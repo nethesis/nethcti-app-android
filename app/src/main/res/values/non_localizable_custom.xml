@@ -95,7 +95,7 @@
     <bool name="hide_accounts">false</bool>
 
     <!-- Chat -->
-    <bool name="disable_chat">false</bool>
+    <bool name="disable_chat">true</bool>
     <bool name="disable_chat_message_notification">false</bool>
     <bool name="disable_chat_send_file">false</bool>
     <bool name="lower_space_between_chat_bubbles_if_same_person">true</bool>
