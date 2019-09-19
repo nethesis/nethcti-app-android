@@ -61,6 +61,8 @@ public class GenericConnectionAssistantActivity extends AssistantActivity implem
         mPassword = findViewById(R.id.assistant_password);
         mPassword.addTextChangedListener(this);
         mDomain = findViewById(R.id.assistant_domain);
+
+        // For testing we use a test url.
         mDomain.setText(getResources().getString(R.string.test_sip_server_url));
         mDomain.addTextChangedListener(this);
         mTransport = findViewById(R.id.assistant_transports);
