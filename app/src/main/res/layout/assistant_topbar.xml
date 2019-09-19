@@ -26,7 +26,7 @@
         android:singleLine="true"
         android:ellipsize="end"
         android:padding="15dp"
-        android:text="@string/assistant"/>
+        android:text="@string/login_top_bar_text"/>
 
     <ImageView
         android:layout_width="0dp"

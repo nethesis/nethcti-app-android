@@ -196,4 +196,5 @@
   <string name="content_description_contact_first_name">Voornaam</string>
   <string name="content_description_contact_last_name">Achternaam</string>
   <string name="content_description_bluetooth">Bluetooth</string>
+    <string name="login_top_bar_text">LOGIN</string>
 </resources>

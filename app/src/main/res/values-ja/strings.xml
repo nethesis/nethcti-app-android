@@ -430,4 +430,5 @@
   <string name="content_description_call_options">発信オプション</string>
   <string name="content_description_audio_route">オーディオルート</string>
   <string name="content_description_exit_conference">会議を終了する</string>
+    <string name="login_top_bar_text">LOGIN</string>
 </resources>

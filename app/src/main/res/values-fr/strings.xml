@@ -582,4 +582,5 @@ Disponible gratuitement ici : %s</string>
   <string name="content_description_conversation_subject">Sujet de la conversation de groupe</string>
   <string name="content_description_conversation_infos">Informations de la conversation de groupe</string>
   <string name="content_description_record_call">Enregistrer l\'appel</string>
+    <string name="login_top_bar_text">LOGIN</string>
 </resources>

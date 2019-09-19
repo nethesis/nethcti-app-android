@@ -446,4 +446,5 @@
   <string name="content_description_call_options">خيارات المكالمة</string>
   <string name="content_description_audio_route">توجيه الصوت</string>
   <string name="content_description_exit_conference">مغادرة الاجتماع</string>
+    <string name="login_top_bar_text">LOGIN</string>
 </resources>

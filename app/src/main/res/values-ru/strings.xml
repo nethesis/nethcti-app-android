@@ -580,4 +580,5 @@
   <string name="content_description_conversation_subject">Тема группового чата</string>
   <string name="content_description_conversation_infos">Информация о групповом чате</string>
   <string name="content_description_record_call">Запись звонка</string>
+    <string name="login_top_bar_text">LOGIN</string>
 </resources>

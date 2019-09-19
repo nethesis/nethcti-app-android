@@ -561,4 +561,5 @@
   <string name="content_description_conversation_subject">Oggetto della chat room di gruppo</string>
   <string name="content_description_conversation_infos">Informazioni sulla chat room di gruppo</string>
   <string name="content_description_record_call">Registra chiamata</string>
+    <string name="login_top_bar_text">LOGIN</string>
 </resources>
