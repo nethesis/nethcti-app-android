@@ -133,7 +133,7 @@ public class NotificationsManager {
                     public void onMessageReceived(
                             Core core, final ChatRoom cr, final ChatMessage message) {
                         if (message.isOutgoing()
-                                || mContext.getResources().getBoolean(R.bool.disable_chat)
+                                || mContext.getResources().getBoolean(R.bool.neth_disable_chat)
                                 || mContext.getResources()
                                         .getBoolean(R.bool.disable_chat_message_notification)) {
                             return;

@@ -113,7 +113,7 @@ public class HistoryDetailFragment extends Fragment {
         if (getResources().getBoolean(R.bool.force_end_to_end_encryption_in_chat)) {
             chat.setVisibility(View.GONE);
         }
-        if (getResources().getBoolean(R.bool.disable_chat)) {
+        if (getResources().getBoolean(R.bool.neth_disable_chat)) {
             chat.setVisibility(View.GONE);
             mChatSecured.setVisibility(View.GONE);
         }
@@ -207,7 +207,7 @@ public class HistoryDetailFragment extends Fragment {
                     mAddToContacts.setVisibility(View.GONE);
                     mGoToContact.setVisibility(View.VISIBLE);
 
-                    if (!getResources().getBoolean(R.bool.disable_chat)
+                    if (!getResources().getBoolean(R.bool.neth_disable_chat)
                             && mContact.hasPresenceModelForUriOrTelCapability(
                                     address.asStringUriOnly(), FriendCapability.LimeX3Dh)) {
                         mChatSecured.setVisibility(View.VISIBLE);

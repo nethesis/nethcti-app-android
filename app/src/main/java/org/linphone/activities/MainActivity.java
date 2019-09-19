@@ -187,7 +187,7 @@ public abstract class MainActivity extends LinphoneGenericActivity
                         getSupportFragmentManager().findFragmentById(R.id.side_menu_fragment);
         mSideMenuFragment.setDrawer(mSideMenu, mSideMenuContent);
 
-        if (getResources().getBoolean(R.bool.disable_chat)) {
+        if (getResources().getBoolean(R.bool.neth_disable_chat)) {
             chat.setVisibility(View.GONE);
         }
 
