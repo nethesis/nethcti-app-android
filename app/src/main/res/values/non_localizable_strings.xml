@@ -62,4 +62,6 @@
         <item>@string/tunnel_mode_entry_value_always</item>
         <item>@string/tunnel_mode_entry_value_auto</item>
     </string-array>
+
+    <string name="test_sip_server_url" translatable="false">nethctiapp.nethserver.net</string>
 </resources>

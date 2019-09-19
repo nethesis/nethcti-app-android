@@ -61,8 +61,14 @@ public class GenericConnectionAssistantActivity extends AssistantActivity implem
         mPassword = findViewById(R.id.assistant_password);
         mPassword.addTextChangedListener(this);
         mDomain = findViewById(R.id.assistant_domain);
+        mDomain.setText(getResources().getString(R.string.test_sip_server_url));
         mDomain.addTextChangedListener(this);
         mTransport = findViewById(R.id.assistant_transports);
+
+        // For Nethesis we allow only tls protocol.
+        if (getResources().getBoolean(R.bool.neth_only_tls_transport_available)) {
+            findViewById(R.id.assistant_transport_layout).setVisibility(View.GONE);
+        }
     }
 
     private void configureAccount() {

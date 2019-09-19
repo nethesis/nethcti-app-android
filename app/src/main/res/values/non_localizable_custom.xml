@@ -51,14 +51,14 @@
     <integer name="phone_number_validation_code_length">4</integer>
 
     <!-- Assistant -->
-    <!-- Only on should be set to true at a time! If not the first one will be used -->
+    <!-- Only one should be set to true at a time! If not the first one will be used -->
     <!-- Start assistant in linphone login view instead of menu -->
     <bool name="assistant_use_linphone_login_as_first_fragment">false</bool>
     <!-- Start assistant in generic login view instead of menu -->
-    <bool name="assistant_use_generic_login_as_first_fragment">false</bool>
+    <bool name="assistant_use_generic_login_as_first_fragment">true</bool>
     <!-- Start Linphone creation account in loginFragment view instead of menu -->
     <bool name="assistant_use_create_linphone_account_as_first_fragment">false</bool>
-    <bool name="assistant_hide_status_bar">true</bool>
+    <bool name="assistant_hide_status_bar">false</bool>
     <bool name="assistant_hide_top_bar">false</bool>
     <bool name="hide_linphone_accounts_in_assistant">false</bool>
     <bool name="hide_generic_accounts_in_assistant">false</bool>
@@ -66,7 +66,7 @@
     <!-- Set the email field of the wizard with one of the gmail account registered on the device -->
     <bool name="pre_fill_email_in_assistant">true</bool>
     <bool name="assistant_account_validation_mandatory">false</bool>
-    <bool name="display_account_assistant_at_first_start">true</bool>
+    <bool name="display_account_assistant_at_first_start">false</bool>
     <bool name="forbid_to_leave_assistant_before_account_configuration">false</bool>
 
     <!-- Call -->
@@ -137,5 +137,7 @@
 
     <!-- Nethesis customizations -->
     <bool name="neth_disable_chat">true</bool>
+    <bool name="neth_only_tls_transport_available">true</bool>
+
 </resources>
 
