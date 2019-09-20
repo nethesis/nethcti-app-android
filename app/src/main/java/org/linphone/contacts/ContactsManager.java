@@ -34,14 +34,15 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import org.linphone.LinphoneContext;
 import org.linphone.LinphoneManager;
-import org.linphone.LinphoneService;
 import org.linphone.R;
 import org.linphone.compatibility.Compatibility;
 import org.linphone.core.Address;
@@ -64,11 +65,11 @@ public class ContactsManager extends ContentObserver implements FriendListListen
     private boolean mInitialized = false;
 
     public static ContactsManager getInstance() {
-        return LinphoneService.instance().getContactsManager();
+        return LinphoneContext.instance().getContactsManager();
     }
 
-    public ContactsManager(Context context, Handler handler) {
-        super(handler);
+    public ContactsManager(Context context) {
+        super(new Handler(Looper.getMainLooper()));
         mContext = context;
         mContactsUpdatedListeners = new ArrayList<>();
         mContacts = new ArrayList<>();
@@ -256,7 +257,7 @@ public class ContactsManager extends ContentObserver implements FriendListListen
                 if (hasReadContactsAccess()
                         && hasWriteContactsAccess()
                         && hasWriteSyncPermission()) {
-                    if (LinphoneService.isReady()) {
+                    if (LinphoneContext.isReady()) {
                         initializeSyncAccount();
                         mInitialized = true;
                     }
@@ -452,7 +453,10 @@ public class ContactsManager extends ContentObserver implements FriendListListen
         LinphoneContact contact = (LinphoneContact) lf.getUserData();
 
         if (contact != null) {
-            if (LinphoneService.instance().getResources().getBoolean(R.bool.use_linphone_tag)) {
+            if (LinphoneContext.instance()
+                    .getApplicationContext()
+                    .getResources()
+                    .getBoolean(R.bool.use_linphone_tag)) {
                 // Inserting Linphone information in Android contact if the parameter is enabled
                 if (LinphonePreferences.instance()
                         .isPresenceStorageInNativeAndroidContactEnabled()) {

@@ -30,7 +30,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.Nullable;
-import org.linphone.LinphoneService;
+import androidx.appcompat.app.AppCompatDelegate;
+import org.linphone.LinphoneContext;
 import org.linphone.R;
 import org.linphone.compatibility.Compatibility;
 import org.linphone.settings.widget.BasicSetting;
@@ -127,9 +128,9 @@ public class AdvancedSettingsFragment extends SettingsFragment {
                     public void onBoolValueChanged(boolean newValue) {
                         mPrefs.setServiceNotificationVisibility(newValue);
                         if (newValue) {
-                            LinphoneService.instance().getNotificationManager().startForeground();
+                            LinphoneContext.instance().getNotificationManager().startForeground();
                         } else {
-                            LinphoneService.instance().getNotificationManager().stopForeground();
+                            LinphoneContext.instance().getNotificationManager().stopForeground();
                         }
                     }
                 });
@@ -147,7 +148,10 @@ public class AdvancedSettingsFragment extends SettingsFragment {
                     @Override
                     public void onBoolValueChanged(boolean newValue) {
                         mPrefs.enableDarkMode(newValue);
-                        getActivity().recreate();
+                        AppCompatDelegate.setDefaultNightMode(
+                                newValue
+                                        ? AppCompatDelegate.MODE_NIGHT_YES
+                                        : AppCompatDelegate.MODE_NIGHT_NO);
                     }
                 });
 

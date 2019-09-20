@@ -49,9 +49,6 @@ public class PhoneAccountLinkingAssistantActivity extends AssistantActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mAbortCreation) {
-            return;
-        }
 
         setContentView(R.layout.assistant_phone_account_linking);
 
@@ -70,6 +67,12 @@ public class PhoneAccountLinkingAssistantActivity extends AssistantActivity {
                 Address identity = mProxyConfig.getIdentityAddress();
                 if (identity == null) {
                     Log.e("[Account Linking] Proxy doesn't have an identity address");
+                    unexpectedError();
+                }
+                if (!mProxyConfig.getDomain().equals(getString(R.string.default_domain))) {
+                    Log.e(
+                            "[Account Linking] Can't link account on domain "
+                                    + mProxyConfig.getDomain());
                     unexpectedError();
                 }
                 mAccountCreator.setUsername(identity.getUsername());
