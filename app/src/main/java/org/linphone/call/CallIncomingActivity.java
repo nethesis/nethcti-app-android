@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import android.Manifest;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -33,8 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import java.util.ArrayList;
+import org.linphone.LinphoneContext;
 import org.linphone.LinphoneManager;
-import org.linphone.LinphoneService;
 import org.linphone.R;
 import org.linphone.activities.LinphoneGenericActivity;
 import org.linphone.compatibility.Compatibility;
@@ -63,9 +62,6 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mAbortCreation) {
-            return;
-        }
 
         Compatibility.setShowWhenLocked(this, true);
         Compatibility.setTurnScreenOn(this, true);
@@ -126,8 +122,9 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
                             Core core, Call call, State state, String message) {
                         if (call == mCall) {
                             if (state == State.Connected) {
-                                startActivity(
-                                        new Intent(CallIncomingActivity.this, CallActivity.class));
+                                // This is done by the Service listener now
+                                // startActivity(new Intent(CallOutgoingActivity.this,
+                                // CallActivity.class));
                             }
                         }
 
@@ -206,7 +203,7 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (LinphoneService.isReady()
+        if (LinphoneContext.isReady()
                 && (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME)) {
             mCall.terminate();
             finish();
