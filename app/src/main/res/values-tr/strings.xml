@@ -480,4 +480,5 @@
   <string name="content_description_conversation_subject">Küme konuşma odası konusu</string>
   <string name="content_description_conversation_infos">Küme konuşma odası bilgisi</string>
     <string name="login_top_bar_text">LOGIN</string>
+    <string name="menu_logout">Çıkış Yap</string>
 </resources>

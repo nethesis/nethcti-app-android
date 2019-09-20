@@ -414,4 +414,5 @@ Wpisz wyświetlaną nazwę (opcjonalnie)</string>
   <string name="content_description_audio_route">Przesyłanie audio</string>
   <string name="content_description_exit_conference">Wyjście konferencji </string>
     <string name="login_top_bar_text">LOGIN</string>
+    <string name="menu_logout">Wyloguj</string>
 </resources>

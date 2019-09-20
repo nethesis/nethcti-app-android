@@ -250,7 +250,7 @@
   <string name="status_error">Connessione difettosa</string>
   <string name="voicemail_unread">messaggi non letti</string>
   <!--Side Menu-->
-  <string name="menu_logout">Uscita</string>
+  <string name="menu_logout">Disconnettiti</string>
   <string name="menu_assistant">Assistente</string>
   <string name="menu_settings">Impostazioni</string>
   <string name="menu_recordings">Registrazioni</string>

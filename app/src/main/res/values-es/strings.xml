@@ -322,4 +322,5 @@
   <string name="content_title_notification_service">Notificación del servicio Linphone</string>
   <string name="content_title_notification">Notificaciones de mensajes instantáneos de Linphone</string>
     <string name="login_top_bar_text">LOGIN</string>
+    <string name="menu_logout">Cerrar sesión</string>
 </resources>

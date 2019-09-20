@@ -447,4 +447,5 @@
   <string name="content_description_audio_route">توجيه الصوت</string>
   <string name="content_description_exit_conference">مغادرة الاجتماع</string>
     <string name="login_top_bar_text">LOGIN</string>
+    <string name="menu_logout">تسجيل خروج</string>
 </resources>

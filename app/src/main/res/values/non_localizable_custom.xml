@@ -85,7 +85,7 @@
 
     <!-- Chat -->
     <bool name="disable_chat">true</bool>
-    <bool name="disable_chat_message_notification">false</bool>
+    <bool name="disable_chat_message_notification">true</bool>
     <bool name="disable_chat_send_file">false</bool>
     <bool name="lower_space_between_chat_bubbles_if_same_person">true</bool>
     <bool name="allow_multiple_images_and_text">true</bool>
@@ -122,7 +122,7 @@
     <bool name="hide_settings_from_side_menu">false</bool>
     <bool name="hide_recordings_from_side_menu">false</bool>
     <bool name="disable_accounts_settings_from_side_menu">false</bool>
-    <bool name="show_log_out_in_side_menu">false</bool>
+    <bool name="show_log_out_in_side_menu">true</bool>
 
     <!-- Others Parameters-->
     <bool name="enable_call_notification">true</bool>

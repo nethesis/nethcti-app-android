@@ -426,4 +426,5 @@
   <string name="content_description_audio_route">音频路由</string>
   <string name="content_description_exit_conference">退出会话</string>
     <string name="login_top_bar_text">LOGIN</string>
+    <string name="menu_logout">登出</string>
 </resources>
