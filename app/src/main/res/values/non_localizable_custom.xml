@@ -147,5 +147,7 @@
     <integer name="time_between_inapp_notification">86400000</integer>
     <bool name="hide_username_in_inapp">true</bool>
 
+    <!-- Nethesis customizations -->
+    <string name="neth_app_name">Nethesis</string>
 </resources>
 
