@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:text="@string/app_name"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             style="@style/splash_screen_subtitle_font"

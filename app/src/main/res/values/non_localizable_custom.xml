@@ -148,12 +148,12 @@
     <bool name="hide_username_in_inapp">true</bool>
 
     <!-- Nethesis customizations -->
-    <string name="neth_address">Nethesis Srl, Strada degli Olmi, 12</string>
-    <string name="neth_address_city">61122 - Pesaro (PU)</string>
-    <string name="neth_app_name">Nethesis</string>
-    <string name="neth_about_link">https://nethesis.net</string>
-    <string name="neth_fax">Fax: +39 0721 268147</string>
-    <string name="neth_tel">Tel: +39 0721 1791157</string>
+    <string name="neth_about_address" translatable="false">Nethesis Srl, Strada degli Olmi, 12</string>
+    <string name="neth_about_address_city" translatable="false">61122 - Pesaro (PU)</string>
+    <string name="neth_app_name" translatable="false">Nethesis</string>
+    <string name="neth_about_link" translatable="false">https://nethesis.net</string>
+    <string name="neth_about_fax" translatable="false">Fax: +39 0721 268147</string>
+    <string name="neth_about_tel" translatable="false">Tel: +39 0721 1791157</string>
 
 </resources>
 
