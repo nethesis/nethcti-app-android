@@ -57,25 +57,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
-                android:text="@string/userid"
-                android:textAllCaps="true" />
-
-            <EditText
-                android:id="@+id/assistant_userid"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/resizable_textfield"
-                android:contentDescription="@string/content_description_username_field"
-                android:inputType="text|textNoSuggestions"
-                android:maxLines="1"
-                android:hint="@string/userid"
-                android:textColor="@color/black_color" />
-
-            <TextView
-                style="@style/assistant_input_field_header_font"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
                 android:text="@string/password"
                 android:textAllCaps="true" />
 
@@ -107,67 +88,6 @@
                 android:maxLines="1"
                 android:hint="@string/domain"
                 android:textColor="@color/black_color" />
-
-            <TextView
-                style="@style/assistant_input_field_header_font"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:text="@string/assistant_display_name_optional"
-                android:textAllCaps="true" />
-
-            <EditText
-                android:id="@+id/assistant_display_name"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/resizable_textfield"
-                android:contentDescription="@string/content_description_display_field"
-                android:inputType="textPersonName"
-                android:maxLines="1"
-                android:hint="@string/assistant_display_name_optional"
-                android:textColor="@color/black_color" />
-
-            <TextView
-                style="@style/assistant_input_field_header_font"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:text="@string/transport"
-                android:textAllCaps="true" />
-
-            <RadioGroup
-                android:id="@+id/assistant_transports"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/transport_udp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:textColor="?attr/primaryTextColor"
-                    android:text="@string/pref_transport_udp" />
-
-                <RadioButton
-                    android:id="@+id/transport_tcp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:textColor="?attr/primaryTextColor"
-                    android:text="@string/pref_transport_tcp" />
-
-                <RadioButton
-                    android:id="@+id/transport_tls"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:textColor="?attr/primaryTextColor"
-                    android:checked="true"
-                    android:text="@string/pref_transport_tls" />
-
-            </RadioGroup>
 
             <Button
                 android:id="@+id/assistant_apply"
