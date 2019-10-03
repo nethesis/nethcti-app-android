@@ -36,7 +36,7 @@ import org.linphone.core.TransportType;
 public class LoginFragment extends Fragment implements OnClickListener, TextWatcher {
     private EditText mLogin, mUserid, mPassword, mDomain, mDisplayName;
     private RadioGroup mTransports;
-    private Button mApply;
+    private Button mApply, mQrCode;
 
     @Override
     public View onCreateView(
@@ -53,6 +53,16 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         mApply = view.findViewById(R.id.assistant_apply);
         mApply.setEnabled(false);
         mApply.setOnClickListener(this);
+        mQrCode = view.findViewById(R.id.lauch_qrcode_mahahahah);
+        mQrCode.setOnClickListener(this);
+
+        if (getArguments() != null && !getArguments().getString("RemoteUrl").isEmpty()) {
+            String toSplit = getArguments().getString("RemoteUrl");
+            String[] separated = toSplit.split(";");
+            mLogin.setText(separated[0]);
+            mPassword.setText(separated[1]);
+            mDomain.setText(separated[2]);
+        }
 
         return view;
     }
@@ -95,6 +105,10 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                 mDomain.getText().toString(),
                                 TransportType.Tls);
             }
+        }
+
+        if (id == R.id.lauch_qrcode_mahahahah) {
+            AssistantActivity.instance().displayQRCodeReader();
         }
     }
 

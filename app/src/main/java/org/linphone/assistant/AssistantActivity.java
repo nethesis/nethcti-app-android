@@ -570,6 +570,19 @@ public class AssistantActivity extends ThemableActivity
         mCurrentFragment = AssistantFragmentsEnum.LOGIN;
     }
 
+    public void displayLoginGeneric(String url) {
+        mFragment = new LoginFragment();
+        /*
+         * We have added url for qrcode provisioning.
+         * Remove next three rows to remove that.
+         */
+        Bundle extra = new Bundle();
+        extra.putString("RemoteUrl", url);
+        mFragment.setArguments(extra);
+        changeFragment(mFragment);
+        mCurrentFragment = AssistantFragmentsEnum.LOGIN;
+    }
+
     public void displayLoginLinphone(String username, String password) {
         mFragment = new LinphoneLoginFragment();
         Bundle extras = new Bundle();
