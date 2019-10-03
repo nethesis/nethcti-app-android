@@ -48,7 +48,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         mPassword = view.findViewById(R.id.assistant_password);
         mPassword.addTextChangedListener(this);
         mDomain = view.findViewById(R.id.assistant_domain);
-        mDomain.setText(R.string.default_domain);
+        mDomain.setText(R.string.neth_test_domain);
         mDomain.addTextChangedListener(this);
         mApply = view.findViewById(R.id.assistant_apply);
         mApply.setEnabled(false);

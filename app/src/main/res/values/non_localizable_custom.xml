@@ -3,7 +3,7 @@
 
     <!-- URLs, URIs and domain -->
     <!-- Set the default domain used for account creation/addresses -->
-    <string name="default_domain" translatable="false">nethctiapp.nethserver.net</string>
+    <string name="default_domain" translatable="false">sip.linphone.org</string>
     <string name="default_stun" translatable="false">stun.linphone.org</string>
     <string name="default_conference_factory_uri" translatable="false">sip:conference-factory@sip.linphone.org</string>
     <string name="default_lime_x3dh_server_url" translatable="false">https://lime.linphone.org/lime-server/lime-server.php</string>
@@ -154,6 +154,8 @@
     <string name="neth_about_link" translatable="false">https://nethesis.net</string>
     <string name="neth_about_fax" translatable="false">Fax: +39 0721 268147</string>
     <string name="neth_about_tel" translatable="false">Tel: +39 0721 1791157</string>
+
+    <string name="neth_test_domain" translatable="false">nethctiapp.nethserver.net</string>
 
 </resources>
 
