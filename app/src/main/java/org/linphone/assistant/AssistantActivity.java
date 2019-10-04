@@ -128,6 +128,11 @@ public class AssistantActivity extends ThemableActivity
             if (getIntent().getBooleanExtra("FromPref", false)) mFromPref = true;
             displayCreateAccount();
         } else {
+            /*
+             * This fragment is used to show a fragment at startup.
+             * I load every time the Sip Login Fragment.
+             */
+            /*
             mFirstFragment =
                     getResources().getBoolean(R.bool.assistant_use_linphone_login_as_first_fragment)
                             ? AssistantFragmentsEnum.LINPHONE_LOGIN
@@ -140,7 +145,9 @@ public class AssistantActivity extends ThemableActivity
                                 ? AssistantFragmentsEnum.CREATE_ACCOUNT
                                 : AssistantFragmentsEnum.WELCOME;
             }
+            */
 
+            mFirstFragment = AssistantFragmentsEnum.LOGIN; // This is the Sip Login Fragment.
             if (findViewById(R.id.fragment_container) != null) {
                 if (savedInstanceState == null) {
                     display(mFirstFragment);
@@ -345,17 +352,22 @@ public class AssistantActivity extends ThemableActivity
                 || mCurrentFragment == AssistantFragmentsEnum.CREATE_ACCOUNT
                 || mCurrentFragment == AssistantFragmentsEnum.REMOTE_PROVISIONING) {
             displayMenu();
-        } else if (mCurrentFragment == AssistantFragmentsEnum.WELCOME) {
-            if (firstLaunch) startActivity(new Intent().setClass(this, LinphoneActivity.class));
-            finish();
-        } else if (mCurrentFragment == AssistantFragmentsEnum.COUNTRY_CHOOSER) {
-            if (mLastFragment.equals(AssistantFragmentsEnum.LINPHONE_LOGIN)) {
-                displayLoginLinphone(null, null);
-            } else {
-                displayCreateAccount();
-            }
+            /*
+             * Those branch are not used anymore.
+             * We use only Login and QrCode_Reader.
+             */
+            /*} else if (mCurrentFragment == AssistantFragmentsEnum.WELCOME) {
+                if (firstLaunch) startActivity(new Intent().setClass(this, LinphoneActivity.class));
+                finish();
+            } else if (mCurrentFragment == AssistantFragmentsEnum.COUNTRY_CHOOSER) {
+                if (mLastFragment.equals(AssistantFragmentsEnum.LINPHONE_LOGIN)) {
+                    displayLoginLinphone(null, null);
+                } else {
+                    displayCreateAccount();
+                }*/
         } else if (mCurrentFragment == AssistantFragmentsEnum.QRCODE_READER) {
-            displayRemoteProvisioning("");
+            // displayRemoteProvisioning("");
+            displayLoginGeneric();
         }
     }
 
@@ -551,6 +563,10 @@ public class AssistantActivity extends ThemableActivity
                 break;
             case CREATE_ACCOUNT:
                 displayCreateAccount();
+                break;
+                // Introduded to open the login onCreate.
+            case LOGIN:
+                displayLoginGeneric();
                 break;
             default:
                 throw new IllegalStateException("Can't handle " + fragment);
