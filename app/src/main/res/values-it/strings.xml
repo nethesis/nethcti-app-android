@@ -65,7 +65,7 @@
   <string name="app_description">"Un SIP client da <i>Nethesis</i> "</string>
   <!--Assistant-->
   <string name="welcome">Benvenuto</string>
-  <string name="assistant">Assistente</string>
+  <string name="assistant">Login</string>
   <string name="assistant_create_account">Creare un account</string>
   <string name="assistant_link_account">Collega l\'account</string>
   <string name="assistant_continue">Continua</string>
@@ -80,15 +80,15 @@
   <string name="transport">Trasporto</string>
   <string name="assistant_create_account_phone_number_address">Il tuo indirizzo SIP è</string>
   <string name="assistant_login_linphone">Usa l\'account NethCTI</string>
-  <string name="assistant_login_generic">Usa l\'account SIP</string>
+  <string name="assistant_login_generic">Usa l\'account</string>
   <string name="assistant_remote_provisioning">Recupera la configurazione remota</string>
   <string name="assistant_create_account_part_1">Conferma il codice paese e inserisci il tuo numero di telefono</string>
   <string name="assistant_create_account_part_2">Ti abbiamo inviato un SMS con un codice di convalida al tuo numero di telefono:</string>
   <string name="assistant_create_account_part_3">Per completare la verifica del numero di telefono, inserisci il codice di 4 cifre di seguito:\n</string>
   <string name="assistant_create_account_part_email">Inserisci un nome utente, un indirizzo e-mail e una password per il tuo account NethCTI</string>
   <string name="assistant_display_name_optional">Nome visualizzato (facoltativo)</string>
-  <string name="assistant_linphone_account">Usa il tuo NethCTI Linphone</string>
-  <string name="assistant_generic_account">Usa l\'account SIP</string>
+  <string name="assistant_linphone_account">Usa il tuo NethCTI Account</string>
+  <string name="assistant_generic_account">Usa l\'account</string>
   <string name="assistant_remote_provisioning_title">Recupera la configurazione remota</string>
   <string name="assistant_fetch_apply">Recupera ed applica</string>
   <string name="assistant_launch_qrcode">Codice QR</string>
@@ -247,7 +247,7 @@
   <string name="voicemail_unread">messaggi non letti</string>
   <!--Side Menu-->
   <string name="menu_logout">Uscita</string>
-  <string name="menu_assistant">Assistente</string>
+  <string name="menu_assistant">Login</string>
   <string name="menu_settings">Impostazioni</string>
   <string name="menu_recordings">Registrazioni</string>
   <string name="menu_about">Informazioni</string>
