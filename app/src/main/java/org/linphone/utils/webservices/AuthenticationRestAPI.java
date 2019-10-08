@@ -5,9 +5,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-/**
- * Interface for Authentication Rest Api Calls. 
- */
+/** Interface for Authentication Rest Api Calls. */
 public interface AuthenticationRestAPI {
     /**
      * The login call. It return every time a 401 HTTP result.
