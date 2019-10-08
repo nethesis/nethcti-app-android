@@ -69,7 +69,7 @@
     <bool name="hide_create_accounts_in_assistant">true</bool>
     <bool name="hide_linphone_accounts_in_assistant">true</bool>
     <bool name="hide_generic_accounts_in_assistant">false</bool>
-    <bool name="hide_remote_provisioning_in_assistant">false</bool>
+    <bool name="hide_remote_provisioning_in_assistant">true</bool>
     <bool name="display_account_assistant_at_first_start">false</bool>
 
     <!-- Remote provisioning -->
@@ -147,15 +147,6 @@
     <integer name="time_between_inapp_notification">86400000</integer>
     <bool name="hide_username_in_inapp">true</bool>
 
-    <!-- Nethesis customizations -->
-    <string name="neth_about_address" translatable="false">Nethesis Srl, Strada degli Olmi, 12</string>
-    <string name="neth_about_address_city" translatable="false">61122 - Pesaro (PU)</string>
-    <string name="neth_app_name" translatable="false">Nethesis</string>
-    <string name="neth_about_link" translatable="false">https://nethesis.net</string>
-    <string name="neth_about_fax" translatable="false">Fax: +39 0721 268147</string>
-    <string name="neth_about_tel" translatable="false">Tel: +39 0721 1791157</string>
-
-    <string name="neth_test_domain" translatable="false">nethctiapp.nethserver.net</string>
 
 </resources>
 

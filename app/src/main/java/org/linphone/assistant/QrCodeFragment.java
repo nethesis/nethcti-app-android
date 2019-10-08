@@ -49,7 +49,12 @@ public class QrCodeFragment extends Fragment {
                     @Override
                     public void onQrcodeFound(Core lc, String result) {
                         enableQrcodeReader(false);
-                        AssistantActivity.instance().displayRemoteProvisioning(result);
+                        /*
+                         * Display Remote Provisioning was the old implementation.
+                         * Now we go to Login Fragment.
+                         */
+                        // AssistantActivity.instance().displayRemoteProvisioning(result);
+                        AssistantActivity.instance().displayLoginGeneric(result);
                     }
                 };
 

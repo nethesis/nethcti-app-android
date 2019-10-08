@@ -97,7 +97,7 @@
                 android:layout_gravity="center"
                 android:autoLink="web"
                 android:gravity="center"
-                android:text="@string/about_link"
+                android:text="@string/neth_about_link"
                 android:textColorLink="@color/primary_color" />
 
         </LinearLayout>
@@ -119,6 +119,14 @@
                 android:layout_height="wrap_content"
                 style="@style/about_license_font"
                 android:text="@string/neth_about_address_city" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="@style/about_grey_panel">
 
             <TextView
                 android:layout_width="wrap_content"

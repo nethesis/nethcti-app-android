@@ -101,6 +101,18 @@
                 android:text="@string/assistant_login"
                 android:textColor="@drawable/assistant_button_text_color" />
 
+            <Button
+                android:id="@+id/lauch_qrcode_mahahahah"
+                style="@style/button_font"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/assistant_button"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/assistant_launch_qrcode"
+                android:textColor="@drawable/assistant_button_text_color" />
+
         </LinearLayout>
 
     </LinearLayout>

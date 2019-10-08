@@ -117,8 +117,8 @@
     </style>
 
     <style name="about_base_panel">
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">10dp</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
     </style>
