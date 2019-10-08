@@ -36,6 +36,7 @@ import android.widget.Toast;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Objects;
 import okhttp3.Headers;
 import org.linphone.R;
@@ -149,10 +150,19 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
+                        if (response == null
+                                || response.headers() == null
+                                || response.headers().get("www-authenticate") == null) {
+                            Toast.makeText(
+                                            AssistantActivity.instance(),
+                                            "Login failed, retry later or check your credentials.",
+                                            Toast.LENGTH_LONG)
+                                    .show();
+                            return;
+                        }
+
                         Headers headers = response.headers();
-                        final String digest =
-                                Objects.requireNonNull(headers.get("www-authenticate"))
-                                        .substring(7);
+                        final String digest = headers.get("www-authenticate").substring(7);
                         Log.e("NOT_AN_ERROR", "On response, digest: " + digest);
                         UserRestAPI userRestAPI =
                                 RetrofitGenerator.createService(UserRestAPI.class);
@@ -175,6 +185,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
+
                         Call<NethUser> getMeCall = userRestAPI.getMe(sha1);
                         getMeCall.enqueue(
                                 new Callback<NethUser>() {
@@ -182,29 +193,41 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                     public void onResponse(
                                             Call<NethUser> call, Response<NethUser> response) {
                                         NethUser nethUser = response.body();
-                                        Extension extension =
+                                        List<Extension> extensions =
                                                 Objects.requireNonNull(nethUser)
                                                         .endpoints
-                                                        .extension
-                                                        .get(0);
-                                        Log.e(
-                                                "NOT_AN_ERROR",
-                                                String.format(
-                                                        "SIP User: %s; SIP Password: %s",
-                                                        extension.username, extension.secret));
-                                        AssistantActivity.instance()
-                                                .genericLogIn(
-                                                        extension.id,
-                                                        null,
-                                                        extension.secret,
-                                                        extension.username,
-                                                        null,
-                                                        domain,
-                                                        TransportType.Tls);
+                                                        .extension;
+                                        for (Extension e : extensions) {
+                                            if (e.type.equals("webrtc")) {
+                                                AssistantActivity.instance()
+                                                        .genericLogIn(
+                                                                e.id,
+                                                                null,
+                                                                e.secret,
+                                                                e.username,
+                                                                null,
+                                                                domain,
+                                                                TransportType.Tls);
+                                                // I do login with only one extension.
+                                                return;
+                                            }
+                                        }
+
+                                        // I haven't found any extension.
+                                        Toast.makeText(
+                                                        AssistantActivity.instance(),
+                                                        "No extensions for this user.",
+                                                        Toast.LENGTH_LONG)
+                                                .show();
                                     }
 
                                     @Override
                                     public void onFailure(Call<NethUser> call, Throwable t) {
+                                        Toast.makeText(
+                                                        AssistantActivity.instance(),
+                                                        "Fail get me api call.",
+                                                        Toast.LENGTH_LONG)
+                                                .show();
                                         Log.e("NOT_AN_ERROR", "On failure: " + t.getCause());
                                     }
                                 });
@@ -212,6 +235,11 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        Toast.makeText(
+                                        AssistantActivity.instance(),
+                                        "Login fail, retry later.",
+                                        Toast.LENGTH_LONG)
+                                .show();
                         Log.e("NOT_AN_ERROR", "On failure: " + t.getCause());
                     }
                 });
