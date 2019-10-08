@@ -18,10 +18,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import static org.linphone.utils.webservices.RetrofitGenerator.calculateRFC2104HMAC;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,8 +33,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
+import okhttp3.Headers;
 import org.linphone.R;
 import org.linphone.core.TransportType;
+import org.linphone.models.Extension;
+import org.linphone.models.LoginCredentials;
+import org.linphone.models.NethUser;
+import org.linphone.utils.webservices.AuthenticationRestAPI;
+import org.linphone.utils.webservices.RetrofitGenerator;
+import org.linphone.utils.webservices.UserRestAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginFragment extends Fragment implements OnClickListener, TextWatcher {
     private EditText mLogin, mUserid, mPassword, mDomain, mDisplayName;
@@ -78,6 +95,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                     || mPassword.length() == 0
                     || mDomain.getText() == null
                     || mDomain.length() == 0) {
+                // Here I show an input error.
                 Toast.makeText(
                                 getActivity(),
                                 getString(R.string.first_launch_no_login_password),
@@ -86,24 +104,20 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 return;
             }
 
+            // Here I've input correctly all fields.
             if (mDomain.getText().toString().compareTo(getString(R.string.default_domain)) == 0) {
                 AssistantActivity.instance()
                         .displayLoginLinphone(
                                 mLogin.getText().toString(), mPassword.getText().toString());
             } else {
+                performNethLogin(
+                        mLogin.getText().toString(),
+                        mPassword.getText().toString(),
+                        mDomain.getText().toString());
                 /*
                  * We have forced the user to use TLS instead other protocols.
                  * We don't need the userid and displayname: removed.
                  */
-                AssistantActivity.instance()
-                        .genericLogIn(
-                                mLogin.getText().toString(),
-                                null,
-                                mPassword.getText().toString(),
-                                null,
-                                null,
-                                mDomain.getText().toString(),
-                                TransportType.Tls);
             }
         }
 
@@ -125,4 +139,81 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
 
     @Override
     public void afterTextChanged(Editable s) {}
+
+    private void performNethLogin(
+            final String username, final String password, final String domain) {
+        AuthenticationRestAPI restAPIClass =
+                RetrofitGenerator.createService(AuthenticationRestAPI.class);
+        Call<String> call = restAPIClass.login(new LoginCredentials(username, password));
+        call.enqueue(
+                new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Headers headers = response.headers();
+                        final String digest =
+                                Objects.requireNonNull(headers.get("www-authenticate"))
+                                        .substring(7);
+                        Log.e("NOT_AN_ERROR", "On response, digest: " + digest);
+                        UserRestAPI userRestAPI =
+                                RetrofitGenerator.createService(UserRestAPI.class);
+                        String sha1 = null;
+                        try {
+                            sha1 =
+                                    String.format(
+                                            "%s:%s",
+                                            username,
+                                            calculateRFC2104HMAC(
+                                                    String.format(
+                                                            "%s:%s:%s", username, password, digest),
+                                                    password));
+                        } catch (NoSuchAlgorithmException e) {
+                            Log.e(
+                                    "NoSuchAlgorithm",
+                                    Objects.requireNonNull(e.getCause()).toString());
+                        } catch (InvalidKeyException e) {
+                            Log.e("InvalidKey", Objects.requireNonNull(e.getMessage()));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        Call<NethUser> getMeCall = userRestAPI.getMe(sha1);
+                        getMeCall.enqueue(
+                                new Callback<NethUser>() {
+                                    @Override
+                                    public void onResponse(
+                                            Call<NethUser> call, Response<NethUser> response) {
+                                        NethUser nethUser = response.body();
+                                        Extension extension =
+                                                Objects.requireNonNull(nethUser)
+                                                        .endpoints
+                                                        .extension
+                                                        .get(0);
+                                        Log.e(
+                                                "NOT_AN_ERROR",
+                                                String.format(
+                                                        "SIP User: %s; SIP Password: %s",
+                                                        extension.username, extension.secret));
+                                        AssistantActivity.instance()
+                                                .genericLogIn(
+                                                        extension.id,
+                                                        null,
+                                                        extension.secret,
+                                                        extension.username,
+                                                        null,
+                                                        domain,
+                                                        TransportType.Tls);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<NethUser> call, Throwable t) {
+                                        Log.e("NOT_AN_ERROR", "On failure: " + t.getCause());
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Log.e("NOT_AN_ERROR", "On failure: " + t.getCause());
+                    }
+                });
+    }
 }
