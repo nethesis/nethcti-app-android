@@ -2,11 +2,11 @@
 <resources>
     <color name="transparent_color">#00000000</color>
 
-    <color name="primary_color">#ff5e00</color> <!-- Try to have a color that renders well on both light & dark theme -->
+    <color name="primary_color">#00a2de</color> <!-- Try to have a color that renders well on both light & dark theme -->
     <!-- You can use https://material.io/design/color/#tools-for-picking-colors to get dark color value from primary -->
-    <color name="primary_dark_color">#e65000</color>
-    <color name="primary_light_color">#ffab4d</color>
-    <color name="notification_led_color">#ff8000</color>
+    <color name="primary_dark_color">#0073ac</color>
+    <color name="primary_light_color">#62d3ff</color>
+    <color name="notification_led_color">#00a2de</color>
 
     <color name="black_color">#000000</color>
     <color name="dark_grey_color">#444444</color>
@@ -18,6 +18,7 @@
 
     <color name="imdn_read_color">#3eb5c0</color>
     <color name="toolbar_color">#e1e1e1</color>
+    <color name="footer_btn_color">#e1e1e1</color>
     <color name="header_background_color">#f3f3f3</color>
     <color name="security_gray_color">#c2c2c2</color>
     <color name="chat_bubble_text_color">#a1a1a1</color>

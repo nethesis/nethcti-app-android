@@ -35,8 +35,15 @@ public class WelcomeFragment extends Fragment implements OnClickListener {
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.assistant_welcome, container, false);
 
+        /*
+         * We have added the possibility to hide the create account button.
+         */
         mCreateAccount = view.findViewById(R.id.create_account);
-        mCreateAccount.setOnClickListener(this);
+        if (getResources().getBoolean(R.bool.hide_create_accounts_in_assistant)) {
+            mCreateAccount.setVisibility(View.GONE);
+        } else {
+            mCreateAccount.setOnClickListener(this);
+        }
 
         mLogLinphoneAccount = view.findViewById(R.id.login_linphone);
         if (getResources().getBoolean(R.bool.hide_linphone_accounts_in_assistant)) {

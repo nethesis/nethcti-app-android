@@ -98,16 +98,37 @@
     </style>
 
     <!-- About related -->
-
-    <style name="about_license_font" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">?attr/primaryTextColor</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">italic</item>
+    <!-- The base font, instance other about fonts starting here. -->
+    <style name="about_base_font" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="about_version_font" parent="@android:style/TextAppearance.Small">
-        <item name="android:textColor">@color/light_grey_color</item>
-        <item name="android:textSize">16sp</item>
+    <style name="about_license_font" parent="about_base_font">
+        <item name="android:textColor">?attr/primaryTextColor</item>
+    </style>
+
+    <style name="about_version_font" parent="about_base_font">
+        <item name="android:textColor">?attr/primaryTextColor</item>
+    </style>
+
+    <style name="about_link_font" parent="about_base_font">
+        <item name="android:textColor">?attr/accentColor</item>
+    </style>
+
+    <style name="about_base_panel">
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="about_grey_panel" parent="about_base_panel">
+        <item name="android:background">@color/light_grey_color</item>
+    </style>
+
+    <style name="about_white_panel" parent="about_base_panel">
+        <item name="android:background">@color/white_color</item>
     </style>
 
     <!-- Chat related -->

@@ -45,15 +45,11 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
 
         mLogin = view.findViewById(R.id.assistant_username);
         mLogin.addTextChangedListener(this);
-        mDisplayName = view.findViewById(R.id.assistant_display_name);
-        mDisplayName.addTextChangedListener(this);
-        mUserid = view.findViewById(R.id.assistant_userid);
-        mUserid.addTextChangedListener(this);
         mPassword = view.findViewById(R.id.assistant_password);
         mPassword.addTextChangedListener(this);
         mDomain = view.findViewById(R.id.assistant_domain);
+        mDomain.setText(R.string.neth_test_domain);
         mDomain.addTextChangedListener(this);
-        mTransports = view.findViewById(R.id.assistant_transports);
         mApply = view.findViewById(R.id.assistant_apply);
         mApply.setEnabled(false);
         mApply.setOnClickListener(this);
@@ -80,31 +76,24 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 return;
             }
 
-            TransportType transport;
-            if (mTransports.getCheckedRadioButtonId() == R.id.transport_udp) {
-                transport = TransportType.Udp;
-            } else {
-                if (mTransports.getCheckedRadioButtonId() == R.id.transport_tcp) {
-                    transport = TransportType.Tcp;
-                } else {
-                    transport = TransportType.Tls;
-                }
-            }
-
             if (mDomain.getText().toString().compareTo(getString(R.string.default_domain)) == 0) {
                 AssistantActivity.instance()
                         .displayLoginLinphone(
                                 mLogin.getText().toString(), mPassword.getText().toString());
             } else {
+                /*
+                 * We have forced the user to use TLS instead other protocols.
+                 * We don't need the userid and displayname: removed.
+                 */
                 AssistantActivity.instance()
                         .genericLogIn(
                                 mLogin.getText().toString(),
-                                mUserid.getText().toString(),
+                                null,
                                 mPassword.getText().toString(),
-                                mDisplayName.getText().toString(),
+                                null,
                                 null,
                                 mDomain.getText().toString(),
-                                transport);
+                                TransportType.Tls);
             }
         }
     }

@@ -65,11 +65,12 @@
     <!-- Set the email field of the wizard with one of the gmail account registered on the device -->
     <bool name="pre_fill_email_in_assistant">true</bool>
     <bool name="assistant_account_validation_mandatory">false</bool>
-    <bool name="allow_only_phone_numbers_in_assistant">false</bool>
-    <bool name="hide_linphone_accounts_in_assistant">false</bool>
+    <bool name="allow_only_phone_numbers_in_assistant">true</bool>
+    <bool name="hide_create_accounts_in_assistant">true</bool>
+    <bool name="hide_linphone_accounts_in_assistant">true</bool>
     <bool name="hide_generic_accounts_in_assistant">false</bool>
     <bool name="hide_remote_provisioning_in_assistant">false</bool>
-    <bool name="display_account_assistant_at_first_start">true</bool>
+    <bool name="display_account_assistant_at_first_start">false</bool>
 
     <!-- Remote provisioning -->
     <bool name="display_sms_remote_provisioning_activity">false</bool>
@@ -95,9 +96,10 @@
     <bool name="hide_accounts">false</bool>
 
     <!-- Chat -->
-    <bool name="disable_chat">false</bool>
-    <bool name="disable_chat_message_notification">false</bool>
-    <bool name="disable_chat_send_file">false</bool>
+    <!-- We have disabled all chat features. -->
+    <bool name="disable_chat">true</bool>
+    <bool name="disable_chat_message_notification">true</bool>
+    <bool name="disable_chat_send_file">true</bool>
     <bool name="lower_space_between_chat_bubbles_if_same_person">true</bool>
     <bool name="allow_multiple_images_and_text">true</bool>
     <bool name="send_text_and_images_as_different_messages">false</bool>
@@ -144,6 +146,16 @@
     <!-- Time between two inapp notifications in milliseconds -->
     <integer name="time_between_inapp_notification">86400000</integer>
     <bool name="hide_username_in_inapp">true</bool>
+
+    <!-- Nethesis customizations -->
+    <string name="neth_about_address" translatable="false">Nethesis Srl, Strada degli Olmi, 12</string>
+    <string name="neth_about_address_city" translatable="false">61122 - Pesaro (PU)</string>
+    <string name="neth_app_name" translatable="false">Nethesis</string>
+    <string name="neth_about_link" translatable="false">https://nethesis.net</string>
+    <string name="neth_about_fax" translatable="false">Fax: +39 0721 268147</string>
+    <string name="neth_about_tel" translatable="false">Tel: +39 0721 1791157</string>
+
+    <string name="neth_test_domain" translatable="false">nethctiapp.nethserver.net</string>
 
 </resources>
 
