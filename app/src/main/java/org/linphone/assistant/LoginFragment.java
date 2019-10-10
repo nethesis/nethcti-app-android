@@ -33,9 +33,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import org.linphone.R;
 import org.linphone.core.TransportType;
@@ -172,104 +169,101 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                     .show();
                             return;
                         }
-                        final String digest = authHeader.substring(7);
-                        UserRestAPI userRestAPI =
-                                RetrofitGenerator.createService(UserRestAPI.class);
-                        String sha1;
-                        try {
-                            sha1 =
-                                    String.format(
-                                            "%s:%s",
-                                            username,
-                                            calculateRFC2104HMAC(
-                                                    String.format(
-                                                            "%s:%s:%s", username, password, digest),
-                                                    password));
-                        } catch (NoSuchAlgorithmException e) {
+
+                        manageLoginResponse(username, password, authHeader.substring(7), domain);
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        manageLoginFailure();
+                    }
+                });
+    }
+
+    private void manageLoginResponse(
+            final String username,
+            final String password,
+            final String digest,
+            final String domain) {
+        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class);
+        String sha1;
+        try {
+            sha1 =
+                    String.format(
+                            "%s:%s",
+                            username,
+                            calculateRFC2104HMAC(
+                                    String.format("%s:%s:%s", username, password, digest),
+                                    password));
+        } catch (Exception e) {
+            Toast.makeText(
+                            AssistantActivity.instance(),
+                            R.string.neth_login_missing_authentication_header,
+                            Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
+        Call<NethUser> getMeCall = userRestAPI.getMe(sha1);
+        getMeCall.enqueue(
+                new Callback<NethUser>() {
+                    @Override
+                    public void onResponse(Call<NethUser> call, Response<NethUser> response) {
+                        NethUser nethUser = response.body();
+                        if (nethUser == null
+                                || nethUser.endpoints == null
+                                || nethUser.endpoints.extension == null) {
                             Toast.makeText(
                                             AssistantActivity.instance(),
-                                            R.string.neth_login_missing_crypt_algorithm,
-                                            Toast.LENGTH_LONG)
-                                    .show();
-                            return;
-                        } catch (InvalidKeyException e) {
-                            Toast.makeText(
-                                            AssistantActivity.instance(),
-                                            R.string.neth_login_missing_crypt_key,
-                                            Toast.LENGTH_LONG)
-                                    .show();
-                            return;
-                        } catch (UnsupportedEncodingException e) {
-                            Toast.makeText(
-                                            AssistantActivity.instance(),
-                                            R.string.neth_login_missing_crypt_encoding,
+                                            R.string.neth_login_missing_neth_user,
                                             Toast.LENGTH_LONG)
                                     .show();
                             return;
                         }
 
-                        Call<NethUser> getMeCall = userRestAPI.getMe(sha1);
-                        getMeCall.enqueue(
-                                new Callback<NethUser>() {
-                                    @Override
-                                    public void onResponse(
-                                            Call<NethUser> call, Response<NethUser> response) {
-                                        NethUser nethUser = response.body();
-                                        if (nethUser == null
-                                                || nethUser.endpoints == null
-                                                || nethUser.endpoints.extension == null) {
-                                            Toast.makeText(
-                                                            AssistantActivity.instance(),
-                                                            R.string.neth_login_missing_neth_user,
-                                                            Toast.LENGTH_LONG)
-                                                    .show();
-                                            return;
-                                        }
-
-                                        List<Extension> extensions = nethUser.endpoints.extension;
-                                        for (Extension e : extensions) {
-                                            if (e.type.equals("webrtc")) {
-                                                AssistantActivity.instance()
-                                                        .genericLogIn(
-                                                                e.id,
-                                                                null,
-                                                                e.secret,
-                                                                e.username,
-                                                                null,
-                                                                domain,
-                                                                TransportType.Tls);
-                                                // I do login with only one extension.
-                                                return;
-                                            }
-                                        }
-
-                                        // I haven't found any extension.
-                                        Toast.makeText(
-                                                        AssistantActivity.instance(),
-                                                        R.string.neth_login_missing_neth_extension,
-                                                        Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<NethUser> call, Throwable t) {
-                                        Toast.makeText(
-                                                        AssistantActivity.instance(),
-                                                        R.string.neth_login_2_call_failed,
-                                                        Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-                                });
+                        manageNethUserIntern(nethUser, domain);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Toast.makeText(
-                                        AssistantActivity.instance(),
-                                        R.string.neth_login_1_call_failed,
-                                        Toast.LENGTH_LONG)
-                                .show();
+                    public void onFailure(Call<NethUser> call, Throwable t) {
+                        manageNethUserInternFailure();
                     }
                 });
+    }
+
+    private void manageNethUserIntern(final NethUser nethUser, final String domain) {
+        List<Extension> extensions = nethUser.endpoints.extension;
+        for (Extension e : extensions) {
+            if (e.type.equals("webrtc")) {
+                AssistantActivity.instance()
+                        .genericLogIn(
+                                e.id, null, e.secret, e.username, null, domain, TransportType.Tls);
+                // I do login with only one extension.
+                return;
+            }
+        }
+
+        // I haven't found any extension.
+        Toast.makeText(
+                        AssistantActivity.instance(),
+                        R.string.neth_login_missing_neth_extension,
+                        Toast.LENGTH_LONG)
+                .show();
+    }
+
+    private void manageNethUserInternFailure() {
+        Toast.makeText(
+                        AssistantActivity.instance(),
+                        R.string.neth_login_2_call_failed,
+                        Toast.LENGTH_LONG)
+                .show();
+    }
+
+    private void manageLoginFailure() {
+        Toast.makeText(
+                        AssistantActivity.instance(),
+                        R.string.neth_login_1_call_failed,
+                        Toast.LENGTH_LONG)
+                .show();
     }
 }
