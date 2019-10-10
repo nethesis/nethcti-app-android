@@ -565,7 +565,7 @@
     <string name="app_name">NethCTI</string>
     <string name="neth_login_1_call_failed">Login fallito, riprovare più tardi.</string>
   <string name="neth_login_2_call_failed">Login fallito, riprovare più tardi.</string>
-  <string name="neth_login_missing_authentication_header">Nessun header di autenticazione ricevuto, contattare un amministratore.</string>
+  <string name="neth_login_missing_authentication_header">Nessuna informazione sull\'utente ricevuta, contrallare i dati inseriti o contattare un amministratore.</string>
   <string name="neth_login_missing_crypt_algorithm">Nessun algoritmo di cifratura rilevato, contattare un amministratore.</string>
   <string name="neth_login_missing_crypt_encoding">Impossibile cifrare i dati, contattare un amministratore.</string>
   <string name="neth_login_missing_crypt_key">Nessuna password inserita, contattare un amministratore o ricontrollare.</string>

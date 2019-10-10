@@ -37,8 +37,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Objects;
-import okhttp3.Headers;
 import org.linphone.R;
 import org.linphone.core.TransportType;
 import org.linphone.models.Extension;
@@ -54,7 +52,7 @@ import retrofit2.Response;
 public class LoginFragment extends Fragment implements OnClickListener, TextWatcher {
     private EditText mLogin, mUserid, mPassword, mDomain, mDisplayName;
     private RadioGroup mTransports;
-    private Button mApply, mQrCode;
+    private Button mApply;
 
     @Override
     public View onCreateView(
@@ -71,15 +69,18 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         mApply = view.findViewById(R.id.assistant_apply);
         mApply.setEnabled(false);
         mApply.setOnClickListener(this);
-        mQrCode = view.findViewById(R.id.lauch_qrcode_mahahahah);
+        Button mQrCode = view.findViewById(R.id.lauch_qrcode_mahahahah);
         mQrCode.setOnClickListener(this);
 
-        if (getArguments() != null && !getArguments().getString("RemoteUrl").isEmpty()) {
+        if (getArguments() != null) {
             String toSplit = getArguments().getString("RemoteUrl");
+            if (toSplit == null) {
+                Log.w("QR_CODE_PROVISIONING", "No QrCode url provided.");
+                return view;
+            }
+
             String[] separated = toSplit.split(";");
-            mLogin.setText(separated[0]);
-            mPassword.setText(separated[1]);
-            mDomain.setText(separated[2]);
+            performNethLogin(separated[0], separated[1], separated[2]);
         }
 
         return view;
@@ -141,17 +142,18 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
     @Override
     public void afterTextChanged(Editable s) {}
 
-    private void performNethLogin(final String username, final String password, final String domain) {
+    private void performNethLogin(
+            final String username, final String password, final String domain) {
         // Enqueue the login api call.
-        AuthenticationRestAPI restAPIClass = RetrofitGenerator.createService(AuthenticationRestAPI.class);
+        AuthenticationRestAPI restAPIClass =
+                RetrofitGenerator.createService(AuthenticationRestAPI.class);
         Call<String> call = restAPIClass.login(new LoginCredentials(username, password));
         call.enqueue(
                 new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         // If I've not or I've a not valid response header, I'll exit.
-                        if (response == null
-                                || response.headers() == null) {
+                        if (response == null || response.headers() == null) {
                             Toast.makeText(
                                             AssistantActivity.instance(),
                                             R.string.neth_login_wrong_credentials,
@@ -162,12 +164,17 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
 
                         // Now I'll enqueue the me api call, to get the extension.
                         String authHeader = response.headers().get("www-authenticate");
-                        if(authHeader == null) {
-                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_authentication_header, Toast.LENGTH_LONG).show();
+                        if (authHeader == null) {
+                            Toast.makeText(
+                                            AssistantActivity.instance(),
+                                            R.string.neth_login_missing_authentication_header,
+                                            Toast.LENGTH_LONG)
+                                    .show();
                             return;
                         }
                         final String digest = authHeader.substring(7);
-                        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class);
+                        UserRestAPI userRestAPI =
+                                RetrofitGenerator.createService(UserRestAPI.class);
                         String sha1;
                         try {
                             sha1 =
@@ -179,13 +186,25 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                                             "%s:%s:%s", username, password, digest),
                                                     password));
                         } catch (NoSuchAlgorithmException e) {
-                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_crypt_algorithm, Toast.LENGTH_LONG).show();
+                            Toast.makeText(
+                                            AssistantActivity.instance(),
+                                            R.string.neth_login_missing_crypt_algorithm,
+                                            Toast.LENGTH_LONG)
+                                    .show();
                             return;
                         } catch (InvalidKeyException e) {
-                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_crypt_key, Toast.LENGTH_LONG).show();
+                            Toast.makeText(
+                                            AssistantActivity.instance(),
+                                            R.string.neth_login_missing_crypt_key,
+                                            Toast.LENGTH_LONG)
+                                    .show();
                             return;
                         } catch (UnsupportedEncodingException e) {
-                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_crypt_encoding, Toast.LENGTH_LONG).show();
+                            Toast.makeText(
+                                            AssistantActivity.instance(),
+                                            R.string.neth_login_missing_crypt_encoding,
+                                            Toast.LENGTH_LONG)
+                                    .show();
                             return;
                         }
 
@@ -196,8 +215,14 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                     public void onResponse(
                                             Call<NethUser> call, Response<NethUser> response) {
                                         NethUser nethUser = response.body();
-                                        if(nethUser == null || nethUser.endpoints == null || nethUser.endpoints.extension == null) {
-                                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_neth_user, Toast.LENGTH_LONG).show();
+                                        if (nethUser == null
+                                                || nethUser.endpoints == null
+                                                || nethUser.endpoints.extension == null) {
+                                            Toast.makeText(
+                                                            AssistantActivity.instance(),
+                                                            R.string.neth_login_missing_neth_user,
+                                                            Toast.LENGTH_LONG)
+                                                    .show();
                                             return;
                                         }
 

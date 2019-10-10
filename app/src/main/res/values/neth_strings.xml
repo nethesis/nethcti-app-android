@@ -11,7 +11,7 @@
     <string name="neth_login_1_call_failed">Login fail, retry later.</string>
     <string name="neth_login_2_call_failed">Fail get me api call.</string>
     <string name="neth_login_wrong_credentials">Login failed, retry later or check your credentials.</string>
-    <string name="neth_login_missing_authentication_header">No authentication header provided, contact an administrator.</string>
+    <string name="neth_login_missing_authentication_header">No user information header provided, check data or contact an administrator.</string>
     <string name="neth_login_missing_crypt_algorithm">No crypto algorithm provided, contact an administrator.</string>
     <string name="neth_login_missing_crypt_key">No password provided, contact an administrator or check it.</string>
     <string name="neth_login_missing_crypt_encoding">Can\'t crypt data, contact an administrator.</string>
