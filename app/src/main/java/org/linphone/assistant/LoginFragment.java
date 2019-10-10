@@ -141,32 +141,34 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
     @Override
     public void afterTextChanged(Editable s) {}
 
-    private void performNethLogin(
-            final String username, final String password, final String domain) {
-        AuthenticationRestAPI restAPIClass =
-                RetrofitGenerator.createService(AuthenticationRestAPI.class);
+    private void performNethLogin(final String username, final String password, final String domain) {
+        // Enqueue the login api call.
+        AuthenticationRestAPI restAPIClass = RetrofitGenerator.createService(AuthenticationRestAPI.class);
         Call<String> call = restAPIClass.login(new LoginCredentials(username, password));
         call.enqueue(
                 new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
+                        // If I've not or I've a not valid response header, I'll exit.
                         if (response == null
-                                || response.headers() == null
-                                || response.headers().get("www-authenticate") == null) {
+                                || response.headers() == null) {
                             Toast.makeText(
                                             AssistantActivity.instance(),
-                                            "Login failed, retry later or check your credentials.",
+                                            R.string.neth_login_wrong_credentials,
                                             Toast.LENGTH_LONG)
                                     .show();
                             return;
                         }
 
-                        Headers headers = response.headers();
-                        final String digest = headers.get("www-authenticate").substring(7);
-                        Log.e("NOT_AN_ERROR", "On response, digest: " + digest);
-                        UserRestAPI userRestAPI =
-                                RetrofitGenerator.createService(UserRestAPI.class);
-                        String sha1 = null;
+                        // Now I'll enqueue the me api call, to get the extension.
+                        String authHeader = response.headers().get("www-authenticate");
+                        if(authHeader == null) {
+                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_authentication_header, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        final String digest = authHeader.substring(7);
+                        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class);
+                        String sha1;
                         try {
                             sha1 =
                                     String.format(
@@ -194,10 +196,12 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                     public void onResponse(
                                             Call<NethUser> call, Response<NethUser> response) {
                                         NethUser nethUser = response.body();
-                                        List<Extension> extensions =
-                                                Objects.requireNonNull(nethUser)
-                                                        .endpoints
-                                                        .extension;
+                                        if(nethUser == null || nethUser.endpoints == null || nethUser.endpoints.extension == null) {
+                                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_neth_user, Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+
+                                        List<Extension> extensions = nethUser.endpoints.extension;
                                         for (Extension e : extensions) {
                                             if (e.type.equals("webrtc")) {
                                                 AssistantActivity.instance()
@@ -217,7 +221,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                         // I haven't found any extension.
                                         Toast.makeText(
                                                         AssistantActivity.instance(),
-                                                        "No extensions for this user.",
+                                                        R.string.neth_login_missing_neth_extension,
                                                         Toast.LENGTH_LONG)
                                                 .show();
                                     }
@@ -226,10 +230,9 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                     public void onFailure(Call<NethUser> call, Throwable t) {
                                         Toast.makeText(
                                                         AssistantActivity.instance(),
-                                                        "Fail get me api call.",
+                                                        R.string.neth_login_2_call_failed,
                                                         Toast.LENGTH_LONG)
                                                 .show();
-                                        Log.e("NOT_AN_ERROR", "On failure: " + t.getCause());
                                     }
                                 });
                     }
@@ -238,10 +241,9 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                     public void onFailure(Call<String> call, Throwable t) {
                         Toast.makeText(
                                         AssistantActivity.instance(),
-                                        "Login fail, retry later.",
+                                        R.string.neth_login_1_call_failed,
                                         Toast.LENGTH_LONG)
                                 .show();
-                        Log.e("NOT_AN_ERROR", "On failure: " + t.getCause());
                     }
                 });
     }
