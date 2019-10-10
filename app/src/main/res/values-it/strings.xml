@@ -563,4 +563,13 @@
   <string name="content_description_conversation_infos">Informazioni sulla chat room di gruppo</string>
   <string name="content_description_record_call">Registra chiamata</string>
     <string name="app_name">NethCTI</string>
+    <string name="neth_login_1_call_failed">Login fallito, riprovare più tardi.</string>
+  <string name="neth_login_2_call_failed">Login fallito, riprovare più tardi.</string>
+  <string name="neth_login_missing_authentication_header">Nessun header di autenticazione ricevuto, contattare un amministratore.</string>
+  <string name="neth_login_missing_crypt_algorithm">Nessun algoritmo di cifratura rilevato, contattare un amministratore.</string>
+  <string name="neth_login_missing_crypt_encoding">Impossibile cifrare i dati, contattare un amministratore.</string>
+  <string name="neth_login_missing_crypt_key">Nessuna password inserita, contattare un amministratore o ricontrollare.</string>
+  <string name="neth_login_missing_neth_extension">Nessuna interno assegnato a questo utente, contattare un amministratore.</string>
+  <string name="neth_login_missing_neth_user">Nessuna informazione sull\'utente ricevuta, contattare un amministratore.</string>
+  <string name="neth_login_wrong_credentials">Login fallito, controllare le credenziali o riprovare più tardi.</string>
 </resources>
