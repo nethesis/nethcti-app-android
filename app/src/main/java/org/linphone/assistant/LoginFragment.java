@@ -177,13 +177,14 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                                             "%s:%s:%s", username, password, digest),
                                                     password));
                         } catch (NoSuchAlgorithmException e) {
-                            Log.e(
-                                    "NoSuchAlgorithm",
-                                    Objects.requireNonNull(e.getCause()).toString());
+                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_crypt_algorithm, Toast.LENGTH_LONG).show();
+                            return;
                         } catch (InvalidKeyException e) {
-                            Log.e("InvalidKey", Objects.requireNonNull(e.getMessage()));
+                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_crypt_key, Toast.LENGTH_LONG).show();
+                            return;
                         } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
+                            Toast.makeText(AssistantActivity.instance(), R.string.neth_login_missing_crypt_encoding, Toast.LENGTH_LONG).show();
+                            return;
                         }
 
                         Call<NethUser> getMeCall = userRestAPI.getMe(sha1);
