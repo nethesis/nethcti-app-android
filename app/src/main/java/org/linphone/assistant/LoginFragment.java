@@ -144,7 +144,8 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         // Enqueue the login api call.
         AuthenticationRestAPI restAPIClass =
                 RetrofitGenerator.createService(AuthenticationRestAPI.class);
-        Call<String> call = restAPIClass.login(new LoginCredentials(username, password));
+        LoginCredentials credentials = new LoginCredentials(username, password);
+        Call<String> call = restAPIClass.login(credentials);
         call.enqueue(
                 new Callback<String>() {
                     @Override

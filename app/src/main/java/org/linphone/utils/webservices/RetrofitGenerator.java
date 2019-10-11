@@ -1,28 +1,33 @@
 package org.linphone.utils.webservices;
 
+import android.util.Log;
+import android.widget.Toast;
 import com.google.gson.GsonBuilder;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.Formatter;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import org.jetbrains.annotations.NotNull;
+import org.linphone.assistant.AssistantActivity;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /** The Retrofit Service Generator. */
 public class RetrofitGenerator {
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-    private static final String baseUrl = "https://nethctiapp.nethserver.net/webrest/";
+    private static final String BASE_URL = "https://nethctiapp.nethserver.net/webrest/";
     private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
-
-    private static Retrofit.Builder builder =
-            new Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .addConverterFactory(
-                            GsonConverterFactory.create(
-                                    new GsonBuilder().serializeNulls().create()));
 
     private static Retrofit retrofit;
 
@@ -35,9 +40,36 @@ public class RetrofitGenerator {
      */
     public static <S> S createService(Class<S> serviceClass) {
         if (retrofit == null) {
-            builder.client(httpClient.build());
+            HttpLoggingInterceptor logBody =
+                    new HttpLoggingInterceptor(
+                            new HttpLoggingInterceptor.Logger() {
+                                @Override
+                                public void log(@NotNull String s) {
+                                    Log.w("OK_HTTP_BODY", s);
+                                }
+                            });
+            logBody.setLevel(HttpLoggingInterceptor.Level.BODY);
+            HttpLoggingInterceptor logHeader =
+                    new HttpLoggingInterceptor(
+                            new HttpLoggingInterceptor.Logger() {
+                                @Override
+                                public void log(@NotNull String s) {
+                                    Log.w("OK_HTTP_HEADER", s);
+                                }
+                            });
+            logHeader.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+            httpClient.addInterceptor(logHeader);
+            httpClient.addInterceptor(logBody);
+            retrofit =
+                    new Retrofit.Builder()
+                            .baseUrl(BASE_URL)
+                            .addConverterFactory(
+                                    GsonConverterFactory.create(
+                                            new GsonBuilder().serializeNulls().create()))
+                            .client(httpClient.build())
+                            .build();
         }
-        retrofit = builder.build();
+
         return retrofit.create(serviceClass);
     }
 
