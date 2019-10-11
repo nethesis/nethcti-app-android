@@ -91,6 +91,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                         .displayLoginLinphone(
                                 mLogin.getText().toString(), mPassword.getText().toString());
             } else {
+                AssistantActivity.instance().displayNethLoginInProgressDialog();
                 /*
                  * We have forced the user to use TLS instead other protocols.
                  * We don't need the userid and displayname: removed.

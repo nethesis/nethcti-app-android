@@ -105,6 +105,7 @@ public class AssistantActivity extends ThemableActivity
     private Dialog mDialog;
     private boolean mRemoteProvisioningInProgress;
     private boolean mEchoCancellerAlreadyDone;
+    private boolean mLoginInProgress;
     private AccountCreator mAccountCreator;
     private CountryListAdapter mCountryListAdapter;
     private LinearLayout mTopBar;
@@ -550,6 +551,7 @@ public class AssistantActivity extends ThemableActivity
         core.setDefaultProxyConfig(proxyConfig);
 
         mAccountCreated = true;
+        mLoginInProgress = false;
         success();
     }
 
@@ -690,6 +692,21 @@ public class AssistantActivity extends ThemableActivity
     public void displayRemoteProvisioningInProgressDialog() {
         mRemoteProvisioningInProgress = true;
 
+        mProgress = ProgressDialog.show(this, null, null);
+        Drawable d = new ColorDrawable(ContextCompat.getColor(this, R.color.light_grey_color));
+        d.setAlpha(200);
+        mProgress
+                .getWindow()
+                .setLayout(
+                        WindowManager.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.MATCH_PARENT);
+        mProgress.getWindow().setBackgroundDrawable(d);
+        mProgress.setContentView(R.layout.wait_layout);
+        mProgress.show();
+    }
+
+    public void displayNethLoginInProgressDialog() {
+        mLoginInProgress = true;
         mProgress = ProgressDialog.show(this, null, null);
         Drawable d = new ColorDrawable(ContextCompat.getColor(this, R.color.light_grey_color));
         d.setAlpha(200);
