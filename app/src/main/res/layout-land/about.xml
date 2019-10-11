@@ -43,14 +43,6 @@
                     android:paddingTop="5dp"
                     android:text="@string/app_name"
                     android:visibility="visible" />
-
-                <TextView
-                    android:textSize="13sp"
-                    android:textColor="?accentColor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/app_description" />
             </LinearLayout>
 
             <LinearLayout
@@ -174,7 +166,7 @@
                 android:background="?attr/dividerColor" />
 
             <LinearLayout
-                android:background="?attr/backgroundColor"
+                style="@style/about_grey_panel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

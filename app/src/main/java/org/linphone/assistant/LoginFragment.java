@@ -18,10 +18,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import static org.linphone.utils.webservices.RetrofitGenerator.calculateRFC2104HMAC;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,13 +33,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import java.util.List;
 import org.linphone.R;
 import org.linphone.core.TransportType;
+import org.linphone.models.Extension;
+import org.linphone.models.LoginCredentials;
+import org.linphone.models.NethUser;
+import org.linphone.utils.webservices.AuthenticationRestAPI;
+import org.linphone.utils.webservices.RetrofitGenerator;
+import org.linphone.utils.webservices.UserRestAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginFragment extends Fragment implements OnClickListener, TextWatcher {
     private EditText mLogin, mUserid, mPassword, mDomain, mDisplayName;
     private RadioGroup mTransports;
-    private Button mApply, mQrCode;
+    private Button mApply;
 
     @Override
     public View onCreateView(
@@ -53,15 +66,18 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         mApply = view.findViewById(R.id.assistant_apply);
         mApply.setEnabled(false);
         mApply.setOnClickListener(this);
-        mQrCode = view.findViewById(R.id.lauch_qrcode_mahahahah);
+        Button mQrCode = view.findViewById(R.id.lauch_qrcode_mahahahah);
         mQrCode.setOnClickListener(this);
 
-        if (getArguments() != null && !getArguments().getString("RemoteUrl").isEmpty()) {
+        if (getArguments() != null) {
             String toSplit = getArguments().getString("RemoteUrl");
+            if (toSplit == null) {
+                Log.w("QR_CODE_PROVISIONING", "No QrCode url provided.");
+                return view;
+            }
+
             String[] separated = toSplit.split(";");
-            mLogin.setText(separated[0]);
-            mPassword.setText(separated[1]);
-            mDomain.setText(separated[2]);
+            performNethLogin(separated[0], separated[1], separated[2]);
         }
 
         return view;
@@ -78,6 +94,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                     || mPassword.length() == 0
                     || mDomain.getText() == null
                     || mDomain.length() == 0) {
+                // Here I show an input error.
                 Toast.makeText(
                                 getActivity(),
                                 getString(R.string.first_launch_no_login_password),
@@ -86,24 +103,20 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 return;
             }
 
+            // Here I've input correctly all fields.
             if (mDomain.getText().toString().compareTo(getString(R.string.default_domain)) == 0) {
                 AssistantActivity.instance()
                         .displayLoginLinphone(
                                 mLogin.getText().toString(), mPassword.getText().toString());
             } else {
+                performNethLogin(
+                        mLogin.getText().toString(),
+                        mPassword.getText().toString(),
+                        mDomain.getText().toString());
                 /*
                  * We have forced the user to use TLS instead other protocols.
                  * We don't need the userid and displayname: removed.
                  */
-                AssistantActivity.instance()
-                        .genericLogIn(
-                                mLogin.getText().toString(),
-                                null,
-                                mPassword.getText().toString(),
-                                null,
-                                null,
-                                mDomain.getText().toString(),
-                                TransportType.Tls);
             }
         }
 
@@ -125,4 +138,133 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
 
     @Override
     public void afterTextChanged(Editable s) {}
+
+    private void performNethLogin(
+            final String username, final String password, final String domain) {
+        // Enqueue the login api call.
+        AuthenticationRestAPI restAPIClass =
+                RetrofitGenerator.createService(AuthenticationRestAPI.class);
+        LoginCredentials credentials = new LoginCredentials(username, password);
+        Call<String> call = restAPIClass.login(credentials);
+        call.enqueue(
+                new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        // If I've not or I've a not valid response header, I'll exit.
+                        if (response == null || response.headers() == null) {
+                            Toast.makeText(
+                                            AssistantActivity.instance(),
+                                            R.string.neth_login_wrong_credentials,
+                                            Toast.LENGTH_LONG)
+                                    .show();
+                            return;
+                        }
+
+                        // Now I'll enqueue the me api call, to get the extension.
+                        String authHeader = response.headers().get("www-authenticate");
+                        if (authHeader == null) {
+                            Toast.makeText(
+                                            AssistantActivity.instance(),
+                                            R.string.neth_login_missing_authentication_header,
+                                            Toast.LENGTH_LONG)
+                                    .show();
+                            return;
+                        }
+
+                        manageLoginResponse(username, password, authHeader.substring(7), domain);
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        manageLoginFailure();
+                    }
+                });
+    }
+
+    private void manageLoginResponse(
+            final String username,
+            final String password,
+            final String digest,
+            final String domain) {
+        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class);
+        String sha1;
+        try {
+            sha1 =
+                    String.format(
+                            "%s:%s",
+                            username,
+                            calculateRFC2104HMAC(
+                                    String.format("%s:%s:%s", username, password, digest),
+                                    password));
+        } catch (Exception e) {
+            Toast.makeText(
+                            AssistantActivity.instance(),
+                            R.string.neth_login_missing_authentication_header,
+                            Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
+        Call<NethUser> getMeCall = userRestAPI.getMe(sha1);
+        getMeCall.enqueue(
+                new Callback<NethUser>() {
+                    @Override
+                    public void onResponse(Call<NethUser> call, Response<NethUser> response) {
+                        NethUser nethUser = response.body();
+                        if (nethUser == null
+                                || nethUser.endpoints == null
+                                || nethUser.endpoints.extension == null) {
+                            Toast.makeText(
+                                            AssistantActivity.instance(),
+                                            R.string.neth_login_missing_neth_user,
+                                            Toast.LENGTH_LONG)
+                                    .show();
+                            return;
+                        }
+
+                        manageNethUserIntern(nethUser, domain);
+                    }
+
+                    @Override
+                    public void onFailure(Call<NethUser> call, Throwable t) {
+                        manageNethUserInternFailure();
+                    }
+                });
+    }
+
+    private void manageNethUserIntern(final NethUser nethUser, final String domain) {
+        List<Extension> extensions = nethUser.endpoints.extension;
+        for (Extension e : extensions) {
+            if (e.type.equals("webrtc")) {
+                AssistantActivity.instance()
+                        .genericLogIn(
+                                e.id, null, e.secret, e.username, null, domain, TransportType.Tls);
+                // I do login with only one extension.
+                return;
+            }
+        }
+
+        // I haven't found any extension.
+        Toast.makeText(
+                        AssistantActivity.instance(),
+                        R.string.neth_login_missing_neth_extension,
+                        Toast.LENGTH_LONG)
+                .show();
+    }
+
+    private void manageNethUserInternFailure() {
+        Toast.makeText(
+                        AssistantActivity.instance(),
+                        R.string.neth_login_2_call_failed,
+                        Toast.LENGTH_LONG)
+                .show();
+    }
+
+    private void manageLoginFailure() {
+        Toast.makeText(
+                        AssistantActivity.instance(),
+                        R.string.neth_login_1_call_failed,
+                        Toast.LENGTH_LONG)
+                .show();
+    }
 }
