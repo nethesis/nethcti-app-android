@@ -1616,12 +1616,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private void initSideMenu() {
         mSideMenu = findViewById(R.id.side_menu);
         mSideMenuItems = new ArrayList<>();
-        if (getResources().getBoolean(R.bool.show_log_out_in_side_menu)) {
-            mSideMenuItems.add(
-                    new MenuItem(
-                            getResources().getString(R.string.menu_logout),
-                            R.drawable.quit_default));
-        }
         if (!getResources().getBoolean(R.bool.hide_assistant_from_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
@@ -1647,6 +1641,12 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
         mSideMenuItems.add(
                 new MenuItem(getResources().getString(R.string.menu_about), R.drawable.menu_about));
+        if (getResources().getBoolean(R.bool.show_log_out_in_side_menu)) {
+            mSideMenuItems.add(
+                    new MenuItem(
+                            getResources().getString(R.string.menu_logout),
+                            R.drawable.quit_default));
+        }
         mSideMenuContent = findViewById(R.id.side_menu_content);
         mSideMenuItemList = findViewById(R.id.item_list);
         mMenu = findViewById(R.id.side_menu_button);
@@ -2047,19 +2047,23 @@ public class LinphoneActivity extends LinphoneGenericActivity
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater inflater =
-                    (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View rowView = inflater.inflate(mResource, parent, false);
+            if (convertView == null) {
+                LayoutInflater inflater =
+                        (LayoutInflater)
+                                getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            TextView textView = rowView.findViewById(R.id.item_name);
-            ImageView imageView = rowView.findViewById(R.id.item_icon);
+                convertView = inflater.inflate(mResource, parent, false);
+            }
+
+            TextView textView = convertView.findViewById(R.id.item_name);
+            ImageView imageView = convertView.findViewById(R.id.item_icon);
 
             MenuItem item = getItem(position);
             textView.setText(item.name);
             imageView.setImageResource(item.icon);
 
-            return rowView;
+            return convertView;
         }
     }
 }

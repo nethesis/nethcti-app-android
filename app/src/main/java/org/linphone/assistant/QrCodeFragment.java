@@ -32,7 +32,6 @@ import org.linphone.core.CoreListenerStub;
 import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration;
 
 public class QrCodeFragment extends Fragment {
-    private TextureView mQrcodeView;
     private CoreListenerStub mListener;
 
     @Override
@@ -40,7 +39,7 @@ public class QrCodeFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.qrcode, container, false);
 
-        mQrcodeView = view.findViewById(R.id.qrcodeCaptureSurface);
+        TextureView mQrcodeView = view.findViewById(R.id.qrcodeCaptureSurface);
 
         LinphoneManager.getLc().setNativePreviewWindowId(mQrcodeView);
 

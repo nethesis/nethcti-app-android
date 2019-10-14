@@ -129,7 +129,7 @@
     <bool name="hide_settings_from_side_menu">false</bool>
     <bool name="hide_recordings_from_side_menu">false</bool>
     <bool name="disable_accounts_settings_from_side_menu">false</bool>
-    <bool name="show_log_out_in_side_menu">false</bool>
+    <bool name="show_log_out_in_side_menu">true</bool>
 
     <!-- Others Parameters-->
     <bool name="enable_call_notification">true</bool>
