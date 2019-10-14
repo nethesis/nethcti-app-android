@@ -31,7 +31,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 import java.util.List;
 import org.linphone.R;
@@ -47,8 +46,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginFragment extends Fragment implements OnClickListener, TextWatcher {
-    private EditText mLogin, mUserid, mPassword, mDomain, mDisplayName;
-    private RadioGroup mTransports;
+    private EditText mLogin, mPassword, mDomain;
     private Button mApply;
 
     @Override
@@ -76,7 +74,20 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 return view;
             }
 
+            // If i can't split the string I return a message error.
             String[] separated = toSplit.split(";");
+            if (separated.length != 3) {
+                Log.e(
+                        "LOGIN_ERROR",
+                        getResources().getString(R.string.neth_login_qrcode_split_error));
+                Toast.makeText(
+                                AssistantActivity.instance(),
+                                R.string.neth_login_qrcode_split_error,
+                                Toast.LENGTH_LONG)
+                        .show();
+                return view;
+            }
+            
             performNethLogin(separated[0], separated[1], separated[2]);
         }
 
