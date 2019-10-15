@@ -247,7 +247,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
     private void manageNethUserIntern(final NethUser nethUser, final String domain) {
         List<Extension> extensions = nethUser.endpoints.extension;
         for (Extension e : extensions) {
-            if (e.type.equals("webrtc")) {
+            if (e.type.equals("mobile")) { // Before was e.type.equals("webrtc");
                 AssistantActivity.instance()
                         .genericLogIn(
                                 e.id, null, e.secret, e.username, null, domain, TransportType.Tls);
