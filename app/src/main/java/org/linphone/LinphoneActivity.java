@@ -159,7 +159,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private RelativeLayout mSideMenuContent, mQuitLayout, mDefaultAccount;
     private ListView mAccountsList, mSideMenuItemList;
     private ImageView mMenu;
-    private List<MenuItem> mSideMenuItems;
+    private MenuAdapter menuAdapter;
+    private static List<MenuItem> mSideMenuItems;
     private boolean mCallTransfer = false;
     private boolean mIsOnBackground = false;
     private int mAlwaysChangingPhoneAngle = -1;
@@ -1605,6 +1606,33 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     // SIDE MENU
+    public void sideMenuLogin() {
+        for (MenuItem item : mSideMenuItems) {
+            if (item.name.equals(getResources().getString(R.string.menu_assistant))) {
+                mSideMenuItems.remove(item);
+                break;
+            }
+        }
+        mSideMenuItems.add(
+                new MenuItem(
+                        getResources().getString(R.string.menu_logout), R.drawable.quit_default));
+        menuAdapter.notifyDataSetChanged();
+    }
+
+    public void sideMenuLogout() {
+        for (MenuItem item : mSideMenuItems) {
+            if (item.name.equals(getResources().getString(R.string.menu_logout))) {
+                mSideMenuItems.remove(item);
+                break;
+            }
+        }
+        mSideMenuItems.add(
+                new MenuItem(
+                        getResources().getString(R.string.menu_assistant),
+                        R.drawable.menu_assistant));
+        menuAdapter.notifyDataSetChanged();
+    }
+
     private void openOrCloseSideMenu(boolean open) {
         if (open) {
             mSideMenu.openDrawer(mSideMenuContent);
@@ -1651,8 +1679,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
         mSideMenuItemList = findViewById(R.id.item_list);
         mMenu = findViewById(R.id.side_menu_button);
 
-        mSideMenuItemList.setAdapter(
-                new MenuAdapter(this, R.layout.side_menu_item_cell, mSideMenuItems));
+        menuAdapter = new MenuAdapter(this, R.layout.side_menu_item_cell, mSideMenuItems);
+        mSideMenuItemList.setAdapter(menuAdapter);
         mSideMenuItemList.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -1664,6 +1692,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                                 lc.setDefaultProxyConfig(null);
                                 lc.clearAllAuthInfo();
                                 lc.clearProxyConfig();
+                                sideMenuLogout();
                                 startActivity(
                                         new Intent()
                                                 .setClass(

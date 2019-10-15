@@ -552,6 +552,7 @@ public class AssistantActivity extends ThemableActivity
 
         mAccountCreated = true;
         mLoginInProgress = false;
+        LinphoneActivity.instance().sideMenuLogin();
         success();
     }
 
