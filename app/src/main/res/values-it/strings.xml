@@ -75,7 +75,7 @@
   <string name="assistant_validate_account_2">Una volta terminato, torna qui e fai clic sul pulsante.</string>
   <string name="assistant_welcome_desc">Questo assistente ti aiuterà a configurare e utilizzare il tuo account SIP.</string>
   <string name="assistant_linphone_login_desc">Inserisci il tuo nome utente e la password dell\'account NethCTI</string>
-  <string name="assistant_login_desc">Inserisci il tuo nome utente e la password con il tuo dominio SIP</string>
+  <string name="assistant_login_desc">Inserisci le seguenti informazioni</string>
   <string name="assistant_remote_provisioning_desc">Inserisci l\'URL di provisioning</string>
   <string name="transport">Trasporto</string>
   <string name="assistant_create_account_phone_number_address">Il tuo indirizzo SIP è</string>
@@ -246,7 +246,7 @@
   <string name="status_error">Connessione difettosa</string>
   <string name="voicemail_unread">messaggi non letti</string>
   <!--Side Menu-->
-  <string name="menu_logout">Uscita</string>
+  <string name="menu_logout">Logout</string>
   <string name="menu_assistant">Login</string>
   <string name="menu_settings">Impostazioni</string>
   <string name="menu_recordings">Registrazioni</string>

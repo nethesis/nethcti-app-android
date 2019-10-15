@@ -103,8 +103,8 @@
                 android:textColor="@drawable/assistant_button_text_color" />
 
             <Button
-                android:id="@+id/lauch_qrcode_mahahahah"
-                style="@style/button_font"
+                style="@style/neth_secondary_button_font"
+                android:id="@+id/launch_qrcode_scan"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"

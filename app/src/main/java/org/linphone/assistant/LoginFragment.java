@@ -64,7 +64,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         mApply = view.findViewById(R.id.assistant_apply);
         mApply.setEnabled(false);
         mApply.setOnClickListener(this);
-        Button mQrCode = view.findViewById(R.id.lauch_qrcode_mahahahah);
+        Button mQrCode = view.findViewById(R.id.launch_qrcode_scan);
         mQrCode.setOnClickListener(this);
 
         if (getArguments() != null) {
@@ -87,7 +87,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                         .show();
                 return view;
             }
-            
+
             performNethLogin(separated[0], separated[1], separated[2]);
         }
 
@@ -132,7 +132,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
             }
         }
 
-        if (id == R.id.lauch_qrcode_mahahahah) {
+        if (id == R.id.launch_qrcode_scan) {
             AssistantActivity.instance().displayQRCodeReader();
         }
     }
