@@ -4,7 +4,7 @@
     <string name="neth_about_address">Nethesis Srl, Strada degli Olmi, 12</string>
     <string name="neth_about_address_city">61122 - Pesaro (PU)</string>
     <string name="neth_app_name" translatable="false">Nethesis</string>
-    <string name="neth_about_link" translatable="false">https://nethesis.net</string>
+    <string name="neth_about_link" translatable="false">https://nethesis.it</string>
     <string name="neth_about_fax" translatable="false">Fax: +39 0721 268147</string>
     <string name="neth_about_tel" translatable="false">Tel: +39 0721 1791157</string>
 
