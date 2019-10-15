@@ -81,7 +81,7 @@ public class SettingsFragment extends Fragment {
 
         // If the chat is disable, I gone the mChat.
         mChat = mRootView.findViewById(R.id.pref_chat);
-        if(getResources().getBoolean(R.bool.disable_chat)) {
+        if (getResources().getBoolean(R.bool.disable_chat)) {
             mChat.setVisibility(View.GONE);
         }
 
@@ -125,12 +125,13 @@ public class SettingsFragment extends Fragment {
                 });
 
         // If the chat is enabled, I'll set the listener.
-        if(!getResources().getBoolean(R.bool.disable_chat)) {
+        if (!getResources().getBoolean(R.bool.disable_chat)) {
             mChat.setListener(
                     new SettingListenerBase() {
                         @Override
                         public void onClicked() {
-                            LinphoneActivity.instance().displaySubSettings(new ChatSettingsFragment());
+                            LinphoneActivity.instance()
+                                    .displaySubSettings(new ChatSettingsFragment());
                         }
                     });
         }

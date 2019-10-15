@@ -413,7 +413,7 @@ public class CallActivity extends LinphoneGenericActivity
 
         mChat = findViewById(R.id.chat);
         mMissedChats = findViewById(R.id.missed_chats);
-        if(getResources().getBoolean(R.bool.disable_chat)) {
+        if (getResources().getBoolean(R.bool.disable_chat)) {
             mChat.setVisibility(View.GONE);
             mMissedChats.setVisibility(View.GONE);
         } else {
