@@ -319,7 +319,7 @@
     <!-- Splashscreen -->
 
     <style name="splash_screen_app_name_font" parent="@android:style/TextAppearance.Large">
-        <item name="android:textColor">?attr/secondaryTextColor</item>
+        <item name="android:textColor">?attr/accentColor</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">50sp</item>
     </style>
