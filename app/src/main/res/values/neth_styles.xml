@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:app="http://schemas.android.com/apk/res-auto">
+<resources>
     <!-- Will migrate -->
     <color name="neth_light_grey_color">#e6e6e6</color>
     <color name="neth_grey_color">#494949</color>
@@ -9,27 +9,21 @@
     <color name="neth_toolbar_color">#e6e6e6</color>
 
     <!-- The base font -->
-    <style name="neth_base_font" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="neth_small_font" parent="neth_base_font">
-        <item name="android:textSize">14sp</item>
+    <style name="neth_small_font" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/neth_grey_text_color</item>
     </style>
 
-    <style name="neth_medium_font" parent="neth_base_font">
-        <item name="android:textSize">18sp</item>
+    <style name="neth_medium_font" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textColor">@color/neth_grey_text_color</item>
     </style>
 
-    <style name="neth_title_font" parent="neth_base_font">
+    <style name="neth_title_font" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/neth_light_blue_color</item>
-        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="neth_field_header_font" parent="neth_medium_font">
         <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">10dp</item>
     </style>
@@ -61,11 +55,14 @@
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="strokeColor">@color/neth_light_blue_color</item>
-        <item name="strokeWidth">0.5dp</item>
     </style>
 
     <!-- Text fields -->
-    <style name="neth_primary_text_fields" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
+    <style name="neth_primary_text_layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/neth_light_blue_color</item>
+        <item name="colorControlNormal">@color/neth_light_grey_color</item>
+        <item name="colorControlActivated">@color/neth_light_blue_color</item>
+        <item name="android:colorControlHighlight">@color/neth_light_blue_color</item>
     </style>
 </resources>

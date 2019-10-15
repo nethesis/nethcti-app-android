@@ -3,7 +3,7 @@
 	<item android:state_pressed="true"
 		android:drawable="@color/primary_color" />
 	<item android:state_selected="true"
-		android:drawable="@color/footer_btn_color" />
+		android:drawable="@color/neth_footer_btn_color" />
 	<item
-		android:drawable="@color/footer_btn_color" />
+		android:drawable="@color/neth_footer_btn_color" />
 </selector>
