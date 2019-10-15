@@ -710,7 +710,7 @@ public class AssistantActivity extends ThemableActivity
         mLoginInProgress = true;
         mProgress = ProgressDialog.show(this, null, null);
         Drawable d = new ColorDrawable(ContextCompat.getColor(this, R.color.light_grey_color));
-        d.setAlpha(200);
+        d.setAlpha(100);
         mProgress
                 .getWindow()
                 .setLayout(

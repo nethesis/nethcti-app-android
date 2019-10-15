@@ -120,7 +120,6 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                         .displayLoginLinphone(
                                 mLogin.getText().toString(), mPassword.getText().toString());
             } else {
-                AssistantActivity.instance().displayNethLoginInProgressDialog();
                 performNethLogin(
                         mLogin.getText().toString(),
                         mPassword.getText().toString(),
@@ -153,6 +152,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
 
     private void performNethLogin(
             final String username, final String password, final String domain) {
+        AssistantActivity.instance().displayNethLoginInProgressDialog();
         // Enqueue the login api call.
         AuthenticationRestAPI restAPIClass =
                 RetrofitGenerator.createService(AuthenticationRestAPI.class);
