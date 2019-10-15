@@ -383,6 +383,7 @@
                         android:padding="12dp"
                         android:src="@drawable/call_hangup" />
 
+                    <!-- Removed by code to fit non_localizable_custom.xml -->
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
