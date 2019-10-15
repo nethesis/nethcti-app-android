@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="LinphoneStyleLight" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Android theme override -->
         <item name="colorAccent">@color/primary_color</item>
         <item name="android:colorPrimary">@color/primary_color</item>
