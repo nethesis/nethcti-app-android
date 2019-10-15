@@ -164,7 +164,8 @@
             android:id="@+id/pref_link_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            linphone:title="@string/pref_link_account" />
+            linphone:title="@string/pref_link_account"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.SwitchSetting
             android:id="@+id/pref_push_notification"
