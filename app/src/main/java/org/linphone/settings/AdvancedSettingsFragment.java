@@ -30,6 +30,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneService;
@@ -52,6 +53,7 @@ public class AdvancedSettingsFragment extends Fragment {
             mDarkMode;
     private TextSetting mRemoteProvisioningUrl, mDisplayName, mUsername, mDeviceName;
     private BasicSetting mAndroidAppSettings;
+    private LinearLayout mPrefPrimAccount;
 
     @Nullable
     @Override
@@ -88,10 +90,16 @@ public class AdvancedSettingsFragment extends Fragment {
                 Build.MANUFACTURER.equals("BlackBerry") ? View.VISIBLE : View.GONE);
 
         mFriendListSubscribe = mRootView.findViewById(R.id.pref_friendlist_subscribe);
+        if (!getResources().getBoolean(R.bool.neth_show_pref_friend_list)) {
+            mFriendListSubscribe.setVisibility(View.GONE);
+        }
 
         mBackgroundMode = mRootView.findViewById(R.id.pref_background_mode);
 
         mStartAtBoot = mRootView.findViewById(R.id.pref_autostart);
+        if (!getResources().getBoolean(R.bool.neth_show_pref_autostart)) {
+            mStartAtBoot.setVisibility(View.GONE);
+        }
 
         mDarkMode = mRootView.findViewById(R.id.pref_dark_mode);
 
@@ -106,6 +114,11 @@ public class AdvancedSettingsFragment extends Fragment {
         mAndroidAppSettings = mRootView.findViewById(R.id.pref_android_app_settings);
 
         mDeviceName = mRootView.findViewById(R.id.pref_device_name);
+
+        mPrefPrimAccount = mRootView.findViewById(R.id.pref_android_prim_account);
+        if (!getResources().getBoolean(R.bool.neth_show_pref_android_prim_account)) {
+            mPrefPrimAccount.setVisibility(View.GONE);
+        }
     }
 
     protected void setListeners() {
@@ -125,13 +138,15 @@ public class AdvancedSettingsFragment extends Fragment {
                     }
                 });
 
-        mFriendListSubscribe.setListener(
-                new SettingListenerBase() {
-                    @Override
-                    public void onBoolValueChanged(boolean newValue) {
-                        mPrefs.enabledFriendlistSubscription(newValue);
-                    }
-                });
+        if (getResources().getBoolean(R.bool.neth_show_pref_friend_list)) {
+            mFriendListSubscribe.setListener(
+                    new SettingListenerBase() {
+                        @Override
+                        public void onBoolValueChanged(boolean newValue) {
+                            mPrefs.enabledFriendlistSubscription(newValue);
+                        }
+                    });
+        }
 
         mBackgroundMode.setListener(
                 new SettingListenerBase() {
@@ -146,13 +161,15 @@ public class AdvancedSettingsFragment extends Fragment {
                     }
                 });
 
-        mStartAtBoot.setListener(
-                new SettingListenerBase() {
-                    @Override
-                    public void onBoolValueChanged(boolean newValue) {
-                        mPrefs.setAutoStart(newValue);
-                    }
-                });
+        if (getResources().getBoolean(R.bool.neth_show_pref_autostart)) {
+            mStartAtBoot.setListener(
+                    new SettingListenerBase() {
+                        @Override
+                        public void onBoolValueChanged(boolean newValue) {
+                            mPrefs.setAutoStart(newValue);
+                        }
+                    });
+        }
 
         mDarkMode.setListener(
                 new SettingListenerBase() {
@@ -216,11 +233,15 @@ public class AdvancedSettingsFragment extends Fragment {
 
         mJavaLogger.setChecked(mPrefs.useJavaLogger());
 
-        mFriendListSubscribe.setChecked(mPrefs.isFriendlistsubscriptionEnabled());
+        if (getResources().getBoolean(R.bool.neth_show_pref_friend_list)) {
+            mFriendListSubscribe.setChecked(mPrefs.isFriendlistsubscriptionEnabled());
+        }
 
         mBackgroundMode.setChecked(mPrefs.getServiceNotificationVisibility());
 
-        mStartAtBoot.setChecked(mPrefs.isAutoStartEnabled());
+        if (getResources().getBoolean(R.bool.neth_show_pref_autostart)) {
+            mStartAtBoot.setChecked(mPrefs.isAutoStartEnabled());
+        }
 
         mDarkMode.setChecked(mPrefs.isDarkModeEnabled());
 
