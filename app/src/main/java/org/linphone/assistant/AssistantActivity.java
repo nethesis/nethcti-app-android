@@ -54,6 +54,7 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneLauncherActivity;
 import org.linphone.LinphoneManager;
@@ -109,6 +110,9 @@ public class AssistantActivity extends ThemableActivity
     private AccountCreator mAccountCreator;
     private CountryListAdapter mCountryListAdapter;
     private LinearLayout mTopBar;
+
+    /** Used to show or hide the login and logout menu item. */
+    private boolean mustHideLogin;
 
     public static AssistantActivity instance() {
         return sInstance;
@@ -407,7 +411,7 @@ public class AssistantActivity extends ThemableActivity
 
     @Override
     public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, final int[] grantResults) {
+            int requestCode, String[] permissions, @NotNull final int[] grantResults) {
         for (int i = 0; i < permissions.length; i++) {
             Log.i(
                     "[Permission] "
@@ -551,7 +555,6 @@ public class AssistantActivity extends ThemableActivity
 
         mAccountCreated = true;
         mLoginInProgress = false;
-        LinphoneActivity.instance().sideMenuLogin();
         success();
     }
 
@@ -815,7 +818,8 @@ public class AssistantActivity extends ThemableActivity
         startActivity(
                 new Intent()
                         .setClass(this, LinphoneActivity.class)
-                        .putExtra("isNewProxyConfig", true));
+                        .putExtra("isNewProxyConfig", true)
+                        .putExtra("mustHideLogin", mustHideLogin));
         finish();
     }
 

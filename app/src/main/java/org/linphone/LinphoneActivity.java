@@ -67,6 +67,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.linphone.LinphoneManager.AddressType;
 import org.linphone.assistant.AssistantActivity;
 import org.linphone.assistant.RemoteProvisioningLoginActivity;
@@ -170,7 +171,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     public static LinphoneActivity instance() {
-        if (sInstance != null) return sInstance;
+        if (sInstance != null) {
+            return sInstance;
+        }
         throw new RuntimeException("LinphoneActivity not instantiated yet");
     }
 
@@ -1607,29 +1610,42 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
     // SIDE MENU
     public void sideMenuLogin() {
+        String logoutText = getResources().getString(R.string.menu_logout);
+        AtomicBoolean needLogout = new AtomicBoolean(true);
         for (MenuItem item : mSideMenuItems) {
             if (item.name.equals(getResources().getString(R.string.menu_assistant))) {
                 mSideMenuItems.remove(item);
                 break;
+            } else if (item.name.equals(logoutText)) {
+                needLogout.set(false);
             }
         }
-        mSideMenuItems.add(
-                new MenuItem(
-                        getResources().getString(R.string.menu_logout), R.drawable.quit_default));
+
+        if (needLogout.get()) {
+            MenuItem logoutItem = new MenuItem(logoutText, R.drawable.quit_default);
+            mSideMenuItems.add(logoutItem);
+        }
+
         menuAdapter.notifyDataSetChanged();
     }
 
     public void sideMenuLogout() {
+        String assistText = getResources().getString(R.string.menu_assistant);
+        AtomicBoolean needLogin = new AtomicBoolean(true);
         for (MenuItem item : mSideMenuItems) {
             if (item.name.equals(getResources().getString(R.string.menu_logout))) {
                 mSideMenuItems.remove(item);
                 break;
+            } else if (item.name.equals(assistText)) {
+                needLogin.set(false);
             }
         }
-        mSideMenuItems.add(
-                new MenuItem(
-                        getResources().getString(R.string.menu_assistant),
-                        R.drawable.menu_assistant));
+
+        if (needLogin.get()) {
+            MenuItem loginItem = new MenuItem(assistText, R.drawable.menu_assistant);
+            mSideMenuItems.add(loginItem);
+        }
+
         menuAdapter.notifyDataSetChanged();
     }
 
@@ -1782,9 +1798,18 @@ public class LinphoneActivity extends LinphoneGenericActivity
             status.setVisibility(View.GONE);
             address.setText("");
             mStatusFragment.resetAccountStatus();
-
             mDefaultAccount.setOnClickListener(null);
+            /*
+             * If I reach this mean that I'm not logged.
+             * So I must hide the logout button.
+             */
+            sideMenuLogout();
         } else {
+            /*
+             * If I reach this mean that I'm logged.
+             * So I must hide the login button.
+             */
+            sideMenuLogin();
             address.setText(proxy.getIdentityAddress().asStringUriOnly());
             displayName.setText(LinphoneUtils.getAddressDisplayName(proxy.getIdentityAddress()));
             status.setImageResource(getStatusIconResource(proxy.getState()));

@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.linphone.R;
 import org.linphone.core.TransportType;
 import org.linphone.models.Extension;
@@ -150,6 +151,13 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
     @Override
     public void afterTextChanged(Editable s) {}
 
+    /**
+     * Start of the new Neth Login Procedure. Perform the first api call.
+     *
+     * @param username Username.
+     * @param password Password.
+     * @param domain Domain.
+     */
     private void performNethLogin(
             final String username, final String password, final String domain) {
         AssistantActivity.instance().displayNethLoginInProgressDialog();
@@ -193,6 +201,14 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 });
     }
 
+    /**
+     * Manage the first result and perform the second api call.
+     *
+     * @param username Username putted before.
+     * @param password Password putted before.
+     * @param digest Digest from first call.
+     * @param domain Domain putted before.
+     */
     private void manageLoginResponse(
             final String username,
             final String password,
@@ -244,13 +260,25 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 });
     }
 
-    private void manageNethUserIntern(final NethUser nethUser, final String domain) {
+    /**
+     * Manage the second result and perform the SIP login.
+     *
+     * @param nethUser Neth user from first call.
+     * @param domain Domain putted before.
+     */
+    private void manageNethUserIntern(@NotNull final NethUser nethUser, final String domain) {
         List<Extension> extensions = nethUser.endpoints.extension;
         for (Extension e : extensions) {
             if (e.type.equals("mobile")) { // Before was e.type.equals("webrtc");
                 AssistantActivity.instance()
                         .genericLogIn(
-                                e.id, null, e.secret, e.username, null, domain, TransportType.Tls);
+                                e.id,
+                                e.username,
+                                e.secret,
+                                e.username,
+                                null,
+                                domain,
+                                TransportType.Tls);
                 // I do login with only one extension.
                 return;
             }
@@ -264,6 +292,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 .show();
     }
 
+    /** Manage the error from the second api call. */
     private void manageNethUserInternFailure() {
         Toast.makeText(
                         AssistantActivity.instance(),
@@ -272,6 +301,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 .show();
     }
 
+    /** Manage the error from the first api call. */
     private void manageLoginFailure() {
         Toast.makeText(
                         AssistantActivity.instance(),
