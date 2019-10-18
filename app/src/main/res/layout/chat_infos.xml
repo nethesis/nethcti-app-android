@@ -13,7 +13,7 @@
             android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="?attr/lighToolbarBackgroundColor"
+            android:background="?attr/lightToolbarBackgroundColor"
             android:orientation="horizontal">
 
             <ImageView
@@ -72,7 +72,7 @@
             android:id="@+id/addParticipantsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/lighToolbarBackgroundColor"
+            android:background="?attr/lightToolbarBackgroundColor"
             android:paddingTop="8dp"
             android:paddingBottom="8dp">
 

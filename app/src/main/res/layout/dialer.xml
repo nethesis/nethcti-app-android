@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
-        android:background="?attr/lighToolbarBackgroundColor">
+        android:background="?attr/lightToolbarBackgroundColor">
 
         <org.linphone.views.EraseButton
             android:id="@+id/erase"

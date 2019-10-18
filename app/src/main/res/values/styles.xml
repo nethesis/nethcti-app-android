@@ -31,9 +31,9 @@
         <item name="drawableTintDisabledColor">@color/disabled_color</item>
         <item name="drawableTintOverColor">@color/primary_color</item>
 
-        <item name="lighToolbarBackgroundColor">@color/toolbar_color</item>
-        <item name="lighToolbarBackgroundDisabledColor">@color/light_grey_color</item>
-        <item name="lighToolbarTextColor">@color/dark_grey_color</item>
+        <item name="lightToolbarBackgroundColor">@color/neth_light_grey_color</item>
+        <item name="lightToolbarBackgroundDisabledColor">@color/neth_grey_color</item>
+        <item name="lightToolbarTextColor">@color/neth_dark_grey</item>
         <item name="darkToolbarBackgroundColor">@color/dark_grey_color</item>
         <item name="darkToolbarTextColor">@color/white_color</item>
 
@@ -70,9 +70,9 @@
         <item name="drawableTintDisabledColor">@color/light_grey_color</item>
         <item name="drawableTintOverColor">@color/primary_color</item>
 
-        <item name="lighToolbarBackgroundColor">@color/dark_grey_color</item>
-        <item name="lighToolbarBackgroundDisabledColor">@color/light_grey_color</item>
-        <item name="lighToolbarTextColor">@color/white_color</item>
+        <item name="lightToolbarBackgroundColor">@color/neth_grey_color</item>
+        <item name="lightToolbarBackgroundDisabledColor">@color/neth_dark_grey</item>
+        <item name="lightToolbarTextColor">@color/neth_light_grey_color</item>
         <item name="darkToolbarBackgroundColor">@color/dark_grey_color</item>
         <item name="darkToolbarTextColor">@color/white_color</item>
 
