@@ -4,9 +4,11 @@
     <color name="neth_light_grey_color">#e6e6e6</color>
     <color name="neth_grey_color">#494949</color>
     <color name="neth_grey_text_color">#606060</color>
-    <color name="neth_light_blue_color">#00a2de</color>
-    <color name="neth_footer_btn_color">#e6e6e6</color>
-    <color name="neth_toolbar_color">#e6e6e6</color>
+    <color name="neth_dark_grey">#212121</color>
+
+    <color name="neth_blue_color">#00a2de</color>
+    <color name="neth_light_blue_color">#62d3ff</color>
+    <color name="neth_dark_blue_color">#0073ac</color>
 
     <!-- The base font -->
     <style name="neth_small_font" parent="TextAppearance.AppCompat.Small">
