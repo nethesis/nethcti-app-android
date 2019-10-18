@@ -25,7 +25,7 @@
                 android:id="@+id/top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="?attr/lighToolbarBackgroundColor"
+                android:background="?attr/lightToolbarBackgroundColor"
                 android:orientation="horizontal"
                 android:visibility="gone">
 
@@ -224,7 +224,7 @@
             android:id="@+id/side_menu_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="left">
+            android:layout_gravity="start">
 
             <RelativeLayout
                 android:id="@+id/side_menu_quit"
@@ -238,7 +238,7 @@
                     android:id="@+id/quit_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:padding="5dp"
                     android:src="@drawable/quit" />
@@ -249,7 +249,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@id/quit_button"
+                    android:layout_toEndOf="@id/quit_button"
                     android:gravity="center_vertical"
                     android:text="@string/quit" />
 

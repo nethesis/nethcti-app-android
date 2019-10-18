@@ -147,6 +147,9 @@
     <integer name="time_between_inapp_notification">86400000</integer>
     <bool name="hide_username_in_inapp">true</bool>
 
-
+    <!-- Nethesis customizations. -->
+    <bool name="neth_show_pref_friend_list">false</bool>
+    <bool name="neth_show_pref_android_prim_account">false</bool>
+    <bool name="neth_show_pref_autostart">false</bool>
 </resources>
 

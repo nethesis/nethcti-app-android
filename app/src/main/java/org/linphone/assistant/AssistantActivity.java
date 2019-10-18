@@ -54,6 +54,7 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneLauncherActivity;
 import org.linphone.LinphoneManager;
@@ -105,9 +106,13 @@ public class AssistantActivity extends ThemableActivity
     private Dialog mDialog;
     private boolean mRemoteProvisioningInProgress;
     private boolean mEchoCancellerAlreadyDone;
+    private boolean mLoginInProgress;
     private AccountCreator mAccountCreator;
     private CountryListAdapter mCountryListAdapter;
     private LinearLayout mTopBar;
+
+    /** Used to show or hide the login and logout menu item. */
+    private boolean mustHideLogin;
 
     public static AssistantActivity instance() {
         return sInstance;
@@ -337,34 +342,33 @@ public class AssistantActivity extends ThemableActivity
         if (mIsLink) {
             return;
         }
-        boolean firstLaunch = LinphonePreferences.instance().isFirstLaunch();
+        // boolean firstLaunch = LinphonePreferences.instance().isFirstLaunch();
         if (mCurrentFragment == mFirstFragment) {
-            LinphonePreferences.instance().firstLaunchSuccessful();
-            if (getResources().getBoolean(R.bool.assistant_cancel_move_to_back)) {
-                moveTaskToBack(true);
-            } else {
-                LinphonePreferences.instance().firstLaunchSuccessful();
-                if (firstLaunch) startActivity(new Intent().setClass(this, LinphoneActivity.class));
-                finish();
-            }
-        } else if (mCurrentFragment == AssistantFragmentsEnum.LOGIN
-                || mCurrentFragment == AssistantFragmentsEnum.LINPHONE_LOGIN
-                || mCurrentFragment == AssistantFragmentsEnum.CREATE_ACCOUNT
-                || mCurrentFragment == AssistantFragmentsEnum.REMOTE_PROVISIONING) {
-            displayMenu();
+            startActivity(new Intent().setClass(this, LinphoneActivity.class));
             /*
-             * Those branch are not used anymore.
-             * We use only Login and QrCode_Reader.
+             * We don't care about this behavior, we go directly to Linphone Activity or to Login.
+             * LinphonePreferences.instance().firstLaunchSuccessful();
+             * if (getResources().getBoolean(R.bool.assistant_cancel_move_to_back)) {
+             *     moveTaskToBack(true);
+             * } else {
+             *     // LinphonePreferences.instance().firstLaunchSuccessful();
+             *     if (firstLaunch) startActivity(new Intent().setClass(this, LinphoneActivity.class));
+             *     finish();
+             * }
+             * } else if (mCurrentFragment == AssistantFragmentsEnum.LOGIN
+             *         || mCurrentFragment == AssistantFragmentsEnum.LINPHONE_LOGIN
+             *         || mCurrentFragment == AssistantFragmentsEnum.CREATE_ACCOUNT
+             *         || mCurrentFragment == AssistantFragmentsEnum.REMOTE_PROVISIONING) {
+             *     displayMenu();} else if (mCurrentFragment == AssistantFragmentsEnum.WELCOME) {
+             *     if (firstLaunch) startActivity(new Intent().setClass(this, LinphoneActivity.class));
+             *     finish();
+             * } else if (mCurrentFragment == AssistantFragmentsEnum.COUNTRY_CHOOSER) {
+             *     if (mLastFragment.equals(AssistantFragmentsEnum.LINPHONE_LOGIN)) {
+             *         displayLoginLinphone(null, null);
+             *     } else {
+             *         displayCreateAccount();
+             *     }
              */
-            /*} else if (mCurrentFragment == AssistantFragmentsEnum.WELCOME) {
-                if (firstLaunch) startActivity(new Intent().setClass(this, LinphoneActivity.class));
-                finish();
-            } else if (mCurrentFragment == AssistantFragmentsEnum.COUNTRY_CHOOSER) {
-                if (mLastFragment.equals(AssistantFragmentsEnum.LINPHONE_LOGIN)) {
-                    displayLoginLinphone(null, null);
-                } else {
-                    displayCreateAccount();
-                }*/
         } else if (mCurrentFragment == AssistantFragmentsEnum.QRCODE_READER) {
             // displayRemoteProvisioning("");
             displayLoginGeneric();
@@ -407,7 +411,7 @@ public class AssistantActivity extends ThemableActivity
 
     @Override
     public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, final int[] grantResults) {
+            int requestCode, String[] permissions, @NotNull final int[] grantResults) {
         for (int i = 0; i < permissions.length; i++) {
             Log.i(
                     "[Permission] "
@@ -550,6 +554,7 @@ public class AssistantActivity extends ThemableActivity
         core.setDefaultProxyConfig(proxyConfig);
 
         mAccountCreated = true;
+        mLoginInProgress = false;
         success();
     }
 
@@ -703,6 +708,21 @@ public class AssistantActivity extends ThemableActivity
         mProgress.show();
     }
 
+    public void displayNethLoginInProgressDialog() {
+        mLoginInProgress = true;
+        mProgress = ProgressDialog.show(this, null, null);
+        Drawable d = new ColorDrawable(ContextCompat.getColor(this, R.color.light_grey_color));
+        d.setAlpha(100);
+        mProgress
+                .getWindow()
+                .setLayout(
+                        WindowManager.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.MATCH_PARENT);
+        mProgress.getWindow().setBackgroundDrawable(d);
+        mProgress.setContentView(R.layout.wait_layout);
+        mProgress.show();
+    }
+
     public void displayAssistantConfirm(String username, String password, String email) {
         CreateAccountActivationFragment fragment = new CreateAccountActivationFragment();
         mNewAccount = true;
@@ -798,7 +818,8 @@ public class AssistantActivity extends ThemableActivity
         startActivity(
                 new Intent()
                         .setClass(this, LinphoneActivity.class)
-                        .putExtra("isNewProxyConfig", true));
+                        .putExtra("isNewProxyConfig", true)
+                        .putExtra("mustHideLogin", mustHideLogin));
         finish();
     }
 

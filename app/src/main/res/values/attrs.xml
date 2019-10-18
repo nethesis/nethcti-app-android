@@ -12,16 +12,16 @@
 
         <attr name="backgroundColor" format="color"/>
         <attr name="backgroundColor2" format="color"/>
-        <attr name="backgroundContastColor" format="color"/>
+        <attr name="backgroundContrastColor" format="color"/>
         <attr name="dividerColor" format="color"/>
 
         <attr name="drawableTintColor" format="color"/>
         <attr name="drawableTintDisabledColor" format="color"/>
         <attr name="drawableTintOverColor" format="color"/>
 
-        <attr name="lighToolbarBackgroundColor" format="color"/>
-        <attr name="lighToolbarBackgroundDisabledColor" format="color"/>
-        <attr name="lighToolbarTextColor" format="color"/>
+        <attr name="lightToolbarBackgroundColor" format="color"/>
+        <attr name="lightToolbarBackgroundDisabledColor" format="color"/>
+        <attr name="lightToolbarTextColor" format="color"/>
         <attr name="darkToolbarBackgroundColor" format="color"/>
         <attr name="darkToolbarTextColor" format="color"/>
 

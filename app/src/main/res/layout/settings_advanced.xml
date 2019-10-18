@@ -70,28 +70,37 @@
             android:layout_height="wrap_content"
             linphone:title="@string/pref_android_app_settings_title" />
 
-        <TextView
-            style="@style/settings_category_font"
-            android:text="@string/pref_primary_account_title"
-            android:paddingTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <org.linphone.settings.widget.TextSetting
-            android:id="@+id/pref_display_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            linphone:hint="@string/pref_display_name_title"
-            linphone:title="@string/pref_display_name_title" />
+            android:orientation="vertical"
+            android:id="@+id/pref_android_prim_account">
 
-        <org.linphone.settings.widget.TextSetting
-            android:id="@+id/pref_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            linphone:hint="@string/pref_user_name_title"
-            linphone:title="@string/pref_user_name_title" />
+            <TextView
+                style="@style/settings_category_font"
+                android:text="@string/pref_primary_account_title"
+                android:paddingTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <org.linphone.settings.widget.TextSetting
+                android:id="@+id/pref_display_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                linphone:hint="@string/pref_display_name_title"
+                linphone:title="@string/pref_display_name_title" />
+
+            <org.linphone.settings.widget.TextSetting
+                android:id="@+id/pref_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                linphone:hint="@string/pref_user_name_title"
+                linphone:title="@string/pref_user_name_title" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

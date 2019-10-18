@@ -31,9 +31,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.linphone.R;
 import org.linphone.core.TransportType;
 import org.linphone.models.Extension;
@@ -47,8 +47,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginFragment extends Fragment implements OnClickListener, TextWatcher {
-    private EditText mLogin, mUserid, mPassword, mDomain, mDisplayName;
-    private RadioGroup mTransports;
+    private EditText mLogin, mPassword, mDomain;
     private Button mApply;
 
     @Override
@@ -66,7 +65,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         mApply = view.findViewById(R.id.assistant_apply);
         mApply.setEnabled(false);
         mApply.setOnClickListener(this);
-        Button mQrCode = view.findViewById(R.id.lauch_qrcode_mahahahah);
+        Button mQrCode = view.findViewById(R.id.launch_qrcode_scan);
         mQrCode.setOnClickListener(this);
 
         if (getArguments() != null) {
@@ -76,7 +75,20 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 return view;
             }
 
+            // If i can't split the string I return a message error.
             String[] separated = toSplit.split(";");
+            if (separated.length != 3) {
+                Log.e(
+                        "LOGIN_ERROR",
+                        getResources().getString(R.string.neth_login_qrcode_split_error));
+                Toast.makeText(
+                                AssistantActivity.instance(),
+                                R.string.neth_login_qrcode_split_error,
+                                Toast.LENGTH_LONG)
+                        .show();
+                return view;
+            }
+
             performNethLogin(separated[0], separated[1], separated[2]);
         }
 
@@ -120,7 +132,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
             }
         }
 
-        if (id == R.id.lauch_qrcode_mahahahah) {
+        if (id == R.id.launch_qrcode_scan) {
             AssistantActivity.instance().displayQRCodeReader();
         }
     }
@@ -139,8 +151,16 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
     @Override
     public void afterTextChanged(Editable s) {}
 
+    /**
+     * Start of the new Neth Login Procedure. Perform the first api call.
+     *
+     * @param username Username.
+     * @param password Password.
+     * @param domain Domain.
+     */
     private void performNethLogin(
             final String username, final String password, final String domain) {
+        AssistantActivity.instance().displayNethLoginInProgressDialog();
         // Enqueue the login api call.
         AuthenticationRestAPI restAPIClass =
                 RetrofitGenerator.createService(AuthenticationRestAPI.class);
@@ -181,6 +201,14 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 });
     }
 
+    /**
+     * Manage the first result and perform the second api call.
+     *
+     * @param username Username putted before.
+     * @param password Password putted before.
+     * @param digest Digest from first call.
+     * @param domain Domain putted before.
+     */
     private void manageLoginResponse(
             final String username,
             final String password,
@@ -232,13 +260,25 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 });
     }
 
-    private void manageNethUserIntern(final NethUser nethUser, final String domain) {
+    /**
+     * Manage the second result and perform the SIP login.
+     *
+     * @param nethUser Neth user from first call.
+     * @param domain Domain putted before.
+     */
+    private void manageNethUserIntern(@NotNull final NethUser nethUser, final String domain) {
         List<Extension> extensions = nethUser.endpoints.extension;
         for (Extension e : extensions) {
-            if (e.type.equals("webrtc")) {
+            if (e.type.equals("mobile")) { // Before was e.type.equals("webrtc");
                 AssistantActivity.instance()
                         .genericLogIn(
-                                e.id, null, e.secret, e.username, null, domain, TransportType.Tls);
+                                e.id,
+                                e.username,
+                                e.secret,
+                                e.username,
+                                null,
+                                domain,
+                                TransportType.Tls);
                 // I do login with only one extension.
                 return;
             }
@@ -252,6 +292,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 .show();
     }
 
+    /** Manage the error from the second api call. */
     private void manageNethUserInternFailure() {
         Toast.makeText(
                         AssistantActivity.instance(),
@@ -260,6 +301,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 .show();
     }
 
+    /** Manage the error from the first api call. */
     private void manageLoginFailure() {
         Toast.makeText(
                         AssistantActivity.instance(),

@@ -67,6 +67,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.linphone.LinphoneManager.AddressType;
 import org.linphone.assistant.AssistantActivity;
 import org.linphone.assistant.RemoteProvisioningLoginActivity;
@@ -159,7 +160,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private RelativeLayout mSideMenuContent, mQuitLayout, mDefaultAccount;
     private ListView mAccountsList, mSideMenuItemList;
     private ImageView mMenu;
-    private List<MenuItem> mSideMenuItems;
+    private MenuAdapter menuAdapter;
+    private static List<MenuItem> mSideMenuItems;
     private boolean mCallTransfer = false;
     private boolean mIsOnBackground = false;
     private int mAlwaysChangingPhoneAngle = -1;
@@ -169,7 +171,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     public static LinphoneActivity instance() {
-        if (sInstance != null) return sInstance;
+        if (sInstance != null) {
+            return sInstance;
+        }
         throw new RuntimeException("LinphoneActivity not instantiated yet");
     }
 
@@ -1605,6 +1609,46 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     // SIDE MENU
+    public void sideMenuLogin() {
+        String logoutText = getResources().getString(R.string.menu_logout);
+        AtomicBoolean needLogout = new AtomicBoolean(true);
+        for (MenuItem item : mSideMenuItems) {
+            if (item.name.equals(getResources().getString(R.string.menu_assistant))) {
+                mSideMenuItems.remove(item);
+                break;
+            } else if (item.name.equals(logoutText)) {
+                needLogout.set(false);
+            }
+        }
+
+        if (needLogout.get()) {
+            MenuItem logoutItem = new MenuItem(logoutText, R.drawable.quit_default);
+            mSideMenuItems.add(logoutItem);
+        }
+
+        menuAdapter.notifyDataSetChanged();
+    }
+
+    public void sideMenuLogout() {
+        String assistText = getResources().getString(R.string.menu_assistant);
+        AtomicBoolean needLogin = new AtomicBoolean(true);
+        for (MenuItem item : mSideMenuItems) {
+            if (item.name.equals(getResources().getString(R.string.menu_logout))) {
+                mSideMenuItems.remove(item);
+                break;
+            } else if (item.name.equals(assistText)) {
+                needLogin.set(false);
+            }
+        }
+
+        if (needLogin.get()) {
+            MenuItem loginItem = new MenuItem(assistText, R.drawable.menu_assistant);
+            mSideMenuItems.add(loginItem);
+        }
+
+        menuAdapter.notifyDataSetChanged();
+    }
+
     private void openOrCloseSideMenu(boolean open) {
         if (open) {
             mSideMenu.openDrawer(mSideMenuContent);
@@ -1616,12 +1660,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private void initSideMenu() {
         mSideMenu = findViewById(R.id.side_menu);
         mSideMenuItems = new ArrayList<>();
-        if (getResources().getBoolean(R.bool.show_log_out_in_side_menu)) {
-            mSideMenuItems.add(
-                    new MenuItem(
-                            getResources().getString(R.string.menu_logout),
-                            R.drawable.quit_default));
-        }
         if (!getResources().getBoolean(R.bool.hide_assistant_from_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
@@ -1647,12 +1685,18 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
         mSideMenuItems.add(
                 new MenuItem(getResources().getString(R.string.menu_about), R.drawable.menu_about));
+        if (getResources().getBoolean(R.bool.show_log_out_in_side_menu)) {
+            mSideMenuItems.add(
+                    new MenuItem(
+                            getResources().getString(R.string.menu_logout),
+                            R.drawable.quit_default));
+        }
         mSideMenuContent = findViewById(R.id.side_menu_content);
         mSideMenuItemList = findViewById(R.id.item_list);
         mMenu = findViewById(R.id.side_menu_button);
 
-        mSideMenuItemList.setAdapter(
-                new MenuAdapter(this, R.layout.side_menu_item_cell, mSideMenuItems));
+        menuAdapter = new MenuAdapter(this, R.layout.side_menu_item_cell, mSideMenuItems);
+        mSideMenuItemList.setAdapter(menuAdapter);
         mSideMenuItemList.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -1664,6 +1708,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                                 lc.setDefaultProxyConfig(null);
                                 lc.clearAllAuthInfo();
                                 lc.clearProxyConfig();
+                                sideMenuLogout();
                                 startActivity(
                                         new Intent()
                                                 .setClass(
@@ -1753,9 +1798,18 @@ public class LinphoneActivity extends LinphoneGenericActivity
             status.setVisibility(View.GONE);
             address.setText("");
             mStatusFragment.resetAccountStatus();
-
             mDefaultAccount.setOnClickListener(null);
+            /*
+             * If I reach this mean that I'm not logged.
+             * So I must hide the logout button.
+             */
+            sideMenuLogout();
         } else {
+            /*
+             * If I reach this mean that I'm logged.
+             * So I must hide the login button.
+             */
+            sideMenuLogin();
             address.setText(proxy.getIdentityAddress().asStringUriOnly());
             displayName.setText(LinphoneUtils.getAddressDisplayName(proxy.getIdentityAddress()));
             status.setImageResource(getStatusIconResource(proxy.getState()));
@@ -2047,19 +2101,23 @@ public class LinphoneActivity extends LinphoneGenericActivity
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater inflater =
-                    (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View rowView = inflater.inflate(mResource, parent, false);
+            if (convertView == null) {
+                LayoutInflater inflater =
+                        (LayoutInflater)
+                                getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            TextView textView = rowView.findViewById(R.id.item_name);
-            ImageView imageView = rowView.findViewById(R.id.item_icon);
+                convertView = inflater.inflate(mResource, parent, false);
+            }
+
+            TextView textView = convertView.findViewById(R.id.item_name);
+            ImageView imageView = convertView.findViewById(R.id.item_icon);
 
             MenuItem item = getItem(position);
             textView.setText(item.name);
             imageView.setImageResource(item.icon);
 
-            return rowView;
+            return convertView;
         }
     }
 }

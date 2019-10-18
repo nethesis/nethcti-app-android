@@ -2,7 +2,7 @@ package org.linphone.utils.webservices;
 
 import android.util.Log;
 import com.google.gson.GsonBuilder;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
@@ -29,28 +29,33 @@ public class RetrofitGenerator {
      * @param serviceClass the service class.
      * @return the service.
      */
-    public static <S> S createService(Class<S> serviceClass) {
+    public static <S> S createService(
+            Class<S> serviceClass, boolean setHeaderInterceptor, boolean setBodyInterceptor) {
         if (retrofit == null) {
-            HttpLoggingInterceptor logBody =
-                    new HttpLoggingInterceptor(
-                            new HttpLoggingInterceptor.Logger() {
-                                @Override
-                                public void log(@NotNull String s) {
-                                    Log.w("OK_HTTP_BODY", s);
-                                }
-                            });
-            logBody.setLevel(HttpLoggingInterceptor.Level.BODY);
-            HttpLoggingInterceptor logHeader =
-                    new HttpLoggingInterceptor(
-                            new HttpLoggingInterceptor.Logger() {
-                                @Override
-                                public void log(@NotNull String s) {
-                                    Log.w("OK_HTTP_HEADER", s);
-                                }
-                            });
-            logHeader.setLevel(HttpLoggingInterceptor.Level.HEADERS);
-            httpClient.addInterceptor(logHeader);
-            httpClient.addInterceptor(logBody);
+            if (setBodyInterceptor) {
+                HttpLoggingInterceptor logBody =
+                        new HttpLoggingInterceptor(
+                                new HttpLoggingInterceptor.Logger() {
+                                    @Override
+                                    public void log(@NotNull String s) {
+                                        Log.w("OK_HTTP_BODY", s);
+                                    }
+                                });
+                logBody.setLevel(HttpLoggingInterceptor.Level.BODY);
+                httpClient.addInterceptor(logBody);
+            }
+            if (setHeaderInterceptor) {
+                HttpLoggingInterceptor logHeader =
+                        new HttpLoggingInterceptor(
+                                new HttpLoggingInterceptor.Logger() {
+                                    @Override
+                                    public void log(@NotNull String s) {
+                                        Log.w("OK_HTTP_HEADER", s);
+                                    }
+                                });
+                logHeader.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+                httpClient.addInterceptor(logHeader);
+            }
             retrofit =
                     new Retrofit.Builder()
                             .baseUrl(BASE_URL)
@@ -64,6 +69,10 @@ public class RetrofitGenerator {
         return retrofit.create(serviceClass);
     }
 
+    public static <S> S createService(Class<S> serviceClass) {
+        return createService(serviceClass, false, false);
+    }
+
     private static String toHexString(byte[] bytes) {
         Formatter formatter = new Formatter();
 
@@ -75,8 +84,9 @@ public class RetrofitGenerator {
     }
 
     public static String calculateRFC2104HMAC(String data, String key)
-            throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
-        SecretKeySpec signingKey = new SecretKeySpec(key.getBytes("UTF-8"), HMAC_SHA1_ALGORITHM);
+            throws NoSuchAlgorithmException, InvalidKeyException {
+        SecretKeySpec signingKey =
+                new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), HMAC_SHA1_ALGORITHM);
         Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
         mac.init(signingKey);
         return toHexString(mac.doFinal(data.getBytes()));

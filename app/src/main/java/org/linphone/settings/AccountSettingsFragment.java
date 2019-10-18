@@ -27,8 +27,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -40,7 +38,6 @@ import org.linphone.core.Core;
 import org.linphone.core.Factory;
 import org.linphone.core.NatPolicy;
 import org.linphone.core.ProxyConfig;
-import org.linphone.core.TransportType;
 import org.linphone.core.tools.Log;
 import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.settings.widget.BasicSetting;
@@ -195,7 +192,9 @@ public class AccountSettingsFragment extends Fragment {
         mLinkAccount = mRootView.findViewById(R.id.pref_link_account);
 
         mTransport = mRootView.findViewById(R.id.pref_transport);
-        initTransportList();
+        mTransport.setVisibility(View.GONE);
+        // Look at bottom.
+        // initTransportList();
     }
 
     protected void setListeners() {
@@ -575,34 +574,37 @@ public class AccountSettingsFragment extends Fragment {
                     }
                 });
 
-        mTransport.setListener(
-                new SettingListenerBase() {
-                    @Override
-                    public void onListValueChanged(int position, String newLabel, String newValue) {
-                        if (mProxyConfig != null) {
-                            mProxyConfig.edit();
-                            String server = mProxyConfig.getServerAddr();
-                            Address serverAddr = Factory.instance().createAddress(server);
-                            if (serverAddr != null) {
-                                try {
-                                    serverAddr.setTransport(
-                                            TransportType.fromInt(Integer.parseInt(newValue)));
-                                    server = serverAddr.asString();
-                                    mProxyConfig.setServerAddr(server);
-                                    if (mOutboundProxy.isChecked()) {
-                                        mProxyConfig.setRoute(server);
-                                    }
-                                    mProxy.setValue(server);
-                                } catch (NumberFormatException nfe) {
-                                    Log.e(nfe);
-                                }
-                            }
-                            mProxyConfig.done();
-                        } else {
-                            Log.e("[Account Settings] No proxy config !");
-                        }
-                    }
-                });
+        /*
+         * Look at bottom.
+         * mTransport.setListener(
+         *         new SettingListenerBase() {
+         *             @Override
+         *             public void onListValueChanged(int position, String newLabel, String newValue) {
+         *                 if (mProxyConfig != null) {
+         *                     mProxyConfig.edit();
+         *                     String server = mProxyConfig.getServerAddr();
+         *                     Address serverAddr = Factory.instance().createAddress(server);
+         *                     if (serverAddr != null) {
+         *                         try {
+         *                             serverAddr.setTransport(
+         *                                     TransportType.fromInt(Integer.parseInt(newValue)));
+         *                             server = serverAddr.asString();
+         *                             mProxyConfig.setServerAddr(server);
+         *                             if (mOutboundProxy.isChecked()) {
+         *                                 mProxyConfig.setRoute(server);
+         *                             }
+         *                             mProxy.setValue(server);
+         *                         } catch (NumberFormatException nfe) {
+         *                             Log.e(nfe);
+         *                         }
+         *                     }
+         *                     mProxyConfig.done();
+         *                 } else {
+         *                     Log.e("[Account Settings] No proxy config !");
+         *                 }
+         *             }
+         *         });
+         */
     }
 
     protected void updateValues() {
@@ -670,29 +672,35 @@ public class AccountSettingsFragment extends Fragment {
 
             mPush.setChecked(mProxyConfig.isPushNotificationAllowed());
 
-            Address proxy = Factory.instance().createAddress(mProxyConfig.getServerAddr());
-            if (proxy != null) {
-                mTransport.setValue(proxy.getTransport().toInt());
-            }
+            /*
+             * Look at bottom.
+             * Address proxy = Factory.instance().createAddress(mProxyConfig.getServerAddr());
+             * if (proxy != null) {
+             *     mTransport.setValue(proxy.getTransport().toInt());
+             * }
+             */
         }
 
         setListeners();
     }
 
-    private void initTransportList() {
-        List<String> entries = new ArrayList<>();
-        List<String> values = new ArrayList<>();
-
-        entries.add(getString(R.string.pref_transport_udp));
-        values.add(String.valueOf(TransportType.Udp.toInt()));
-        entries.add(getString(R.string.pref_transport_tcp));
-        values.add(String.valueOf(TransportType.Tcp.toInt()));
-
-        if (!getResources().getBoolean(R.bool.disable_all_security_features_for_markets)) {
-            entries.add(getString(R.string.pref_transport_tls));
-            values.add(String.valueOf(TransportType.Tls.toInt()));
-        }
-
-        mTransport.setItems(entries, values);
-    }
+    /*
+     * We don't permit to change the protocol type.
+     * private void initTransportList() {
+     *     List<String> entries = new ArrayList<>();
+     *     List<String> values = new ArrayList<>();
+     *
+     *     entries.add(getString(R.string.pref_transport_udp));
+     *     values.add(String.valueOf(TransportType.Udp.toInt()));
+     *     entries.add(getString(R.string.pref_transport_tcp));
+     *     values.add(String.valueOf(TransportType.Tcp.toInt()));
+     *
+     *     if (!getResources().getBoolean(R.bool.disable_all_security_features_for_markets)) {
+     *         entries.add(getString(R.string.pref_transport_tls));
+     *         values.add(String.valueOf(TransportType.Tls.toInt()));
+     *     }
+     *
+     *     mTransport.setItems(entries, values);
+     * }
+     */
 }

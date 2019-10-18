@@ -3,4 +3,6 @@
     <!-- Nethesis customizations -->
     <string name="neth_about_address">Nethesis Srl, Strada degli Olmi, 12</string>
     <string name="neth_about_address_city">61122 - Pesaro (PU)</string>
+
+    <string name="neth_login_qrcode_split_error">Error while reading the QRCODE.</string>
 </resources>

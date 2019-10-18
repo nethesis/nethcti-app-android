@@ -412,8 +412,13 @@ public class CallActivity extends LinphoneGenericActivity
         mNumpad.getBackground().setAlpha(240);
 
         mChat = findViewById(R.id.chat);
-        mChat.setOnClickListener(this);
         mMissedChats = findViewById(R.id.missed_chats);
+        if (getResources().getBoolean(R.bool.disable_chat)) {
+            mChat.setVisibility(View.GONE);
+            mMissedChats.setVisibility(View.GONE);
+        } else {
+            mChat.setOnClickListener(this);
+        }
 
         // Others
 
@@ -1684,7 +1689,7 @@ public class CallActivity extends LinphoneGenericActivity
     private void displayMissedChats() {
         int count = LinphoneManager.getInstance().getUnreadMessageCount();
 
-        if (count > 0) {
+        if (!getResources().getBoolean(R.bool.disable_chat) && count > 0) {
             mMissedChats.setText(String.valueOf(count));
             mMissedChats.setVisibility(View.VISIBLE);
         } else {

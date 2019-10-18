@@ -81,7 +81,7 @@
     <string name="assistant_validate_account_2">Once it is done, come back here and click on the button.</string>
     <string name="assistant_welcome_desc">This assistant will help you configure and use your SIP account.</string>
     <string name="assistant_linphone_login_desc">Please enter your username and password of NethCTI account</string>
-    <string name="assistant_login_desc">Please enter your username and password with your SIP domain</string>
+    <string name="assistant_login_desc">Please enter the following informations</string>
     <string name="assistant_remote_provisioning_desc">Please provide your provisioning URL</string>
     <string name="transport">Transport</string>
     <string name="assistant_create_account_phone_number_address">Your SIP address is</string>

@@ -3,7 +3,7 @@
     android:id="@+id/default_account"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:background="?attr/lighToolbarBackgroundColor"
+    android:background="?attr/lightToolbarBackgroundColor"
     android:contentDescription="@string/content_description_default_account">
 
     <LinearLayout
