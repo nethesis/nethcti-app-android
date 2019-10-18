@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="30dp">
+            android:padding="30dp"
+            android:background="?attr/backgroundColor">
 
             <!-- Informations -->
             <LinearLayout
@@ -66,8 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:inputType="textUri"
-                        android:background="@color/white_color" />
+                        android:inputType="textUri" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,8 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:inputType="text"
-                        android:background="@color/white_color"/>
+                        android:inputType="text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,8 +127,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:inputType="textPassword"
-                        android:background="@color/white_color" />
+                        android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

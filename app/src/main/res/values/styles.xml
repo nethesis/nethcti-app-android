@@ -22,8 +22,8 @@
         <item name="primarySubtextDarkColor">@color/grey_color</item>
         <item name="primarySubtextLightColor">@color/light_grey_color</item>
 
-        <item name="backgroundColor">@color/neth_grey_color</item>
-        <item name="backgroundColor2">@color/neth_light_grey_color</item>
+        <item name="backgroundColor">@color/neth_light_grey_color</item>
+        <item name="backgroundColor2">@color/neth_white_color</item>
         <item name="backgroundContrastColor">@color/neth_dark_grey</item>
         <item name="dividerColor">@color/neth_grey_color</item>
 

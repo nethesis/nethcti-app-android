@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Will migrate -->
+    <color name="neth_white_color">#fafafa</color>
     <color name="neth_light_grey_color">#e6e6e6</color>
     <color name="neth_grey_color">#494949</color>
     <color name="neth_grey_text_color">#606060</color>
@@ -34,7 +35,6 @@
     <style name="neth_base_panel">
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:background">?attr/backgroundColor</item>
     </style>
 
     <style name="neth_field_container_panel" parent="neth_base_panel">
@@ -48,15 +48,15 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
-        <item name="backgroundTint">@color/neth_light_blue_color</item>
+        <item name="backgroundTint">@color/neth_blue_color</item>
     </style>
 
     <style name="neth_secondary_button_font" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="android:textColor">@color/neth_light_blue_color</item>
+        <item name="android:textColor">@color/neth_blue_color</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
-        <item name="strokeColor">@color/neth_light_blue_color</item>
+        <item name="strokeColor">@color/neth_blue_color</item>
     </style>
 
     <!-- Text fields -->
@@ -64,7 +64,7 @@
         <item name="boxBackgroundMode">outline</item>
         <item name="android:textColor">?attr/primaryTextColor</item>
         <item name="boxStrokeColor">@color/neth_light_blue_color</item>
-        <item name="colorControlNormal">?attr/backgroundColor2</item>
+        <item name="colorControlNormal">?attr/backgroundColor</item>
         <item name="colorControlActivated">@color/neth_light_blue_color</item>
         <item name="android:colorControlHighlight">@color/neth_light_blue_color</item>
     </style>
