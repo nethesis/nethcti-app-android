@@ -251,7 +251,7 @@
   <string name="menu_settings">Impostazioni</string>
   <string name="menu_recordings">Registrazioni</string>
   <string name="menu_about">Informazioni</string>
-  <string name="quit">Esci</string>
+  <string name="quit">Chiudi</string>
   <!--Call-->
   <string name="incoming_call">chiamata in arrivo</string>
   <string name="outgoing_call">chiamata in uscita</string>
