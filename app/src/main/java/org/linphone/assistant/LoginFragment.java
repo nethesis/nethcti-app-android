@@ -172,22 +172,18 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                     public void onResponse(Call<String> call, Response<String> response) {
                         // If I've not or I've a not valid response header, I'll exit.
                         if (response == null || response.headers() == null) {
-                            Toast.makeText(
-                                            AssistantActivity.instance(),
-                                            R.string.neth_login_wrong_credentials,
-                                            Toast.LENGTH_LONG)
-                                    .show();
+                            AssistantActivity.instance()
+                                    .dismissProgessDialogWithToast(
+                                            R.string.neth_login_wrong_credentials);
                             return;
                         }
 
                         // Now I'll enqueue the me api call, to get the extension.
                         String authHeader = response.headers().get("www-authenticate");
                         if (authHeader == null) {
-                            Toast.makeText(
-                                            AssistantActivity.instance(),
-                                            R.string.neth_login_missing_authentication_header,
-                                            Toast.LENGTH_LONG)
-                                    .show();
+                            AssistantActivity.instance()
+                                    .dismissProgessDialogWithToast(
+                                            R.string.neth_login_missing_authentication_header);
                             return;
                         }
 
@@ -225,11 +221,9 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                     String.format("%s:%s:%s", username, password, digest),
                                     password));
         } catch (Exception e) {
-            Toast.makeText(
-                            AssistantActivity.instance(),
-                            R.string.neth_login_missing_authentication_header,
-                            Toast.LENGTH_LONG)
-                    .show();
+            AssistantActivity.instance()
+                    .dismissProgessDialogWithToast(
+                            R.string.neth_login_missing_authentication_header);
             return;
         }
 
@@ -242,11 +236,9 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                         if (nethUser == null
                                 || nethUser.endpoints == null
                                 || nethUser.endpoints.extension == null) {
-                            Toast.makeText(
-                                            AssistantActivity.instance(),
-                                            R.string.neth_login_missing_neth_user,
-                                            Toast.LENGTH_LONG)
-                                    .show();
+                            AssistantActivity.instance()
+                                    .dismissProgessDialogWithToast(
+                                            R.string.neth_login_missing_neth_user);
                             return;
                         }
 
@@ -285,28 +277,19 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         }
 
         // I haven't found any extension.
-        Toast.makeText(
-                        AssistantActivity.instance(),
-                        R.string.neth_login_missing_neth_extension,
-                        Toast.LENGTH_LONG)
-                .show();
+        AssistantActivity.instance()
+                .dismissProgessDialogWithToast(R.string.neth_login_missing_neth_extension);
     }
 
     /** Manage the error from the second api call. */
     private void manageNethUserInternFailure() {
-        Toast.makeText(
-                        AssistantActivity.instance(),
-                        R.string.neth_login_2_call_failed,
-                        Toast.LENGTH_LONG)
-                .show();
+        AssistantActivity.instance()
+                .dismissProgessDialogWithToast(R.string.neth_login_2_call_failed);
     }
 
     /** Manage the error from the first api call. */
     private void manageLoginFailure() {
-        Toast.makeText(
-                        AssistantActivity.instance(),
-                        R.string.neth_login_1_call_failed,
-                        Toast.LENGTH_LONG)
-                .show();
+        AssistantActivity.instance()
+                .dismissProgessDialogWithToast(R.string.neth_login_1_call_failed);
     }
 }
