@@ -1148,14 +1148,20 @@ public class CallActivity extends LinphoneGenericActivity
                 mTransfer.setVisibility(View.INVISIBLE);
             }
             mAddCall.setVisibility(View.INVISIBLE);
-            mConference.setVisibility(View.INVISIBLE);
+            mConference.setVisibility(
+                    getResources().getBoolean(R.bool.neth_show_conference_in_activity_call)
+                            ? View.INVISIBLE
+                            : View.GONE);
             mRecordCall.setVisibility(View.INVISIBLE);
         } else { // Display mOptions
             if (mIsTransferAllowed) {
                 mTransfer.setVisibility(View.VISIBLE);
             }
             mAddCall.setVisibility(View.VISIBLE);
-            mConference.setVisibility(View.VISIBLE);
+            mConference.setVisibility(
+                    getResources().getBoolean(R.bool.neth_show_conference_in_activity_call)
+                            ? View.VISIBLE
+                            : View.GONE);
             mRecordCall.setVisibility(View.VISIBLE);
             mOptions.setSelected(true);
             mTransfer.setEnabled(LinphoneManager.getLc().getCurrentCall() != null);
