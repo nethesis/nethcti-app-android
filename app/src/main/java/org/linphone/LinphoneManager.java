@@ -599,7 +599,9 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
     private void terminateCall() {
         if (mCore.inCall()) {
-            mCore.terminateCall(mCore.getCurrentCall());
+            mCore.getCurrentCall().terminate();
+            // Deprecation update.
+            // mCore.terminateCall(mCore.getCurrentCall());
         }
     }
 
@@ -1877,5 +1879,56 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
     public void lastCallSasRejected(boolean rejected) {
         mHasLastCallSasBeenRejected = rejected;
+    }
+
+    /**
+     * Scan all proxy configs to find the user's one.
+     *
+     * @param mAccountIndex Account index in current session.
+     * @return The user's Proxy Config. Can be null.
+     */
+    public static ProxyConfig getUserProxyConfig(int mAccountIndex) {
+        Core core = getLcIfManagerNotDestroyedOrNull();
+        if (mAccountIndex >= 0 && core != null) {
+            ProxyConfig[] proxyConfigs = core.getProxyConfigList();
+            if (proxyConfigs.length > mAccountIndex) {
+                return proxyConfigs[mAccountIndex];
+            } else {
+                Log.e("[Account Settings] Proxy config not found !");
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Logout the user and delete his info and configs.
+     *
+     * @param mAuthInfo Auth Info.
+     * @param mProxyConfig Proxy Configs.
+     */
+    public static void removeAuthAndProxyConfigsByUser(
+            AuthInfo mAuthInfo, ProxyConfig mProxyConfig) {
+        Core core = getLcIfManagerNotDestroyedOrNull();
+        if (core != null) {
+            if (mProxyConfig != null) {
+                core.removeProxyConfig(mProxyConfig);
+            }
+            if (mAuthInfo != null) {
+                core.removeAuthInfo(mAuthInfo);
+            }
+        }
+    }
+
+    /** Reset the proxy configs when the actual configs are not valid yet. */
+    public static void resetProxyConfigs() {
+        Core core = getLcIfManagerNotDestroyedOrNull();
+        // Set a new default proxy config if the current one has been removed.
+        if (core != null && core.getDefaultProxyConfig() == null) {
+            ProxyConfig[] proxyConfigs = core.getProxyConfigList();
+            if (proxyConfigs.length > 0) {
+                core.setDefaultProxyConfig(proxyConfigs[0]);
+            }
+        }
     }
 }

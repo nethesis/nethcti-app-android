@@ -83,23 +83,14 @@ public class AccountSettingsFragment extends Fragment {
 
         loadSettings();
 
-        mIsNewlyCreatedAccount = true;
         mAccountIndex = getArguments().getInt("Account", -1);
         if (mAccountIndex == -1 && savedInstanceState != null) {
             mAccountIndex = savedInstanceState.getInt("Account", -1);
         }
 
-        mProxyConfig = null;
-        Core core = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
-        if (mAccountIndex >= 0 && core != null) {
-            ProxyConfig[] proxyConfigs = core.getProxyConfigList();
-            if (proxyConfigs.length > mAccountIndex) {
-                mProxyConfig = proxyConfigs[mAccountIndex];
-                mIsNewlyCreatedAccount = false;
-            } else {
-                Log.e("[Account Settings] Proxy config not found !");
-            }
-        }
+        // Get the current user proxy config, useful for logout by now.
+        mProxyConfig = LinphoneManager.getUserProxyConfig(mAccountIndex);
+        mIsNewlyCreatedAccount = mProxyConfig == null;
 
         return mRootView;
     }
@@ -538,23 +529,9 @@ public class AccountSettingsFragment extends Fragment {
                 new SettingListenerBase() {
                     @Override
                     public void onClicked() {
-                        Core core = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
-                        if (core != null) {
-                            if (mProxyConfig != null) {
-                                core.removeProxyConfig(mProxyConfig);
-                            }
-                            if (mAuthInfo != null) {
-                                core.removeAuthInfo(mAuthInfo);
-                            }
-                        }
-
-                        // Set a new default proxy config if the current one has been removed
-                        if (core != null && core.getDefaultProxyConfig() == null) {
-                            ProxyConfig[] proxyConfigs = core.getProxyConfigList();
-                            if (proxyConfigs.length > 0) {
-                                core.setDefaultProxyConfig(proxyConfigs[0]);
-                            }
-                        }
+                        // This is the tento modified logout.
+                        LinphoneManager.removeAuthAndProxyConfigsByUser(mAuthInfo, mProxyConfig);
+                        LinphoneManager.resetProxyConfigs();
 
                         LinphoneActivity.instance().displaySettings();
                         LinphoneActivity.instance().refreshAccounts();
