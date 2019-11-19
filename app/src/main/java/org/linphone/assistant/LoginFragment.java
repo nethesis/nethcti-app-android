@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         mPassword = view.findViewById(R.id.assistant_password);
         mPassword.addTextChangedListener(this);
         mDomain = view.findViewById(R.id.assistant_domain);
-        mDomain.setText(R.string.neth_test_domain);
+        // Set this line while testing. mDomain.setText(R.string.neth_test_domain);
         mDomain.addTextChangedListener(this);
         mApply = view.findViewById(R.id.assistant_apply);
         mApply.setEnabled(false);
@@ -163,7 +163,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         AssistantActivity.instance().displayNethLoginInProgressDialog();
         // Enqueue the login api call.
         AuthenticationRestAPI restAPIClass =
-                RetrofitGenerator.createService(AuthenticationRestAPI.class);
+                RetrofitGenerator.createService(AuthenticationRestAPI.class, domain);
         LoginCredentials credentials = new LoginCredentials(username, password);
         Call<String> call = restAPIClass.login(credentials);
         call.enqueue(
@@ -206,7 +206,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
      * @param domain Domain putted before.
      */
     private void manageLoginResponse(
-            final String username,
+        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class, domain);
             final String password,
             final String digest,
             final String domain) {
