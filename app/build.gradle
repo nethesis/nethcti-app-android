@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 static def getPackageName() {
-    return "org.linphone"
+    return "it.nethesis.nethctiapp" // "org.linphone"
 }
 
 static def firebaseEnabled() {
@@ -72,8 +72,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 4125
-        versionName "4.1.1"
+        versionCode 4128
+        versionName '1.0.0'
         applicationId getPackageName()
         multiDexEnabled true
         manifestPlaceholders = [linphone_address_mime_type: "vnd.android.cursor.item/vnd." + getPackageName() + ".provider.sip_address"]
@@ -81,7 +81,7 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "linphone-android-${variant.buildType.name}-${gitVersion.toString().trim()}.apk"
+            outputFileName = "nethctiapp-android-${variant.buildType.name}-${gitVersion.toString().trim()}.apk"
         }
     }
 
