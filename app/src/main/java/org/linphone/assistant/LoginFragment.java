@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         mPassword = view.findViewById(R.id.assistant_password);
         mPassword.addTextChangedListener(this);
         mDomain = view.findViewById(R.id.assistant_domain);
-        mDomain.setText(R.string.neth_test_domain);
+        // Set this line while testing. mDomain.setText(R.string.neth_test_domain);
         mDomain.addTextChangedListener(this);
         mApply = view.findViewById(R.id.assistant_apply);
         mApply.setEnabled(false);
@@ -89,7 +89,8 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 return view;
             }
 
-            performNethLogin(separated[0], separated[1], separated[2]);
+            // performNethLogin(separated[0], separated[1], separated[2]); Before the AuthToken.
+            manageLoginResponse(String.format("%s:%s", separated[0], separated[1]), separated[2]);
         }
 
         return view;
@@ -163,7 +164,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         AssistantActivity.instance().displayNethLoginInProgressDialog();
         // Enqueue the login api call.
         AuthenticationRestAPI restAPIClass =
-                RetrofitGenerator.createService(AuthenticationRestAPI.class);
+                RetrofitGenerator.createService(AuthenticationRestAPI.class, domain);
         LoginCredentials credentials = new LoginCredentials(username, password);
         Call<String> call = restAPIClass.login(credentials);
         call.enqueue(
@@ -172,26 +173,42 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                     public void onResponse(Call<String> call, Response<String> response) {
                         // If I've not or I've a not valid response header, I'll exit.
                         if (response == null || response.headers() == null) {
-                            Toast.makeText(
-                                            AssistantActivity.instance(),
-                                            R.string.neth_login_wrong_credentials,
-                                            Toast.LENGTH_LONG)
-                                    .show();
+                            AssistantActivity.instance()
+                                    .dismissProgessDialogWithToast(
+                                            R.string.neth_login_wrong_credentials);
                             return;
                         }
 
                         // Now I'll enqueue the me api call, to get the extension.
                         String authHeader = response.headers().get("www-authenticate");
                         if (authHeader == null) {
-                            Toast.makeText(
-                                            AssistantActivity.instance(),
-                                            R.string.neth_login_missing_authentication_header,
-                                            Toast.LENGTH_LONG)
-                                    .show();
+                            AssistantActivity.instance()
+                                    .dismissProgessDialogWithToast(
+                                            R.string.neth_login_missing_authentication_header);
                             return;
                         }
 
-                        manageLoginResponse(username, password, authHeader.substring(7), domain);
+                        String authToken;
+                        try {
+                            authToken =
+                                    String.format(
+                                            "%s:%s",
+                                            username,
+                                            calculateRFC2104HMAC(
+                                                    String.format(
+                                                            "%s:%s:%s",
+                                                            username,
+                                                            password,
+                                                            authHeader.substring(7)),
+                                                    password));
+                        } catch (Exception e) {
+                            AssistantActivity.instance()
+                                    .dismissProgessDialogWithToast(
+                                            R.string.neth_login_missing_authentication_header);
+                            return;
+                        }
+
+                        manageLoginResponse(authToken, domain);
                     }
 
                     @Override
@@ -204,36 +221,13 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
     /**
      * Manage the first result and perform the second api call.
      *
-     * @param username Username putted before.
-     * @param password Password putted before.
-     * @param digest Digest from first call.
+     * @param authToken Authentication Token received and calculated.
      * @param domain Domain putted before.
      */
-    private void manageLoginResponse(
-            final String username,
-            final String password,
-            final String digest,
-            final String domain) {
-        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class);
-        String sha1;
-        try {
-            sha1 =
-                    String.format(
-                            "%s:%s",
-                            username,
-                            calculateRFC2104HMAC(
-                                    String.format("%s:%s:%s", username, password, digest),
-                                    password));
-        } catch (Exception e) {
-            Toast.makeText(
-                            AssistantActivity.instance(),
-                            R.string.neth_login_missing_authentication_header,
-                            Toast.LENGTH_LONG)
-                    .show();
-            return;
-        }
+    private void manageLoginResponse(final String authToken, final String domain) {
+        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class, domain);
 
-        Call<NethUser> getMeCall = userRestAPI.getMe(sha1);
+        Call<NethUser> getMeCall = userRestAPI.getMe(authToken);
         getMeCall.enqueue(
                 new Callback<NethUser>() {
                     @Override
@@ -242,11 +236,9 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                         if (nethUser == null
                                 || nethUser.endpoints == null
                                 || nethUser.endpoints.extension == null) {
-                            Toast.makeText(
-                                            AssistantActivity.instance(),
-                                            R.string.neth_login_missing_neth_user,
-                                            Toast.LENGTH_LONG)
-                                    .show();
+                            AssistantActivity.instance()
+                                    .dismissProgessDialogWithToast(
+                                            R.string.neth_login_missing_neth_user);
                             return;
                         }
 
@@ -285,28 +277,19 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
         }
 
         // I haven't found any extension.
-        Toast.makeText(
-                        AssistantActivity.instance(),
-                        R.string.neth_login_missing_neth_extension,
-                        Toast.LENGTH_LONG)
-                .show();
+        AssistantActivity.instance()
+                .dismissProgessDialogWithToast(R.string.neth_login_missing_neth_extension);
     }
 
     /** Manage the error from the second api call. */
     private void manageNethUserInternFailure() {
-        Toast.makeText(
-                        AssistantActivity.instance(),
-                        R.string.neth_login_2_call_failed,
-                        Toast.LENGTH_LONG)
-                .show();
+        AssistantActivity.instance()
+                .dismissProgessDialogWithToast(R.string.neth_login_2_call_failed);
     }
 
     /** Manage the error from the first api call. */
     private void manageLoginFailure() {
-        Toast.makeText(
-                        AssistantActivity.instance(),
-                        R.string.neth_login_1_call_failed,
-                        Toast.LENGTH_LONG)
-                .show();
+        AssistantActivity.instance()
+                .dismissProgessDialogWithToast(R.string.neth_login_1_call_failed);
     }
 }

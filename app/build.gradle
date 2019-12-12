@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 static def getPackageName() {
-    return "org.linphone"
+    return "it.nethesis.nethctiapp" // "org.linphone"
 }
 
 static def firebaseEnabled() {
@@ -81,7 +81,7 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "linphone-android-${variant.buildType.name}-${gitVersion.toString().trim()}.apk"
+            outputFileName = "nethctiapp-android-${variant.buildType.name}-${gitVersion.toString().trim()}.apk"
         }
     }
 

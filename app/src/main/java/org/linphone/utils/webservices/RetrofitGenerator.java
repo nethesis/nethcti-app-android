@@ -30,8 +30,13 @@ public class RetrofitGenerator {
      * @return the service.
      */
     public static <S> S createService(
-            Class<S> serviceClass, boolean setHeaderInterceptor, boolean setBodyInterceptor) {
+            Class<S> serviceClass,
+            String domain,
+            boolean setHeaderInterceptor,
+            boolean setBodyInterceptor) {
         if (retrofit == null) {
+            String endpoint =
+                    domain == null ? BASE_URL : String.format("https://%s/webrest/", domain);
             if (setBodyInterceptor) {
                 HttpLoggingInterceptor logBody =
                         new HttpLoggingInterceptor(
@@ -58,7 +63,7 @@ public class RetrofitGenerator {
             }
             retrofit =
                     new Retrofit.Builder()
-                            .baseUrl(BASE_URL)
+                            .baseUrl(endpoint)
                             .addConverterFactory(
                                     GsonConverterFactory.create(
                                             new GsonBuilder().serializeNulls().create()))
@@ -69,8 +74,8 @@ public class RetrofitGenerator {
         return retrofit.create(serviceClass);
     }
 
-    public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, false, false);
+    public static <S> S createService(Class<S> serviceClass, String domain) {
+        return createService(serviceClass, domain, false, false);
     }
 
     private static String toHexString(byte[] bytes) {

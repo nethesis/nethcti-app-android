@@ -1675,12 +1675,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private void initSideMenu() {
         mSideMenu = findViewById(R.id.side_menu);
         mSideMenuItems = new ArrayList<>();
-        if (!getResources().getBoolean(R.bool.hide_assistant_from_side_menu)) {
-            mSideMenuItems.add(
-                    new MenuItem(
-                            getResources().getString(R.string.menu_assistant),
-                            R.drawable.menu_assistant));
-        }
         if (!getResources().getBoolean(R.bool.hide_settings_from_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
@@ -1706,6 +1700,12 @@ public class LinphoneActivity extends LinphoneGenericActivity
                             getResources().getString(R.string.menu_logout),
                             R.drawable.quit_default));
         }
+        if (!getResources().getBoolean(R.bool.hide_assistant_from_side_menu)) {
+            mSideMenuItems.add(
+                    new MenuItem(
+                            getResources().getString(R.string.menu_assistant),
+                            R.drawable.menu_assistant));
+        }
         mSideMenuContent = findViewById(R.id.side_menu_content);
         mSideMenuItemList = findViewById(R.id.item_list);
         mMenu = findViewById(R.id.side_menu_button);
@@ -1720,9 +1720,11 @@ public class LinphoneActivity extends LinphoneGenericActivity
                         if (selectedItem.equals(getString(R.string.menu_logout))) {
                             Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
                             if (lc != null) {
-                                lc.setDefaultProxyConfig(null);
-                                lc.clearAllAuthInfo();
-                                lc.clearProxyConfig();
+                                // Get the current user proxy config, useful for logout by now.
+                                ProxyConfig mProxyConfig = LinphoneManager.getUserProxyConfig(0);
+                                LinphoneManager.removeAuthAndProxyConfigsByUser(
+                                        mProxyConfig.findAuthInfo(), mProxyConfig);
+                                LinphoneManager.resetProxyConfigs();
                                 sideMenuLogout();
                                 startActivity(
                                         new Intent()

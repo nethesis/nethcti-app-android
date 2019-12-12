@@ -152,7 +152,5 @@
     <bool name="neth_show_pref_android_prim_account">false</bool>
     <bool name="neth_show_pref_autostart">false</bool>
     <bool name="neth_show_conference_in_activity_call">false</bool>
-
-    <bool name="neth_check_for_updates">true</bool>
 </resources>
 

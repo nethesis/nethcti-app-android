@@ -122,7 +122,11 @@ public class CallActivity extends LinphoneGenericActivity
             mConferenceStatus,
             mRecordCall,
             mRecording;
-    private ImageView mAudioRoute, mRouteSpeaker, mRouteEarpiece, mRouteBluetooth, mMenu, mChat;
+    private ImageView mAudioRoute;
+    private ImageView mRouteSpeaker;
+    private ImageView mRouteEarpiece;
+    private ImageView mRouteBluetooth;
+    private ImageView mMenu;
     private LinearLayout mNoCurrentCall, mCallInfo, mCallPaused;
     private ProgressBar mVideoProgress;
     private StatusFragment mStatus;
@@ -201,7 +205,7 @@ public class CallActivity extends LinphoneGenericActivity
                 new CoreListenerStub() {
                     @Override
                     public void onMessageReceived(Core lc, ChatRoom cr, ChatMessage message) {
-                        displayMissedChats();
+                        if (!getResources().getBoolean(R.bool.disable_chat)) displayMissedChats();
                     }
 
                     @Override
@@ -411,9 +415,10 @@ public class CallActivity extends LinphoneGenericActivity
         mNumpad = findViewById(R.id.numpad);
         mNumpad.getBackground().setAlpha(240);
 
-        mChat = findViewById(R.id.chat);
+        ImageView mChat = findViewById(R.id.chat);
         mMissedChats = findViewById(R.id.missed_chats);
         if (getResources().getBoolean(R.bool.disable_chat)) {
+            findViewById(R.id.chat_container).setVisibility(View.GONE);
             mChat.setVisibility(View.GONE);
             mMissedChats.setVisibility(View.GONE);
         } else {
@@ -1143,14 +1148,20 @@ public class CallActivity extends LinphoneGenericActivity
                 mTransfer.setVisibility(View.INVISIBLE);
             }
             mAddCall.setVisibility(View.INVISIBLE);
-            mConference.setVisibility(View.INVISIBLE);
+            mConference.setVisibility(
+                    getResources().getBoolean(R.bool.neth_show_conference_in_activity_call)
+                            ? View.INVISIBLE
+                            : View.GONE);
             mRecordCall.setVisibility(View.INVISIBLE);
         } else { // Display mOptions
             if (mIsTransferAllowed) {
                 mTransfer.setVisibility(View.VISIBLE);
             }
             mAddCall.setVisibility(View.VISIBLE);
-            mConference.setVisibility(View.VISIBLE);
+            mConference.setVisibility(
+                    getResources().getBoolean(R.bool.neth_show_conference_in_activity_call)
+                            ? View.VISIBLE
+                            : View.GONE);
             mRecordCall.setVisibility(View.VISIBLE);
             mOptions.setSelected(true);
             mTransfer.setEnabled(LinphoneManager.getLc().getCurrentCall() != null);
