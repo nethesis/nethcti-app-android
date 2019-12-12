@@ -98,6 +98,7 @@ import org.linphone.core.ChatRoom;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Factory;
+import org.linphone.core.MediaEncryption;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.Reason;
 import org.linphone.core.RegistrationState;
@@ -190,6 +191,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         if (getResources().getBoolean(R.bool.orientation_portrait_only)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+
         boolean useFirstLoginActivity =
                 getResources().getBoolean(R.bool.display_account_assistant_at_first_start);
         if (LinphonePreferences.instance().isProvisioningLoginViewEnabled()) {
@@ -333,6 +335,14 @@ public class LinphoneActivity extends LinphoneGenericActivity
             LinphoneManager.getLc().setDeviceRotation(rotation);
             onNewIntent(getIntent());
         }
+
+        // Set the default neth settings.
+        LinphonePreferences.instance().setInitiateVideoCall(true);
+        LinphonePreferences.instance().setAutomaticallyAcceptVideoRequests(true);
+        LinphonePreferences.instance().enableOverlay(true);
+        LinphonePreferences.instance().setMediaEncryption(MediaEncryption.SRTP);
+        LinphonePreferences.instance().setServiceNotificationVisibility(true);
+        LinphoneService.instance().getNotificationManager().startForeground();
     }
 
     @Override
@@ -679,7 +689,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     private void checkForUpdate() {
-        if(!getResources().getBoolean(R.bool.neth_check_for_updates)) {
+        if (!getResources().getBoolean(R.bool.neth_check_for_updates)) {
             // If I don't want to check for updates, I have to set false this value.
             return;
         }
