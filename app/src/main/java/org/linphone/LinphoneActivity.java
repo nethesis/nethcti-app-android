@@ -339,7 +339,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         // Set the default neth settings.
         LinphonePreferences.instance().setInitiateVideoCall(true);
         LinphonePreferences.instance().setAutomaticallyAcceptVideoRequests(true);
-        LinphonePreferences.instance().enableOverlay(true);
+        LinphonePreferences.instance().enableOverlay(false);
         LinphonePreferences.instance().setMediaEncryption(MediaEncryption.SRTP);
         LinphonePreferences.instance().setServiceNotificationVisibility(true);
         LinphoneService.instance().getNotificationManager().startForeground();
@@ -689,11 +689,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     private void checkForUpdate() {
-        if (!getResources().getBoolean(R.bool.neth_check_for_updates)) {
-            // If I don't want to check for updates, I have to set false this value.
-            return;
-        }
-
         String url = LinphonePreferences.instance().getCheckReleaseUrl();
         if (url != null && !url.isEmpty()) {
             int lastTimestamp = LinphonePreferences.instance().getLastCheckReleaseTimestamp();
