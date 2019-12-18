@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Accessibility strings -->
+    <string name="neth_account_status_led">Account status</string>
+    <string name="neth_layout_divider">Divider</string>
+
     <!-- Nethesis customizations -->
     <string name="neth_about_address">Nethesis Srl, Strada degli Olmi, 12</string>
     <string name="neth_about_address_city">61122 - Pesaro (PU)</string>

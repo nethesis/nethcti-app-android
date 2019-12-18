@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Accessibility strings -->
+    <string name="neth_account_status_led">Stato Account</string>
+    <string name="neth_layout_divider">Divisore</string>
+
     <!-- Nethesis customizations -->
     <string name="neth_about_address">Nethesis Srl, Strada degli Olmi, 12</string>
     <string name="neth_about_address_city">61122 - Pesaro (PU)</string>

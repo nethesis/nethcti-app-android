@@ -1917,6 +1917,7 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
             if (mAuthInfo != null) {
                 core.removeAuthInfo(mAuthInfo);
             }
+            core.clearAllAuthInfo();
             core.clearProxyConfig();
         }
     }
