@@ -1,5 +1,6 @@
 package org.linphone.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /*
@@ -9,20 +10,22 @@ import com.google.gson.annotations.SerializedName;
 public class Extension {
 
     @SerializedName("id")
+    @Expose
     public String id;
 
     @SerializedName("type")
+    @Expose
     public String type;
 
     @SerializedName("secret")
+    @Expose
     public String secret;
 
     @SerializedName("username")
+    @Expose
     public String username;
 
     @SerializedName("description")
+    @Expose
     public String description;
-
-    @SerializedName("actions")
-    public Actions actions;
 }

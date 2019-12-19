@@ -1,5 +1,6 @@
 package org.linphone.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /*
@@ -8,15 +9,18 @@ import com.google.gson.annotations.SerializedName;
  */
 public class NethUser {
     @SerializedName("name")
+    @Expose
     public String name;
 
     @SerializedName("username")
+    @Expose
     public String username;
 
     // @SerializedName("presence")
     // public String presence;
 
     @SerializedName("endpoints")
+    @Expose
     public Endpoints endpoints;
 
     // @SerializedName("presenceOnBusy")

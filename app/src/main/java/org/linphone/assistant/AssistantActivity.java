@@ -764,9 +764,24 @@ public class AssistantActivity extends ThemableActivity
         mCurrentFragment = AssistantFragmentsEnum.LINPHONE_LOGIN;
     }
 
-    /** Use this to close the progress dialog at any moment. */
+    /**
+     * Use this to close the progress dialog at any moment.
+     *
+     * @param resId The Resource Id to show.
+     */
     public void dismissProgessDialogWithToast(int resId) {
         Toast.makeText(AssistantActivity.instance(), resId, Toast.LENGTH_LONG).show();
+        if (mProgress != null) mProgress.dismiss();
+    }
+
+    /**
+     * Use this to close the progress dialog at any moment.
+     *
+     * @param message The message to show in a toast.
+     */
+    public void dismissProgressDialogWithMessage(String message) {
+        if (message != null)
+            Toast.makeText(AssistantActivity.instance(), message, Toast.LENGTH_LONG).show();
         if (mProgress != null) mProgress.dismiss();
     }
 

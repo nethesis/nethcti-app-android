@@ -1,14 +1,17 @@
 package org.linphone.models;
 
 import androidx.annotation.NonNull;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /** The Login Credentials. */
 public class LoginCredentials {
     @SerializedName("username")
+    @Expose
     private String Username;
 
     @SerializedName("password")
+    @Expose
     private String Password;
 
     /**

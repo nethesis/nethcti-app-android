@@ -9,4 +9,13 @@
     <string name="neth_about_address_city">61122 - Pesaro (PU)</string>
 
     <string name="neth_login_qrcode_split_error">Error while reading the QRCODE.</string>
+    <string name="neth_login_1_call_failed">Login fallito, riprovare più tardi.</string>
+    <string name="neth_login_2_call_failed">Login fallito, riprovare più tardi.</string>
+    <string name="neth_login_missing_authentication_header">Mancata conferma delle credenziali, contrallare i dati inseriti o contattare un amministratore.</string>
+    <string name="neth_login_missing_crypt_algorithm">Nessun algoritmo di cifratura rilevato, contattare un amministratore.</string>
+    <string name="neth_login_missing_crypt_encoding">Impossibile cifrare i dati, contattare un amministratore.</string>
+    <string name="neth_login_missing_crypt_key">Nessuna password inserita, contattare un amministratore o ricontrollare.</string>
+    <string name="neth_login_missing_neth_extension">Nessun interno assegnato a questo utente, contattare un amministratore.</string>
+    <string name="neth_login_missing_neth_user">Nessun utente trovato, contattare un amministratore.</string>
+    <string name="neth_login_wrong_credentials">Login fallito, controllare le credenziali o riprovare più tardi.</string>
 </resources>

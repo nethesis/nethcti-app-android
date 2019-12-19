@@ -29,15 +29,11 @@ public class RetrofitGenerator {
      * @param serviceClass the service class.
      * @return the service.
      */
-    public static <S> S createService(
-            Class<S> serviceClass,
-            String domain,
-            boolean setHeaderInterceptor,
-            boolean setBodyInterceptor) {
+    public static <S> S createService(Class<S> serviceClass, String domain, boolean interceptors) {
         if (retrofit == null) {
             String endpoint =
                     domain == null ? BASE_URL : String.format("https://%s/webrest/", domain);
-            if (setBodyInterceptor) {
+            if (interceptors) {
                 HttpLoggingInterceptor logBody =
                         new HttpLoggingInterceptor(
                                 new HttpLoggingInterceptor.Logger() {
@@ -49,7 +45,7 @@ public class RetrofitGenerator {
                 logBody.setLevel(HttpLoggingInterceptor.Level.BODY);
                 httpClient.addInterceptor(logBody);
             }
-            if (setHeaderInterceptor) {
+            if (interceptors) {
                 HttpLoggingInterceptor logHeader =
                         new HttpLoggingInterceptor(
                                 new HttpLoggingInterceptor.Logger() {
@@ -75,7 +71,7 @@ public class RetrofitGenerator {
     }
 
     public static <S> S createService(Class<S> serviceClass, String domain) {
-        return createService(serviceClass, domain, false, false);
+        return createService(serviceClass, domain, false);
     }
 
     private static String toHexString(byte[] bytes) {
