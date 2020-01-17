@@ -74,6 +74,7 @@ import org.linphone.core.RegistrationState;
 import org.linphone.core.TransportType;
 import org.linphone.core.tools.Log;
 import org.linphone.fragments.StatusFragment;
+import org.linphone.notifications.FCMNotification;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.ThemableActivity;
@@ -529,7 +530,8 @@ public class AssistantActivity extends ThemableActivity
             String displayname,
             String prefix,
             String domain,
-            TransportType transport) {
+            TransportType transport,
+            String netUsername) {
         Core core = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
         if (core == null) return;
 
@@ -553,6 +555,10 @@ public class AssistantActivity extends ThemableActivity
         core.addProxyConfig(proxyConfig);
         core.setDefaultProxyConfig(proxyConfig);
 
+        // TODO: LUCA - login notificatore
+        FCMNotification.updateRegistrationInfo(
+                getApplicationContext(),
+                FCMNotification.getNotificatoreUserIdentifier(userid, domain));
         mAccountCreated = true;
         mLoginInProgress = false;
         success();

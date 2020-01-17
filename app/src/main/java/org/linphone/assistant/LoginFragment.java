@@ -270,7 +270,8 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                 nethUser.name,
                                 null,
                                 domain,
-                                TransportType.Tls);
+                                TransportType.Tls,
+                                nethUser.username);
                 // I do login with only one extension.
                 return;
             }
