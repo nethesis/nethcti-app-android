@@ -39,6 +39,7 @@ import org.linphone.core.TransportType;
 import org.linphone.models.Extension;
 import org.linphone.models.LoginCredentials;
 import org.linphone.models.NethUser;
+import org.linphone.utils.SharedPreferencesManager;
 import org.linphone.utils.webservices.AuthenticationRestAPI;
 import org.linphone.utils.webservices.RetrofitGenerator;
 import org.linphone.utils.webservices.UserRestAPI;
@@ -222,7 +223,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
      * Manage the first result and perform the second api call.
      *
      * @param authToken Authentication Token received and calculated.
-     * @param domain Domain putted before.
+     * @param domain Domain put before.
      */
     private void manageLoginResponse(final String authToken, final String domain) {
         UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class, domain);
@@ -273,6 +274,8 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                 TransportType.Tls,
                                 nethUser.username);
                 // I do login with only one extension.
+                SharedPreferencesManager.setUsername(
+                        getActivity().getApplicationContext(), nethUser.username);
                 return;
             }
         }

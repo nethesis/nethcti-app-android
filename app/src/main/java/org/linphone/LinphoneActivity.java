@@ -98,7 +98,6 @@ import org.linphone.core.ChatRoom;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Factory;
-import org.linphone.core.MediaEncryption;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.Reason;
 import org.linphone.core.RegistrationState;
@@ -122,6 +121,7 @@ import org.linphone.utils.IntentUtils;
 import org.linphone.utils.LinphoneGenericActivity;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.PushNotificationUtils;
+import org.linphone.utils.SharedPreferencesManager;
 import org.linphone.views.AddressText;
 import org.linphone.xmlrpc.XmlRpcHelper;
 import org.linphone.xmlrpc.XmlRpcListenerBase;
@@ -338,20 +338,24 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
 
         ProxyConfig proxy = LinphoneManager.getLc().getDefaultProxyConfig();
-        Address userAddress = proxy.getIdentityAddress();
+        if (proxy != null) {
+            Address userAddress = proxy.getIdentityAddress();
 
-        FCMNotification.updateRegistrationInfo(
-                getApplicationContext(),
-                FCMNotification.getNotificatoreUserIdentifier(
-                        userAddress.getUsername(), userAddress.getDomain()));
+            FCMNotification.updateRegistrationInfo(
+                    getApplicationContext(),
+                    FCMNotification.getNotificatoreUserIdentifier(
+                            userAddress.getUsername(), userAddress.getDomain()));
+        }
 
         // Set the default neth settings.
+        /*
         LinphonePreferences.instance().setInitiateVideoCall(true);
         LinphonePreferences.instance().setAutomaticallyAcceptVideoRequests(true);
         LinphonePreferences.instance().enableOverlay(false);
         LinphonePreferences.instance().setMediaEncryption(MediaEncryption.SRTP);
         LinphonePreferences.instance().setServiceNotificationVisibility(true);
         LinphoneService.instance().getNotificationManager().startForeground();
+         */
     }
 
     @Override
@@ -1729,7 +1733,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
                                 LinphoneManager.removeAuthAndProxyConfigsByUser(
                                         mProxyConfig.findAuthInfo(), mProxyConfig);
                                 LinphoneManager.resetProxyConfigs();
-                                // TODO: LUCA - logout notificatore
+
+                                // [Notificatore] logout user from Notificatore app.
+                                SharedPreferencesManager.removeUsername(getApplicationContext());
                                 FCMNotification.updateRegistrationInfo(getApplicationContext(), "");
                                 sideMenuLogout();
                                 startActivity(

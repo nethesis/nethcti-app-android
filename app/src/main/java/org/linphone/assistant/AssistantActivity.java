@@ -555,7 +555,7 @@ public class AssistantActivity extends ThemableActivity
         core.addProxyConfig(proxyConfig);
         core.setDefaultProxyConfig(proxyConfig);
 
-        // TODO: LUCA - login notificatore
+        // [Notificatore] login to Notificatore app.
         FCMNotification.updateRegistrationInfo(
                 getApplicationContext(),
                 FCMNotification.getNotificatoreUserIdentifier(userid, domain));

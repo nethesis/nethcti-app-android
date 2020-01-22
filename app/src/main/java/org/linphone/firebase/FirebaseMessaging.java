@@ -32,7 +32,6 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import java.util.Map;
 import java.util.UUID;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneService;
@@ -42,12 +41,12 @@ import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 
 public class FirebaseMessaging extends FirebaseMessagingService {
+
     public FirebaseMessaging() {}
 
     @Override
     public void onNewToken(final String token) {
-        // TODO: LUCA - Aggiornare token anche su notificatore
-
+        // [Notificatore] send new token to Notificatore app.
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
 
@@ -65,18 +64,35 @@ public class FirebaseMessaging extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Map<String, String> values = remoteMessage.getData();
-        String message = values.get("message");
-
-        sendNotification(message);
+        // TODO: LUCA : remove
+        sendNotification(remoteMessage.getData().get("message"));
         android.util.Log.i("FirebaseMessaging", "[Push Notification] Received");
 
         if (!LinphoneService.isReady()) {
-            android.util.Log.i("FirebaseMessaging", "[Push Notification] Starting Service");
-            Intent intent = new Intent(ACTION_MAIN);
-            intent.setClass(this, LinphoneService.class);
-            intent.putExtra("PushNotification", true);
-            startService(intent);
+            try {
+                android.util.Log.i("FirebaseMessaging", "[Push Notification] Starting Service");
+                Intent intent = new Intent(ACTION_MAIN);
+                intent.setClass(this, LinphoneService.class);
+                intent.putExtra("PushNotification", true);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    android.util.Log.i(
+                            "FirebaseMessaging",
+                            "[Push Notification] Starting Service with startForegroundService()");
+
+                    startForegroundService(intent);
+                } else {
+                    android.util.Log.i(
+                            "FirebaseMessaging",
+                            "[Push Notification] Starting Service with startService()");
+
+                    startService(intent);
+                }
+
+            } catch (Exception e) {
+                android.util.Log.i(
+                        "FirebaseMessaging", "[Push Notification] Exception: " + e.getMessage());
+            }
         }
     }
 
