@@ -98,6 +98,7 @@ import org.linphone.core.ChatRoom;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Factory;
+import org.linphone.core.MediaEncryption;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.Reason;
 import org.linphone.core.RegistrationState;
@@ -352,10 +353,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
         LinphonePreferences.instance().setInitiateVideoCall(true);
         LinphonePreferences.instance().setAutomaticallyAcceptVideoRequests(true);
         LinphonePreferences.instance().enableOverlay(false);
-        LinphonePreferences.instance().setMediaEncryption(MediaEncryption.SRTP);
         LinphonePreferences.instance().setServiceNotificationVisibility(true);
         LinphoneService.instance().getNotificationManager().startForeground();
          */
+        LinphonePreferences.instance().setMediaEncryption(MediaEncryption.SRTP);
     }
 
     @Override
