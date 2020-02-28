@@ -267,7 +267,7 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                 e.id,
                                 e.username,
                                 e.secret,
-                                e.username,
+                                nethUser.name,
                                 null,
                                 domain,
                                 TransportType.Tls);

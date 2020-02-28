@@ -10,7 +10,7 @@
         android:id="@+id/layout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -33,15 +33,17 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:padding="5dp"
-        android:src="@drawable/led_connected" />
+        android:src="@drawable/led_connected"
+        android:contentDescription="@string/neth_account_status_led"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="?attr/dividerColor" />
+        android:background="?attr/dividerColor"
+        android:contentDescription="@string/neth_layout_divider"/>
 
 </RelativeLayout>

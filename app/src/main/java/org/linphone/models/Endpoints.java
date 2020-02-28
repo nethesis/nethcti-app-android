@@ -1,5 +1,6 @@
 package org.linphone.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Endpoints {
     // public List<Jabber> jabber = null;
 
     @SerializedName("extension")
+    @Expose
     public List<Extension> extension = null;
 
     // @SerializedName("cellphone")
