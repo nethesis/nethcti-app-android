@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         android:src="@drawable/splash_landscape" />
 
     <ProgressBar
