@@ -208,7 +208,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+        <service android:name=".notifications.RegistrationIntentService" />
         <service
             android:name=".LinphoneService"
             android:label="@string/service_name" />

@@ -237,9 +237,7 @@ public final class LinphoneService extends Service {
                                     }
                                 });
 
-        if (Version.sdkAboveOrEqual(Version.API26_O_80)
-                && intent != null
-                && intent.getBooleanExtra("ForceStartForeground", false)) {
+        if (Version.sdkAboveOrEqual(Version.API26_O_80)) {
             mNotificationManager.startForeground();
         }
 
