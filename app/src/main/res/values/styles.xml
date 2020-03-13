@@ -38,6 +38,8 @@
         <item name="darkToolbarTextColor">@color/neth_light_grey_color</item>
 
         <item name="button_background_drawable">@drawable/button_background_light</item>
+
+        <item name="android:statusBarColor">@color/neth_blue_color</item>
     </style>
 
     <style name="LinphoneStyleDark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -77,6 +79,8 @@
         <item name="darkToolbarTextColor">@color/neth_dark_grey</item>
 
         <item name="button_background_drawable">@drawable/button_background_dark</item>
+
+        <item name="android:statusBarColor">@color/neth_blue_color</item>
     </style>
 
     <!-- Assistant related -->

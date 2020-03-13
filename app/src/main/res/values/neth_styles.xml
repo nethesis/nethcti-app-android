@@ -62,9 +62,17 @@
     <!-- Text fields -->
     <style name="neth_primary_text_layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxBackgroundMode">outline</item>
+        <item name="backgroundColor">@color/neth_blue_color</item>
         <item name="android:textColor">?attr/primaryTextColor</item>
         <item name="boxStrokeColor">@color/neth_light_blue_color</item>
         <item name="colorControlNormal">?attr/backgroundColor</item>
+        <item name="colorControlActivated">@color/neth_light_blue_color</item>
+        <item name="android:colorControlHighlight">@color/neth_light_blue_color</item>
+    </style>
+
+    <style name="neth_primary_text_layout_theme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/neth_light_blue_color</item>
         <item name="colorControlActivated">@color/neth_light_blue_color</item>
         <item name="android:colorControlHighlight">@color/neth_light_blue_color</item>
     </style>

@@ -58,7 +58,8 @@
                     android:labelFor="@id/assistant_domain"/>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:theme="@style/neth_primary_text_layout"
+                    style="@style/neth_primary_text_layout"
+                    android:theme="@style/neth_primary_text_layout_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -88,7 +89,8 @@
                     android:labelFor="@id/assistant_username"/>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:theme="@style/neth_primary_text_layout"
+                    style="@style/neth_primary_text_layout"
+                    android:theme="@style/neth_primary_text_layout_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -118,7 +120,8 @@
                     android:labelFor="@id/assistant_password"/>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:theme="@style/neth_primary_text_layout"
+                    style="@style/neth_primary_text_layout"
+                    android:theme="@style/neth_primary_text_layout_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
