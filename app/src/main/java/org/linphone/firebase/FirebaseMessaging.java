@@ -63,9 +63,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
-        // TODO: LUCA : remove
-        sendNotification(remoteMessage.getData().get("message"));
+        // sendNotification(remoteMessage.getData().get("message")); // Only for testing.
         android.util.Log.i("FirebaseMessaging", "[Push Notification] Received");
 
         if (!LinphoneService.isReady()) {
