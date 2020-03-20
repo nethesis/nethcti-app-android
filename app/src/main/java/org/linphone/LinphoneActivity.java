@@ -352,10 +352,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
         /*
         LinphonePreferences.instance().setInitiateVideoCall(true);
         LinphonePreferences.instance().setAutomaticallyAcceptVideoRequests(true);
-        LinphonePreferences.instance().enableOverlay(false);
         LinphonePreferences.instance().setServiceNotificationVisibility(true);
         LinphoneService.instance().getNotificationManager().startForeground();
          */
+        LinphonePreferences.instance().enableOverlay(true);
         LinphonePreferences.instance().setMediaEncryption(MediaEncryption.SRTP);
     }
 
