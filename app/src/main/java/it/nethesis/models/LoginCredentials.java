@@ -1,4 +1,4 @@
-package org.linphone.models;
+package it.nethesis.models;
 
 import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;

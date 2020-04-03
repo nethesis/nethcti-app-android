@@ -24,7 +24,4 @@
     <string name="neth_login_missing_neth_extension">No extensions for this user, contact an administrator.</string>
 
     <string name="neth_test_domain" translatable="false">nethctiapp.nethserver.net</string>
-
-    <string name="notificatore_uri" translatable="false">http://notificatore.apexnet.it/Notificatore.aspx</string>
-    <string name="notificatore_app_key" translatable="false">NETHCTI_APP</string>
 </resources>

@@ -1,4 +1,4 @@
-package org.linphone.utils.webservices;
+package it.nethesis.webservices;
 
 import android.util.Log;
 import com.google.gson.GsonBuilder;
