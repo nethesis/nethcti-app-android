@@ -30,9 +30,9 @@ public class RetrofitGenerator {
      * @return the service.
      */
     public static <S> S createService(Class<S> serviceClass, String domain, boolean interceptors) {
-        if (retrofit == null) {
-            String endpoint =
-                    domain == null ? BASE_URL : String.format("https://%s/webrest/", domain);
+        String endpoint = domain == null ? BASE_URL : String.format("https://%s/webrest/", domain);
+
+        if (retrofit == null || !retrofit.baseUrl().toString().equals(endpoint)) {
             if (interceptors) {
                 HttpLoggingInterceptor logBody =
                         new HttpLoggingInterceptor(

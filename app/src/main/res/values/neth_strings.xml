@@ -12,7 +12,7 @@
     <string name="neth_about_fax" translatable="false">Fax: +39 0721 268147</string>
     <string name="neth_about_tel" translatable="false">Tel: +39 0721 1791157</string>
 
-    <string name="neth_login_1_call_failed">Login fail, retry later.</string>
+    <string name="neth_login_1_call_failed">Can not reach server. Check domain and network connection.</string>
     <string name="neth_login_2_call_failed">Fail get me api call.</string>
     <string name="neth_login_wrong_credentials">Login failed, retry later or check your credentials.</string>
     <string name="neth_login_missing_authentication_header">No user information header provided, check data or contact an administrator.</string>
