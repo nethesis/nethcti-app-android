@@ -11,6 +11,7 @@
     <string name="neth_about_link" translatable="false">https://nethesis.it</string>
     <string name="neth_about_fax" translatable="false">Fax: +39 0721 268147</string>
     <string name="neth_about_tel" translatable="false">Tel: +39 0721 1791157</string>
+    <string name="neth_privacy_policy_link" translatable="false">https://www.nethesis.it/</string>
 
     <string name="neth_login_1_call_failed">Can not reach server. Check domain and network connection.</string>
     <string name="neth_login_2_call_failed">Fail get me api call.</string>
