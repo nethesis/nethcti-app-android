@@ -33,6 +33,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import java.util.UUID;
+import org.linphone.BuildConfig;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneService;
 import org.linphone.R;
@@ -63,7 +64,10 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // sendNotification(remoteMessage.getData().get("message")); // Only for testing.
+        if (BuildConfig.DEBUG) {
+            sendNotification(remoteMessage.getData().get("message")); // Only for testing.
+        }
+
         android.util.Log.i("FirebaseMessaging", "[Push Notification] Received");
 
         if (!LinphoneService.isReady()) {

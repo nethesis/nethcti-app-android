@@ -104,11 +104,15 @@ public class FCMNotification {
                         @Override
                         public void onResponse(
                                 Call<RegisterTokenReponse> call,
-                                Response<RegisterTokenReponse> response) {}
+                                Response<RegisterTokenReponse> response) {
+                            Log.i(TAG, "FCM Token registered");
+                        }
 
                         @Override
                         public void onFailure(
-                                Call<RegisterTokenReponse> call, Throwable exception) {}
+                                Call<RegisterTokenReponse> call, Throwable exception) {
+                            Log.e(TAG, "FCM Error registering Token");
+                        }
                     });
         } catch (Exception ex) {
             Log.e(TAG, "FCM Exception", ex);
