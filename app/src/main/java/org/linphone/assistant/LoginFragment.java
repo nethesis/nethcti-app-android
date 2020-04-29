@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import static org.linphone.utils.webservices.RetrofitGenerator.calculateRFC2104HMAC;
+import static it.nethesis.webservices.RetrofitGenerator.calculateRFC2104HMAC;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -32,17 +32,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import it.nethesis.models.Extension;
+import it.nethesis.models.LoginCredentials;
+import it.nethesis.models.NethUser;
+import it.nethesis.webservices.AuthenticationRestAPI;
+import it.nethesis.webservices.RetrofitGenerator;
+import it.nethesis.webservices.UserRestAPI;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.linphone.R;
 import org.linphone.core.TransportType;
-import org.linphone.models.Extension;
-import org.linphone.models.LoginCredentials;
-import org.linphone.models.NethUser;
 import org.linphone.utils.SharedPreferencesManager;
-import org.linphone.utils.webservices.AuthenticationRestAPI;
-import org.linphone.utils.webservices.RetrofitGenerator;
-import org.linphone.utils.webservices.UserRestAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

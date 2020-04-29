@@ -4,15 +4,23 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
-import android.text.TextUtils;
 import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.GsonBuilder;
+import it.nethesis.models.notificatore.RegisterToken;
+import it.nethesis.models.notificatore.RegisterTokenReponse;
+import it.nethesis.webservices.NotificatoreRestAPI;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
 import org.linphone.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /** This class contains methods for record user identifier and send it to server. */
 public class FCMNotification {
@@ -64,28 +72,50 @@ public class FCMNotification {
         return netUsername + "@" + domain;
     }
 
-    private static boolean doSendRegistrationId(
+    private static void doSendRegistrationId(
             String deviceId,
             String user,
             String notificatoreUrl,
             String notificatoreAppKey,
             String language) {
         try {
-            String urlstring = notificatoreUrl;
-            urlstring += "?CMD=initapp&os=2";
-            urlstring += "&devtoken=" + deviceId;
-            urlstring += "&regid=" + FirebaseInstanceId.getInstance().getToken();
-            urlstring += "&appkey=" + notificatoreAppKey;
-            if (!TextUtils.isEmpty(language)) urlstring += "&lang=" + language;
 
-            if (user != null && !user.equals("")) urlstring += "&user=" + user;
+            Retrofit retrofit =
+                    new Retrofit.Builder()
+                            .baseUrl(notificatoreUrl)
+                            .addConverterFactory(
+                                    GsonConverterFactory.create(
+                                            new GsonBuilder().serializeNulls().create()))
+                            .build();
 
-            String result = getUrlContents(urlstring);
+            NotificatoreRestAPI restAPIClass = retrofit.create(NotificatoreRestAPI.class);
 
-            return result.contains("OK");
+            RegisterToken registerData = new RegisterToken();
+            registerData.setRegID(FirebaseInstanceId.getInstance().getToken());
+            registerData.setOs("2");
+            registerData.setUser(user);
+            registerData.setLanguage(language);
+            registerData.setDevToken(deviceId);
+
+            Call<RegisterTokenReponse> call =
+                    restAPIClass.registerToken(notificatoreAppKey, registerData);
+            call.enqueue(
+                    new Callback<RegisterTokenReponse>() {
+                        @Override
+                        public void onResponse(
+                                Call<RegisterTokenReponse> call,
+                                Response<RegisterTokenReponse> response) {
+                            Log.i(TAG, "FCM Token registered");
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<RegisterTokenReponse> call, Throwable exception) {
+                            Log.e(TAG, "FCM Error registering Token");
+                        }
+                    });
         } catch (Exception ex) {
             Log.e(TAG, "FCM Exception", ex);
-            return false;
         }
     }
 

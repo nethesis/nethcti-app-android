@@ -76,7 +76,7 @@ public class AboutFragment extends Fragment implements OnClickListener {
                         Intent browserIntent =
                                 new Intent(
                                         Intent.ACTION_VIEW,
-                                        Uri.parse(getString(R.string.about_privacy_policy_link)));
+                                        Uri.parse(getString(R.string.neth_privacy_policy_link)));
                         startActivity(browserIntent);
                     }
                 });

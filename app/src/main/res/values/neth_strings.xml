@@ -11,8 +11,9 @@
     <string name="neth_about_link" translatable="false">https://nethesis.it</string>
     <string name="neth_about_fax" translatable="false">Fax: +39 0721 268147</string>
     <string name="neth_about_tel" translatable="false">Tel: +39 0721 1791157</string>
+    <string name="neth_privacy_policy_link" translatable="false">https://blog.nethesis.it/terms-and-privacy-nethcti-app/</string>
 
-    <string name="neth_login_1_call_failed">Login fail, retry later.</string>
+    <string name="neth_login_1_call_failed">Can not reach server. Check domain and network connection.</string>
     <string name="neth_login_2_call_failed">Fail get me api call.</string>
     <string name="neth_login_wrong_credentials">Login failed, retry later or check your credentials.</string>
     <string name="neth_login_missing_authentication_header">No user information header provided, check data or contact an administrator.</string>
@@ -24,7 +25,4 @@
     <string name="neth_login_missing_neth_extension">No extensions for this user, contact an administrator.</string>
 
     <string name="neth_test_domain" translatable="false">nethctiapp.nethserver.net</string>
-
-    <string name="notificatore_uri" translatable="false">http://notificatore.apexnet.it/Notificatore.aspx</string>
-    <string name="notificatore_app_key" translatable="false">NETHCTI_APP</string>
 </resources>

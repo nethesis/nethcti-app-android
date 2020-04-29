@@ -1,6 +1,6 @@
-package org.linphone.utils.webservices;
+package it.nethesis.webservices;
 
-import org.linphone.models.NethUser;
+import it.nethesis.models.NethUser;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

@@ -1,6 +1,6 @@
-package org.linphone.utils.webservices;
+package it.nethesis.webservices;
 
-import org.linphone.models.LoginCredentials;
+import it.nethesis.models.LoginCredentials;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
