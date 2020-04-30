@@ -24,3 +24,6 @@ linphone-sdk-android/*.aar
 app/release
 keystore.properties
 app/src/main/res/xml/contacts.xml
+app/NethCTIKeyStore
+app/src/main/res/values/notificatore_strings.xml
+keystore.properties
