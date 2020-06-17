@@ -107,6 +107,7 @@ import org.linphone.core.PublishState;
 import org.linphone.core.Reason;
 import org.linphone.core.RegistrationState;
 import org.linphone.core.SubscriptionState;
+import org.linphone.core.TransportType;
 import org.linphone.core.Tunnel;
 import org.linphone.core.TunnelConfig;
 import org.linphone.core.VersionUpdateCheckResult;
@@ -544,6 +545,7 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
         Address lAddress;
         lAddress = mCore.interpretUrl(to); // InterpretUrl does normalizePhoneNumber
+        lAddress.setTransport(TransportType.Tls);
         if (lAddress == null) {
             Log.e("[Manager] Couldn't convert to String to Address : " + to);
             return;
