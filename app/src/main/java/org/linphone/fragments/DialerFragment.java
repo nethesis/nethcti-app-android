@@ -119,10 +119,10 @@ public class DialerFragment extends Fragment {
                         if (lc.getCurrentCall() == null) {
                             return;
                         }
-                        lc.transferCall(lc.getCurrentCall(), mAddress.getText().toString());
                         sIsCallTransferOngoing = false;
-                        LinphoneActivity.instance()
-                                .resetClassicMenuLayoutAndGoBackToCallIfStillRunning();
+                        if (mAddress.getText().length() > 0) {
+                            LinphoneManager.getInstance().newOutgoingCall(mAddress);
+                        }
                     }
                 };
 

@@ -40,7 +40,8 @@ public class PhoneStateChangedReceiver extends BroadcastReceiver {
             if (lc != null) {
                 lc.pauseAllCalls();
             }
-        } else if (TelephonyManager.EXTRA_STATE_IDLE.equals(extraState) || TelephonyManager.EXTRA_STATE_RINGING.equals(extraState)) {
+        } else if (TelephonyManager.EXTRA_STATE_IDLE.equals(extraState)
+                || TelephonyManager.EXTRA_STATE_RINGING.equals(extraState)) {
             LinphoneManager.getInstance().setCallGsmON(false);
         }
     }

@@ -1450,6 +1450,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
         return mCallTransfer;
     }
 
+    public void setmCallTransfer(boolean b) {
+        this.mCallTransfer = b;
+    }
+
     private void initInCallMenuLayout() {
         selectMenu(FragmentsAvailable.DIALER);
         DialerFragment dialerFragment = DialerFragment.instance();

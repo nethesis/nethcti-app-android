@@ -405,6 +405,11 @@ public class CallActivity extends LinphoneGenericActivity
         mOptions.setOnClickListener(this);
         mOptions.setEnabled(false);
 
+        if (LinphoneActivity.instance().isCallTransfer()) {
+            mOptions.setImageDrawable(
+                    getResources().getDrawable(R.drawable.options_transfer_call_default));
+        }
+
         // BottonBar
         mHangUp = findViewById(R.id.hang_up);
         mHangUp.setOnClickListener(this);
@@ -792,7 +797,14 @@ public class CallActivity extends LinphoneGenericActivity
         } else if (id == R.id.transfer) {
             goBackToDialerAndDisplayTransferButton();
         } else if (id == R.id.options) {
-            hideOrDisplayCallOptions();
+            if (LinphoneActivity.instance().isCallTransfer()) {
+                LinphoneManager.getLc()
+                        .getCurrentCall()
+                        .transferToAnother(LinphoneManager.getLc().getCalls()[0]);
+                LinphoneActivity.instance().setmCallTransfer(false);
+            } else {
+                hideOrDisplayCallOptions();
+            }
         } else if (id == R.id.audio_route) {
             hideOrDisplayAudioRoutes();
         } else if (id == R.id.route_bluetooth) {
