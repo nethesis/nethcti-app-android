@@ -693,6 +693,12 @@ public class CallActivity extends LinphoneGenericActivity
         mOptions.setEnabled(
                 !getResources().getBoolean(R.bool.disable_options_in_call)
                         && (mAddCall.isEnabled() || mTransfer.isEnabled()));
+        if (LinphoneActivity.instance().isCallTransfer()) {
+            mOptions.setImageDrawable(
+                    getResources().getDrawable(R.drawable.options_transfer_call_default));
+        } else {
+            mOptions.setImageDrawable(getResources().getDrawable(R.drawable.options));
+        }
 
         Call currentCall = LinphoneManager.getLc().getCurrentCall();
 
