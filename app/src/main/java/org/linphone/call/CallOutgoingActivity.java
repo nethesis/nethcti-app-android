@@ -92,6 +92,18 @@ public class CallOutgoingActivity extends LinphoneGenericActivity implements OnC
                     @Override
                     public void onCallStateChanged(
                             Core lc, Call call, Call.State state, String message) {
+                        if (state == State.End || state == State.Error) {
+                            if (LinphoneActivity.instance().isCallTransfer()
+                                    && LinphoneActivity.instance().getmTransferCallId() != null) {
+                                LinphoneManager.getLc()
+                                        .getCallByRemoteAddress2(
+                                                LinphoneActivity.instance().getmTransferCallId())
+                                        .resume();
+                            }
+                            if (state == State.End) {
+                                LinphoneActivity.instance().setmCallTransfer(false);
+                            }
+                        }
                         if (call == mCall && State.Connected == state) {
                             if (!LinphoneActivity.isInstanciated()) {
                                 return;
