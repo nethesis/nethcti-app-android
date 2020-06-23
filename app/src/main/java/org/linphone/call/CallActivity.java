@@ -266,6 +266,8 @@ public class CallActivity extends LinphoneGenericActivity
                                 showAcceptCallUpdateDialog();
                                 createTimerForDialog(SECONDS_BEFORE_DENYING_CALL_UPDATE);
                             }
+                        } else if (state == State.End) {
+                            LinphoneActivity.instance().setmCallTransfer(false);
                         }
 
                         refreshIncallUi();

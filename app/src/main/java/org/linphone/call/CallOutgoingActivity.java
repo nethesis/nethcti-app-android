@@ -250,8 +250,8 @@ public class CallOutgoingActivity extends LinphoneGenericActivity implements OnC
     }
 
     private void decline() {
-        mCall.terminate();
         LinphoneActivity.instance().setmCallTransfer(false);
+        mCall.terminate();
         finish();
     }
 
