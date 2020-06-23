@@ -169,8 +169,18 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private boolean mIsOnBackground = false;
     private int mAlwaysChangingPhoneAngle = -1;
 
+    private Address mTransferCallId = null;
+
     public static boolean isInstanciated() {
         return sInstance != null;
+    }
+
+    public Address getmTransferCallId() {
+        return mTransferCallId;
+    }
+
+    public void setmTransferCallId(Address mTransferCallId) {
+        this.mTransferCallId = mTransferCallId;
     }
 
     public static LinphoneActivity instance() {

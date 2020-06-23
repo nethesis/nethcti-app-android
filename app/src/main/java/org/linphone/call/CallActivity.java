@@ -266,8 +266,18 @@ public class CallActivity extends LinphoneGenericActivity
                                 showAcceptCallUpdateDialog();
                                 createTimerForDialog(SECONDS_BEFORE_DENYING_CALL_UPDATE);
                             }
-                        } else if (state == State.End) {
-                            LinphoneActivity.instance().setmCallTransfer(false);
+                        } else if (state == State.End || state == State.Error) {
+                            if (LinphoneActivity.instance().isCallTransfer()
+                                    && LinphoneActivity.instance().getmTransferCallId() != null) {
+                                pauseOrResumeCall(
+                                        LinphoneManager.getLc()
+                                                .getCallByRemoteAddress2(
+                                                        LinphoneActivity.instance()
+                                                                .getmTransferCallId()));
+                            }
+                            if (state == State.End) {
+                                LinphoneActivity.instance().setmCallTransfer(false);
+                            }
                         }
 
                         refreshIncallUi();
@@ -808,8 +818,12 @@ public class CallActivity extends LinphoneGenericActivity
             if (LinphoneActivity.instance().isCallTransfer()) {
                 LinphoneManager.getLc()
                         .getCurrentCall()
-                        .transferToAnother(LinphoneManager.getLc().getCalls()[0]);
+                        .transferToAnother(
+                                LinphoneManager.getLc()
+                                        .getCallByRemoteAddress2(
+                                                LinphoneActivity.instance().getmTransferCallId()));
                 LinphoneActivity.instance().setmCallTransfer(false);
+                LinphoneActivity.instance().setmTransferCallId(null);
             } else {
                 hideOrDisplayCallOptions();
             }
@@ -1036,7 +1050,7 @@ public class CallActivity extends LinphoneGenericActivity
             mPause.setSelected(true);
         } else if (call != null) {
             if (call.getState() == State.Paused) {
-                lc.resumeCall(call);
+                call.resume();
                 if (mIsVideoCallPaused) {
                     mIsVideoCallPaused = false;
                 }

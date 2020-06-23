@@ -121,6 +121,11 @@ public class DialerFragment extends Fragment {
                         }
                         sIsCallTransferOngoing = false;
                         if (mAddress.getText().length() > 0) {
+                            LinphoneActivity.instance()
+                                    .setmTransferCallId(
+                                            LinphoneManager.getLc()
+                                                    .getCurrentCall()
+                                                    .getRemoteAddress());
                             LinphoneManager.getInstance().newOutgoingCall(mAddress);
                         }
                     }
