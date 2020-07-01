@@ -281,10 +281,11 @@ public class CallActivity extends LinphoneGenericActivity
                                                         CallTransferManager.instance()
                                                                 .getmTransferCallId()));
                             }
-                            if (state == State.End) {
-                                // LinphoneActivity.instance().setmCallTransfer(false);
-                                CallTransferManager.instance().setmCallTransfer(false);
-                            }
+
+                            // if (state == State.End) {
+                            // LinphoneActivity.instance().setmCallTransfer(false);
+                            CallTransferManager.instance().setmCallTransfer(false);
+                            // }
                         }
 
                         refreshIncallUi();
@@ -713,7 +714,6 @@ public class CallActivity extends LinphoneGenericActivity
         mOptions.setEnabled(
                 !getResources().getBoolean(R.bool.disable_options_in_call)
                         && (mAddCall.isEnabled() || mTransfer.isEnabled()));
-        // if (LinphoneActivity.isInstanciated() && LinphoneActivity.instance().isCallTransfer()) {
         if (CallTransferManager.instance().ismCallTransfer()) {
             mOptions.setImageDrawable(
                     getResources().getDrawable(R.drawable.options_transfer_call_default));
@@ -824,9 +824,7 @@ public class CallActivity extends LinphoneGenericActivity
         } else if (id == R.id.transfer) {
             goBackToDialerAndDisplayTransferButton();
         } else if (id == R.id.options) {
-            // if (LinphoneActivity.instance().isCallTransfer()) {
             if (CallTransferManager.instance().ismCallTransfer()) {
-                // LinphoneManager.getLc().getCurrentCall().transferToAnother(LinphoneManager.getLc().getCallByRemoteAddress2(LinphoneActivity.instance().getmTransferCallId()));
                 LinphoneManager.getLc()
                         .getCurrentCall()
                         .transferToAnother(
@@ -834,9 +832,7 @@ public class CallActivity extends LinphoneGenericActivity
                                         .getCallByRemoteAddress2(
                                                 CallTransferManager.instance()
                                                         .getmTransferCallId()));
-                // LinphoneActivity.instance().setmCallTransfer(false);
                 CallTransferManager.instance().setmCallTransfer(false);
-                // LinphoneActivity.instance().setmTransferCallId(null);
                 CallTransferManager.instance().setmTransferCallId(null);
             } else {
                 hideOrDisplayCallOptions();

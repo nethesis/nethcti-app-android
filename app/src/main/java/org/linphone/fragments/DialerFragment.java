@@ -119,9 +119,8 @@ public class DialerFragment extends Fragment {
                         if (lc.getCurrentCall() == null) {
                             return;
                         }
-                        CallTransferManager.instance().setmCallTransfer(false);
+
                         if (mAddress.getText().length() > 0) {
-                            // LinphoneActivity.instance().setmTransferCallId(LinphoneManager.getLc().getCurrentCall().getRemoteAddress());
                             CallTransferManager.instance()
                                     .setmTransferCallId(
                                             LinphoneManager.getLc()

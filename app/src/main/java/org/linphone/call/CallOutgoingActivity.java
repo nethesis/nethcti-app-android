@@ -94,21 +94,14 @@ public class CallOutgoingActivity extends LinphoneGenericActivity implements OnC
                     public void onCallStateChanged(
                             Core lc, Call call, Call.State state, String message) {
                         if (state == State.End || state == State.Error) {
-                            // if (LinphoneActivity.instance().isCallTransfer()
                             if (CallTransferManager.instance().ismCallTransfer()
-                                    // && LinphoneActivity.instance().getmTransferCallId() != null)
-                                    // {
                                     && CallTransferManager.instance().getmTransferCallId()
                                             != null) {
-                                // LinphoneManager.getLc().getCallByRemoteAddress2(LinphoneActivity.instance().getmTransferCallId()).resume();
+                                CallTransferManager.instance().setmCallTransfer(false);
                                 LinphoneManager.getLc()
                                         .getCallByRemoteAddress2(
                                                 CallTransferManager.instance().getmTransferCallId())
                                         .resume();
-                            }
-                            if (state == State.End) {
-                                // LinphoneActivity.instance().setmCallTransfer(false);
-                                CallTransferManager.instance().setmCallTransfer(false);
                             }
                         }
                         if (call == mCall && State.Connected == state) {
@@ -269,8 +262,6 @@ public class CallOutgoingActivity extends LinphoneGenericActivity implements OnC
     }
 
     private void decline() {
-        // LinphoneActivity.instance().setmCallTransfer(false);
-        // LinphoneActivity.instance().setmTransferCallId(null);
         CallTransferManager.instance().setmCallTransfer(false);
         CallTransferManager.instance().setmTransferCallId(null);
         mCall.terminate();
