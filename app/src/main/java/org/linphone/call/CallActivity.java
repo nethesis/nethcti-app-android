@@ -268,24 +268,17 @@ public class CallActivity extends LinphoneGenericActivity
                                 createTimerForDialog(SECONDS_BEFORE_DENYING_CALL_UPDATE);
                             }
                         } else if (state == State.End || state == State.Error) {
-                            // if (LinphoneActivity.instance().isCallTransfer()
                             if (CallTransferManager.instance().ismCallTransfer()
-                                    // && LinphoneActivity.instance().getmTransferCallId() != null)
-                                    // {
                                     && CallTransferManager.instance().getmTransferCallId()
                                             != null) {
                                 pauseOrResumeCall(
-                                        // LinphoneManager.getLc().getCallByRemoteAddress2(LinphoneActivity.instance().getmTransferCallId()));
                                         LinphoneManager.getLc()
                                                 .getCallByRemoteAddress2(
                                                         CallTransferManager.instance()
                                                                 .getmTransferCallId()));
                             }
 
-                            // if (state == State.End) {
-                            // LinphoneActivity.instance().setmCallTransfer(false);
                             CallTransferManager.instance().setmCallTransfer(false);
-                            // }
                         }
 
                         refreshIncallUi();

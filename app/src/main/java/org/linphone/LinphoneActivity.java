@@ -539,7 +539,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
             }
         } else if (resultCode == Activity.RESULT_FIRST_USER && requestCode == CALL_ACTIVITY) {
             getIntent().putExtra("PreviousActivity", CALL_ACTIVITY);
-            // mCallTransfer = data != null && data.getBooleanExtra("Transfer", false);
             CallTransferManager.instance()
                     .setmCallTransfer(data != null && data.getBooleanExtra("Transfer", false));
             if (LinphoneManager.getLc().getCallsNb() > 0) {
