@@ -91,7 +91,7 @@ public class NotificationsManager {
                         mContext,
                         mContext.getString(R.string.service_name),
                         "",
-                        R.drawable.linphone_notification_icon,
+                        R.drawable.ic_nethesis_24,
                         R.mipmap.ic_launcher,
                         bm,
                         pendingIntent,

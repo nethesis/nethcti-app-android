@@ -61,6 +61,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import it.nethesis.utils.CallTransferManager;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -165,7 +166,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private ImageView mMenu;
     private MenuAdapter menuAdapter;
     private static List<MenuItem> mSideMenuItems;
-    private boolean mCallTransfer = false;
+    // private boolean mCallTransfer = false;
     private boolean mIsOnBackground = false;
     private int mAlwaysChangingPhoneAngle = -1;
 
@@ -538,7 +539,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
             }
         } else if (resultCode == Activity.RESULT_FIRST_USER && requestCode == CALL_ACTIVITY) {
             getIntent().putExtra("PreviousActivity", CALL_ACTIVITY);
-            mCallTransfer = data != null && data.getBooleanExtra("Transfer", false);
+            // mCallTransfer = data != null && data.getBooleanExtra("Transfer", false);
+            CallTransferManager.instance()
+                    .setmCallTransfer(data != null && data.getBooleanExtra("Transfer", false));
             if (LinphoneManager.getLc().getCallsNb() > 0) {
                 initInCallMenuLayout();
             } else {
@@ -564,7 +567,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }*/
 
         Bundle extras = intent.getExtras();
-        mCallTransfer = false;
+        // mCallTransfer = false;
+        CallTransferManager.instance().setmCallTransfer(false);
         if (extras != null) {
             if (extras.getBoolean("GoToChat", false)) {
                 String localSipUri = extras.getString("LocalSipUri");
@@ -597,7 +601,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 goToDialerFragment();
             } else if (extras.getBoolean("Transfer", false)) {
                 intent.putExtra("DoNotGoToCallActivity", true);
-                mCallTransfer = true;
+                // mCallTransfer = true;
+                CallTransferManager.instance().setmCallTransfer(true);
                 if (LinphoneManager.getLc().getCallsNb() > 0) {
                     initInCallMenuLayout();
                 } else {
@@ -1424,7 +1429,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
         AddressType address = new AddressText(this, null);
         address.setText(number);
         address.setDisplayedName(name);
-        if (!mCallTransfer) {
+        // if (!mCallTransfer) {
+        if (!CallTransferManager.instance().ismCallTransfer()) {
             LinphoneManager.getInstance().newOutgoingCall(address);
         } else {
             addressWaitingToBeCalled = number;
@@ -1446,10 +1452,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
         mOrientationHelper.enable();
     }
 
-    public Boolean isCallTransfer() {
-        return mCallTransfer;
-    }
-
     private void initInCallMenuLayout() {
         selectMenu(FragmentsAvailable.DIALER);
         DialerFragment dialerFragment = DialerFragment.instance();
@@ -1465,6 +1467,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
 
         if (LinphoneManager.isInstanciated() && LinphoneManager.getLc().getCallsNb() > 0) {
+            CallTransferManager.instance().setmCallTransfer(false);
             Call call = LinphoneManager.getLc().getCalls()[0];
             if (call.getState() == Call.State.IncomingReceived
                     || call.getState() == State.IncomingEarlyMedia) {

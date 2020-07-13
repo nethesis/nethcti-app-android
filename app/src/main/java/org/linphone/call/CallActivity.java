@@ -56,6 +56,7 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import it.nethesis.utils.CallTransferManager;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.HashMap;
@@ -266,6 +267,25 @@ public class CallActivity extends LinphoneGenericActivity
                                 showAcceptCallUpdateDialog();
                                 createTimerForDialog(SECONDS_BEFORE_DENYING_CALL_UPDATE);
                             }
+                        } else if (state == State.End || state == State.Error) {
+                            // if (LinphoneActivity.instance().isCallTransfer()
+                            if (CallTransferManager.instance().ismCallTransfer()
+                                    // && LinphoneActivity.instance().getmTransferCallId() != null)
+                                    // {
+                                    && CallTransferManager.instance().getmTransferCallId()
+                                            != null) {
+                                pauseOrResumeCall(
+                                        // LinphoneManager.getLc().getCallByRemoteAddress2(LinphoneActivity.instance().getmTransferCallId()));
+                                        LinphoneManager.getLc()
+                                                .getCallByRemoteAddress2(
+                                                        CallTransferManager.instance()
+                                                                .getmTransferCallId()));
+                            }
+
+                            // if (state == State.End) {
+                            // LinphoneActivity.instance().setmCallTransfer(false);
+                            CallTransferManager.instance().setmCallTransfer(false);
+                            // }
                         }
 
                         refreshIncallUi();
@@ -404,6 +424,12 @@ public class CallActivity extends LinphoneGenericActivity
         mOptions = findViewById(R.id.options);
         mOptions.setOnClickListener(this);
         mOptions.setEnabled(false);
+
+        // if (LinphoneActivity.isInstanciated() && LinphoneActivity.instance().isCallTransfer()) {
+        if (CallTransferManager.instance().ismCallTransfer()) {
+            mOptions.setImageDrawable(
+                    getResources().getDrawable(R.drawable.options_transfer_call_default));
+        }
 
         // BottonBar
         mHangUp = findViewById(R.id.hang_up);
@@ -688,6 +714,12 @@ public class CallActivity extends LinphoneGenericActivity
         mOptions.setEnabled(
                 !getResources().getBoolean(R.bool.disable_options_in_call)
                         && (mAddCall.isEnabled() || mTransfer.isEnabled()));
+        if (CallTransferManager.instance().ismCallTransfer()) {
+            mOptions.setImageDrawable(
+                    getResources().getDrawable(R.drawable.options_transfer_call_default));
+        } else {
+            mOptions.setImageDrawable(getResources().getDrawable(R.drawable.options));
+        }
 
         Call currentCall = LinphoneManager.getLc().getCurrentCall();
 
@@ -792,7 +824,19 @@ public class CallActivity extends LinphoneGenericActivity
         } else if (id == R.id.transfer) {
             goBackToDialerAndDisplayTransferButton();
         } else if (id == R.id.options) {
-            hideOrDisplayCallOptions();
+            if (CallTransferManager.instance().ismCallTransfer()) {
+                LinphoneManager.getLc()
+                        .getCurrentCall()
+                        .transferToAnother(
+                                LinphoneManager.getLc()
+                                        .getCallByRemoteAddress2(
+                                                CallTransferManager.instance()
+                                                        .getmTransferCallId()));
+                CallTransferManager.instance().setmCallTransfer(false);
+                CallTransferManager.instance().setmTransferCallId(null);
+            } else {
+                hideOrDisplayCallOptions();
+            }
         } else if (id == R.id.audio_route) {
             hideOrDisplayAudioRoutes();
         } else if (id == R.id.route_bluetooth) {
@@ -1016,7 +1060,7 @@ public class CallActivity extends LinphoneGenericActivity
             mPause.setSelected(true);
         } else if (call != null) {
             if (call.getState() == State.Paused) {
-                lc.resumeCall(call);
+                call.resume();
                 if (mIsVideoCallPaused) {
                     mIsVideoCallPaused = false;
                 }

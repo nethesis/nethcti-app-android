@@ -28,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import it.nethesis.utils.CallTransferManager;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -39,7 +40,6 @@ import org.linphone.views.EraseButton;
 
 public class DialerFragment extends Fragment {
     private static DialerFragment sInstance;
-    private static boolean sIsCallTransferOngoing = false;
 
     private AddressAware mNumpad;
     private AddressText mAddress;
@@ -68,7 +68,7 @@ public class DialerFragment extends Fragment {
         if (LinphoneActivity.isInstanciated()
                 && LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null
                 && LinphoneManager.getLcIfManagerNotDestroyedOrNull().getCallsNb() > 0) {
-            if (sIsCallTransferOngoing) {
+            if (CallTransferManager.instance().ismCallTransfer()) {
                 mCall.setImageResource(R.drawable.call_transfer);
             } else {
                 mCall.setImageResource(R.drawable.call_add);
@@ -119,10 +119,15 @@ public class DialerFragment extends Fragment {
                         if (lc.getCurrentCall() == null) {
                             return;
                         }
-                        lc.transferCall(lc.getCurrentCall(), mAddress.getText().toString());
-                        sIsCallTransferOngoing = false;
-                        LinphoneActivity.instance()
-                                .resetClassicMenuLayoutAndGoBackToCallIfStillRunning();
+
+                        if (mAddress.getText().length() > 0) {
+                            CallTransferManager.instance()
+                                    .setmTransferCallId(
+                                            LinphoneManager.getLc()
+                                                    .getCurrentCall()
+                                                    .getRemoteAddress());
+                            LinphoneManager.getInstance().newOutgoingCall(mAddress);
+                        }
                     }
                 };
 
@@ -173,7 +178,8 @@ public class DialerFragment extends Fragment {
         String addressWaitingToBeCalled = LinphoneActivity.instance().addressWaitingToBeCalled;
         if (addressWaitingToBeCalled != null) {
             mAddress.setText(addressWaitingToBeCalled);
-            if (!LinphoneActivity.instance().isCallTransfer()
+            // if (!LinphoneActivity.instance().isCallTransfer()
+            if (!CallTransferManager.instance().ismCallTransfer()
                     && getResources()
                             .getBoolean(R.bool.automatically_start_intercepted_outgoing_gsm_call)) {
                 newOutgoingCall(addressWaitingToBeCalled);
@@ -186,14 +192,13 @@ public class DialerFragment extends Fragment {
         if (!LinphoneActivity.isInstanciated()) {
             return;
         }
-        sIsCallTransferOngoing = LinphoneActivity.instance().isCallTransfer();
         Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
         if (lc == null) {
             return;
         }
 
         if (lc.getCallsNb() > 0) {
-            if (sIsCallTransferOngoing) {
+            if (CallTransferManager.instance().ismCallTransfer()) {
                 mCall.setImageResource(R.drawable.call_transfer);
                 mCall.setExternalClickListener(mTransferListener);
             } else {

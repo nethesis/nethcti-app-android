@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
+import it.nethesis.utils.CallTransferManager;
 import java.util.ArrayList;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
@@ -92,6 +93,17 @@ public class CallOutgoingActivity extends LinphoneGenericActivity implements OnC
                     @Override
                     public void onCallStateChanged(
                             Core lc, Call call, Call.State state, String message) {
+                        if (state == State.End || state == State.Error) {
+                            if (CallTransferManager.instance().ismCallTransfer()
+                                    && CallTransferManager.instance().getmTransferCallId()
+                                            != null) {
+                                CallTransferManager.instance().setmCallTransfer(false);
+                                LinphoneManager.getLc()
+                                        .getCallByRemoteAddress2(
+                                                CallTransferManager.instance().getmTransferCallId())
+                                        .resume();
+                            }
+                        }
                         if (call == mCall && State.Connected == state) {
                             if (!LinphoneActivity.isInstanciated()) {
                                 return;
@@ -250,7 +262,9 @@ public class CallOutgoingActivity extends LinphoneGenericActivity implements OnC
     }
 
     private void decline() {
-        LinphoneManager.getLc().terminateCall(mCall);
+        CallTransferManager.instance().setmCallTransfer(false);
+        CallTransferManager.instance().setmTransferCallId(null);
+        mCall.terminate();
         finish();
     }
 
