@@ -418,10 +418,9 @@ public class CallActivity extends LinphoneGenericActivity
         mOptions.setOnClickListener(this);
         mOptions.setEnabled(false);
 
-        // if (LinphoneActivity.isInstanciated() && LinphoneActivity.instance().isCallTransfer()) {
         if (CallTransferManager.instance().ismCallTransfer()) {
             mOptions.setImageDrawable(
-                    getResources().getDrawable(R.drawable.options_transfer_call_default));
+                    getResources().getDrawable(R.drawable.options_transfer_call, this.getTheme()));
         }
 
         // BottonBar
@@ -707,12 +706,14 @@ public class CallActivity extends LinphoneGenericActivity
         mOptions.setEnabled(
                 !getResources().getBoolean(R.bool.disable_options_in_call)
                         && (mAddCall.isEnabled() || mTransfer.isEnabled()));
+
+        Drawable d = null;
         if (CallTransferManager.instance().ismCallTransfer()) {
-            mOptions.setImageDrawable(
-                    getResources().getDrawable(R.drawable.options_transfer_call_default));
+            d = getResources().getDrawable(R.drawable.options_transfer_call, this.getTheme());
         } else {
-            mOptions.setImageDrawable(getResources().getDrawable(R.drawable.options));
+            d = getResources().getDrawable(R.drawable.options, this.getTheme());
         }
+        mOptions.setImageDrawable(d);
 
         Call currentCall = LinphoneManager.getLc().getCurrentCall();
 
