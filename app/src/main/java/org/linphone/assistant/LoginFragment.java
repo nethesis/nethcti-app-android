@@ -272,7 +272,8 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                                 null,
                                 domain,
                                 TransportType.Tls,
-                                nethUser.username);
+                                nethUser.username,
+                                e.proxyPort);
                 // I do login with only one extension.
                 SharedPreferencesManager.setUsername(
                         getActivity().getApplicationContext(), nethUser.username);

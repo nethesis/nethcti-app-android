@@ -28,4 +28,8 @@ public class Extension {
     @SerializedName("description")
     @Expose
     public String description;
+
+    @SerializedName("proxy_port")
+    @Expose
+    public int proxyPort;
 }
