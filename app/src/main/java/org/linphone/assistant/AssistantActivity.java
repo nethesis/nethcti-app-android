@@ -531,7 +531,8 @@ public class AssistantActivity extends ThemableActivity
             String prefix,
             String domain,
             TransportType transport,
-            String netUsername) {
+            String netUsername,
+            int proxyPort) {
         Core core = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
         if (core == null) return;
 
@@ -547,7 +548,14 @@ public class AssistantActivity extends ThemableActivity
             identityAddr.setDisplayName(displayname);
             proxyConfig.setIdentityAddress(identityAddr);
         }
-        String proxy = "<sip:" + domain + ";transport=" + transport.name().toLowerCase() + ">";
+        String proxy =
+                "<sip:"
+                        + domain
+                        + ":"
+                        + proxyPort
+                        + ";transport="
+                        + transport.name().toLowerCase()
+                        + ">";
         proxyConfig.setServerAddr(proxy);
 
         proxyConfig.setDialPrefix(prefix);

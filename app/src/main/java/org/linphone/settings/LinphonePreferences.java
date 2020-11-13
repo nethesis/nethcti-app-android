@@ -591,7 +591,7 @@ public class LinphonePreferences {
     public void setMediaEncryption(MediaEncryption menc) {
         if (getLc() == null) return;
         if (menc == null) return;
-
+        if (menc == MediaEncryption.SRTP) getLc().setMediaEncryptionMandatory(true);
         getLc().setMediaEncryption(menc);
     }
 
