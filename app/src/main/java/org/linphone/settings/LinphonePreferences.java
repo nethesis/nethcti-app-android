@@ -591,7 +591,6 @@ public class LinphonePreferences {
     public void setMediaEncryption(MediaEncryption menc) {
         if (getLc() == null) return;
         if (menc == null) return;
-
         getLc().setMediaEncryption(menc);
     }
 
@@ -607,7 +606,12 @@ public class LinphonePreferences {
             return;
         }
 
-        if (enable) {
+        togglePushNotification(enable);
+    }
+
+    public void togglePushNotification(boolean isEnabled) {
+        Core lc = LinphoneManager.getLc();
+        if (isEnabled) {
             // Add push infos to exisiting proxy configs
             String regId = getPushNotificationRegistrationID();
             String appId = getString(R.string.gcm_defaultSenderId);

@@ -69,6 +69,7 @@ import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.DialPlan;
 import org.linphone.core.Factory;
+import org.linphone.core.MediaEncryption;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.RegistrationState;
 import org.linphone.core.TransportType;
@@ -531,7 +532,8 @@ public class AssistantActivity extends ThemableActivity
             String prefix,
             String domain,
             TransportType transport,
-            String netUsername) {
+            String nethUsername,
+            Integer proxyPort) {
         Core core = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
         if (core == null) return;
 
@@ -547,13 +549,25 @@ public class AssistantActivity extends ThemableActivity
             identityAddr.setDisplayName(displayname);
             proxyConfig.setIdentityAddress(identityAddr);
         }
-        String proxy = "<sip:" + domain + ";transport=" + transport.name().toLowerCase() + ">";
-        proxyConfig.setServerAddr(proxy);
 
+        String proxy = "<sip:" + domain;
+        if (proxyPort != null) {
+            proxy += ":" + proxyPort;
+        }
+        proxy += ";transport=" + transport.name().toLowerCase() + ">";
+
+        proxyConfig.setServerAddr(proxy);
         proxyConfig.setDialPrefix(prefix);
 
         core.addProxyConfig(proxyConfig);
         core.setDefaultProxyConfig(proxyConfig);
+
+        // setup proxy settings
+        if (proxyPort != null) {
+            core.setMediaEncryption(MediaEncryption.SRTP);
+            core.setMediaEncryptionMandatory(true);
+            LinphonePreferences.instance().togglePushNotification(true);
+        }
 
         // [Notificatore] login to Notificatore app.
         FCMNotification.updateRegistrationInfo(

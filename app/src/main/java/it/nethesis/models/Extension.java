@@ -2,6 +2,7 @@ package it.nethesis.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.Nullable;
 
 /*
  * It represent the extension in Endpoints.
@@ -28,4 +29,9 @@ public class Extension {
     @SerializedName("description")
     @Expose
     public String description;
+
+    @SerializedName("proxy_port")
+    @Expose
+    @Nullable
+    public Integer proxyPort = null;
 }
