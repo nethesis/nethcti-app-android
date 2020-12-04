@@ -937,6 +937,9 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     }
 
     @Override
+    public void onMessageSent(Core core, ChatRoom chatRoom, ChatMessage chatMessage) {}
+
+    @Override
     public void onMessageReceived(Core lc, final ChatRoom cr, final ChatMessage message) {
         if (mServiceContext.getResources().getBoolean(R.bool.disable_chat)) {
             return;
@@ -1600,6 +1603,9 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
                             + "]");
         }
     }
+
+    @Override
+    public void onChatRoomRead(Core core, ChatRoom chatRoom) {}
 
     @Override
     public void onSubscriptionStateChanged(Core lc, Event ev, SubscriptionState state) {
