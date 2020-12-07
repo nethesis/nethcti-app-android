@@ -68,12 +68,12 @@ android {
         abortOnError false
     }
 
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 4148
-        versionName '1.1.0'
+        targetSdkVersion 29
+        versionCode 4150
+        versionName '1.1.1'
         applicationId getPackageName()
         multiDexEnabled true
         manifestPlaceholders = [linphone_address_mime_type: "vnd.android.cursor.item/vnd." + getPackageName() + ".provider.sip_address"]
