@@ -45,6 +45,7 @@ import org.linphone.core.Address;
 import org.linphone.core.Call;
 import org.linphone.core.CallLog;
 import org.linphone.fragments.FragmentsAvailable;
+import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.SelectableHelper;
 
 public class HistoryFragment extends Fragment
@@ -246,6 +247,8 @@ public class HistoryFragment extends Fragment
                 } else {
                     address = log.getToAddress();
                 }
+                int accountIndex = LinphonePreferences.instance().getDefaultAccountIndex();
+                address.setDomain(LinphonePreferences.instance().getAccountDomain(accountIndex));
                 LinphoneActivity.instance()
                         .setAddresGoToDialerAndCall(
                                 address.asStringUriOnly(), address.getDisplayName());
