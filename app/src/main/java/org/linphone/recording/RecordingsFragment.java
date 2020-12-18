@@ -19,8 +19,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+
+import android.Manifest;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +51,7 @@ public class RecordingsFragment extends Fragment
                 RecordingViewHolder.ClickListener,
                 SelectableHelper.DeleteListener {
     private RecyclerView mRecordingList;
-    private List<Recording> mRecordings;
+    private List<Recording> mRecordings = new ArrayList<>();
     private TextView mNoRecordings;
     private RecordingsAdapter mRecordingsAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -133,20 +137,30 @@ public class RecordingsFragment extends Fragment
         File directory = new File(recordingsDirectory);
 
         if (directory.exists() && directory.isDirectory()) {
+
+            if (checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (this != null) {
+                    this.requestPermissions(
+                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                }
+            }
             File[] existingRecordings = directory.listFiles();
 
-            for (File f : existingRecordings) {
-                boolean exists = false;
-                for (Recording r : mRecordings) {
-                    if (r.getRecordPath().equals(f.getPath())) {
-                        exists = true;
-                        break;
+            if (existingRecordings.length > 0) {
+                for (File f : existingRecordings) {
+                    boolean exists = false;
+                    for (Recording r : mRecordings) {
+                        if (r.getRecordPath().equals(f.getPath())) {
+                            exists = true;
+                            break;
+                        }
                     }
-                }
 
-                if (!exists) {
-                    if (Recording.RECORD_PATTERN.matcher(f.getPath()).matches()) {
-                        mRecordings.add(new Recording(mContext, f.getPath()));
+                    if (!exists) {
+                        if (Recording.RECORD_PATTERN.matcher(f.getPath()).matches()) {
+                            mRecordings.add(new Recording(mContext, f.getPath()));
+                        }
                     }
                 }
             }
