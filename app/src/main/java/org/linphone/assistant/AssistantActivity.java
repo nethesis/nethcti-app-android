@@ -563,11 +563,10 @@ public class AssistantActivity extends ThemableActivity
         core.setDefaultProxyConfig(proxyConfig);
 
         // setup proxy settings
-        if (proxyPort != null) {
-            core.setMediaEncryption(MediaEncryption.SRTP);
-            core.setMediaEncryptionMandatory(true);
-            LinphonePreferences.instance().togglePushNotification(true);
-        }
+        core.setMediaEncryption(MediaEncryption.SRTP);
+        LinphonePreferences.instance().togglePushNotification(true);
+        core.setMediaEncryptionMandatory(proxyPort != null);
+        proxyConfig.setExpires(proxyPort != null ? 604800 : 3600);
 
         // [Notificatore] login to Notificatore app.
         FCMNotification.updateRegistrationInfo(
