@@ -72,7 +72,7 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 4153
+        versionCode 4154
         versionName '1.1.1'
         applicationId getPackageName()
         multiDexEnabled true
