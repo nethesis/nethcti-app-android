@@ -559,14 +559,14 @@ public class AssistantActivity extends ThemableActivity
         proxyConfig.setServerAddr(proxy);
         proxyConfig.setDialPrefix(prefix);
 
-        core.addProxyConfig(proxyConfig);
-        core.setDefaultProxyConfig(proxyConfig);
-
         // setup proxy settings
         core.setMediaEncryption(MediaEncryption.SRTP);
         LinphonePreferences.instance().togglePushNotification(true);
         core.setMediaEncryptionMandatory(proxyPort != null);
         proxyConfig.setExpires(proxyPort != null ? 604800 : 3600);
+
+        core.addProxyConfig(proxyConfig);
+        core.setDefaultProxyConfig(proxyConfig);
 
         // [Notificatore] login to Notificatore app.
         FCMNotification.updateRegistrationInfo(
