@@ -14,6 +14,15 @@ public class LoginCredentials {
     @Expose
     private String Password;
 
+    @SerializedName("type")
+    @Expose
+    private String Type;
+
+    /**
+     * Set the type.
+     */
+    this.Type = "mobile";
+
     /**
      * Set the username.
      *

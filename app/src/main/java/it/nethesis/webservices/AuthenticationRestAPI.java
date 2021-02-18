@@ -1,6 +1,7 @@
 package it.nethesis.webservices;
 
 import it.nethesis.models.LoginCredentials;
+import it.nethesis.models.LogoutBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -22,5 +23,5 @@ public interface AuthenticationRestAPI {
      * @return 200 Ok HTTP Result.
      */
     @POST("authentication/logout")
-    Call<String> logout();
+    Call<String> logout(@Body LogoutBody body);
 }
