@@ -21,28 +21,45 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import it.nethesis.models.NethesisContact;
+import it.nethesis.models.contactlist.Contact;
+import it.nethesis.models.contactlist.ContactList;
+import it.nethesis.webservices.RetrofitGenerator;
+import it.nethesis.webservices.UserRestAPI;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
+import org.linphone.assistant.AssistantActivity;
 import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.utils.SelectableHelper;
+import org.linphone.utils.SharedPreferencesManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ContactsFragment extends Fragment
         implements OnItemClickListener,
@@ -64,6 +81,15 @@ public class ContactsFragment extends Fragment
     private SelectableHelper mSelectionHelper;
     private ContactsAdapter mContactAdapter;
     private SwipeRefreshLayout mContactsRefresher;
+    private List<LinphoneContact> listContact;
+    private static final int PAGE_START = 0;
+    private boolean isLoading = false;
+    private int currentPage = PAGE_START;
+    private static final int LIMIT = 20;
+    private static final String ALL = "all";
+    private String mView = ALL;
+    private RelativeLayout mRelativeLayoutViews;
+    private Spinner mSpinnerView;
 
     @Override
     public View onCreateView(
@@ -103,11 +129,27 @@ public class ContactsFragment extends Fragment
         mNewContact = view.findViewById(R.id.newContact);
         mContactsRefresher = view.findViewById(R.id.contactsListRefresher);
 
+        mRelativeLayoutViews = view.findViewById(R.id.relativeLayout_views);
+        mSpinnerView = view.findViewById(R.id.spinner_views);
+
+        ArrayAdapter mViewAdapater =
+                ArrayAdapter.createFromResource(
+                        getActivity().getApplicationContext(),
+                        R.array.views,
+                        android.R.layout.simple_spinner_dropdown_item);
+        mViewAdapater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerView.setAdapter(mViewAdapater);
+
         mContactsRefresher.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        ContactsManager.getInstance().fetchContactsAsync();
+                        if (!mOnlyDisplayLinphoneContacts) {
+                            ContactsManager.getInstance().fetchContactsAsync();
+                        } else {
+                            loadMoreContacts(
+                                    mView, mSearchView.getQuery().toString(), false, false);
+                        }
                     }
                 });
 
@@ -202,6 +244,38 @@ public class ContactsFragment extends Fragment
                 getActivity().getResources().getDrawable(R.drawable.divider));
         mContactsList.addItemDecoration(dividerItemDecoration);
 
+        mContactsList.addOnScrollListener(
+                new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+                        int visibleItemCount = mLayoutManager.getChildCount();
+                        int totalItemCount = mLayoutManager.getItemCount();
+                        int firstVisibleItemPosition =
+                                mLayoutManager.findFirstVisibleItemPosition();
+                        if (!isLoading()) {
+                            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                                    && firstVisibleItemPosition >= 0) {
+                                loadMoreContacts(
+                                        mView, mSearchView.getQuery().toString(), false, true);
+                            }
+                        }
+                    }
+                });
+
+        mSpinnerView.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(
+                            AdapterView<?> adapterView, View view, int position, long l) {
+
+                        setSelectView(adapterView.getItemAtPosition(position).toString());
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {}
+                });
+
         return view;
     }
 
@@ -224,13 +298,12 @@ public class ContactsFragment extends Fragment
         }
         changeContactsToggle();
 
-        List<LinphoneContact> listContact;
-
         if (mOnlyDisplayLinphoneContacts) {
-            listContact = ContactsManager.getInstance().getSIPContacts(search);
+            searchContactsNethesis(mView, this, search, true, true);
         } else {
             listContact = ContactsManager.getInstance().getContacts(search);
         }
+
         if (mContactAdapter != null && mContactAdapter.isEditionEnabled()) {
             isEditionEnabled = true;
         }
@@ -248,7 +321,7 @@ public class ContactsFragment extends Fragment
 
     private void changeContactsAdapter() {
         changeContactsToggle();
-        List<LinphoneContact> listContact;
+        // List<LinphoneContact> listContact;
 
         mNoSipContact.setVisibility(View.GONE);
         mNoContact.setVisibility(View.GONE);
@@ -257,13 +330,13 @@ public class ContactsFragment extends Fragment
         String query = mSearchView.getQuery().toString();
         if (query.equals("")) {
             if (mOnlyDisplayLinphoneContacts) {
-                listContact = ContactsManager.getInstance().getSIPContacts();
+                searchContactsNethesis(mView, this, "", false, true);
             } else {
                 listContact = ContactsManager.getInstance().getContacts();
             }
         } else {
             if (mOnlyDisplayLinphoneContacts) {
-                listContact = ContactsManager.getInstance().getSIPContacts(query);
+                searchContactsNethesis(mView, this, query, false, true);
             } else {
                 listContact = ContactsManager.getInstance().getContacts(query);
             }
@@ -298,11 +371,13 @@ public class ContactsFragment extends Fragment
             mAllContactsSelected.setVisibility(View.INVISIBLE);
             mLinphoneContacts.setEnabled(false);
             mLinphoneContactsSelected.setVisibility(View.VISIBLE);
+            mRelativeLayoutViews.setVisibility(View.VISIBLE);
         } else {
             mAllContacts.setEnabled(false);
             mAllContactsSelected.setVisibility(View.VISIBLE);
             mLinphoneContacts.setEnabled(true);
             mLinphoneContactsSelected.setVisibility(View.INVISIBLE);
+            mRelativeLayoutViews.setVisibility(View.GONE);
         }
     }
 
@@ -414,5 +489,172 @@ public class ContactsFragment extends Fragment
             }
         }
         ContactsManager.getInstance().deleteMultipleContactsAtOnce(ids);
+    }
+
+    private void loadMoreContacts(
+            String view, String search, boolean isInSearchMode, boolean isRefreshing) {
+        isLoading = true;
+        currentPage += isRefreshing ? 1 : 0;
+        mContactsFetchInProgress.setVisibility(View.VISIBLE);
+        // mContactsRefresher.setRefreshing(true);
+        searchContactsNethesis(view, this, search, isInSearchMode, false);
+    }
+
+    private boolean isLoading() {
+        return isLoading;
+    }
+
+    private void searchContactsNethesis(
+            final String view,
+            ContactViewHolder.ClickListener clickListener,
+            String search,
+            boolean isInSeachMode,
+            boolean isFirst) {
+
+        fetchContactsResponse(
+                search,
+                view,
+                getContext(),
+                LIMIT,
+                LIMIT * currentPage,
+                clickListener,
+                isInSeachMode,
+                isFirst);
+    }
+
+    public void setSelectView(String view) {
+        mView = view;
+        searchContacts(mSearchView.getQuery().toString());
+    }
+
+    private void fetchContactsResponse(
+            String search,
+            String view,
+            Context context,
+            int limit,
+            int offset,
+            final ContactViewHolder.ClickListener clickListener,
+            final boolean isInSeachMode,
+            final boolean isFirst) {
+
+        listContact = new ArrayList<>();
+
+        String domain = SharedPreferencesManager.getDomain(context);
+        String authToken = SharedPreferencesManager.getAuthtoken(context);
+
+        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class, domain);
+
+        Call<ContactList> searchWithTerms = null;
+        switch (view) {
+            case "all":
+                searchWithTerms = userRestAPI.searchWithTermsAll(authToken, search, limit, offset);
+                break;
+            case "company":
+                searchWithTerms =
+                        userRestAPI.searchWithTermsCompany(authToken, search, limit, offset);
+                break;
+            case "person":
+                searchWithTerms =
+                        userRestAPI.searchWithTermsPerson(authToken, search, limit, offset);
+                break;
+        }
+
+        searchWithTerms.enqueue(
+                new Callback<ContactList>() {
+                    @Override
+                    public void onResponse(Call<ContactList> call, Response<ContactList> response) {
+                        if (response.isSuccessful()) {
+                            ContactList contactList = response.body();
+                            if (contactList == null) {
+                                return;
+                            }
+                            List<Contact> contacts = contactList.getRows();
+                            for (Contact c : contacts) {
+                                listContact.add(
+                                        ContactsManager.getInstance().addNethesisContactFromAPI(c));
+                            }
+                            sortContactByView(listContact);
+                            if (mOnlyDisplayLinphoneContacts) {
+                                mContactAdapter =
+                                        new ContactsAdapter(
+                                                mContext,
+                                                listContact,
+                                                clickListener,
+                                                mSelectionHelper);
+                                mContactAdapter.setIsSearchMode(isInSeachMode);
+
+                                mSelectionHelper.setAdapter(mContactAdapter);
+                                mContactsList.setAdapter(mContactAdapter);
+
+                                mNoSipContact.setVisibility(View.GONE);
+
+                                if (!mOnlyDisplayLinphoneContacts
+                                        && mContactAdapter.getItemCount() == 0) {
+                                    mNoContact.setVisibility(View.VISIBLE);
+                                } else if (mOnlyDisplayLinphoneContacts
+                                        && mContactAdapter.getItemCount() == 0) {
+                                    mNoSipContact.setVisibility(View.VISIBLE);
+                                }
+                                mContactsFetchInProgress.setVisibility(View.GONE);
+                                mContactsRefresher.setRefreshing(false);
+
+                                mContactAdapter.notifyDataSetChanged();
+                                if (isFirst) {
+                                    displayFirstContact();
+                                }
+                            }
+                        } else if (response.code() == 401) {
+                            LinphoneManager.clearProxys(getContext());
+                            startActivity(
+                                    new Intent()
+                                            .setClass(
+                                                    LinphoneManager.getInstance().getContext(),
+                                                    AssistantActivity.class));
+
+                            getActivity().finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ContactList> call, Throwable throwable) {}
+                });
+    }
+
+    private void sortContactByView(List<LinphoneContact> listContact) {
+        switch (mView) {
+            case "all":
+            case "person":
+                Collections.sort(
+                        listContact,
+                        new Comparator() {
+
+                            public int compare(Object o1, Object o2) {
+                                int sComp = 0;
+                                String x1 = ((NethesisContact) o1).getOrganization();
+                                String x2 = ((NethesisContact) o2).getOrganization();
+                                if (x1 == null || x1.isEmpty())
+                                    if (x2 == null || x2.isEmpty()) sComp = 0;
+                                    else sComp = -1;
+                                else if (x2 == null || x2.isEmpty())
+                                    sComp = 1; // all other strings are after null
+                                else sComp = x1.compareTo(x2);
+
+                                if (sComp != 0) {
+                                    return sComp;
+                                }
+
+                                String x3 = ((NethesisContact) o1).getFullName();
+                                String x4 = ((NethesisContact) o2).getFullName();
+                                if (x3 == null || x3.isEmpty())
+                                    if (x4 == null || x4.isEmpty()) return 0;
+                                    else return -1;
+                                else if (x4 == null || x4.isEmpty()) return 1;
+                                else return x3.compareTo(x4);
+                            }
+                        });
+                break;
+            case "company":
+                break;
+        }
     }
 }

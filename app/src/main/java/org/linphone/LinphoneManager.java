@@ -119,6 +119,7 @@ import org.linphone.mediastream.Version;
 import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration;
 import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration.AndroidCamera;
 import org.linphone.mediastream.video.capture.hwconf.Hacks;
+import org.linphone.notifications.FCMNotification;
 import org.linphone.receivers.BluetoothManager;
 import org.linphone.receivers.HookReceiver;
 import org.linphone.receivers.OutgoingCallReceiver;
@@ -128,6 +129,7 @@ import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.MediaScanner;
 import org.linphone.utils.MediaScannerListener;
 import org.linphone.utils.PushNotificationUtils;
+import org.linphone.utils.SharedPreferencesManager;
 
 /**
  * Manager of the low level LibLinphone stuff.<br>
@@ -1940,6 +1942,27 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
             if (proxyConfigs.length > 0) {
                 core.setDefaultProxyConfig(proxyConfigs[0]);
             }
+        }
+    }
+
+    public static void clearProxys(Context context) {
+        Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
+        if (lc != null) {
+            // Get the current user proxy config, useful for logout by now.
+            ProxyConfig mProxyConfig = LinphoneManager.getUserProxyConfig(0);
+            LinphoneManager.removeAuthAndProxyConfigsByUser(
+                    mProxyConfig.findAuthInfo(), mProxyConfig);
+            LinphoneManager.resetProxyConfigs();
+
+            // Delete the token and domain information from the
+            // SharedPreferences
+            SharedPreferencesManager.removeAuthtoken(context);
+
+            SharedPreferencesManager.removeDomain(context);
+
+            // [Notificatore] logout user from Notificatore app.
+            SharedPreferencesManager.removeUsername(context.getApplicationContext());
+            FCMNotification.updateRegistrationInfo(context.getApplicationContext(), "");
         }
     }
 }

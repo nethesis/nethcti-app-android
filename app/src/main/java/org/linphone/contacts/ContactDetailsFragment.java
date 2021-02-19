@@ -30,10 +30,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import it.nethesis.models.NethesisContact;
+import it.nethesis.models.NethesisNumberOrAddress;
 import java.util.List;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
@@ -220,10 +224,202 @@ public class ContactDetailsFragment extends Fragment
         mOrganization.setText(
                 (mContact.getOrganization() != null) ? mContact.getOrganization() : "");
 
+        if (!mContact.isNethesisContact()) {
+            TableLayout controls = view.findViewById(R.id.controls);
+            controls.removeAllViews();
+            List<LinphoneNumberOrAddress> noas = mContact.getNumbersOrAddresses();
+            for (LinphoneNumberOrAddress noa : noas) {
+                boolean skip = false;
+                View v = inflater.inflate(R.layout.contact_control_row, null);
+
+                String value = noa.getValue();
+                String displayednumberOrAddress =
+                        LinphoneUtils.getDisplayableUsernameFromAddress(value);
+
+                TextView label = v.findViewById(R.id.address_label);
+                if (noa.isSIPAddress()) {
+                    label.setText(R.string.sip_address);
+                    skip |= getResources().getBoolean(R.bool.hide_contact_sip_addresses);
+                } else {
+                    label.setText(R.string.phone_number);
+                    skip |= getResources().getBoolean(R.bool.hide_contact_phone_numbers);
+                }
+
+                TextView tv = v.findViewById(R.id.numeroOrAddress);
+                tv.setText(displayednumberOrAddress);
+                tv.setSelected(true);
+
+                ProxyConfig lpc = LinphoneManager.getLc().getDefaultProxyConfig();
+                if (lpc != null) {
+                    String username = lpc.normalizePhoneNumber(displayednumberOrAddress);
+                    if (username != null) {
+                        value = LinphoneUtils.getFullAddressFromUsername(username);
+                    }
+                }
+
+                v.findViewById(R.id.friendLinphone).setVisibility(View.GONE);
+                if (mContact.getFriend() != null) {
+                    PresenceModel pm =
+                            mContact.getFriend().getPresenceModelForUriOrTel(noa.getValue());
+                    if (pm != null && pm.getBasicStatus().equals(PresenceBasicStatus.Open)) {
+                        v.findViewById(R.id.friendLinphone).setVisibility(View.VISIBLE);
+                    } else {
+                        if (getResources()
+                                .getBoolean(R.bool.hide_numbers_and_addresses_without_presence)) {
+                            skip = true;
+                        }
+                    }
+                }
+
+                v.findViewById(R.id.inviteFriend).setVisibility(View.GONE);
+                if (!noa.isSIPAddress()
+                        && v.findViewById(R.id.friendLinphone).getVisibility() == View.GONE
+                        && !getResources().getBoolean(R.bool.hide_invite_contact)) {
+                    v.findViewById(R.id.inviteFriend).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.inviteFriend).setTag(noa.getNormalizedPhone());
+                    v.findViewById(R.id.inviteFriend)
+                            .setOnClickListener(
+                                    new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            String number = (String) v.getTag();
+                                            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+                                            smsIntent.putExtra("address", number);
+                                            smsIntent.setData(Uri.parse("smsto:" + number));
+                                            String text =
+                                                    getString(R.string.invite_friend_text)
+                                                            .replace(
+                                                                    "%s",
+                                                                    getString(
+                                                                            R.string
+                                                                                    .download_link));
+                                            smsIntent.putExtra("sms_body", text);
+                                            startActivity(smsIntent);
+                                        }
+                                    });
+                }
+
+                String contactAddress =
+                        mContact.getContactFromPresenceModelForUriOrTel(noa.getValue());
+                if (!mDisplayChatAddressOnly) {
+                    v.findViewById(R.id.contact_call).setOnClickListener(mDialListener);
+                    if (contactAddress != null) {
+                        v.findViewById(R.id.contact_call).setTag(contactAddress);
+                    } else {
+                        v.findViewById(R.id.contact_call).setTag(value);
+                    }
+                } else {
+                    v.findViewById(R.id.contact_call).setVisibility(View.GONE);
+                }
+
+                v.findViewById(R.id.contact_chat).setOnClickListener(mChatListener);
+                v.findViewById(R.id.contact_chat_secured).setOnClickListener(mChatListener);
+                if (contactAddress != null) {
+                    v.findViewById(R.id.contact_chat).setTag(contactAddress);
+                    v.findViewById(R.id.contact_chat_secured).setTag(contactAddress);
+                } else {
+                    v.findViewById(R.id.contact_chat).setTag(value);
+                    v.findViewById(R.id.contact_chat_secured).setTag(value);
+                }
+
+                if (v.findViewById(R.id.friendLinphone).getVisibility() == View.VISIBLE
+                        && mContact.hasPresenceModelForUriOrTelCapability(
+                                noa.getValue(), FriendCapability.LimeX3Dh)) {
+                    v.findViewById(R.id.contact_chat_secured).setVisibility(View.VISIBLE);
+                } else {
+                    v.findViewById(R.id.contact_chat_secured).setVisibility(View.GONE);
+                }
+
+                if (getResources().getBoolean(R.bool.disable_chat)) {
+                    v.findViewById(R.id.contact_chat).setVisibility(View.GONE);
+                    v.findViewById(R.id.contact_chat_secured).setVisibility(View.GONE);
+                }
+
+                if (!skip) {
+                    controls.addView(v);
+                }
+            }
+        }
+        /*If Nethesis Contact*/
+        else {
+            SetNethesisContactDetails(inflater, view);
+        }
+    }
+
+    @Override
+    public void onContactsUpdated() {
+        LinphoneContact contact =
+                ContactsManager.getInstance().findContactFromAndroidId(mContact.getAndroidId());
+        if (contact != null) {
+            changeDisplayedContact(contact);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ContactsManager.getInstance().addContactsListener(this);
+        if (LinphoneActivity.isInstanciated()) {
+            LinphoneActivity.instance().selectMenu(FragmentsAvailable.CONTACT_DETAIL);
+        }
+        displayContact(mInflater, mView);
+    }
+
+    @Override
+    public void onPause() {
+        if (mChatRoom != null) {
+            mChatRoom.removeListener(mChatRoomCreationListener);
+        }
+        ContactsManager.getInstance().removeContactsListener(this);
+        super.onPause();
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        if (id == R.id.editContact) {
+            ContactsManager.getInstance().editContact(getActivity(), mContact, null);
+        } else if (id == R.id.deleteContact) {
+            final Dialog dialog =
+                    LinphoneActivity.instance().displayDialog(getString(R.string.delete_text));
+            Button delete = dialog.findViewById(R.id.dialog_delete_button);
+            Button cancel = dialog.findViewById(R.id.dialog_cancel_button);
+
+            delete.setOnClickListener(
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mContact.delete();
+                            // To ensure removed contact won't appear in the contacts list anymore
+                            ContactsManager.getInstance().fetchContactsAsync();
+                            LinphoneActivity.instance().displayContacts(false);
+                            dialog.dismiss();
+                        }
+                    });
+
+            cancel.setOnClickListener(
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+            dialog.show();
+        } else if (id == R.id.back) {
+            getFragmentManager().popBackStackImmediate();
+        }
+    }
+
+    private void SetNethesisContactDetails(LayoutInflater inflater, View view) {
+        NethesisContact contact = (NethesisContact) mContact;
+
         TableLayout controls = view.findViewById(R.id.controls);
         controls.removeAllViews();
-        List<LinphoneNumberOrAddress> noas = mContact.getNumbersOrAddresses();
-        for (LinphoneNumberOrAddress noa : noas) {
+        List<NethesisNumberOrAddress> noas = contact.getNethesisNumbersOrAddresses();
+
+        for (NethesisNumberOrAddress noa : noas) {
             boolean skip = false;
             View v = inflater.inflate(R.layout.contact_control_row, null);
 
@@ -233,10 +429,10 @@ public class ContactDetailsFragment extends Fragment
 
             TextView label = v.findViewById(R.id.address_label);
             if (noa.isSIPAddress()) {
-                label.setText(R.string.sip_address);
+                label.setText(R.string.internal);
                 skip |= getResources().getBoolean(R.bool.hide_contact_sip_addresses);
             } else {
-                label.setText(R.string.phone_number);
+                label.setText(contact.GetResourceByString(noa.getType()));
                 skip |= getResources().getBoolean(R.bool.hide_contact_phone_numbers);
             }
 
@@ -330,71 +526,47 @@ public class ContactDetailsFragment extends Fragment
                 controls.addView(v);
             }
         }
-    }
 
-    @Override
-    public void onContactsUpdated() {
-        LinphoneContact contact =
-                ContactsManager.getInstance().findContactFromAndroidId(mContact.getAndroidId());
-        if (contact != null) {
-            changeDisplayedContact(contact);
-        }
-    }
+        LinearLayout faxLayout = view.findViewById(R.id.faxLayout);
+        LinearLayout emailLayout = view.findViewById(R.id.emailLayout);
+        LinearLayout taskLayout = view.findViewById(R.id.taskLayout);
+        LinearLayout notesLayout = view.findViewById(R.id.notesLayout);
 
-    @Override
-    public void onResume() {
-        super.onResume();
+        faxLayout.setVisibility(
+                (contact.getFax() == null || contact.getFax().isEmpty())
+                        ? View.GONE
+                        : View.VISIBLE);
+        emailLayout.setVisibility(
+                (contact.getEmail() == null || contact.getEmail().isEmpty())
+                        ? View.GONE
+                        : View.VISIBLE);
+        taskLayout.setVisibility(
+                (contact.getTitle() == null || contact.getTitle().isEmpty())
+                        ? View.GONE
+                        : View.VISIBLE);
+        notesLayout.setVisibility(
+                (contact.getNotes() == null || contact.getNotes().isEmpty())
+                        ? View.GONE
+                        : View.VISIBLE);
 
-        ContactsManager.getInstance().addContactsListener(this);
-        if (LinphoneActivity.isInstanciated()) {
-            LinphoneActivity.instance().selectMenu(FragmentsAvailable.CONTACT_DETAIL);
-        }
-        displayContact(mInflater, mView);
-    }
+        TextView fax_label = view.findViewById(R.id.fax_label);
+        fax_label.setText(R.string.fax);
+        TextView fax = view.findViewById((R.id.fax));
+        fax.setText(contact.getFax());
 
-    @Override
-    public void onPause() {
-        if (mChatRoom != null) {
-            mChatRoom.removeListener(mChatRoomCreationListener);
-        }
-        ContactsManager.getInstance().removeContactsListener(this);
-        super.onPause();
-    }
+        TextView email_label = view.findViewById(R.id.email_label);
+        email_label.setText(R.string.e_mail);
+        TextView email = view.findViewById((R.id.email));
+        email.setText(contact.getEmail());
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
+        TextView titles_label = view.findViewById(R.id.task_label);
+        titles_label.setText(R.string.task);
+        TextView task = view.findViewById((R.id.task));
+        task.setText(contact.getTitle());
 
-        if (id == R.id.editContact) {
-            ContactsManager.getInstance().editContact(getActivity(), mContact, null);
-        } else if (id == R.id.deleteContact) {
-            final Dialog dialog =
-                    LinphoneActivity.instance().displayDialog(getString(R.string.delete_text));
-            Button delete = dialog.findViewById(R.id.dialog_delete_button);
-            Button cancel = dialog.findViewById(R.id.dialog_cancel_button);
-
-            delete.setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mContact.delete();
-                            // To ensure removed contact won't appear in the contacts list anymore
-                            ContactsManager.getInstance().fetchContactsAsync();
-                            LinphoneActivity.instance().displayContacts(false);
-                            dialog.dismiss();
-                        }
-                    });
-
-            cancel.setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                        }
-                    });
-            dialog.show();
-        } else if (id == R.id.back) {
-            getFragmentManager().popBackStackImmediate();
-        }
+        TextView notes_label = view.findViewById(R.id.notes_label);
+        notes_label.setText(R.string.notes);
+        EditText notes_edit = view.findViewById((R.id.notes));
+        notes_edit.setText(contact.getNotes());
     }
 }

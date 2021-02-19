@@ -123,7 +123,6 @@ import org.linphone.utils.IntentUtils;
 import org.linphone.utils.LinphoneGenericActivity;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.PushNotificationUtils;
-import org.linphone.utils.SharedPreferencesManager;
 import org.linphone.views.AddressText;
 import org.linphone.xmlrpc.XmlRpcHelper;
 import org.linphone.xmlrpc.XmlRpcListenerBase;
@@ -1729,25 +1728,15 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String selectedItem = mSideMenuItemList.getAdapter().getItem(i).toString();
                         if (selectedItem.equals(getString(R.string.menu_logout))) {
-                            Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
-                            if (lc != null) {
-                                // Get the current user proxy config, useful for logout by now.
-                                ProxyConfig mProxyConfig = LinphoneManager.getUserProxyConfig(0);
-                                LinphoneManager.removeAuthAndProxyConfigsByUser(
-                                        mProxyConfig.findAuthInfo(), mProxyConfig);
-                                LinphoneManager.resetProxyConfigs();
+                            LinphoneManager.clearProxys(getApplicationContext());
+                            sideMenuLogout();
+                            startActivity(
+                                    new Intent()
+                                            .setClass(
+                                                    LinphoneManager.getInstance().getContext(),
+                                                    AssistantActivity.class));
+                            finish();
 
-                                // [Notificatore] logout user from Notificatore app.
-                                SharedPreferencesManager.removeUsername(getApplicationContext());
-                                FCMNotification.updateRegistrationInfo(getApplicationContext(), "");
-                                sideMenuLogout();
-                                startActivity(
-                                        new Intent()
-                                                .setClass(
-                                                        LinphoneManager.getInstance().getContext(),
-                                                        AssistantActivity.class));
-                                finish();
-                            }
                         } else if (selectedItem.equals(getString(R.string.menu_settings))) {
                             LinphoneActivity.instance().displaySettings();
                         } else if (selectedItem.equals(getString(R.string.menu_about))) {

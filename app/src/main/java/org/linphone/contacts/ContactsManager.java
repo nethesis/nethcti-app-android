@@ -36,10 +36,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
+import it.nethesis.models.NethesisContact;
+import it.nethesis.models.NethesisNumberOrAddress;
+import it.nethesis.models.contactlist.Contact;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import org.jetbrains.annotations.NotNull;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
@@ -54,11 +58,12 @@ import org.linphone.core.MagicSearch;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.tools.Log;
 import org.linphone.settings.LinphonePreferences;
+import org.linphone.utils.LinphoneUtils;
 
 public class ContactsManager extends ContentObserver implements FriendListListener {
     private static ContactsManager sInstance;
 
-    private List<LinphoneContact> mContacts, mSipContacts;
+    private List<LinphoneContact> mContacts, mSipContacts, mNethesisContacts;
     private ArrayList<ContactsUpdatedListener> mContactsUpdatedListeners;
     private MagicSearch mMagicSearch;
     private boolean mContactsFetchedOnce = false;
@@ -76,6 +81,7 @@ public class ContactsManager extends ContentObserver implements FriendListListen
         mContactsUpdatedListeners = new ArrayList<>();
         mContacts = new ArrayList<>();
         mSipContacts = new ArrayList<>();
+        mNethesisContacts = new ArrayList<>();
 
         if (LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null) {
             mMagicSearch = LinphoneManager.getLcIfManagerNotDestroyedOrNull().createMagicSearch();
@@ -513,5 +519,67 @@ public class ContactsManager extends ContentObserver implements FriendListListen
         for (ContactsUpdatedListener listener : mContactsUpdatedListeners) {
             listener.onContactsUpdated();
         }
+    }
+
+    @NotNull
+    public NethesisContact addNethesisContactFromAPI(Contact c) {
+        NethesisContact con = new NethesisContact();
+        con.setId(c.getId());
+        con.setFirstNameAndLastName(c.getName(), "", true);
+        con.setFullName(c.getName());
+        con.setOrganization(c.getCompany(), true);
+        // Extensions
+        NethesisNumberOrAddress extensions =
+                new NethesisNumberOrAddress(c.getExtension(), true, null);
+        // WorkPhone
+        NethesisNumberOrAddress workPhone =
+                new NethesisNumberOrAddress(c.getWorkphone(), false, "workPhone");
+        // HomePhone
+        NethesisNumberOrAddress homePhone =
+                new NethesisNumberOrAddress(c.getHomephone(), false, "homePhone");
+        // CellPhone
+        NethesisNumberOrAddress cellPhone =
+                new NethesisNumberOrAddress(c.getCellphone(), false, "cellPhone");
+
+        List<NethesisNumberOrAddress> addresses = new ArrayList<>();
+        addresses.add(extensions);
+        addresses.add(workPhone);
+        addresses.add(homePhone);
+        addresses.add(cellPhone);
+
+        // Verify if address has sipContact
+
+        for (NethesisNumberOrAddress address : addresses) {
+            if (address.isSIPAddress()) {
+                address.setValue(LinphoneUtils.getFullAddressFromUsername(address.getValue()));
+            }
+            con.addOrUpdateNumberOrAddress(address);
+        }
+
+        con.setType(c.getType());
+        con.setWorkemail(c.getWorkemail());
+        con.setFax(c.getFax());
+        con.setTitle(c.getTitle());
+        con.setEmail(c.getWorkemail());
+        con.setNotes(c.getNotes());
+        con.setSource(c.getSource());
+        con.setIsNethesisContact(true);
+        con.setOwnerId(c.getOwnerId());
+        con.setHomeemail(c.getHomeemail());
+        con.setHomestreet(c.getHomestreet());
+        con.setHomepob(c.getHomepob());
+        con.setHomecity(c.getHomecity());
+        con.setHomeprovince(c.getHomeprovince());
+        con.setHomepostalcode(c.getHomepostalcode());
+        con.setHomecountry(c.getHomecountry());
+        con.setWorkstreet(c.getWorkstreet());
+        con.setWorkpob(c.getWorkpob());
+        con.setWorkcity(c.getWorkcity());
+        con.setWorkprovince(c.getWorkprovince());
+        con.setWorkpostalcode(c.getWorkpostalcode());
+        con.setWorkcountry(c.getWorkcountry());
+        con.setUrl(c.getUrl());
+        con.setSpeeddialNum(c.getSpeeddialNum());
+        return con;
     }
 }

@@ -563,4 +563,6 @@
   <string name="content_description_conversation_infos">Informazioni sulla chat room di gruppo</string>
   <string name="content_description_record_call">Registra chiamata</string>
     <string name="app_name">NethCTI</string>
+
+
 </resources>

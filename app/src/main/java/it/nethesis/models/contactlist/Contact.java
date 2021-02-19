@@ -162,7 +162,10 @@ public class Contact {
     }
 
     public String getHomephone() {
-        return homephone;
+        if (homephone != null) {
+            return !homephone.isEmpty() ? homephone : null;
+        }
+        return null;
     }
 
     public void setHomephone(String homephone) {
@@ -170,7 +173,10 @@ public class Contact {
     }
 
     public String getWorkphone() {
-        return workphone;
+        if (workphone != null) {
+            return !workphone.isEmpty() ? workphone : null;
+        }
+        return null;
     }
 
     public void setWorkphone(String workphone) {
@@ -178,7 +184,10 @@ public class Contact {
     }
 
     public String getCellphone() {
-        return cellphone;
+        if (cellphone != null) {
+            return !cellphone.isEmpty() ? cellphone : null;
+        }
+        return null;
     }
 
     public void setCellphone(String cellphone) {
@@ -330,7 +339,7 @@ public class Contact {
     }
 
     public String getExtension() {
-        return extension;
+        return !extension.isEmpty() ? extension : null;
     }
 
     public void setExtension(String extension) {
