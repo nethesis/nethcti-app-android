@@ -339,7 +339,7 @@ public class Contact {
     }
 
     public String getExtension() {
-        return !extension.isEmpty() ? extension : null;
+        return extension != null ? (!extension.isEmpty() ? extension : null) : null;
     }
 
     public void setExtension(String extension) {

@@ -62,8 +62,10 @@ import org.linphone.utils.LinphoneUtils;
 
 public class ContactsManager extends ContentObserver implements FriendListListener {
     private static ContactsManager sInstance;
+    private static int mMaxContact;
 
-    private List<LinphoneContact> mContacts, mSipContacts, mNethesisContacts;
+    private List<LinphoneContact> mContacts, mNethesisContacts;
+    private List<LinphoneContact> mSipContacts;
     private ArrayList<ContactsUpdatedListener> mContactsUpdatedListeners;
     private MagicSearch mMagicSearch;
     private boolean mContactsFetchedOnce = false;
@@ -87,6 +89,10 @@ public class ContactsManager extends ContentObserver implements FriendListListen
             mMagicSearch = LinphoneManager.getLcIfManagerNotDestroyedOrNull().createMagicSearch();
             mMagicSearch.setLimitedSearch(false); // Do not limit the number of results
         }
+    }
+
+    public static void setMaximumNethesisContactCount(int count) {
+        mMaxContact = count;
     }
 
     public void addContactsListener(ContactsUpdatedListener listener) {
@@ -522,7 +528,7 @@ public class ContactsManager extends ContentObserver implements FriendListListen
     }
 
     @NotNull
-    public NethesisContact addNethesisContactFromAPI(Contact c) {
+    public NethesisContact createNethesisContactFromAPI(Contact c) {
         NethesisContact con = new NethesisContact();
         con.setId(c.getId());
         con.setFirstNameAndLastName(c.getName(), "", true);
@@ -581,5 +587,9 @@ public class ContactsManager extends ContentObserver implements FriendListListen
         con.setUrl(c.getUrl());
         con.setSpeeddialNum(c.getSpeeddialNum());
         return con;
+    }
+
+    public int getTotalNethesisContactCount() {
+        return mMaxContact;
     }
 }

@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -249,13 +250,17 @@ public class ContactsFragment extends Fragment
                     @Override
                     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
+                        int rows = ContactsManager.getInstance().getSIPContacts().size();
+                        int total = ContactsManager.getInstance().getTotalNethesisContactCount();
+
                         int visibleItemCount = mLayoutManager.getChildCount();
-                        int totalItemCount = mLayoutManager.getItemCount();
                         int firstVisibleItemPosition =
                                 mLayoutManager.findFirstVisibleItemPosition();
+
                         if (!isLoading()) {
-                            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                                    && firstVisibleItemPosition >= 0) {
+                            if (rows < total
+                                    && ((visibleItemCount + firstVisibleItemPosition) + 20)
+                                            > rows) {
                                 loadMoreContacts(
                                         mView, mSearchView.getQuery().toString(), false, true);
                             }
@@ -537,7 +542,7 @@ public class ContactsFragment extends Fragment
             final boolean isInSeachMode,
             final boolean isFirst) {
 
-        listContact = new ArrayList<>();
+        listContact = ContactsManager.getInstance().getSIPContacts();
 
         String domain = SharedPreferencesManager.getDomain(context);
         String authToken = SharedPreferencesManager.getAuthtoken(context);
@@ -564,14 +569,33 @@ public class ContactsFragment extends Fragment
                     @Override
                     public void onResponse(Call<ContactList> call, Response<ContactList> response) {
                         if (response.isSuccessful()) {
+                            int oldRVPos = mLayoutManager.findFirstVisibleItemPosition();
                             ContactList contactList = response.body();
                             if (contactList == null) {
                                 return;
                             }
+                            ContactsManager.setMaximumNethesisContactCount(contactList.getCount());
                             List<Contact> contacts = contactList.getRows();
                             for (Contact c : contacts) {
-                                listContact.add(
-                                        ContactsManager.getInstance().addNethesisContactFromAPI(c));
+                                NethesisContact contact =
+                                        ContactsManager.getInstance()
+                                                .createNethesisContactFromAPI(c);
+                                ListIterator<LinphoneContact> iterator = listContact.listIterator();
+                                boolean isPresent = false;
+                                while (iterator.hasNext()) {
+                                    LinphoneContact contact2 = iterator.next();
+                                    if (contact2 instanceof NethesisContact
+                                            && contact2.isNethesisContact()) {
+                                        if (((NethesisContact) contact2).getId()
+                                                == contact.getId()) {
+                                            isPresent = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!isPresent) {
+                                    listContact.add(contact);
+                                }
                             }
                             sortContactByView(listContact);
                             if (mOnlyDisplayLinphoneContacts) {
@@ -585,8 +609,11 @@ public class ContactsFragment extends Fragment
 
                                 mSelectionHelper.setAdapter(mContactAdapter);
                                 mContactsList.setAdapter(mContactAdapter);
+                                mContactAdapter.updateDataSet(listContact);
 
                                 mNoSipContact.setVisibility(View.GONE);
+
+                                mContactsList.scrollToPosition(oldRVPos);
 
                                 if (!mOnlyDisplayLinphoneContacts
                                         && mContactAdapter.getItemCount() == 0) {
@@ -599,8 +626,10 @@ public class ContactsFragment extends Fragment
                                 mContactsRefresher.setRefreshing(false);
 
                                 mContactAdapter.notifyDataSetChanged();
+                                isLoading = false;
                                 if (isFirst) {
-                                    displayFirstContact();
+                                    // TODO: controllare isTablet()
+                                    // displayFirstContact();
                                 }
                             }
                         } else if (response.code() == 401) {
@@ -629,27 +658,29 @@ public class ContactsFragment extends Fragment
                         new Comparator() {
 
                             public int compare(Object o1, Object o2) {
-                                int sComp = 0;
-                                String x1 = ((NethesisContact) o1).getOrganization();
-                                String x2 = ((NethesisContact) o2).getOrganization();
-                                if (x1 == null || x1.isEmpty())
-                                    if (x2 == null || x2.isEmpty()) sComp = 0;
-                                    else sComp = -1;
-                                else if (x2 == null || x2.isEmpty())
-                                    sComp = 1; // all other strings are after null
-                                else sComp = x1.compareTo(x2);
+                                String x3 =
+                                        ((NethesisContact) o1).getFullName() != null
+                                                ? ((NethesisContact) o1).getFullName()
+                                                : "";
+                                String x4 =
+                                        ((NethesisContact) o2).getFullName() != null
+                                                ? ((NethesisContact) o2).getFullName()
+                                                : "";
+                                int asd = x3.compareTo(x4);
 
-                                if (sComp != 0) {
-                                    return sComp;
+                                if (asd != 0) {
+                                    return asd;
                                 }
 
-                                String x3 = ((NethesisContact) o1).getFullName();
-                                String x4 = ((NethesisContact) o2).getFullName();
-                                if (x3 == null || x3.isEmpty())
-                                    if (x4 == null || x4.isEmpty()) return 0;
-                                    else return -1;
-                                else if (x4 == null || x4.isEmpty()) return 1;
-                                else return x3.compareTo(x4);
+                                String x1 =
+                                        ((NethesisContact) o1).getOrganization() != null
+                                                ? ((NethesisContact) o1).getOrganization()
+                                                : "";
+                                String x2 =
+                                        ((NethesisContact) o2).getOrganization() != null
+                                                ? ((NethesisContact) o2).getOrganization()
+                                                : "";
+                                return x1.compareTo(x2);
                             }
                         });
                 break;

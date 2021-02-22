@@ -57,6 +57,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
+import it.nethesis.webservices.AuthenticationRestAPI;
+import it.nethesis.webservices.RetrofitGenerator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -130,6 +132,8 @@ import org.linphone.utils.MediaScanner;
 import org.linphone.utils.MediaScannerListener;
 import org.linphone.utils.PushNotificationUtils;
 import org.linphone.utils.SharedPreferencesManager;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Manager of the low level LibLinphone stuff.<br>
@@ -1945,24 +1949,43 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
         }
     }
 
-    public static void clearProxys(Context context) {
+    public static void clearProxys(final Context context) {
         Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
         if (lc != null) {
             // Get the current user proxy config, useful for logout by now.
             ProxyConfig mProxyConfig = LinphoneManager.getUserProxyConfig(0);
-            LinphoneManager.removeAuthAndProxyConfigsByUser(
-                    mProxyConfig.findAuthInfo(), mProxyConfig);
-            LinphoneManager.resetProxyConfigs();
+            if (mProxyConfig != null) {
+                LinphoneManager.removeAuthAndProxyConfigsByUser(
+                        mProxyConfig.findAuthInfo(), mProxyConfig);
+                LinphoneManager.resetProxyConfigs();
+            }
 
-            // Delete the token and domain information from the
-            // SharedPreferences
-            SharedPreferencesManager.removeAuthtoken(context);
+            String domain = SharedPreferencesManager.getDomain(context);
+            AuthenticationRestAPI api =
+                    RetrofitGenerator.createService(AuthenticationRestAPI.class, domain);
+            api.logout()
+                    .enqueue(
+                            new Callback<String>() {
+                                @Override
+                                public void onResponse(
+                                        retrofit2.Call<String> call, Response<String> response) {
+                                    // Delete the token and domain information from the
+                                    // SharedPreferences
+                                    SharedPreferencesManager.removeAuthtoken(context);
+                                    SharedPreferencesManager.removeDomain(context);
 
-            SharedPreferencesManager.removeDomain(context);
+                                    // [Notificatore] logout user from Notificatore app.
+                                    SharedPreferencesManager.removeUsername(
+                                            context.getApplicationContext());
+                                    FCMNotification.updateRegistrationInfo(
+                                            context.getApplicationContext(), "");
+                                }
 
-            // [Notificatore] logout user from Notificatore app.
-            SharedPreferencesManager.removeUsername(context.getApplicationContext());
-            FCMNotification.updateRegistrationInfo(context.getApplicationContext(), "");
+                                @Override
+                                public void onFailure(retrofit2.Call<String> call, Throwable t) {
+                                    // TODO: GEtire errore in fase di logout
+                                }
+                            });
         }
     }
 }

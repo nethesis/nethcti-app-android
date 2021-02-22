@@ -2,13 +2,18 @@ package it.nethesis.webservices;
 
 import android.util.Log;
 import com.google.gson.GsonBuilder;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import okhttp3.Headers;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.jetbrains.annotations.NotNull;
 import retrofit2.Retrofit;
@@ -33,6 +38,25 @@ public class RetrofitGenerator {
         String endpoint = domain == null ? BASE_URL : String.format("https://%s/webrest/", domain);
 
         if (retrofit == null || !retrofit.baseUrl().toString().equals(endpoint)) {
+            Interceptor asd =
+                    new Interceptor() {
+                        @NotNull
+                        @Override
+                        public Response intercept(@NotNull Chain chain) throws IOException {
+                            Request request = chain.request();
+                            Headers h =
+                                    request.headers()
+                                            .newBuilder()
+                                            .add("Auth-Exp", "no-exp")
+                                            .build();
+
+                            request = request.newBuilder().header("Auth-Exp", "no-exp").build();
+                            Response r = chain.proceed(request);
+                            return r;
+                        }
+                    };
+            httpClient.addNetworkInterceptor(asd);
+
             if (interceptors) {
                 HttpLoggingInterceptor logBody =
                         new HttpLoggingInterceptor(
@@ -42,7 +66,7 @@ public class RetrofitGenerator {
                                         Log.w("OK_HTTP_BODY", s);
                                     }
                                 });
-                logBody.setLevel(HttpLoggingInterceptor.Level.BODY);
+                logBody.level(HttpLoggingInterceptor.Level.BODY);
                 httpClient.addInterceptor(logBody);
             }
             if (interceptors) {
@@ -54,9 +78,10 @@ public class RetrofitGenerator {
                                         Log.w("OK_HTTP_HEADER", s);
                                     }
                                 });
-                logHeader.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+                logHeader.level(HttpLoggingInterceptor.Level.HEADERS);
                 httpClient.addInterceptor(logHeader);
             }
+
             retrofit =
                     new Retrofit.Builder()
                             .baseUrl(endpoint)

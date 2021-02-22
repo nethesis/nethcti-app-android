@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.SectionIndexer;
 import androidx.annotation.NonNull;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -140,8 +141,10 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
                 }
             }
         }
+        ArrayList<String> sections = new ArrayList<>(mMap.keySet());
+        Collections.sort(sections);
 
-        mSectionsList = new ArrayList<>(mMap.keySet());
+        mSectionsList = sections;
         mSections = new String[mSectionsList.size()];
         mSectionsList.toArray(mSections);
 
