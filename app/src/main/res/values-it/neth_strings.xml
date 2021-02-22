@@ -18,4 +18,22 @@
     <string name="neth_login_missing_neth_extension">Nessun interno assegnato a questo utente, contattare un amministratore.</string>
     <string name="neth_login_missing_neth_user">Nessun utente trovato, contattare un amministratore.</string>
     <string name="neth_login_wrong_credentials">Login fallito, controllare le credenziali o riprovare più tardi.</string>
+
+    <!--Custom-->
+    <string name="views_spin">seleziona una view</string>
+    <string-array name="views">
+        <item>all</item>
+        <item>company</item>
+        <item>person</item>
+    </string-array>
+    <string name="work_tel">Telefono lavoro</string>
+    <string name="home_tel">Telefono casa</string>
+    <string name="cell">Cellulare</string>
+    <string name="fax">Fax</string>
+    <string name="e_mail">Email</string>
+    <string name="task">Mansione</string>
+    <string name="notes">Note</string>
+    <string name="internal">Interno</string>
+    <string name="spinnerTextView">Seleziona un filtro</string>
+
 </resources>

@@ -104,7 +104,7 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
 
     @Override
     public int getItemCount() {
-        return mContacts.size();
+        return mContacts != null ? mContacts.size() : 0;
     }
 
     public Object getItem(int position) {
@@ -125,18 +125,22 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
 
         mMap = new LinkedHashMap<>();
         String prevLetter = null;
-        for (int i = 0; i < mContacts.size(); i++) {
-            LinphoneContact contact = mContacts.get(i);
-            String fullName = contact.getFullName();
-            if (fullName == null || fullName.isEmpty()) {
-                continue;
-            }
-            String firstLetter = fullName.substring(0, 1).toUpperCase(Locale.getDefault());
-            if (!firstLetter.equals(prevLetter)) {
-                prevLetter = firstLetter;
-                mMap.put(firstLetter, i);
+
+        if (mContacts != null) {
+            for (int i = 0; i < mContacts.size(); i++) {
+                LinphoneContact contact = mContacts.get(i);
+                String fullName = contact.getFullName();
+                if (fullName == null || fullName.isEmpty()) {
+                    continue;
+                }
+                String firstLetter = fullName.substring(0, 1).toUpperCase(Locale.getDefault());
+                if (!firstLetter.equals(prevLetter)) {
+                    prevLetter = firstLetter;
+                    mMap.put(firstLetter, i);
+                }
             }
         }
+
         mSectionsList = new ArrayList<>(mMap.keySet());
         mSections = new String[mSectionsList.size()];
         mSectionsList.toArray(mSections);

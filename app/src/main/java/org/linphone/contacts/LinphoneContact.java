@@ -47,7 +47,7 @@ public class LinphoneContact extends AndroidContact
     private String mFullName, mFirstName, mLastName, mOrganization;
     private transient Uri mPhotoUri, mThumbnailUri;
     private List<LinphoneNumberOrAddress> mAddresses;
-    private boolean mHasSipAddress;
+    private boolean mHasSipAddress, misNethesisContact;
 
     public LinphoneContact() {
         super();
@@ -60,6 +60,7 @@ public class LinphoneContact extends AndroidContact
         mThumbnailUri = null;
         mAddresses = new ArrayList<>();
         mPhotoUri = null;
+        misNethesisContact = false;
         mHasSipAddress = false;
     }
 
@@ -562,5 +563,13 @@ public class LinphoneContact extends AndroidContact
         if (!isFriend()) return false;
 
         return getFriend().hasCapability(capability);
+    }
+
+    public boolean isNethesisContact() {
+        return misNethesisContact;
+    }
+
+    public void setIsNethesisContact(boolean misNethesisContact) {
+        this.misNethesisContact = misNethesisContact;
     }
 }

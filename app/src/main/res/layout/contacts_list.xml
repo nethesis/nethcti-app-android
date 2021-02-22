@@ -91,6 +91,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
         android:layout_margin="10dp">
 
         <SearchView
@@ -103,6 +104,27 @@
             android:paddingRight="5dp"
             android:queryBackground="@color/transparent_color"
             android:queryHint="@string/chat_room_creation_filter_hint"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_views"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:layout_margin="10dp">
+
+        <Spinner
+            android:id="@+id/spinner_views"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:spinnerMode="dropdown" />
+
 
     </RelativeLayout>
 

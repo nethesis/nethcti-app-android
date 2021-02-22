@@ -71,7 +71,7 @@ public class RetrofitGenerator {
     }
 
     public static <S> S createService(Class<S> serviceClass, String domain) {
-        return createService(serviceClass, domain, false);
+        return createService(serviceClass, domain, true);
     }
 
     private static String toHexString(byte[] bytes) {

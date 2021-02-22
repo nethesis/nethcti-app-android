@@ -209,6 +209,13 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                             return;
                         }
 
+                        // Save the authToken and domain in the SharedPreferences
+                        SharedPreferencesManager.setAuthtoken(
+                                getActivity().getApplicationContext(), authToken);
+
+                        SharedPreferencesManager.setDomain(
+                                getActivity().getApplicationContext(), domain);
+
                         manageLoginResponse(authToken, domain);
                     }
 

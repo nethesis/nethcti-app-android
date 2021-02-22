@@ -25,4 +25,21 @@
     <string name="neth_login_missing_neth_extension">No extensions for this user, contact an administrator.</string>
 
     <string name="neth_test_domain" translatable="false">nethctiapp.nethserver.net</string>
+
+    <!--Custom-->
+    <string name="views_spin">select a view</string>
+    <string-array name="views">
+        <item>all</item>
+        <item>company</item>
+        <item>person</item>
+    </string-array>
+    <string name="work_tel">Work Telephone</string>
+    <string name="home_tel">Home Telephone</string>
+    <string name="cell">Mobile phone</string>
+    <string name="fax">Fax</string>
+    <string name="e_mail">Email</string>
+    <string name="task">Task</string>
+    <string name="notes">Note</string>
+    <string name="internal">Internal</string>
+    <string name="spinnerTextView">Select a filter</string>
 </resources>
