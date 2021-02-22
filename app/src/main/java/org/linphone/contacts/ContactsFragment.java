@@ -69,7 +69,7 @@ public class ContactsFragment extends Fragment
                 SelectableHelper.DeleteListener {
     private RecyclerView mContactsList;
     private TextView mNoSipContact, mNoContact;
-    private ImageView mAllContacts, mLinphoneContacts, mNewContact;
+    private ImageView mAllContacts, mLinphoneContacts, mNewContact, mEdit;
     private boolean mOnlyDisplayLinphoneContacts;
     private View mAllContactsSelected, mLinphoneContactsSelected;
     private int mLastKnownPosition;
@@ -128,6 +128,7 @@ public class ContactsFragment extends Fragment
         mLinphoneContactsSelected = view.findViewById(R.id.linphone_contacts_select);
         mContactsFetchInProgress = view.findViewById(R.id.contactsFetchInProgress);
         mNewContact = view.findViewById(R.id.newContact);
+        mEdit = view.findViewById(R.id.edit);
         mContactsRefresher = view.findViewById(R.id.contactsListRefresher);
 
         mRelativeLayoutViews = view.findViewById(R.id.relativeLayout_views);
@@ -163,6 +164,11 @@ public class ContactsFragment extends Fragment
                         mAllContacts.setEnabled(false);
                         mLinphoneContacts.setEnabled(true);
                         mLinphoneContactsSelected.setVisibility(View.INVISIBLE);
+                        mNewContact.setVisibility(View.VISIBLE);
+                        mNewContact.setEnabled(true);
+                        mEdit.setVisibility(View.VISIBLE);
+                        mEdit.setEnabled(true);
+
                         changeContactsAdapter();
                     }
                 });
@@ -176,6 +182,10 @@ public class ContactsFragment extends Fragment
                         mLinphoneContacts.setEnabled(false);
                         mAllContacts.setEnabled(true);
                         mOnlyDisplayLinphoneContacts = true;
+                        mNewContact.setVisibility(View.GONE);
+                        mNewContact.setEnabled(false);
+                        mEdit.setVisibility(View.GONE);
+                        mEdit.setEnabled(false);
                         changeContactsAdapter();
                     }
                 });

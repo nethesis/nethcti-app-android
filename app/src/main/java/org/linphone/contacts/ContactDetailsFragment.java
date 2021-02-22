@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -133,7 +136,7 @@ public class ContactDetailsFragment extends Fragment
                                     } else {
                                         Log.w(
                                                 "[Contact Details Fragment] createChatRoom returned null...");
-                                        mWaitLayout.setVisibility(View.GONE);
+                                        mWaitLayout.setVisibility(GONE);
                                     }
                                 } else {
                                     room = lc.getChatRoom(participant);
@@ -161,7 +164,7 @@ public class ContactDetailsFragment extends Fragment
         }
 
         mWaitLayout = mView.findViewById(R.id.waitScreen);
-        mWaitLayout.setVisibility(View.GONE);
+        mWaitLayout.setVisibility(GONE);
 
         mEditContact = mView.findViewById(R.id.editContact);
         mEditContact.setOnClickListener(this);
@@ -175,7 +178,7 @@ public class ContactDetailsFragment extends Fragment
         if (org != null && !org.isEmpty() && isOrgVisible) {
             mOrganization.setText(org);
         } else {
-            mOrganization.setVisibility(View.GONE);
+            mOrganization.setVisibility(GONE);
         }
 
         mBack = mView.findViewById(R.id.back);
@@ -190,14 +193,14 @@ public class ContactDetailsFragment extends Fragment
                     @Override
                     public void onStateChanged(ChatRoom cr, ChatRoom.State newState) {
                         if (newState == ChatRoom.State.Created) {
-                            mWaitLayout.setVisibility(View.GONE);
+                            mWaitLayout.setVisibility(GONE);
                             LinphoneActivity.instance()
                                     .goToChat(
                                             cr.getLocalAddress().asStringUriOnly(),
                                             cr.getPeerAddress().asStringUriOnly(),
                                             null);
                         } else if (newState == ChatRoom.State.CreationFailed) {
-                            mWaitLayout.setVisibility(View.GONE);
+                            mWaitLayout.setVisibility(GONE);
                             LinphoneActivity.instance().displayChatRoomError();
                             Log.e(
                                     "Group chat room for address "
@@ -217,6 +220,11 @@ public class ContactDetailsFragment extends Fragment
 
     @SuppressLint("InflateParams")
     private void displayContact(LayoutInflater inflater, View view) {
+        mEditContact.setEnabled(!mContact.isNethesisContact());
+        mDeleteContact.setEnabled(!mContact.isNethesisContact());
+        mEditContact.setVisibility(mContact.isNethesisContact() ? GONE : VISIBLE);
+        mDeleteContact.setVisibility(mContact.isNethesisContact() ? GONE : VISIBLE);
+
         ContactAvatar.displayAvatar(mContact, view.findViewById(R.id.avatar_layout));
 
         TextView contactName = view.findViewById(R.id.contact_name);
@@ -257,7 +265,7 @@ public class ContactDetailsFragment extends Fragment
                     }
                 }
 
-                v.findViewById(R.id.friendLinphone).setVisibility(View.GONE);
+                v.findViewById(R.id.friendLinphone).setVisibility(GONE);
                 if (mContact.getFriend() != null) {
                     PresenceModel pm =
                             mContact.getFriend().getPresenceModelForUriOrTel(noa.getValue());
@@ -271,9 +279,9 @@ public class ContactDetailsFragment extends Fragment
                     }
                 }
 
-                v.findViewById(R.id.inviteFriend).setVisibility(View.GONE);
+                v.findViewById(R.id.inviteFriend).setVisibility(GONE);
                 if (!noa.isSIPAddress()
-                        && v.findViewById(R.id.friendLinphone).getVisibility() == View.GONE
+                        && v.findViewById(R.id.friendLinphone).getVisibility() == GONE
                         && !getResources().getBoolean(R.bool.hide_invite_contact)) {
                     v.findViewById(R.id.inviteFriend).setVisibility(View.VISIBLE);
                     v.findViewById(R.id.inviteFriend).setTag(noa.getNormalizedPhone());
@@ -309,7 +317,7 @@ public class ContactDetailsFragment extends Fragment
                         v.findViewById(R.id.contact_call).setTag(value);
                     }
                 } else {
-                    v.findViewById(R.id.contact_call).setVisibility(View.GONE);
+                    v.findViewById(R.id.contact_call).setVisibility(GONE);
                 }
 
                 v.findViewById(R.id.contact_chat).setOnClickListener(mChatListener);
@@ -327,12 +335,12 @@ public class ContactDetailsFragment extends Fragment
                                 noa.getValue(), FriendCapability.LimeX3Dh)) {
                     v.findViewById(R.id.contact_chat_secured).setVisibility(View.VISIBLE);
                 } else {
-                    v.findViewById(R.id.contact_chat_secured).setVisibility(View.GONE);
+                    v.findViewById(R.id.contact_chat_secured).setVisibility(GONE);
                 }
 
                 if (getResources().getBoolean(R.bool.disable_chat)) {
-                    v.findViewById(R.id.contact_chat).setVisibility(View.GONE);
-                    v.findViewById(R.id.contact_chat_secured).setVisibility(View.GONE);
+                    v.findViewById(R.id.contact_chat).setVisibility(GONE);
+                    v.findViewById(R.id.contact_chat_secured).setVisibility(GONE);
                 }
 
                 if (!skip) {
@@ -448,7 +456,7 @@ public class ContactDetailsFragment extends Fragment
                 }
             }
 
-            v.findViewById(R.id.friendLinphone).setVisibility(View.GONE);
+            v.findViewById(R.id.friendLinphone).setVisibility(GONE);
             if (mContact.getFriend() != null) {
                 PresenceModel pm = mContact.getFriend().getPresenceModelForUriOrTel(noa.getValue());
                 if (pm != null && pm.getBasicStatus().equals(PresenceBasicStatus.Open)) {
@@ -461,9 +469,9 @@ public class ContactDetailsFragment extends Fragment
                 }
             }
 
-            v.findViewById(R.id.inviteFriend).setVisibility(View.GONE);
+            v.findViewById(R.id.inviteFriend).setVisibility(GONE);
             if (!noa.isSIPAddress()
-                    && v.findViewById(R.id.friendLinphone).getVisibility() == View.GONE
+                    && v.findViewById(R.id.friendLinphone).getVisibility() == GONE
                     && !getResources().getBoolean(R.bool.hide_invite_contact)) {
                 v.findViewById(R.id.inviteFriend).setVisibility(View.VISIBLE);
                 v.findViewById(R.id.inviteFriend).setTag(noa.getNormalizedPhone());
@@ -496,7 +504,7 @@ public class ContactDetailsFragment extends Fragment
                     v.findViewById(R.id.contact_call).setTag(value);
                 }
             } else {
-                v.findViewById(R.id.contact_call).setVisibility(View.GONE);
+                v.findViewById(R.id.contact_call).setVisibility(GONE);
             }
 
             v.findViewById(R.id.contact_chat).setOnClickListener(mChatListener);
@@ -514,12 +522,12 @@ public class ContactDetailsFragment extends Fragment
                             noa.getValue(), FriendCapability.LimeX3Dh)) {
                 v.findViewById(R.id.contact_chat_secured).setVisibility(View.VISIBLE);
             } else {
-                v.findViewById(R.id.contact_chat_secured).setVisibility(View.GONE);
+                v.findViewById(R.id.contact_chat_secured).setVisibility(GONE);
             }
 
             if (getResources().getBoolean(R.bool.disable_chat)) {
-                v.findViewById(R.id.contact_chat).setVisibility(View.GONE);
-                v.findViewById(R.id.contact_chat_secured).setVisibility(View.GONE);
+                v.findViewById(R.id.contact_chat).setVisibility(GONE);
+                v.findViewById(R.id.contact_chat_secured).setVisibility(GONE);
             }
 
             if (!skip) {
@@ -533,21 +541,13 @@ public class ContactDetailsFragment extends Fragment
         LinearLayout notesLayout = view.findViewById(R.id.notesLayout);
 
         faxLayout.setVisibility(
-                (contact.getFax() == null || contact.getFax().isEmpty())
-                        ? View.GONE
-                        : View.VISIBLE);
+                (contact.getFax() == null || contact.getFax().isEmpty()) ? GONE : View.VISIBLE);
         emailLayout.setVisibility(
-                (contact.getEmail() == null || contact.getEmail().isEmpty())
-                        ? View.GONE
-                        : View.VISIBLE);
+                (contact.getEmail() == null || contact.getEmail().isEmpty()) ? GONE : View.VISIBLE);
         taskLayout.setVisibility(
-                (contact.getTitle() == null || contact.getTitle().isEmpty())
-                        ? View.GONE
-                        : View.VISIBLE);
+                (contact.getTitle() == null || contact.getTitle().isEmpty()) ? GONE : View.VISIBLE);
         notesLayout.setVisibility(
-                (contact.getNotes() == null || contact.getNotes().isEmpty())
-                        ? View.GONE
-                        : View.VISIBLE);
+                (contact.getNotes() == null || contact.getNotes().isEmpty()) ? GONE : View.VISIBLE);
 
         TextView fax_label = view.findViewById(R.id.fax_label);
         fax_label.setText(R.string.fax);
