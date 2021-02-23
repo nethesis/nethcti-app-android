@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -85,6 +86,7 @@ public class ContactsFragment extends Fragment
     private List<LinphoneContact> listContact;
     private static final int PAGE_START = 0;
     private boolean isLoading = false;
+    private boolean isFirst = true;
     private int currentPage = PAGE_START;
     private static final int LIMIT = 20;
     private static final String ALL = "all";
@@ -149,8 +151,13 @@ public class ContactsFragment extends Fragment
                         if (!mOnlyDisplayLinphoneContacts) {
                             ContactsManager.getInstance().fetchContactsAsync();
                         } else {
-                            loadMoreContacts(
-                                    mView, mSearchView.getQuery().toString(), false, false);
+                            searchContactsNethesis(
+                                    mView,
+                                    ContactsFragment.this,
+                                    mSearchView.getQuery().toString(),
+                                    true,
+                                    true,
+                                    false);
                         }
                     }
                 });
@@ -257,6 +264,16 @@ public class ContactsFragment extends Fragment
 
         mContactsList.addOnScrollListener(
                 new RecyclerView.OnScrollListener() {
+
+                    @Override
+                    public void onScrollStateChanged(
+                            @NonNull RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                        if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                            isLoading = true;
+                        }
+                    }
+
                     @Override
                     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
@@ -267,12 +284,11 @@ public class ContactsFragment extends Fragment
                         int firstVisibleItemPosition =
                                 mLayoutManager.findFirstVisibleItemPosition();
 
-                        if (!isLoading()) {
+                        if (isLoading() && dy > 0) {
                             if (rows < total
                                     && ((visibleItemCount + firstVisibleItemPosition) + 20)
                                             > rows) {
-                                loadMoreContacts(
-                                        mView, mSearchView.getQuery().toString(), false, true);
+                                loadMoreContacts(mView, mSearchView.getQuery().toString(), false);
                             }
                         }
                     }
@@ -314,7 +330,7 @@ public class ContactsFragment extends Fragment
         changeContactsToggle();
 
         if (mOnlyDisplayLinphoneContacts) {
-            searchContactsNethesis(mView, this, search, true, true);
+            searchContactsNethesis(mView, this, search, false, false, true);
         } else {
             listContact = ContactsManager.getInstance().getContacts(search);
         }
@@ -345,13 +361,13 @@ public class ContactsFragment extends Fragment
         String query = mSearchView.getQuery().toString();
         if (query.equals("")) {
             if (mOnlyDisplayLinphoneContacts) {
-                searchContactsNethesis(mView, this, "", false, true);
+                searchContactsNethesis(mView, this, "", false, false, true);
             } else {
                 listContact = ContactsManager.getInstance().getContacts();
             }
         } else {
             if (mOnlyDisplayLinphoneContacts) {
-                searchContactsNethesis(mView, this, query, false, true);
+                searchContactsNethesis(mView, this, query, false, false, true);
             } else {
                 listContact = ContactsManager.getInstance().getContacts(query);
             }
@@ -506,13 +522,12 @@ public class ContactsFragment extends Fragment
         ContactsManager.getInstance().deleteMultipleContactsAtOnce(ids);
     }
 
-    private void loadMoreContacts(
-            String view, String search, boolean isInSearchMode, boolean isRefreshing) {
-        isLoading = true;
-        currentPage += isRefreshing ? 1 : 0;
+    private void loadMoreContacts(String view, String search, boolean isInSearchMode) {
+        isLoading = false;
+        currentPage += 1;
         mContactsFetchInProgress.setVisibility(View.VISIBLE);
         // mContactsRefresher.setRefreshing(true);
-        searchContactsNethesis(view, this, search, isInSearchMode, false);
+        searchContactsNethesis(view, this, search, isInSearchMode, false, false);
     }
 
     private boolean isLoading() {
@@ -524,6 +539,7 @@ public class ContactsFragment extends Fragment
             ContactViewHolder.ClickListener clickListener,
             String search,
             boolean isInSeachMode,
+            boolean isRefreshing,
             boolean isFirst) {
 
         fetchContactsResponse(
@@ -534,6 +550,7 @@ public class ContactsFragment extends Fragment
                 LIMIT * currentPage,
                 clickListener,
                 isInSeachMode,
+                isRefreshing,
                 isFirst);
     }
 
@@ -550,29 +567,21 @@ public class ContactsFragment extends Fragment
             int offset,
             final ContactViewHolder.ClickListener clickListener,
             final boolean isInSeachMode,
+            final boolean isRefreshing,
             final boolean isFirst) {
 
-        listContact = ContactsManager.getInstance().getSIPContacts();
+        listContact =
+                (search == null || search.isEmpty() && !isRefreshing)
+                        ? ContactsManager.getInstance().getSIPContacts()
+                        : new ArrayList<LinphoneContact>();
 
         String domain = SharedPreferencesManager.getDomain(context);
         String authToken = SharedPreferencesManager.getAuthtoken(context);
 
         UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class, domain);
 
-        Call<ContactList> searchWithTerms = null;
-        switch (view) {
-            case "all":
-                searchWithTerms = userRestAPI.searchWithTermsAll(authToken, search, limit, offset);
-                break;
-            case "company":
-                searchWithTerms =
-                        userRestAPI.searchWithTermsCompany(authToken, search, limit, offset);
-                break;
-            case "person":
-                searchWithTerms =
-                        userRestAPI.searchWithTermsPerson(authToken, search, limit, offset);
-                break;
-        }
+        Call<ContactList> searchWithTerms =
+                userRestAPI.searchWithTerms(authToken, search, offset, limit, view);
 
         searchWithTerms.enqueue(
                 new Callback<ContactList>() {
@@ -623,8 +632,6 @@ public class ContactsFragment extends Fragment
 
                                 mNoSipContact.setVisibility(View.GONE);
 
-                                mContactsList.scrollToPosition(oldRVPos);
-
                                 if (!mOnlyDisplayLinphoneContacts
                                         && mContactAdapter.getItemCount() == 0) {
                                     mNoContact.setVisibility(View.VISIBLE);
@@ -636,7 +643,6 @@ public class ContactsFragment extends Fragment
                                 mContactsRefresher.setRefreshing(false);
 
                                 mContactAdapter.notifyDataSetChanged();
-                                isLoading = false;
                                 if (isFirst) {
                                     // TODO: controllare isTablet()
                                     // displayFirstContact();
@@ -660,42 +666,51 @@ public class ContactsFragment extends Fragment
     }
 
     private void sortContactByView(List<LinphoneContact> listContact) {
-        switch (mView) {
-            case "all":
-            case "person":
-                Collections.sort(
-                        listContact,
-                        new Comparator() {
+        boolean areAllNotNethesisContact = false;
+        for (LinphoneContact contact : listContact) {
+            if (!contact.isNethesisContact()) {
+                areAllNotNethesisContact = true;
+                break;
+            }
+        }
+        if (!areAllNotNethesisContact) {
+            switch (mView) {
+                case "all":
+                case "person":
+                    Collections.sort(
+                            listContact,
+                            new Comparator() {
 
-                            public int compare(Object o1, Object o2) {
-                                String x3 =
-                                        ((NethesisContact) o1).getFullName() != null
-                                                ? ((NethesisContact) o1).getFullName()
-                                                : "";
-                                String x4 =
-                                        ((NethesisContact) o2).getFullName() != null
-                                                ? ((NethesisContact) o2).getFullName()
-                                                : "";
-                                int asd = x3.compareTo(x4);
+                                public int compare(Object o1, Object o2) {
+                                    String x3 =
+                                            ((NethesisContact) o1).getFullName() != null
+                                                    ? ((NethesisContact) o1).getFullName()
+                                                    : "";
+                                    String x4 =
+                                            ((NethesisContact) o2).getFullName() != null
+                                                    ? ((NethesisContact) o2).getFullName()
+                                                    : "";
+                                    int asd = x3.compareTo(x4);
 
-                                if (asd != 0) {
-                                    return asd;
+                                    if (asd != 0) {
+                                        return asd;
+                                    }
+
+                                    String x1 =
+                                            ((NethesisContact) o1).getOrganization() != null
+                                                    ? ((NethesisContact) o1).getOrganization()
+                                                    : "";
+                                    String x2 =
+                                            ((NethesisContact) o2).getOrganization() != null
+                                                    ? ((NethesisContact) o2).getOrganization()
+                                                    : "";
+                                    return x1.compareTo(x2);
                                 }
-
-                                String x1 =
-                                        ((NethesisContact) o1).getOrganization() != null
-                                                ? ((NethesisContact) o1).getOrganization()
-                                                : "";
-                                String x2 =
-                                        ((NethesisContact) o2).getOrganization() != null
-                                                ? ((NethesisContact) o2).getOrganization()
-                                                : "";
-                                return x1.compareTo(x2);
-                            }
-                        });
-                break;
-            case "company":
-                break;
+                            });
+                    break;
+                case "company":
+                    break;
+            }
         }
     }
 }
