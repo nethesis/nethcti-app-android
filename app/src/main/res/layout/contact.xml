@@ -247,13 +247,15 @@
                             android:textColor="?attr/primarySubtextLightColor" />
                     </RelativeLayout>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/notes"
                         style="@style/contact_name_list_cell_font"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:inputType="none"
-                        android:gravity="center_horizontal"/>
+                        android:layout_height="wrap_content"
+                        android:fadingEdge="horizontal"
+                        android:gravity="center"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true" />
 
                 </LinearLayout>
 

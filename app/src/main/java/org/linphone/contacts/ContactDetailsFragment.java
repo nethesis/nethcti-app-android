@@ -33,7 +33,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -228,9 +227,14 @@ public class ContactDetailsFragment extends Fragment
         ContactAvatar.displayAvatar(mContact, view.findViewById(R.id.avatar_layout));
 
         TextView contactName = view.findViewById(R.id.contact_name);
-        contactName.setText(mContact.getFullName());
-        mOrganization.setText(
-                (mContact.getOrganization() != null) ? mContact.getOrganization() : "");
+        if (mContact.getFullName() == null || mContact.getFullName().isEmpty()) {
+            contactName.setText(
+                    mContact.getOrganization() != null ? mContact.getOrganization() : "");
+        } else {
+            contactName.setText(mContact.getFullName());
+            mOrganization.setText(
+                    (mContact.getOrganization() != null) ? mContact.getOrganization() : "");
+        }
 
         if (!mContact.isNethesisContact()) {
             TableLayout controls = view.findViewById(R.id.controls);
@@ -566,7 +570,7 @@ public class ContactDetailsFragment extends Fragment
 
         TextView notes_label = view.findViewById(R.id.notes_label);
         notes_label.setText(R.string.notes);
-        EditText notes_edit = view.findViewById((R.id.notes));
+        TextView notes_edit = view.findViewById((R.id.notes));
         notes_edit.setText(contact.getNotes());
     }
 }
