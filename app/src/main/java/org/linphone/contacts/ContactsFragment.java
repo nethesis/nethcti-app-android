@@ -588,7 +588,6 @@ public class ContactsFragment extends Fragment
                     @Override
                     public void onResponse(Call<ContactList> call, Response<ContactList> response) {
                         if (response.isSuccessful()) {
-                            int oldRVPos = mLayoutManager.findFirstVisibleItemPosition();
                             ContactList contactList = response.body();
                             if (contactList == null) {
                                 return;
@@ -643,6 +642,9 @@ public class ContactsFragment extends Fragment
                                 mContactsRefresher.setRefreshing(false);
 
                                 mContactAdapter.notifyDataSetChanged();
+
+                                scrollToBottom(mContactsList);
+
                                 if (isFirst) {
                                     // TODO: controllare isTablet()
                                     // displayFirstContact();
@@ -662,6 +664,29 @@ public class ContactsFragment extends Fragment
 
                     @Override
                     public void onFailure(Call<ContactList> call, Throwable throwable) {}
+                });
+    }
+
+    private void scrollToBottom(final RecyclerView mContactsList) {
+        // scroll to last item to get the view of last item
+        final LinearLayoutManager layoutManager =
+                (LinearLayoutManager) mContactsList.getLayoutManager();
+        final RecyclerView.Adapter adapter = mContactsList.getAdapter();
+        final int lastItemPosition = adapter.getItemCount() - 1;
+
+        layoutManager.scrollToPositionWithOffset(lastItemPosition, 0);
+        mContactsList.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        // then scroll to specific offset
+                        View target = layoutManager.findViewByPosition(lastItemPosition);
+                        if (target != null) {
+                            int offset =
+                                    mContactsList.getMeasuredHeight() - target.getMeasuredHeight();
+                            layoutManager.scrollToPositionWithOffset(lastItemPosition, offset);
+                        }
+                    }
                 });
     }
 
