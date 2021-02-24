@@ -581,7 +581,7 @@ public class ContactsFragment extends Fragment
         UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class, domain);
 
         Call<ContactList> searchWithTerms =
-                userRestAPI.searchWithTerms(authToken, search, offset, limit, view);
+                userRestAPI.searchStartsWith(authToken, search, offset, limit, view);
 
         searchWithTerms.enqueue(
                 new Callback<ContactList>() {
