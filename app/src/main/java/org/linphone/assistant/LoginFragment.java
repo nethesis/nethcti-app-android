@@ -209,13 +209,6 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                             return;
                         }
 
-                        // Save the authToken and domain in the SharedPreferences
-                        SharedPreferencesManager.setAuthtoken(
-                                getActivity().getApplicationContext(), authToken);
-
-                        SharedPreferencesManager.setDomain(
-                                getActivity().getApplicationContext(), domain);
-
                         manageLoginResponse(authToken, domain);
                     }
 
@@ -233,8 +226,13 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
      * @param domain Domain put before.
      */
     private void manageLoginResponse(final String authToken, final String domain) {
-        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class, domain);
+        // Save the authToken and domain in the SharedPreferences
+        SharedPreferencesManager.setAuthtoken(
+                getActivity().getApplicationContext(), authToken);
+        SharedPreferencesManager.setDomain(
+                getActivity().getApplicationContext(), domain);
 
+        UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class, domain);
         Call<NethUser> getMeCall = userRestAPI.getMe(authToken);
         getMeCall.enqueue(
                 new Callback<NethUser>() {
