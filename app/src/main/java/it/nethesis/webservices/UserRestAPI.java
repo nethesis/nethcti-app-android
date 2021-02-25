@@ -19,18 +19,16 @@ public interface UserRestAPI {
     @GET("user/me")
     Call<NethUser> getMe(@Header("Authorization") String authorizationHeader);
 
-    @GET("phonebook/searchstartswith/{term}?")
-    Call<ContactList> searchStartsWith(
-            @Header("Authorization") String authorizationHeaderaaaa,
-            @Path("term") String term,
-            @Query("offset") int offset,
-            @Query("limit") int limit,
-            @Query("view") String view);
-
     @GET("phonebook/searchstartswith/{term}?limit=50")
     Call<ContactList> searchStartsWith(
             @Header("Authorization") String authorizationHeader,
             @Path("term") String term,
+            @Query("offset") int offset,
+            @Query("view") String view);
+
+    @GET("phonebook/search/?limit=50")
+    Call<ContactList> searchWith(
+            @Header("Authorization") String authorizationHeader,
             @Query("offset") int offset,
             @Query("view") String view);
 }
