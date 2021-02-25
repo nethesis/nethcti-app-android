@@ -48,7 +48,8 @@
                 android:contentDescription="@string/content_description_linphone_contacts"
                 android:gravity="center"
                 android:padding="15dp"
-                android:src="@drawable/contacts_sip" />
+                android:tint="@color/contacts_sip"
+                android:src="@drawable/ic_contacts_sip"  />
 
             <View
                 android:id="@+id/linphone_contacts_select"
