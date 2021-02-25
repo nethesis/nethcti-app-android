@@ -422,9 +422,6 @@ public class ContactsFragment extends Fragment
 
     @Override
     public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-        mSearchView.clearFocus();
-        mSearchView.setQuery("", false);
-
         LinphoneContact contact = (LinphoneContact) adapter.getItemAtPosition(position);
         if (mEditOnClick) {
             mEditConsumed = true;
