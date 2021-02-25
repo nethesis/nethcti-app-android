@@ -1029,8 +1029,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
         if (fragment2 != null
                 && fragment2.isVisible()
                 && mCurrentFragment == FragmentsAvailable.CONTACT_DETAIL) {
-            ContactDetailsFragment contactFragment = (ContactDetailsFragment) fragment2;
-            contactFragment.changeDisplayedContact(contact);
+            if (fragment2 instanceof ContactDetailsFragment) {
+                ContactDetailsFragment contactFragment = (ContactDetailsFragment) fragment2;
+                contactFragment.changeDisplayedContact(contact);
+            }
         } else {
             Bundle extras = new Bundle();
             extras.putSerializable("Contact", contact);

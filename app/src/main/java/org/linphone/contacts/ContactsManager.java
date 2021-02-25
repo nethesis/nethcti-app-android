@@ -592,4 +592,17 @@ public class ContactsManager extends ContentObserver implements FriendListListen
     public int getTotalNethesisContactCount() {
         return mMaxContact;
     }
+
+    public boolean CheckIfIsNethesisList(List<LinphoneContact> mContacts) {
+        boolean isNethesisContact = true;
+        for (LinphoneContact contact : mContacts) {
+            if (contact.isNethesisContact()) {
+                isNethesisContact = true;
+            } else {
+                isNethesisContact = false;
+            }
+            break;
+        }
+        return isNethesisContact;
+    }
 }

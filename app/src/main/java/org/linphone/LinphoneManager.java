@@ -552,11 +552,12 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
         Address lAddress;
         lAddress = mCore.interpretUrl(to); // InterpretUrl does normalizePhoneNumber
-        lAddress.setTransport(TransportType.Tls);
         if (lAddress == null) {
             Log.e("[Manager] Couldn't convert to String to Address : " + to);
             return;
         }
+
+        lAddress.setTransport(TransportType.Tls);
 
         if (displayName != null) lAddress.setDisplayName(displayName);
 
