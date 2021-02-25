@@ -23,6 +23,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -247,8 +248,11 @@ public class ContactsFragment extends Fragment
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        currentPage = 0;
-                        searchContacts(newText);
+                        if (mSearchView.hasFocus()) {
+                            currentPage = 0;
+                            searchContacts(newText);
+                        }
+
                         return true;
                     }
                 });
@@ -258,7 +262,7 @@ public class ContactsFragment extends Fragment
 
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(
-                        mContactsList.getContext(), mLayoutManager.getOrientation());
+                        mContactsList.getContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(
                 getActivity().getResources().getDrawable(R.drawable.divider));
         mContactsList.addItemDecoration(dividerItemDecoration);
@@ -284,12 +288,15 @@ public class ContactsFragment extends Fragment
                         int visibleItemCount = mLayoutManager.getChildCount();
                         int firstVisibleItemPosition =
                                 mLayoutManager.findFirstVisibleItemPosition();
-
-                        if (isLoading() && dy > 0) {
+                        if (isLoading()) {
                             if (rows < total
-                                    && ((visibleItemCount + firstVisibleItemPosition) + LIMIT)
+                                    && ((visibleItemCount + firstVisibleItemPosition) + 20)
                                             > rows) {
-                                loadMoreContacts(mView, mSearchView.getQuery().toString(), false);
+                                loadMoreContacts(
+                                        mView,
+                                        mSearchView.getQuery().toString(),
+                                        mSearchView.getQuery() != null
+                                                && mSearchView.getQuery().length() != 0);
                             }
                         }
                     }
@@ -331,7 +338,7 @@ public class ContactsFragment extends Fragment
         changeContactsToggle();
 
         if (mOnlyDisplayLinphoneContacts) {
-            searchContactsNethesis(mView, this, search, LIMIT * currentPage, false, false, true);
+            searchContactsNethesis(mView, this, search, LIMIT * currentPage, true, false, true);
         } else {
             listContact = ContactsManager.getInstance().getContacts(search);
         }
@@ -354,7 +361,8 @@ public class ContactsFragment extends Fragment
     private void changeContactsAdapter() {
         changeContactsToggle();
         // List<LinphoneContact> listContact;
-
+        mSearchView.clearFocus();
+        mSearchView.setQuery("", false);
         mNoSipContact.setVisibility(View.GONE);
         mNoContact.setVisibility(View.GONE);
         mContactsList.setVisibility(View.VISIBLE);
@@ -570,20 +578,16 @@ public class ContactsFragment extends Fragment
             final boolean isRefreshing,
             final boolean isFirst) {
 
-        listContact =
-                ((search == null || search == "") || offset != 0)
-                        ? ContactsManager.getInstance().getSIPContacts()
-                        : new ArrayList<LinphoneContact>();
+        if (offset == 0 && !ContactsManager.getInstance().getSIPContacts().isEmpty()) {
+            ContactsManager.getInstance().getSIPContacts().clear();
+        }
+        listContact = ContactsManager.getInstance().getSIPContacts();
 
         String domain = SharedPreferencesManager.getDomain(context);
         String authToken = SharedPreferencesManager.getAuthtoken(context);
 
         UserRestAPI userRestAPI = RetrofitGenerator.createService(UserRestAPI.class, domain);
-
-        Call<ContactList> searchWithTerms =
-                userRestAPI.searchStartsWith(authToken, search, offset, view);
-
-        searchWithTerms.enqueue(
+        Callback<ContactList> responseManagement =
                 new Callback<ContactList>() {
                     @Override
                     public void onResponse(Call<ContactList> call, Response<ContactList> response) {
@@ -592,6 +596,7 @@ public class ContactsFragment extends Fragment
                             if (contactList == null) {
                                 return;
                             }
+                            int oldRVPos = mLayoutManager.findFirstVisibleItemPosition();
                             ContactsManager.setMaximumNethesisContactCount(contactList.getCount());
                             List<Contact> contacts = contactList.getRows();
                             for (Contact c : contacts) {
@@ -615,7 +620,7 @@ public class ContactsFragment extends Fragment
                                     listContact.add(contact);
                                 }
                             }
-                            // sortContactByView(listContact);
+
                             if (mOnlyDisplayLinphoneContacts) {
                                 mContactAdapter =
                                         new ContactsAdapter(
@@ -627,7 +632,7 @@ public class ContactsFragment extends Fragment
 
                                 mSelectionHelper.setAdapter(mContactAdapter);
                                 mContactsList.setAdapter(mContactAdapter);
-                                mContactAdapter.updateDataSet(listContact);
+                                // mContactAdapter.updateDataSet(listContact);
 
                                 mNoSipContact.setVisibility(View.GONE);
 
@@ -644,12 +649,11 @@ public class ContactsFragment extends Fragment
                                 mContactAdapter.notifyDataSetChanged();
 
                                 if (offset != 0) {
-                                    scrollToBottom(mContactsList);
+                                    mContactsList.scrollToPosition(oldRVPos);
                                 }
 
-                                if (isFirst) {
-                                    // TODO: controllare isTablet()
-                                    // displayFirstContact();
+                                if (isFirst && LinphoneActivity.instance().isTablet()) {
+                                    displayFirstContact();
                                 }
                             }
                         } else if (response.code() == 401) {
@@ -666,7 +670,15 @@ public class ContactsFragment extends Fragment
 
                     @Override
                     public void onFailure(Call<ContactList> call, Throwable throwable) {}
-                });
+                };
+        Call<ContactList> searchCall;
+        if (isInSeachMode) {
+            searchCall = userRestAPI.searchStartsWith(authToken, search, offset, view);
+        } else {
+            searchCall = userRestAPI.searchWith(authToken, offset, view);
+        }
+
+        searchCall.enqueue(responseManagement);
     }
 
     private void sortContactByView(List<LinphoneContact> listContact) {
@@ -716,28 +728,5 @@ public class ContactsFragment extends Fragment
                     break;
             }
         }
-    }
-
-    private void scrollToBottom(final RecyclerView mContactsList) {
-        // scroll to last item to get the view of last item
-        final LinearLayoutManager layoutManager =
-                (LinearLayoutManager) mContactsList.getLayoutManager();
-        final RecyclerView.Adapter adapter = mContactsList.getAdapter();
-        final int lastItemPosition = adapter.getItemCount() - 1;
-
-        layoutManager.scrollToPositionWithOffset(lastItemPosition, 0);
-        mContactsList.post(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        // then scroll to specific offset
-                        View target = layoutManager.findViewByPosition(lastItemPosition);
-                        if (target != null) {
-                            int offset =
-                                    mContactsList.getMeasuredHeight() - target.getMeasuredHeight();
-                            layoutManager.scrollToPositionWithOffset(lastItemPosition, offset);
-                        }
-                    }
-                });
     }
 }
