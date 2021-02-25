@@ -74,17 +74,12 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
 
         if (!mIsSearchMode) {
             String fullName = contact.getFullName();
-            if (fullName != null && !fullName.isEmpty()) {
+            if (fullName != null && !fullName.isEmpty() && !contact.isNethesisContact()) {
                 holder.separatorText.setText(String.valueOf(fullName.charAt(0)));
             }
         }
-        holder.separator.setVisibility(
-                mIsSearchMode
-                                || (!mIsSearchMode
-                                        && getPositionForSection(getSectionForPosition(position))
-                                                != position)
-                        ? View.GONE
-                        : View.VISIBLE);
+        // Nasconde le letterine
+        holder.separator.setVisibility(View.GONE);
         holder.linphoneFriend.setVisibility(contact.isInFriendList() ? View.VISIBLE : View.GONE);
 
         ContactAvatar.displayAvatar(contact, holder.avatarLayout);
@@ -127,7 +122,7 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
         mMap = new LinkedHashMap<>();
         String prevLetter = null;
 
-        if (mContacts != null) {
+        if (mContacts != null && !ContactsManager.getInstance().CheckIfIsNethesisList(mContacts)) {
             for (int i = 0; i < mContacts.size(); i++) {
                 LinphoneContact contact = mContacts.get(i);
                 String fullName = contact.getFullName();

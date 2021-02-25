@@ -19,37 +19,16 @@ public interface UserRestAPI {
     @GET("user/me")
     Call<NethUser> getMe(@Header("Authorization") String authorizationHeader);
 
-    @GET("phonebook/search/{term}?view=name")
-    Call<ContactList> searchWithTerms(
+    @GET("phonebook/searchstartswith/{term}?limit=50")
+    Call<ContactList> searchStartsWith(
             @Header("Authorization") String authorizationHeader,
             @Path("term") String term,
-            @Query("limit") int limit,
-            @Query("offset") int offset);
+            @Query("offset") int offset,
+            @Query("view") String view);
 
-    @GET("phonebook/search/{term}?view=company")
-    Call<ContactList> searchWithTermsCompany(
+    @GET("phonebook/search/?limit=50")
+    Call<ContactList> searchWith(
             @Header("Authorization") String authorizationHeader,
-            @Path("term") String term,
-            @Query("limit") int limit,
-            @Query("offset") int offset);
-
-    @GET("phonebook/search/{term}?view=all")
-    Call<ContactList> searchWithTermsAll(
-            @Header("Authorization") String authorizationHeader,
-            @Path("term") String term,
-            @Query("limit") int limit,
-            @Query("offset") int offset);
-
-    @GET("phonebook/search/{term}?view=person")
-    Call<ContactList> searchWithTermsPerson(
-            @Header("Authorization") String authorizationHeader,
-            @Path("term") String term,
-            @Query("limit") int limit,
-            @Query("offset") int offset);
-
-    @GET("phonebook/search/{term}?view=name&limit=5")
-    Call<ContactList> searchWithTerms(
-            @Header("Authorization") String authorizationHeader,
-            @Path("term") String term,
-            @Query("offset") int offset);
+            @Query("offset") int offset,
+            @Query("view") String view);
 }

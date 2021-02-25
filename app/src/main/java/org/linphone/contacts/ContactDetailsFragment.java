@@ -33,7 +33,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -73,6 +72,7 @@ public class ContactDetailsFragment extends Fragment
     private boolean mDisplayChatAddressOnly = false;
     private ChatRoom mChatRoom;
     private ChatRoomListenerStub mChatRoomCreationListener;
+    private ViewGroup mContainer;
 
     private final OnClickListener mDialListener =
             new OnClickListener() {
@@ -157,7 +157,12 @@ public class ContactDetailsFragment extends Fragment
         mContact = (LinphoneContact) getArguments().getSerializable("Contact");
 
         this.mInflater = inflater;
-        mView = inflater.inflate(R.layout.contact, container, false);
+        this.mContainer = container;
+        if (!mContact.isNethesisContact()) {
+            mView = inflater.inflate(R.layout.contact, container, false);
+        } else {
+            mView = inflater.inflate(R.layout.nethesis_contact, container, false);
+        }
 
         if (getArguments() != null) {
             mDisplayChatAddressOnly = getArguments().getBoolean("ChatAddressOnly");
@@ -215,7 +220,21 @@ public class ContactDetailsFragment extends Fragment
 
     public void changeDisplayedContact(LinphoneContact newContact) {
         mContact = newContact;
+        int layoutId = 0;
+        if (!mContact.isNethesisContact()) {
+            layoutId = R.layout.contact;
+        } else {
+            layoutId = R.layout.nethesis_contact;
+        }
+        setViewLayout(layoutId);
         displayContact(mInflater, mView);
+    }
+
+    private void setViewLayout(int id) {
+        mView = mInflater.inflate(id, null);
+        ViewGroup rootView = (ViewGroup) getView();
+        rootView.removeAllViews();
+        rootView.addView(mView);
     }
 
     @SuppressLint("InflateParams")
@@ -228,9 +247,14 @@ public class ContactDetailsFragment extends Fragment
         ContactAvatar.displayAvatar(mContact, view.findViewById(R.id.avatar_layout));
 
         TextView contactName = view.findViewById(R.id.contact_name);
-        contactName.setText(mContact.getFullName());
-        mOrganization.setText(
-                (mContact.getOrganization() != null) ? mContact.getOrganization() : "");
+        if (mContact.getFullName() == null || mContact.getFullName().isEmpty()) {
+            contactName.setText(
+                    mContact.getOrganization() != null ? mContact.getOrganization() : "");
+        } else {
+            contactName.setText(mContact.getFullName());
+            mOrganization.setText(
+                    (mContact.getOrganization() != null) ? mContact.getOrganization() : "");
+        }
 
         if (!mContact.isNethesisContact()) {
             TableLayout controls = view.findViewById(R.id.controls);
@@ -352,6 +376,9 @@ public class ContactDetailsFragment extends Fragment
         else {
             SetNethesisContactDetails(inflater, view);
         }
+
+        mWaitLayout = mView.findViewById(R.id.waitScreen);
+        mWaitLayout.setVisibility(GONE);
     }
 
     @Override
@@ -535,11 +562,16 @@ public class ContactDetailsFragment extends Fragment
             }
         }
 
+        LinearLayout ownerLayout = view.findViewById(R.id.ownerLayout);
         LinearLayout faxLayout = view.findViewById(R.id.faxLayout);
         LinearLayout emailLayout = view.findViewById(R.id.emailLayout);
         LinearLayout taskLayout = view.findViewById(R.id.taskLayout);
         LinearLayout notesLayout = view.findViewById(R.id.notesLayout);
 
+        ownerLayout.setVisibility(
+                (contact.getOwnerId() == null || contact.getOwnerId().isEmpty())
+                        ? GONE
+                        : View.VISIBLE);
         faxLayout.setVisibility(
                 (contact.getFax() == null || contact.getFax().isEmpty()) ? GONE : View.VISIBLE);
         emailLayout.setVisibility(
@@ -548,6 +580,11 @@ public class ContactDetailsFragment extends Fragment
                 (contact.getTitle() == null || contact.getTitle().isEmpty()) ? GONE : View.VISIBLE);
         notesLayout.setVisibility(
                 (contact.getNotes() == null || contact.getNotes().isEmpty()) ? GONE : View.VISIBLE);
+
+        TextView owner_label = view.findViewById(R.id.owner_label);
+        owner_label.setText(R.string.owner);
+        TextView owner = view.findViewById((R.id.owner));
+        owner.setText(contact.getOwnerId());
 
         TextView fax_label = view.findViewById(R.id.fax_label);
         fax_label.setText(R.string.fax);
@@ -566,7 +603,7 @@ public class ContactDetailsFragment extends Fragment
 
         TextView notes_label = view.findViewById(R.id.notes_label);
         notes_label.setText(R.string.notes);
-        EditText notes_edit = view.findViewById((R.id.notes));
+        TextView notes_edit = view.findViewById((R.id.notes));
         notes_edit.setText(contact.getNotes());
     }
 }
