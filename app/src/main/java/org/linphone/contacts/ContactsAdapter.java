@@ -78,13 +78,8 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
                 holder.separatorText.setText(String.valueOf(fullName.charAt(0)));
             }
         }
-        holder.separator.setVisibility(
-                mIsSearchMode
-                                || (!mIsSearchMode
-                                        && getPositionForSection(getSectionForPosition(position))
-                                                != position)
-                        ? View.GONE
-                        : View.VISIBLE);
+        // Nasconde le letterine
+        holder.separator.setVisibility(View.GONE);
         holder.linphoneFriend.setVisibility(contact.isInFriendList() ? View.VISIBLE : View.GONE);
 
         ContactAvatar.displayAvatar(contact, holder.avatarLayout);

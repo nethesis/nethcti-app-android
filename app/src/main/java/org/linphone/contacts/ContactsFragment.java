@@ -288,14 +288,7 @@ public class ContactsFragment extends Fragment
                         int visibleItemCount = mLayoutManager.getChildCount();
                         int firstVisibleItemPosition =
                                 mLayoutManager.findFirstVisibleItemPosition();
-                        Log.d("WEDO", "isLoading() -> " + isLoading());
                         if (isLoading()) {
-                            Log.d(
-                                    "WEDO",
-                                    "SipContacts().size() -> "
-                                            + ContactsManager.getInstance().getSIPContacts().size()
-                                            + "getTotalNethesisContactCount() -> "
-                                            + total);
                             if (rows < total
                                     && ((visibleItemCount + firstVisibleItemPosition) + 20)
                                             > rows) {
@@ -590,12 +583,6 @@ public class ContactsFragment extends Fragment
         }
         listContact = ContactsManager.getInstance().getSIPContacts();
 
-        Log.d(
-                "WEDO",
-                "1 - listContact.size() -> "
-                        + listContact.size()
-                        + "isInSearchMode -> "
-                        + isInSeachMode);
         String domain = SharedPreferencesManager.getDomain(context);
         String authToken = SharedPreferencesManager.getAuthtoken(context);
 
@@ -635,7 +622,6 @@ public class ContactsFragment extends Fragment
                             }
 
                             if (mOnlyDisplayLinphoneContacts) {
-                                Log.d("WEDO", "2 - listContact.size() -> " + listContact.size());
                                 mContactAdapter =
                                         new ContactsAdapter(
                                                 mContext,
