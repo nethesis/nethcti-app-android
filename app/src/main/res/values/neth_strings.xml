@@ -42,4 +42,5 @@
     <string name="notes">Note</string>
     <string name="internal">Internal</string>
     <string name="spinnerTextView">Select a filter</string>
+    <string name="owner">Created by</string>
 </resources>
