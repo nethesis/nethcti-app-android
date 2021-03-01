@@ -147,6 +147,8 @@ public class ContactsFragment extends Fragment
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
+                        mSearchView.clearFocus();
+                        mSearchView.setQuery("", false);
                         if (!mOnlyDisplayLinphoneContacts) {
                             ContactsManager.getInstance().fetchContactsAsync();
                         } else {
@@ -155,7 +157,7 @@ public class ContactsFragment extends Fragment
                                     ContactsFragment.this,
                                     mSearchView.getQuery().toString(),
                                     LIMIT * currentPage,
-                                    true,
+                                    false,
                                     true,
                                     false);
                         }
@@ -452,10 +454,12 @@ public class ContactsFragment extends Fragment
 
     @Override
     public boolean onItemLongClicked(int position) {
-        if (!mContactAdapter.isEditionEnabled()) {
-            mSelectionHelper.enterEditionMode();
+        if (!mOnlyDisplayLinphoneContacts) {
+            if (!mContactAdapter.isEditionEnabled()) {
+                mSelectionHelper.enterEditionMode();
+            }
+            mContactAdapter.toggleSelection(position);
         }
-        mContactAdapter.toggleSelection(position);
         return true;
     }
 
@@ -579,11 +583,6 @@ public class ContactsFragment extends Fragment
             final boolean isRefreshing,
             final boolean isFirst) {
 
-        if (offset == 0 && !ContactsManager.getInstance().getSIPContacts().isEmpty()) {
-            ContactsManager.getInstance().getSIPContacts().clear();
-        }
-        listContact = ContactsManager.getInstance().getSIPContacts();
-
         String domain = SharedPreferencesManager.getDomain(context);
         String authToken = SharedPreferencesManager.getAuthtoken(context);
 
@@ -599,6 +598,20 @@ public class ContactsFragment extends Fragment
                             }
                             int oldRVPos = mLayoutManager.findFirstVisibleItemPosition();
                             ContactsManager.setMaximumNethesisContactCount(contactList.getCount());
+                            int offset = 0;
+                            try {
+                                offset =
+                                        Integer.parseInt(
+                                                call.request().url().queryParameter("offset"));
+
+                            } catch (NumberFormatException ignored) {
+                            }
+                            if (offset == 0
+                                    && !ContactsManager.getInstance().getSIPContacts().isEmpty()) {
+                                ContactsManager.getInstance().getSIPContacts().clear();
+                            }
+                            listContact = ContactsManager.getInstance().getSIPContacts();
+
                             List<Contact> contacts = contactList.getRows();
                             for (Contact c : contacts) {
                                 NethesisContact contact =
@@ -676,7 +689,7 @@ public class ContactsFragment extends Fragment
         if (isInSeachMode) {
             searchCall = userRestAPI.searchStartsWith(authToken, search, offset, view);
         } else {
-            searchCall = userRestAPI.searchWith(authToken, offset, view);
+            searchCall = userRestAPI.getAll(authToken, offset);
         }
 
         searchCall.enqueue(responseManagement);

@@ -8,7 +8,7 @@
         <!-- Comment out the following line to disable system's status bar coloring -->
         <item name="android:colorPrimaryDark">@color/neth_dark_blue_color</item>
         <item name="android:textColorPrimary">@color/neth_dark_grey</item>
-        <item name="android:textColorSecondary">@color/neth_light_grey_color</item>
+        <item name="android:textColorSecondary">@color/neth_dark_grey</item>
         <item name="android:textColorHint">@color/neth_grey_text_color</item>
         <item name="android:colorBackground">@color/neth_light_grey_color</item>
         <item name="android:textColorPrimaryInverse">@color/white_color</item>
