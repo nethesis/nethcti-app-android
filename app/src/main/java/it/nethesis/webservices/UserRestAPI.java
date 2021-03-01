@@ -26,9 +26,8 @@ public interface UserRestAPI {
             @Query("offset") int offset,
             @Query("view") String view);
 
-    @GET("phonebook/search/?limit=50")
-    Call<ContactList> searchWith(
-            @Header("Authorization") String authorizationHeader,
-            @Query("offset") int offset,
-            @Query("view") String view);
+    @GET("phonebook/getall/?limit=50")
+    Call<ContactList> getAll(
+            @Header("Authorization") String authorizationHeader, @Query("offset") int offset);
+    /*@Query("view") String view);*/
 }
