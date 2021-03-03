@@ -122,7 +122,7 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
         mMap = new LinkedHashMap<>();
         String prevLetter = null;
 
-        if (mContacts != null && !ContactsManager.getInstance().CheckIfIsNethesisList(mContacts)) {
+        if (mContacts != null && !ContactsManager.getInstance().checkIfIsNethesisList(mContacts)) {
             for (int i = 0; i < mContacts.size(); i++) {
                 LinphoneContact contact = mContacts.get(i);
                 String fullName = contact.getFullName();

@@ -62,9 +62,10 @@ import org.linphone.utils.LinphoneUtils;
 
 public class ContactsManager extends ContentObserver implements FriendListListener {
     private static ContactsManager sInstance;
-    private static int mMaxContact;
 
-    private List<LinphoneContact> mContacts, mNethesisContacts;
+    private boolean isAvailable;
+
+    private List<LinphoneContact> mContacts;
     private List<LinphoneContact> mSipContacts;
     private ArrayList<ContactsUpdatedListener> mContactsUpdatedListeners;
     private MagicSearch mMagicSearch;
@@ -83,7 +84,6 @@ public class ContactsManager extends ContentObserver implements FriendListListen
         mContactsUpdatedListeners = new ArrayList<>();
         mContacts = new ArrayList<>();
         mSipContacts = new ArrayList<>();
-        mNethesisContacts = new ArrayList<>();
 
         if (LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null) {
             mMagicSearch = LinphoneManager.getLcIfManagerNotDestroyedOrNull().createMagicSearch();
@@ -91,8 +91,8 @@ public class ContactsManager extends ContentObserver implements FriendListListen
         }
     }
 
-    public static void setMaximumNethesisContactCount(int count) {
-        mMaxContact = count;
+    public void setIsAvailable(boolean available) {
+        isAvailable = available;
     }
 
     public void addContactsListener(ContactsUpdatedListener listener) {
@@ -589,18 +589,14 @@ public class ContactsManager extends ContentObserver implements FriendListListen
         return con;
     }
 
-    public int getTotalNethesisContactCount() {
-        return mMaxContact;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
-    public boolean CheckIfIsNethesisList(List<LinphoneContact> mContacts) {
+    public boolean checkIfIsNethesisList(List<LinphoneContact> mContacts) {
         boolean isNethesisContact = true;
         for (LinphoneContact contact : mContacts) {
-            if (contact.isNethesisContact()) {
-                isNethesisContact = true;
-            } else {
-                isNethesisContact = false;
-            }
+            isNethesisContact = contact.isNethesisContact();
             break;
         }
         return isNethesisContact;

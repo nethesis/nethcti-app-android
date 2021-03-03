@@ -284,13 +284,12 @@ public class ContactsFragment extends Fragment
                     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
                         int rows = ContactsManager.getInstance().getSIPContacts().size();
-                        int total = ContactsManager.getInstance().getTotalNethesisContactCount();
 
                         int visibleItemCount = mLayoutManager.getChildCount();
                         int firstVisibleItemPosition =
                                 mLayoutManager.findFirstVisibleItemPosition();
                         if (isLoading()) {
-                            if (rows < total
+                            if (ContactsManager.getInstance().isAvailable()
                                     && ((visibleItemCount + firstVisibleItemPosition) + 20)
                                             > rows) {
                                 loadMoreContacts(
@@ -597,7 +596,7 @@ public class ContactsFragment extends Fragment
                                 return;
                             }
                             int oldRVPos = mLayoutManager.findFirstVisibleItemPosition();
-                            ContactsManager.setMaximumNethesisContactCount(contactList.getCount());
+
                             int offset = 0;
                             try {
                                 offset =
@@ -606,6 +605,10 @@ public class ContactsFragment extends Fragment
 
                             } catch (NumberFormatException ignored) {
                             }
+                            ContactsManager.getInstance()
+                                    .setIsAvailable(
+                                            !contactList.getRows().isEmpty()
+                                                    && contactList.getRows().size() == LIMIT);
                             if (offset == 0
                                     && !ContactsManager.getInstance().getSIPContacts().isEmpty()) {
                                 ContactsManager.getInstance().getSIPContacts().clear();
