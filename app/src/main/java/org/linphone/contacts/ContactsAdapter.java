@@ -88,8 +88,12 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
                 mContext.getResources().getBoolean(R.bool.display_contact_organization);
         String org = contact.getOrganization();
         if (org != null && !org.isEmpty() && isOrgVisible) {
-            holder.organization.setText(org);
-            holder.organization.setVisibility(View.VISIBLE);
+            if (contact.getFullName().isEmpty()) {
+                holder.name.setText(org);
+            } else {
+                holder.organization.setText(org);
+                holder.organization.setVisibility(View.VISIBLE);
+            }
         } else {
             holder.organization.setVisibility(View.GONE);
         }

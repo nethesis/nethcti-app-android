@@ -368,6 +368,7 @@ public class ContactsFragment extends Fragment
         mContactsList.setVisibility(View.VISIBLE);
         boolean isEditionEnabled = false;
         String query = mSearchView.getQuery().toString();
+        listContact = new ArrayList<>();
         if (query.equals("")) {
             if (mOnlyDisplayLinphoneContacts) {
                 searchContactsNethesis(mView, this, "", LIMIT * currentPage, false, false, true);

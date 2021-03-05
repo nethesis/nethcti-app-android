@@ -9,7 +9,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -44,15 +43,8 @@ public class RetrofitGenerator {
                         @Override
                         public Response intercept(@NotNull Chain chain) throws IOException {
                             Request request = chain.request();
-                            Headers h =
-                                    request.headers()
-                                            .newBuilder()
-                                            .add("Auth-Exp", "no-exp")
-                                            .build();
-
                             request = request.newBuilder().header("Auth-Exp", "no-exp").build();
-                            Response r = chain.proceed(request);
-                            return r;
+                            return chain.proceed(request);
                         }
                     };
             httpClient.addNetworkInterceptor(asd);
