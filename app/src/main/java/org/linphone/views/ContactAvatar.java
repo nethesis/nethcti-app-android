@@ -155,12 +155,30 @@ public class ContactAvatar {
         boolean generated_avatars =
                 v.getContext().getResources().getBoolean(R.bool.generate_text_avatar);
 
-        // Kepp the generated avatar ready in case of failure while loading picture
-        holder.generatedAvatar.setText(
-                generateAvatar(
-                        contact.getFullName() == null
-                                ? contact.getFirstName() + " " + contact.getLastName()
-                                : contact.getFullName()));
+        // Keep the generated avatar ready in case of failure while loading picture
+        String avatar = "";
+        if (contact.getFullName() == null || contact.getFullName().isEmpty()) {
+            if ((contact.getFirstName() == null || contact.getFirstName().isEmpty())
+                    && (contact.getLastName() == null || contact.getLastName().isEmpty())) {
+                if (contact.getOrganization() != null) {
+                    avatar = contact.getOrganization();
+                } else {
+                    avatar = "";
+                }
+            } else {
+                if ((contact.getFirstName() == null || contact.getFirstName().isEmpty())
+                        || (contact.getLastName() == null || contact.getLastName().isEmpty())) {
+                    if (contact.getFirstName() == null || contact.getFirstName().isEmpty()) {
+                        avatar = contact.getLastName();
+                    } else {
+                        avatar = contact.getFirstName();
+                    }
+                }
+            }
+        } else {
+            avatar = contact.getFullName();
+        }
+        holder.generatedAvatar.setText(generateAvatar(avatar));
 
         holder.generatedAvatar.setVisibility(View.GONE);
         holder.contactPicture.setVisibility(View.VISIBLE);
@@ -182,11 +200,7 @@ public class ContactAvatar {
             holder.contactPicture.setVisibility(View.VISIBLE);
             holder.generatedAvatar.setVisibility(View.GONE);
         } else if (generated_avatars) {
-            holder.generatedAvatar.setText(
-                    generateAvatar(
-                            contact.getFullName() == null
-                                    ? contact.getFirstName() + " " + contact.getLastName()
-                                    : contact.getFullName()));
+            holder.generatedAvatar.setText(generateAvatar(avatar));
             holder.generatedAvatar.setVisibility(View.VISIBLE);
         }
 
