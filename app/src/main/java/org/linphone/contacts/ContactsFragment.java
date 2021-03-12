@@ -21,7 +21,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +37,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,7 +55,6 @@ import java.util.ListIterator;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
-import org.linphone.assistant.AssistantActivity;
 import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.utils.SelectableHelper;
 import org.linphone.utils.SharedPreferencesManager;
@@ -69,9 +68,9 @@ public class ContactsFragment extends Fragment
                 ContactViewHolder.ClickListener,
                 SelectableHelper.DeleteListener {
     private RecyclerView mContactsList;
-    private TextView mNoSipContact, mNoContact;
+    private TextView mNoSipContact, mNoContact, mSessionExpired;
     private ImageView mAllContacts, mLinphoneContacts, mNewContact, mEdit;
-    private boolean mOnlyDisplayLinphoneContacts;
+    private boolean mOnlyDisplayLinphoneContacts, mIsSessionExpired = false;
     private View mAllContactsSelected, mLinphoneContactsSelected;
     private int mLastKnownPosition;
     private boolean mEditOnClick = false, mEditConsumed = false, mOnlyDisplayChatAddress = false;
@@ -92,6 +91,23 @@ public class ContactsFragment extends Fragment
     private String mView = ALL;
     private RelativeLayout mRelativeLayoutViews;
     private Spinner mSpinnerView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mOnlyDisplayLinphoneContacts = savedInstanceState.getBoolean("showSip");
+            mIsSessionExpired = savedInstanceState.getBoolean("sessionExpired");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("showSip", mOnlyDisplayLinphoneContacts);
+        outState.putBoolean("sessionExpired", mIsSessionExpired);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public View onCreateView(
@@ -121,6 +137,7 @@ public class ContactsFragment extends Fragment
 
         mNoSipContact = view.findViewById(R.id.noSipContact);
         mNoContact = view.findViewById(R.id.noContact);
+        mSessionExpired = view.findViewById(R.id.sessionExpired);
         mContactsList = view.findViewById(R.id.contactsList);
 
         mAllContacts = view.findViewById(R.id.all_contacts);
@@ -233,6 +250,8 @@ public class ContactsFragment extends Fragment
             if (!mOnlyDisplayLinphoneContacts
                     && ContactsManager.getInstance().getContacts().size() == 0) {
                 mNoContact.setVisibility(View.VISIBLE);
+            } else if (mIsSessionExpired) {
+                mSessionExpired.setVisibility(View.VISIBLE);
             } else if (mOnlyDisplayLinphoneContacts
                     && ContactsManager.getInstance().getSIPContacts().size() == 0) {
                 mNoSipContact.setVisibility(View.VISIBLE);
@@ -365,6 +384,7 @@ public class ContactsFragment extends Fragment
         mSearchView.setQuery("", false);
         mNoSipContact.setVisibility(View.GONE);
         mNoContact.setVisibility(View.GONE);
+        mSessionExpired.setVisibility(View.GONE);
         mContactsList.setVisibility(View.VISIBLE);
         boolean isEditionEnabled = false;
         String query = mSearchView.getQuery().toString();
@@ -400,6 +420,8 @@ public class ContactsFragment extends Fragment
 
         if (!mOnlyDisplayLinphoneContacts && mContactAdapter.getItemCount() == 0) {
             mNoContact.setVisibility(View.VISIBLE);
+        } else if (mIsSessionExpired) {
+            mSessionExpired.setVisibility(View.VISIBLE);
         } else if (mOnlyDisplayLinphoneContacts && mContactAdapter.getItemCount() == 0) {
             mNoSipContact.setVisibility(View.VISIBLE);
         }
@@ -475,9 +497,9 @@ public class ContactsFragment extends Fragment
 
         if (LinphoneActivity.isInstanciated()) {
             LinphoneActivity.instance().selectMenu(FragmentsAvailable.CONTACTS_LIST);
-            mOnlyDisplayLinphoneContacts =
-                    ContactsManager.getInstance().isLinphoneContactsPrefered()
-                            || getResources().getBoolean(R.bool.hide_non_linphone_contacts);
+            // mOnlyDisplayLinphoneContacts =
+            //         ContactsManager.getInstance().isLinphoneContactsPrefered()
+            //                 || getResources().getBoolean(R.bool.hide_non_linphone_contacts);
         }
         changeContactsToggle();
         invalidate();
@@ -505,6 +527,7 @@ public class ContactsFragment extends Fragment
             if (mContactAdapter.getItemCount() > 0) {
                 mNoContact.setVisibility(View.GONE);
                 mNoSipContact.setVisibility(View.GONE);
+                mSessionExpired.setVisibility(View.GONE);
             }
         }
         mContactsFetchInProgress.setVisibility(View.GONE);
@@ -592,6 +615,7 @@ public class ContactsFragment extends Fragment
                     @Override
                     public void onResponse(Call<ContactList> call, Response<ContactList> response) {
                         if (response.isSuccessful()) {
+                            mIsSessionExpired = false;
                             ContactList contactList = response.body();
                             if (contactList == null) {
                                 return;
@@ -653,6 +677,7 @@ public class ContactsFragment extends Fragment
                                 // mContactAdapter.updateDataSet(listContact);
 
                                 mNoSipContact.setVisibility(View.GONE);
+                                mSessionExpired.setVisibility(View.GONE);
 
                                 if (!mOnlyDisplayLinphoneContacts
                                         && mContactAdapter.getItemCount() == 0) {
@@ -675,14 +700,9 @@ public class ContactsFragment extends Fragment
                                 }
                             }
                         } else if (response.code() == 401) {
-                            LinphoneManager.clearProxys(getContext());
-                            startActivity(
-                                    new Intent()
-                                            .setClass(
-                                                    LinphoneManager.getInstance().getContext(),
-                                                    AssistantActivity.class));
-
-                            getActivity().finish();
+                            mIsSessionExpired = true;
+                            mNoSipContact.setVisibility(View.GONE);
+                            mSessionExpired.setVisibility(View.VISIBLE);
                         }
                     }
 

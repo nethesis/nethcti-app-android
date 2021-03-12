@@ -26,6 +26,8 @@
 
     <string name="neth_test_domain" translatable="false">nethctiapp.nethserver.net</string>
 
+    <string name="neth_session_expired">Session expired. To see contacts you need to logout and login again.</string>
+
     <!--Custom-->
     <string name="views_spin">select a view</string>
     <string-array name="views">

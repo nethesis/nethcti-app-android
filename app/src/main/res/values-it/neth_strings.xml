@@ -18,6 +18,7 @@
     <string name="neth_login_missing_neth_extension">Nessun interno assegnato a questo utente, contattare un amministratore.</string>
     <string name="neth_login_missing_neth_user">Nessun utente trovato, contattare un amministratore.</string>
     <string name="neth_login_wrong_credentials">Login fallito, controllare le credenziali o riprovare più tardi.</string>
+    <string name="neth_session_expired">Sessione scaduta. Per poter vedere la lista contatti è necessario fare logout e login di nuovo.</string>
 
     <!--Custom-->
     <string name="views_spin">seleziona una view</string>

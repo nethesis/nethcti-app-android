@@ -158,6 +158,16 @@
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/sessionExpired"
+            style="@style/empty_list_font"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/neth_session_expired"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/noSipContact"
             style="@style/empty_list_font"
             android:layout_width="match_parent"
