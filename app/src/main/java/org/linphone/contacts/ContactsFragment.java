@@ -263,6 +263,7 @@ public class ContactsFragment extends Fragment
                 new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
+                        mSearchView.clearFocus();
                         return true;
                     }
 
@@ -422,6 +423,7 @@ public class ContactsFragment extends Fragment
             mNoContact.setVisibility(View.VISIBLE);
         } else if (mIsSessionExpired) {
             mSessionExpired.setVisibility(View.VISIBLE);
+            LinphoneActivity.instance().displayEmptyFragment();
         } else if (mOnlyDisplayLinphoneContacts && mContactAdapter.getItemCount() == 0) {
             mNoSipContact.setVisibility(View.VISIBLE);
         }
@@ -458,8 +460,6 @@ public class ContactsFragment extends Fragment
 
     @Override
     public void onItemClicked(int position) {
-        mSearchView.clearFocus();
-        mSearchView.setQuery("", false);
         LinphoneContact contact = (LinphoneContact) mContactAdapter.getItem(position);
 
         if (mContactAdapter.isEditionEnabled()) {
