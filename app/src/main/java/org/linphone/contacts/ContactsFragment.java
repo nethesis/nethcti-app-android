@@ -581,6 +581,7 @@ public class ContactsFragment extends Fragment
     }
 
     private void loadMoreContacts(String view, String search, boolean isInSearchMode) {
+        isLoading = false;
         currentPage += 1;
         mContactsFetchInProgress.setVisibility(View.VISIBLE);
         searchContactsNethesis(
@@ -635,7 +636,6 @@ public class ContactsFragment extends Fragment
                     @Override
                     public void onResponse(Call<ContactList> call, Response<ContactList> response) {
                         mSearchView.setEnabled(true);
-                        isLoading = false;
                         if (response.isSuccessful()) {
                             mIsSessionExpired = false;
                             ContactList contactList = response.body();
@@ -736,7 +736,6 @@ public class ContactsFragment extends Fragment
                         mSearchView.setEnabled(true);
                         mNoSipContact.setVisibility(View.VISIBLE);
                         mContactsFetchInProgress.setVisibility(View.GONE);
-                        isLoading = false;
                     }
                 };
         Call<ContactList> searchCall;
