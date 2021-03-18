@@ -173,7 +173,7 @@
 
     <!-- Contacts -->
     <string name="no_contact">No contact in your address book.</string>
-    <string name="no_sip_contact">No SIP contact in your address book.</string>
+    <string name="no_sip_contact">No contact in your address book.</string>
     <string name="delete_contacts">Do you want to delete selected contacts?</string>
     <string name="delete_contact">Do you want to delete selected contact?</string>
     <string name="sip_address">SIP address</string>
