@@ -781,7 +781,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 && newFragmentType != FragmentsAvailable.CHAT_LIST
                 && newFragmentType != FragmentsAvailable.CHAT
                 && newFragmentType != FragmentsAvailable.GROUP_CHAT) {
-            return;
+            if (!mEmptyFragment) return;
         }
 
         if (mCurrentFragment == FragmentsAvailable.DIALER) {
@@ -1028,11 +1028,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
         Fragment fragment2 = getFragmentManager().findFragmentById(R.id.fragmentContainer2);
         if (fragment2 != null
                 && fragment2.isVisible()
-                && mCurrentFragment == FragmentsAvailable.CONTACT_DETAIL) {
-            if (fragment2 instanceof ContactDetailsFragment) {
-                ContactDetailsFragment contactFragment = (ContactDetailsFragment) fragment2;
-                contactFragment.changeDisplayedContact(contact);
-            }
+                && mCurrentFragment == FragmentsAvailable.CONTACT_DETAIL
+                && fragment2 instanceof ContactDetailsFragment) {
+            ContactDetailsFragment contactFragment = (ContactDetailsFragment) fragment2;
+            contactFragment.changeDisplayedContact(contact);
         } else {
             Bundle extras = new Bundle();
             extras.putSerializable("Contact", contact);
