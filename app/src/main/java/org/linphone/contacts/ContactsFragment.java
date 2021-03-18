@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +92,7 @@ public class ContactsFragment extends Fragment
     private String mView = ALL;
     private RelativeLayout mRelativeLayoutViews;
     private Spinner mSpinnerView;
+    private Handler mHandler = new Handler();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -238,6 +240,13 @@ public class ContactsFragment extends Fragment
             mAllContacts.setEnabled(mOnlyDisplayLinphoneContacts);
             mLinphoneContacts.setEnabled(!mAllContacts.isEnabled());
         }
+
+        if (mOnlyDisplayLinphoneContacts) {
+            mNewContact.setVisibility(View.GONE);
+            mNewContact.setEnabled(false);
+            mEdit.setVisibility(View.GONE);
+            mEdit.setEnabled(false);
+        }
         mNewContact.setEnabled(LinphoneManager.getLc().getCallsNb() == 0);
 
         if (!ContactsManager.getInstance().contactsFetchedOnce()) {
@@ -268,12 +277,20 @@ public class ContactsFragment extends Fragment
                     }
 
                     @Override
-                    public boolean onQueryTextChange(String newText) {
-                        if (mSearchView.hasFocus()) {
-                            currentPage = 0;
-                            searchContacts(newText);
-                        }
-
+                    public boolean onQueryTextChange(final String newText) {
+                        mHandler.removeCallbacksAndMessages(null);
+                        mHandler.postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (mSearchView.hasFocus()) {
+                                            currentPage = 0;
+                                            mSearchView.setEnabled(false);
+                                            searchContacts(newText);
+                                        }
+                                    }
+                                },
+                                500);
                         return true;
                     }
                 });
@@ -361,6 +378,7 @@ public class ContactsFragment extends Fragment
             searchContactsNethesis(mView, this, search, LIMIT * currentPage, true, false, true);
         } else {
             listContact = ContactsManager.getInstance().getContacts(search);
+            mSearchView.setEnabled(true);
         }
 
         if (mContactAdapter != null && mContactAdapter.isEditionEnabled()) {
@@ -380,7 +398,6 @@ public class ContactsFragment extends Fragment
 
     private void changeContactsAdapter() {
         changeContactsToggle();
-        // List<LinphoneContact> listContact;
         mSearchView.clearFocus();
         mSearchView.setQuery("", false);
         mNoSipContact.setVisibility(View.GONE);
@@ -419,11 +436,15 @@ public class ContactsFragment extends Fragment
 
         mContactAdapter.notifyDataSetChanged();
 
-        if (!mOnlyDisplayLinphoneContacts && mContactAdapter.getItemCount() == 0) {
-            mNoContact.setVisibility(View.VISIBLE);
+        if (!mOnlyDisplayLinphoneContacts) {
+            if (mContactAdapter.getItemCount() == 0) {
+                mNoContact.setVisibility(View.VISIBLE);
+            }
         } else if (mIsSessionExpired) {
             mSessionExpired.setVisibility(View.VISIBLE);
-            LinphoneActivity.instance().displayEmptyFragment();
+            if (LinphoneActivity.instance().isTablet()) {
+                LinphoneActivity.instance().displayEmptyFragment();
+            }
         } else if (mOnlyDisplayLinphoneContacts && mContactAdapter.getItemCount() == 0) {
             mNoSipContact.setVisibility(View.VISIBLE);
         }
@@ -614,6 +635,7 @@ public class ContactsFragment extends Fragment
                 new Callback<ContactList>() {
                     @Override
                     public void onResponse(Call<ContactList> call, Response<ContactList> response) {
+                        mSearchView.setEnabled(true);
                         if (response.isSuccessful()) {
                             mIsSessionExpired = false;
                             ContactList contactList = response.body();
@@ -703,11 +725,16 @@ public class ContactsFragment extends Fragment
                             mIsSessionExpired = true;
                             mNoSipContact.setVisibility(View.GONE);
                             mSessionExpired.setVisibility(View.VISIBLE);
+                            if (LinphoneActivity.instance().isTablet()) {
+                                LinphoneActivity.instance().displayEmptyFragment();
+                            }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<ContactList> call, Throwable throwable) {}
+                    public void onFailure(Call<ContactList> call, Throwable throwable) {
+                        mSearchView.setEnabled(true);
+                    }
                 };
         Call<ContactList> searchCall;
         if (isInSeachMode) {
