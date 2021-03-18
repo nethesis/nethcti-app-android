@@ -257,6 +257,12 @@ public class ContactDetailsFragment extends Fragment
         }
 
         if (!mContact.isNethesisContact()) {
+            mEditContact = mView.findViewById(R.id.editContact);
+            mEditContact.setOnClickListener(this);
+
+            mDeleteContact = mView.findViewById(R.id.deleteContact);
+            mDeleteContact.setOnClickListener(this);
+
             TableLayout controls = view.findViewById(R.id.controls);
             controls.removeAllViews();
             List<LinphoneNumberOrAddress> noas = mContact.getNumbersOrAddresses();
