@@ -23,7 +23,9 @@
                 android:background="?attr/button_background_drawable"
                 android:contentDescription="@string/content_description_back"
                 android:padding="18dp"
-                android:src="@drawable/back" />
+                android:src="@drawable/back"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <View
                 android:layout_width="0dp"
@@ -38,7 +40,9 @@
                 android:background="?attr/button_background_drawable"
                 android:contentDescription="@string/content_description_delete"
                 android:padding="15dp"
-                android:src="@drawable/delete" />
+                android:src="@drawable/delete"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <ImageView
                 android:id="@+id/editContact"
@@ -48,7 +52,9 @@
                 android:background="?attr/button_background_drawable"
                 android:contentDescription="@string/content_description_edit"
                 android:padding="15dp"
-                android:src="@drawable/edit" />
+                android:src="@drawable/edit"
+                android:clickable="true"
+                android:focusable="true"/>
 
         </LinearLayout>
 
