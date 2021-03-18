@@ -723,6 +723,7 @@ public class ContactsFragment extends Fragment
                             }
                         } else if (response.code() == 401) {
                             mIsSessionExpired = true;
+                            mContactsFetchInProgress.setVisibility(View.GONE);
                             mNoSipContact.setVisibility(View.GONE);
                             mSessionExpired.setVisibility(View.VISIBLE);
                             if (LinphoneActivity.instance().isTablet()) {
