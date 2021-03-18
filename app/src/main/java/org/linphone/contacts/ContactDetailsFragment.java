@@ -497,30 +497,6 @@ public class ContactDetailsFragment extends Fragment
             }
 
             v.findViewById(R.id.inviteFriend).setVisibility(GONE);
-            if (!noa.isSIPAddress()
-                    && v.findViewById(R.id.friendLinphone).getVisibility() == GONE
-                    && !getResources().getBoolean(R.bool.hide_invite_contact)) {
-                v.findViewById(R.id.inviteFriend).setVisibility(View.VISIBLE);
-                v.findViewById(R.id.inviteFriend).setTag(noa.getNormalizedPhone());
-                v.findViewById(R.id.inviteFriend)
-                        .setOnClickListener(
-                                new OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        String number = (String) v.getTag();
-                                        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-                                        smsIntent.putExtra("address", number);
-                                        smsIntent.setData(Uri.parse("smsto:" + number));
-                                        String text =
-                                                getString(R.string.invite_friend_text)
-                                                        .replace(
-                                                                "%s",
-                                                                getString(R.string.download_link));
-                                        smsIntent.putExtra("sms_body", text);
-                                        startActivity(smsIntent);
-                                    }
-                                });
-            }
 
             String contactAddress = mContact.getContactFromPresenceModelForUriOrTel(noa.getValue());
             if (!mDisplayChatAddressOnly) {
