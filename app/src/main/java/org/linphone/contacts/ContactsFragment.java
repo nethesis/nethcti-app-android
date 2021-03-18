@@ -325,7 +325,7 @@ public class ContactsFragment extends Fragment
                         int visibleItemCount = mLayoutManager.getChildCount();
                         int firstVisibleItemPosition =
                                 mLayoutManager.findFirstVisibleItemPosition();
-                        if (isLoading()) {
+                        if (mOnlyDisplayLinphoneContacts && isLoading()) {
                             if (ContactsManager.getInstance().isAvailable()
                                     && ((visibleItemCount + firstVisibleItemPosition) + 20)
                                             > rows) {
