@@ -37,4 +37,12 @@
     <string name="internal">Interno</string>
     <string name="spinnerTextView">Seleziona un filtro</string>
     <string name="owner">Creato da</string>
+    <string name="workAddress">Indirizzo Lavoro</string>
+    <string name="workCity">Città Lavoro</string>
+    <string name="workState">Provincia Lavoro</string>
+    <string name="workCountry">Paese Lavoro</string>
+    <string name="homeAddress">Indirizzo Casa</string>
+    <string name="homeCity">Città Casa</string>
+    <string name="homeState">Provincia Casa</string>
+    <string name="homeCountry">Stato Casa</string>
 </resources>

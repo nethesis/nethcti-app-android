@@ -187,7 +187,7 @@ public class ContactDetailsFragment extends Fragment
         }
 
         mBack = mView.findViewById(R.id.back);
-        if (getResources().getBoolean(R.bool.isTablet)) {
+        if (LinphoneActivity.instance().isTablet()) {
             mBack.setVisibility(View.INVISIBLE);
         } else {
             mBack.setOnClickListener(this);
@@ -543,6 +543,15 @@ public class ContactDetailsFragment extends Fragment
         LinearLayout emailLayout = view.findViewById(R.id.emailLayout);
         LinearLayout taskLayout = view.findViewById(R.id.taskLayout);
         LinearLayout notesLayout = view.findViewById(R.id.notesLayout);
+        LinearLayout workAddressLayout = view.findViewById(R.id.workAddress);
+        LinearLayout workCityLayout = view.findViewById(R.id.workCity);
+        LinearLayout workStateLayout = view.findViewById(R.id.workState);
+        LinearLayout workCountryLayout = view.findViewById(R.id.workCountry);
+
+        LinearLayout homeAddressLayout = view.findViewById(R.id.homeAddress);
+        LinearLayout homeCityLayout = view.findViewById(R.id.homeCity);
+        LinearLayout homeStateLayout = view.findViewById(R.id.homeState);
+        LinearLayout homeCountryLayout = view.findViewById(R.id.homeCountry);
 
         ownerLayout.setVisibility(
                 (contact.getOwnerId() == null || contact.getOwnerId().isEmpty())
@@ -556,6 +565,38 @@ public class ContactDetailsFragment extends Fragment
                 (contact.getTitle() == null || contact.getTitle().isEmpty()) ? GONE : View.VISIBLE);
         notesLayout.setVisibility(
                 (contact.getNotes() == null || contact.getNotes().isEmpty()) ? GONE : View.VISIBLE);
+        workAddressLayout.setVisibility(
+                (contact.getWorkstreet() == null || contact.getWorkstreet().isEmpty())
+                        ? GONE
+                        : View.VISIBLE);
+        workCityLayout.setVisibility(
+                (contact.getWorkcity() == null || contact.getWorkcity().isEmpty())
+                        ? GONE
+                        : View.VISIBLE);
+        workStateLayout.setVisibility(
+                (contact.getWorkprovince() == null || contact.getWorkprovince().isEmpty())
+                        ? GONE
+                        : View.VISIBLE);
+        workCountryLayout.setVisibility(
+                (contact.getWorkcountry() == null || contact.getWorkcountry().isEmpty())
+                        ? GONE
+                        : View.VISIBLE);
+        homeAddressLayout.setVisibility(
+                (contact.getHomestreet() == null || contact.getHomestreet().isEmpty())
+                        ? GONE
+                        : View.VISIBLE);
+        homeCityLayout.setVisibility(
+                (contact.getHomecity() == null || contact.getHomecity().isEmpty())
+                        ? GONE
+                        : View.VISIBLE);
+        homeStateLayout.setVisibility(
+                (contact.getHomeprovince() == null || contact.getHomeprovince().isEmpty())
+                        ? GONE
+                        : View.VISIBLE);
+        homeCountryLayout.setVisibility(
+                (contact.getHomecountry() == null || contact.getHomecountry().isEmpty())
+                        ? GONE
+                        : View.VISIBLE);
 
         TextView owner_label = view.findViewById(R.id.owner_label);
         owner_label.setText(R.string.owner);
@@ -581,5 +622,29 @@ public class ContactDetailsFragment extends Fragment
         notes_label.setText(R.string.notes);
         TextView notes_edit = view.findViewById((R.id.notes));
         notes_edit.setText(contact.getNotes());
+
+        TextView workAddress = view.findViewById((R.id.workAddressValue));
+        workAddress.setText(contact.getWorkstreet());
+
+        TextView workCity = view.findViewById((R.id.workCityValue));
+        workCity.setText(contact.getWorkcity());
+
+        TextView workState = view.findViewById((R.id.workStateValue));
+        workState.setText(contact.getWorkprovince());
+
+        TextView workCountry = view.findViewById((R.id.workCountryValue));
+        workCountry.setText(contact.getWorkcountry());
+
+        TextView homeAddress = view.findViewById((R.id.homeAddressValue));
+        homeAddress.setText(contact.getHomestreet());
+
+        TextView homeCity = view.findViewById((R.id.homeCityValue));
+        homeCity.setText(contact.getHomecity());
+
+        TextView homeState = view.findViewById((R.id.homeStateValue));
+        homeState.setText(contact.getHomeprovince());
+
+        TextView homeCountry = view.findViewById((R.id.homeCountryValue));
+        homeCountry.setText(contact.getHomecountry());
     }
 }

@@ -40,9 +40,17 @@
     <string name="cell">Mobile phone</string>
     <string name="fax">Fax</string>
     <string name="e_mail">Email</string>
-    <string name="task">Task</string>
+    <string name="task">Job</string>
     <string name="notes">Note</string>
     <string name="internal">Internal</string>
     <string name="spinnerTextView">Select a filter</string>
     <string name="owner">Created by</string>
+    <string name="workAddress">Work Address</string>
+    <string name="workCity">Work City</string>
+    <string name="workState">Work State</string>
+    <string name="workCountry">Work Country</string>
+    <string name="homeAddress">Home Address</string>
+    <string name="homeCity">Home City</string>
+    <string name="homeState">Home State</string>
+    <string name="homeCountry">Home Country</string>
 </resources>
