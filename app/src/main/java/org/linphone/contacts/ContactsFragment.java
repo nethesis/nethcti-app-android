@@ -87,7 +87,7 @@ public class ContactsFragment extends Fragment
     private static final int PAGE_START = 0;
     private boolean isLoading = false;
     private int currentPage = PAGE_START;
-    private static final int LIMIT = 50;
+    private static final int LIMIT = 100;
     private static final String ALL = "all";
     private String mView = ALL;
     private RelativeLayout mRelativeLayoutViews;
@@ -327,7 +327,7 @@ public class ContactsFragment extends Fragment
                                 mLayoutManager.findFirstVisibleItemPosition();
                         if (mOnlyDisplayLinphoneContacts && isLoading()) {
                             if (ContactsManager.getInstance().isAvailable()
-                                    && ((visibleItemCount + firstVisibleItemPosition) + 20)
+                                    && ((visibleItemCount + firstVisibleItemPosition) + 50)
                                             > rows) {
                                 loadMoreContacts(
                                         mView,
@@ -746,9 +746,9 @@ public class ContactsFragment extends Fragment
                 };
         Call<ContactList> searchCall;
         if (isInSeachMode) {
-            searchCall = userRestAPI.searchStartsWith(authToken, search, offset, view);
+            searchCall = userRestAPI.searchStartsWith(authToken, search, offset, LIMIT, view);
         } else {
-            searchCall = userRestAPI.getAll(authToken, offset);
+            searchCall = userRestAPI.getAll(authToken, offset, LIMIT);
         }
 
         searchCall.enqueue(responseManagement);
