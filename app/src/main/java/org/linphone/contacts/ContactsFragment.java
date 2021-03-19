@@ -381,6 +381,11 @@ public class ContactsFragment extends Fragment
             searchContactsNethesis(mView, this, search, LIMIT * currentPage, true, false, true);
         } else {
             listContact = ContactsManager.getInstance().getContacts(search);
+            if (listContact == null || listContact.isEmpty()) {
+                mNoContact.setVisibility(View.VISIBLE);
+            } else {
+                mNoContact.setVisibility(View.GONE);
+            }
             mSearchView.setEnabled(true);
         }
 
