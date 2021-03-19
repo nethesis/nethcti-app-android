@@ -445,7 +445,7 @@ public class ContactsFragment extends Fragment
             if (LinphoneActivity.instance().isTablet()) {
                 LinphoneActivity.instance().displayEmptyFragment();
             }
-        } else if (mOnlyDisplayLinphoneContacts && mContactAdapter.getItemCount() == 0) {
+        } else if (mContactAdapter.getItemCount() == 0) {
             mContactsFetchInProgress.setVisibility(View.VISIBLE);
         }
     }
@@ -723,6 +723,20 @@ public class ContactsFragment extends Fragment
                             }
                         } else if (response.code() == 401) {
                             mIsSessionExpired = true;
+                            mContactsRefresher.setRefreshing(false);
+                            if (mOnlyDisplayLinphoneContacts) {
+                                ContactsManager.getInstance().getSIPContacts().clear();
+                                listContact = ContactsManager.getInstance().getSIPContacts();
+                                mContactAdapter =
+                                        new ContactsAdapter(
+                                                mContext,
+                                                listContact,
+                                                clickListener,
+                                                mSelectionHelper);
+                                mContactAdapter.setIsSearchMode(false);
+                                currentPage = 0;
+                            }
+
                             mContactsFetchInProgress.setVisibility(View.GONE);
                             mNoSipContact.setVisibility(View.GONE);
                             mSessionExpired.setVisibility(View.VISIBLE);
@@ -734,7 +748,17 @@ public class ContactsFragment extends Fragment
 
                     @Override
                     public void onFailure(Call<ContactList> call, Throwable throwable) {
+                        mContactsRefresher.setRefreshing(false);
                         mSearchView.setEnabled(true);
+                        if (mOnlyDisplayLinphoneContacts) {
+                            ContactsManager.getInstance().getSIPContacts().clear();
+                            listContact = ContactsManager.getInstance().getSIPContacts();
+                            mContactAdapter =
+                                    new ContactsAdapter(
+                                            mContext, listContact, clickListener, mSelectionHelper);
+                            mContactAdapter.setIsSearchMode(false);
+                            currentPage = 0;
+                        }
                         mNoSipContact.setVisibility(View.VISIBLE);
                         mContactsFetchInProgress.setVisibility(View.GONE);
                     }
