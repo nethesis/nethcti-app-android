@@ -69,7 +69,7 @@ public class ContactsFragment extends Fragment
                 ContactViewHolder.ClickListener,
                 SelectableHelper.DeleteListener {
     private RecyclerView mContactsList;
-    private TextView mNoSipContact, mNoContact, mSessionExpired;
+    private TextView mNoSipContact, mNoContact, mSessionExpired, mNoConnection;
     private ImageView mAllContacts, mLinphoneContacts, mNewContact, mEdit;
     private boolean mOnlyDisplayLinphoneContacts, mIsSessionExpired = false;
     private View mAllContactsSelected, mLinphoneContactsSelected;
@@ -140,6 +140,7 @@ public class ContactsFragment extends Fragment
         mNoSipContact = view.findViewById(R.id.noSipContact);
         mNoContact = view.findViewById(R.id.noContact);
         mSessionExpired = view.findViewById(R.id.sessionExpired);
+        mNoConnection = view.findViewById(R.id.noConnection);
         mContactsList = view.findViewById(R.id.contactsList);
 
         mAllContacts = view.findViewById(R.id.all_contacts);
@@ -411,6 +412,7 @@ public class ContactsFragment extends Fragment
         mNoSipContact.setVisibility(View.GONE);
         mNoContact.setVisibility(View.GONE);
         mSessionExpired.setVisibility(View.GONE);
+        mNoConnection.setVisibility(View.GONE);
         mContactsList.setVisibility(View.VISIBLE);
         boolean isEditionEnabled = false;
         String query = mSearchView.getQuery().toString();
@@ -557,6 +559,7 @@ public class ContactsFragment extends Fragment
                 mNoContact.setVisibility(View.GONE);
                 mNoSipContact.setVisibility(View.GONE);
                 mSessionExpired.setVisibility(View.GONE);
+                mNoConnection.setVisibility(View.GONE);
             }
         }
         mContactsFetchInProgress.setVisibility(View.GONE);
@@ -708,6 +711,7 @@ public class ContactsFragment extends Fragment
 
                                 mNoSipContact.setVisibility(View.GONE);
                                 mSessionExpired.setVisibility(View.GONE);
+                                mNoConnection.setVisibility(View.GONE);
 
                                 if (!mOnlyDisplayLinphoneContacts
                                         && mContactAdapter.getItemCount() == 0) {
@@ -736,6 +740,7 @@ public class ContactsFragment extends Fragment
 
                             mContactsFetchInProgress.setVisibility(View.GONE);
                             mNoSipContact.setVisibility(View.GONE);
+                            mNoConnection.setVisibility(View.GONE);
                             mSessionExpired.setVisibility(View.VISIBLE);
                             if (LinphoneActivity.instance().isTablet()) {
                                 LinphoneActivity.instance().displayEmptyFragment();
@@ -748,7 +753,9 @@ public class ContactsFragment extends Fragment
                         mContactsRefresher.setRefreshing(false);
                         mSearchView.setEnabled(true);
                         clearSIPRVAdapter(clickListener);
-                        mNoSipContact.setVisibility(View.VISIBLE);
+                        mNoSipContact.setVisibility(View.GONE);
+                        mSessionExpired.setVisibility(View.GONE);
+                        mNoConnection.setVisibility(View.VISIBLE);
                         mContactsFetchInProgress.setVisibility(View.GONE);
                     }
                 };
