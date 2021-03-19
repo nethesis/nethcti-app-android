@@ -279,6 +279,9 @@ public class ContactsFragment extends Fragment
                     @Override
                     public boolean onQueryTextChange(final String newText) {
                         mHandler.removeCallbacksAndMessages(null);
+                        if (mOnlyDisplayLinphoneContacts) {
+                            mContactsFetchInProgress.setVisibility(View.VISIBLE);
+                        }
                         mHandler.postDelayed(
                                 new Runnable() {
                                     @Override
@@ -290,7 +293,7 @@ public class ContactsFragment extends Fragment
                                         }
                                     }
                                 },
-                                500);
+                                250);
                         return true;
                     }
                 });
