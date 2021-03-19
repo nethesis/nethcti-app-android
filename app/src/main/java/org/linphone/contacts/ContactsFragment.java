@@ -724,18 +724,7 @@ public class ContactsFragment extends Fragment
                         } else if (response.code() == 401) {
                             mIsSessionExpired = true;
                             mContactsRefresher.setRefreshing(false);
-                            if (mOnlyDisplayLinphoneContacts) {
-                                ContactsManager.getInstance().getSIPContacts().clear();
-                                listContact = ContactsManager.getInstance().getSIPContacts();
-                                mContactAdapter =
-                                        new ContactsAdapter(
-                                                mContext,
-                                                listContact,
-                                                clickListener,
-                                                mSelectionHelper);
-                                mContactAdapter.setIsSearchMode(false);
-                                currentPage = 0;
-                            }
+                            clearSIPRVAdapter(clickListener);
 
                             mContactsFetchInProgress.setVisibility(View.GONE);
                             mNoSipContact.setVisibility(View.GONE);
@@ -750,15 +739,7 @@ public class ContactsFragment extends Fragment
                     public void onFailure(Call<ContactList> call, Throwable throwable) {
                         mContactsRefresher.setRefreshing(false);
                         mSearchView.setEnabled(true);
-                        if (mOnlyDisplayLinphoneContacts) {
-                            ContactsManager.getInstance().getSIPContacts().clear();
-                            listContact = ContactsManager.getInstance().getSIPContacts();
-                            mContactAdapter =
-                                    new ContactsAdapter(
-                                            mContext, listContact, clickListener, mSelectionHelper);
-                            mContactAdapter.setIsSearchMode(false);
-                            currentPage = 0;
-                        }
+                        clearSIPRVAdapter(clickListener);
                         mNoSipContact.setVisibility(View.VISIBLE);
                         mContactsFetchInProgress.setVisibility(View.GONE);
                     }
@@ -771,6 +752,20 @@ public class ContactsFragment extends Fragment
         }
 
         searchCall.enqueue(responseManagement);
+    }
+
+    private void clearSIPRVAdapter(ContactViewHolder.ClickListener clickListener) {
+        if (mOnlyDisplayLinphoneContacts) {
+            ContactsManager.getInstance().getSIPContacts().clear();
+            listContact = ContactsManager.getInstance().getSIPContacts();
+            mContactAdapter =
+                    new ContactsAdapter(mContext, listContact, clickListener, mSelectionHelper);
+            mContactAdapter.setIsSearchMode(false);
+            mSelectionHelper.setAdapter(mContactAdapter);
+            mContactsList.setAdapter(mContactAdapter);
+            mContactAdapter.notifyDataSetChanged();
+            currentPage = 0;
+        }
     }
 
     private void sortContactByView(List<LinphoneContact> listContact) {
