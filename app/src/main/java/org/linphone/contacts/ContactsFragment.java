@@ -101,6 +101,7 @@ public class ContactsFragment extends Fragment
         if (savedInstanceState != null) {
             mOnlyDisplayLinphoneContacts = savedInstanceState.getBoolean("showSip");
             mIsSessionExpired = savedInstanceState.getBoolean("sessionExpired");
+            mLastKnownPosition = savedInstanceState.getInt("lastKnownPosition");
         }
     }
 
@@ -108,6 +109,7 @@ public class ContactsFragment extends Fragment
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean("showSip", mOnlyDisplayLinphoneContacts);
         outState.putBoolean("sessionExpired", mIsSessionExpired);
+        outState.putInt("lastKnownPosition", mLastKnownPosition);
         super.onSaveInstanceState(outState);
     }
 
@@ -654,7 +656,9 @@ public class ContactsFragment extends Fragment
                                 return;
                             }
                             int oldRVPos = mLayoutManager.findFirstVisibleItemPosition();
-
+                            if (oldRVPos > 0) {
+                                mLastKnownPosition = oldRVPos;
+                            }
                             int offset = 0;
                             try {
                                 offset =
@@ -707,7 +711,7 @@ public class ContactsFragment extends Fragment
 
                                 mSelectionHelper.setAdapter(mContactAdapter);
                                 mContactsList.setAdapter(mContactAdapter);
-                                // mContactAdapter.updateDataSet(listContact);
+                                //mContactAdapter.updateDataSet(listContact);
 
                                 mNoSipContact.setVisibility(View.GONE);
                                 mSessionExpired.setVisibility(View.GONE);
@@ -726,7 +730,11 @@ public class ContactsFragment extends Fragment
                                 mContactAdapter.notifyDataSetChanged();
 
                                 if (offset != 0) {
-                                    mContactsList.scrollToPosition(oldRVPos);
+                                    if (listContact.size() < mLastKnownPosition) {
+                                        mContactsList.scrollToPosition(listContact.size() - 1);
+                                    } else {
+                                        mContactsList.scrollToPosition(mLastKnownPosition);
+                                    }
                                 }
 
                                 if (isFirst && LinphoneActivity.instance().isTablet()) {
@@ -779,6 +787,7 @@ public class ContactsFragment extends Fragment
             mSelectionHelper.setAdapter(mContactAdapter);
             mContactsList.setAdapter(mContactAdapter);
             mContactAdapter.notifyDataSetChanged();
+            mLastKnownPosition = 0;
             currentPage = 0;
         }
     }
