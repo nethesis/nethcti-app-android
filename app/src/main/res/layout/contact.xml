@@ -67,6 +67,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:paddingTop="20dp">
 
                 <RelativeLayout
@@ -84,8 +87,7 @@
                     style="@style/big_contact_name_font"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:maxLines="1" />
+                    android:layout_gravity="center"/>
 
                 <TextView
                     android:id="@+id/contactOrganization"

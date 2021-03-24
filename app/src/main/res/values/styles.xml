@@ -238,7 +238,7 @@
 
     <style name="big_contact_name_font" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">?attr/primaryTextColor</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">26sp</item>
     </style>
 
     <style name="contact_edit_form_label_font" parent="@android:style/TextAppearance.Medium">
