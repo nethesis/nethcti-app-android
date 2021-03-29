@@ -711,7 +711,7 @@ public class ContactsFragment extends Fragment
 
                                 mSelectionHelper.setAdapter(mContactAdapter);
                                 mContactsList.setAdapter(mContactAdapter);
-                                //mContactAdapter.updateDataSet(listContact);
+                                // mContactAdapter.updateDataSet(listContact);
 
                                 mNoSipContact.setVisibility(View.GONE);
                                 mSessionExpired.setVisibility(View.GONE);
