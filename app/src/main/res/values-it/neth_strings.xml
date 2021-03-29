@@ -46,4 +46,7 @@
     <string name="homeCity">Città Casa</string>
     <string name="homeState">Provincia Casa</string>
     <string name="homeCountry">Stato Casa</string>
+    <string name="source">Sorgente</string>
+    <string name="speedDial">Chiamata Rapida</string>
+    <string name="type">Tipo</string>
 </resources>

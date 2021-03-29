@@ -54,4 +54,8 @@
     <string name="homeCity">Home City</string>
     <string name="homeState">Home State</string>
     <string name="homeCountry">Home Country</string>
+    <string name="source">Source</string>
+    <string name="speedDial">Speed Dial</string>
+    <string name="type">Type</string>
+    <string name="url" translatable="false">Url</string>
 </resources>

@@ -380,7 +380,7 @@ public class ContactDetailsFragment extends Fragment
         }
         /*If Nethesis Contact*/
         else {
-            SetNethesisContactDetails(inflater, view);
+            setNethesisContactDetails(inflater, view);
         }
 
         mWaitLayout = mView.findViewById(R.id.waitScreen);
@@ -453,7 +453,7 @@ public class ContactDetailsFragment extends Fragment
         }
     }
 
-    private void SetNethesisContactDetails(LayoutInflater inflater, View view) {
+    private void setNethesisContactDetails(LayoutInflater inflater, View view) {
         NethesisContact contact = (NethesisContact) mContact;
 
         TableLayout controls = view.findViewById(R.id.controls);
@@ -553,11 +553,14 @@ public class ContactDetailsFragment extends Fragment
         LinearLayout workCityLayout = view.findViewById(R.id.workCity);
         LinearLayout workStateLayout = view.findViewById(R.id.workState);
         LinearLayout workCountryLayout = view.findViewById(R.id.workCountry);
-
         LinearLayout homeAddressLayout = view.findViewById(R.id.homeAddress);
         LinearLayout homeCityLayout = view.findViewById(R.id.homeCity);
         LinearLayout homeStateLayout = view.findViewById(R.id.homeState);
         LinearLayout homeCountryLayout = view.findViewById(R.id.homeCountry);
+        LinearLayout sourceLayout = view.findViewById(R.id.sourceLayout);
+        LinearLayout speedDialLayout = view.findViewById(R.id.speedDialLayout);
+        LinearLayout typeLayout = view.findViewById(R.id.typeLayout);
+        LinearLayout urlLayout = view.findViewById(R.id.urlLayout);
 
         ownerLayout.setVisibility(
                 (contact.getOwnerId() == null || contact.getOwnerId().isEmpty())
@@ -603,6 +606,16 @@ public class ContactDetailsFragment extends Fragment
                 (contact.getHomecountry() == null || contact.getHomecountry().isEmpty())
                         ? GONE
                         : View.VISIBLE);
+        sourceLayout.setVisibility(
+                contact.getSource() == null || contact.getSource().isEmpty() ? GONE : VISIBLE);
+        speedDialLayout.setVisibility(
+                contact.getSpeeddialNum() == null || contact.getSpeeddialNum().isEmpty()
+                        ? GONE
+                        : VISIBLE);
+        typeLayout.setVisibility(
+                contact.getType() == null || contact.getType().isEmpty() ? GONE : VISIBLE);
+        urlLayout.setVisibility(
+                contact.getUrl() == null || contact.getUrl().isEmpty() ? GONE : VISIBLE);
 
         TextView owner_label = view.findViewById(R.id.owner_label);
         owner_label.setText(R.string.owner);
@@ -652,5 +665,17 @@ public class ContactDetailsFragment extends Fragment
 
         TextView homeCountry = view.findViewById((R.id.homeCountryValue));
         homeCountry.setText(contact.getHomecountry());
+
+        TextView source = view.findViewById((R.id.sourceValue));
+        source.setText(contact.getSource());
+
+        TextView speedDial = view.findViewById((R.id.speedDialValue));
+        speedDial.setText(contact.getSpeeddialNum());
+
+        TextView type = view.findViewById((R.id.typeValue));
+        type.setText(contact.getType());
+
+        TextView url = view.findViewById((R.id.urlValue));
+        url.setText(contact.getUrl());
     }
 }
