@@ -150,7 +150,6 @@ dependencies {
     if (firebaseEnabled()) {
         implementation 'com.google.firebase:firebase-messaging:20.1.0'
     }
-    implementation 'com.android.billingclient:billing:1.2'
     implementation 'org.apache.commons:commons-compress:1.18'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'

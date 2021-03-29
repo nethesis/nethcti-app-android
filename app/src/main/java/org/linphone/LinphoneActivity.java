@@ -112,7 +112,6 @@ import org.linphone.fragments.StatusFragment;
 import org.linphone.history.HistoryDetailFragment;
 import org.linphone.history.HistoryFragment;
 import org.linphone.notifications.FCMNotification;
-import org.linphone.purchase.InAppPurchaseActivity;
 import org.linphone.recording.RecordingsFragment;
 import org.linphone.settings.AccountSettingsFragment;
 import org.linphone.settings.AudioSettingsFragment;
@@ -474,10 +473,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
         refreshAccounts();
 
-        if (getResources().getBoolean(R.bool.enable_in_app_purchase)) {
-            isTrialAccount();
-        }
-
         displayMissedChats(LinphoneManager.getInstance().getUnreadMessageCount());
         displayMissedCalls(LinphoneManager.getLc().getMissedCallsCount());
 
@@ -586,10 +581,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 Log.i("[Linphone Activity] Intent asked to go to call history");
                 intent.putExtra("DoNotGoToCallActivity", true);
                 changeCurrentFragment(FragmentsAvailable.HISTORY_LIST, null);
-            } else if (extras.getBoolean("GoToInapp", false)) {
-                Log.i("[Linphone Activity] Intent asked to go to inapp");
-                intent.putExtra("DoNotGoToCallActivity", true);
-                displayInapp();
             } else if (extras.getBoolean("Notification", false)) {
                 if (LinphoneManager.getLc().getCallsNb() > 0) {
                     startIncallActivity();
@@ -1075,10 +1066,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
     private void displayAssistant() {
         startActivity(new Intent(LinphoneActivity.this, AssistantActivity.class));
-    }
-
-    private void displayInapp() {
-        startActivity(new Intent(LinphoneActivity.this, InAppPurchaseActivity.class));
     }
 
     public void goToChatCreator(
@@ -1692,11 +1679,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
                             getResources().getString(R.string.menu_settings),
                             R.drawable.menu_options));
         }
-        if (getResources().getBoolean(R.bool.enable_in_app_purchase)) {
-            mSideMenuItems.add(
-                    new MenuItem(
-                            getResources().getString(R.string.inapp), R.drawable.menu_options));
-        }
         if (!getResources().getBoolean(R.bool.hide_recordings_from_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
@@ -1744,15 +1726,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
                             LinphoneActivity.instance().displayAbout();
                         } else if (selectedItem.equals(getString(R.string.menu_assistant))) {
                             LinphoneActivity.instance().displayAssistant();
-                        }
-                        if (getResources().getBoolean(R.bool.enable_in_app_purchase)) {
-                            if (mSideMenuItemList
-                                    .getAdapter()
-                                    .getItem(i)
-                                    .toString()
-                                    .equals(getString(R.string.inapp))) {
-                                LinphoneActivity.instance().displayInapp();
-                            }
                         }
                         if (mSideMenuItemList
                                 .getAdapter()
@@ -1879,31 +1852,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private void initAccounts() {
         mAccountsList = findViewById(R.id.accounts_list);
         mDefaultAccount = findViewById(R.id.default_account);
-    }
-
-    // Inapp Purchase
-    private void isTrialAccount() {
-        if (LinphoneManager.getLc().getDefaultProxyConfig() != null
-                && LinphonePreferences.instance().getInappPopupTime() != null) {
-            XmlRpcHelper helper = new XmlRpcHelper();
-            helper.isTrialAccountAsync(
-                    new XmlRpcListenerBase() {
-                        @Override
-                        public void onTrialAccountFetched(boolean isTrial) {
-                            mIsTrialAccount = isTrial;
-                            getExpirationAccount();
-                        }
-
-                        @Override
-                        public void onError() {}
-                    },
-                    LinphonePreferences.instance()
-                            .getAccountUsername(
-                                    LinphonePreferences.instance().getDefaultAccountIndex()),
-                    LinphonePreferences.instance()
-                            .getAccountHa1(
-                                    LinphonePreferences.instance().getDefaultAccountIndex()));
-        }
     }
 
     private void getExpirationAccount() {
