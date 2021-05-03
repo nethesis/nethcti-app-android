@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <!-- NethCTI Styles -->
+    <style name="NethCTIStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Android theme override -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <!-- Comment out the following line to disable system's status bar coloring -->
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+        <item name="android:textColorHint">@color/secondaryTextColor</item>
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <item name="android:textColorPrimaryInverse">@color/secondaryTextColor</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="accentColor">@color/colorAccent</item>
+        <item name="accentColorLight30">@color/colorAccentLight</item>
+        <item name="accentTextColor">@color/colorAccentLight</item>
+        <item name="primaryTextColor">@color/primaryTextColor</item>
+        <item name="secondaryTextColor">@color/secondaryTextColor</item>
+        <item name="primarySubtextDarkColor">@color/grey_color</item>
+        <item name="primarySubtextLightColor">@color/light_grey_color</item>
+
+        <item name="backgroundColor">@color/colorPrimary</item>
+        <item name="backgroundColor2">@color/colorPrimaryLight</item>
+        <item name="backgroundContrastColor">@color/neth_grey_color</item>
+        <item name="dividerColor">@color/neth_grey_color</item>
+
+        <item name="drawableTintColor">@color/neth_dark_grey</item>
+        <item name="drawableTintDisabledColor">@color/neth_grey_color</item>
+        <item name="drawableTintOverColor">@color/colorAccentLight</item>
+
+        <item name="lightToolbarBackgroundColor">@color/neth_light_grey_color</item>
+        <item name="lightToolbarBackgroundDisabledColor">@color/neth_grey_color</item>
+        <item name="lightToolbarTextColor">@color/neth_dark_grey</item>
+        <item name="darkToolbarBackgroundColor">@color/neth_dark_grey</item>
+        <item name="darkToolbarTextColor">@color/neth_light_grey_color</item>
+
+        <item name="button_background_drawable">@drawable/button_background_light</item>
+
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="NetHCTIThinHeaderTitle" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">10sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+    </style>
+
+
+    <!-- Old-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Android theme override -->
         <item name="colorAccent">@color/colorAccent</item>
@@ -13,7 +66,6 @@
         <item name="android:colorBackground">@color/neth_light_grey_color</item>
         <item name="android:textColorPrimaryInverse">@color/white_color</item>
         <item name="android:windowBackground">@color/neth_light_grey_color</item>
-        <item name="android:windowLightStatusBar">true</item>
 
         <item name="accentColor">@color/colorAccent</item>
         <item name="accentColorLight30">@color/colorAccentLight</item>
@@ -82,96 +134,6 @@
         <item name="button_background_drawable">@drawable/button_background_dark</item>
 
         <item name="android:statusBarColor">@color/colorPrimary</item>
-    </style>
-
-    <!-- NethCTI Styles -->
-    <style name="NethCTIStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Android theme override -->
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorPrimary">@color/colorPrimary</item>
-        <!-- Comment out the following line to disable system's status bar coloring -->
-        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
-        <item name="android:textColorHint">@color/neth_grey_text_color</item>
-        <item name="android:colorBackground">@color/neth_light_grey_color</item>
-        <item name="android:textColorPrimaryInverse">@color/white_color</item>
-        <item name="android:windowBackground">@color/neth_light_grey_color</item>
-
-        <item name="accentColor">@color/colorAccent</item>
-        <item name="accentColorLight30">@color/colorAccentLight</item>
-        <item name="accentTextColor">@color/neth_light_grey_color</item>
-        <item name="primaryTextColor">@color/neth_dark_grey</item>
-        <item name="secondaryTextColor">@color/neth_light_grey_color</item>
-        <item name="primarySubtextDarkColor">@color/grey_color</item>
-        <item name="primarySubtextLightColor">@color/light_grey_color</item>
-
-        <item name="backgroundColor">@color/neth_light_grey_color</item>
-        <item name="backgroundColor2">@color/neth_white_color</item>
-        <item name="backgroundContrastColor">@color/neth_dark_grey</item>
-        <item name="dividerColor">@color/neth_grey_color</item>
-
-        <item name="drawableTintColor">@color/neth_dark_grey</item>
-        <item name="drawableTintDisabledColor">@color/neth_grey_color</item>
-        <item name="drawableTintOverColor">@color/colorAccentLight</item>
-
-        <item name="lightToolbarBackgroundColor">@color/neth_light_grey_color</item>
-        <item name="lightToolbarBackgroundDisabledColor">@color/neth_grey_color</item>
-        <item name="lightToolbarTextColor">@color/neth_dark_grey</item>
-        <item name="darkToolbarBackgroundColor">@color/neth_dark_grey</item>
-        <item name="darkToolbarTextColor">@color/neth_light_grey_color</item>
-
-        <item name="button_background_drawable">@drawable/button_background_light</item>
-
-        <item name="android:statusBarColor">@color/colorPrimary</item>
-    </style>
-
-    <style name="NethCTIStyleDark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Android theme override -->
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorPrimary">@color/colorPrimary</item>
-        <!-- Comment out the following line to disable system's status bar coloring -->
-        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:textColorPrimary">@color/neth_light_grey_color</item>
-        <item name="android:textColorSecondary">@color/neth_light_grey_color</item>
-        <item name="android:textColorHint">@color/neth_light_grey_color</item>
-        <item name="android:colorBackground">@color/neth_dark_grey</item>
-        <item name="android:textColorPrimaryInverse">@color/neth_dark_grey</item>
-        <item name="android:windowBackground">@color/neth_dark_grey</item>
-
-        <item name="accentColor">@color/colorAccent</item>
-        <item name="accentColorLight30">@color/colorAccentLight</item>
-        <item name="accentTextColor">@color/white_color</item>
-        <item name="primaryTextColor">@color/dark_primary_text_color</item>
-        <item name="secondaryTextColor">@color/dark_grey_color</item>
-        <item name="primarySubtextDarkColor">@color/header_background_color</item>
-        <item name="primarySubtextLightColor">@color/toolbar_color</item>
-
-        <item name="backgroundColor">@color/neth_dark_grey</item>
-        <item name="backgroundColor2">@color/neth_grey_color</item>
-        <item name="backgroundContrastColor">@color/neth_light_grey_color</item>
-        <item name="dividerColor">@color/neth_light_grey_color</item>
-
-        <item name="drawableTintColor">@color/neth_light_grey_color</item>
-        <item name="drawableTintDisabledColor">@color/neth_grey_color</item>
-        <item name="drawableTintOverColor">@color/colorAccent</item>
-
-        <item name="lightToolbarBackgroundColor">@color/neth_grey_color</item>
-        <item name="lightToolbarBackgroundDisabledColor">@color/neth_dark_grey</item>
-        <item name="lightToolbarTextColor">@color/neth_light_grey_color</item>
-        <item name="darkToolbarBackgroundColor">@color/neth_light_grey_color</item>
-        <item name="darkToolbarTextColor">@color/neth_dark_grey</item>
-
-        <item name="button_background_drawable">@drawable/button_background_dark</item>
-
-        <item name="android:statusBarColor">@color/colorPrimary</item>
-    </style>
-
-    <style name="NetHCTIThinHeaderTitle" parent="@style/Widget.AppCompat.TextView">
-        <item name="android:textSize">14sp</item>
-        <item name="android:lineSpacingExtra">10sp</item>
-        <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:fontFamily">@font/roboto_light</item>
     </style>
 
 

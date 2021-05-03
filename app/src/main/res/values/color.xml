@@ -10,8 +10,9 @@
     <color name="colorAccentDark">#0073ac</color>
     <color name="colorLedNotification">#00a2de</color>
 
-    <color name="primaryTextColor">#FFF</color>
-    <color name="secondaryTextColor">#000</color>
+    <color name="primaryTextColor">#000</color>
+    <color name="primaryTextColorInverse">#FFF</color>
+    <color name="secondaryTextColor">#808080</color>
 
     <color name="neth_white_color">#fafafa</color>
     <color name="neth_light_grey_color">#e6e6e6</color>
