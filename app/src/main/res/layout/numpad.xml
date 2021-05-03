@@ -14,12 +14,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit1"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="1"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_one" />
+                app:icon="@drawable/ic_numpad_1" />
 
         </FrameLayout>
 
@@ -30,12 +30,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit2"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="2"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_two" />
+                app:icon="@drawable/ic_numpad_2" />
         </FrameLayout>
 
         <FrameLayout
@@ -45,12 +45,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit3"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="3"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_three" />
+                app:icon="@drawable/ic_numpad_3" />
         </FrameLayout>
     </TableRow>
 
@@ -64,12 +64,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit4"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="4"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_four" />
+                app:icon="@drawable/ic_numpad_4" />
         </FrameLayout>
 
         <FrameLayout
@@ -78,12 +78,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit5"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="5"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_five" />
+                app:icon="@drawable/ic_numpad_5" />
         </FrameLayout>
 
         <FrameLayout
@@ -92,12 +92,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit6"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="6"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_six" />
+                app:icon="@drawable/ic_numpad_6" />
         </FrameLayout>
     </TableRow>
 
@@ -111,12 +111,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit7"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="7"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_seven" />
+                app:icon="@drawable/ic_numpad_7" />
         </FrameLayout>
 
         <FrameLayout
@@ -125,12 +125,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit8"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="8"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_eight" />
+                app:icon="@drawable/ic_numpad_8" />
         </FrameLayout>
 
         <FrameLayout
@@ -139,12 +139,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit9"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="9"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_nine" />
+                app:icon="@drawable/ic_numpad_9" />
         </FrameLayout>
     </TableRow>
 
@@ -158,12 +158,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/DigitStar"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="*"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_star_digit" />
+                app:icon="@drawable/ic_numpad_asterisk" />
         </FrameLayout>
 
         <FrameLayout
@@ -172,12 +172,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit00"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="0+"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_zero" />
+                app:icon="@drawable/ic_numpad_0" />
         </FrameLayout>
 
         <FrameLayout
@@ -186,12 +186,12 @@
 
             <org.linphone.views.Digit
                 android:id="@+id/DigitHash"
-                style="@style/NethCTIButton"
+                style="@style/NethCTIDialpadDigit"
                 android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="#"
                 android:textSize="0sp"
-                app:icon="@drawable/numpad_sharp" />
+                app:icon="@drawable/ic_numpad_hashtag" />
         </FrameLayout>
     </TableRow>
 

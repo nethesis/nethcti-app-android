@@ -16,6 +16,7 @@
         <item name="android:textColorPrimaryInverse">@color/secondaryTextColor</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="fontFamily">@font/roboto_regular</item>
 
         <item name="accentColor">@color/colorAccent</item>
         <item name="accentColorLight30">@color/colorAccentLight</item>
@@ -72,6 +73,12 @@
         <item name="backgroundTint">@color/neth_button</item>
         <item name="iconTint">@color/neth_button_icon</item>
         <item name="rippleColor">@color/colorAccentLight</item>
+    </style>
+
+    <style name="NethCTIDialpadDigit" parent="NethCTIButton">
+        <item name="iconSize">24dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="android:padding">6dp</item>
     </style>
 
     <!-- Custom View -->
