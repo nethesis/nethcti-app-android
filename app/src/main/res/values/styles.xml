@@ -45,13 +45,37 @@
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
-    <style name="NetHCTIThinHeaderTitle" parent="@style/Widget.AppCompat.TextView">
+    <style name="NethCTITextRegular" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="NethCTITextMedium" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="NethCTITextLight" parent="@style/Widget.AppCompat.TextView">
         <item name="android:textSize">14sp</item>
-        <item name="android:lineSpacingExtra">10sp</item>
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:fontFamily">@font/roboto_light</item>
     </style>
 
+    <style name="NethCTITextThin" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_thin</item>
+    </style>
+
+    <style name="NethCTIThinHeaderTitle" parent="@style/NethCTITextLight">
+        <item name="android:lineSpacingExtra">10sp</item>
+    </style>
+
+    <style name="NethCTIStatusBarText" parent="@style/LinphoneStyleLight">
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <!-- Old-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
