@@ -90,7 +90,7 @@ class ApiTwentySixPlus {
         NotificationChannel channel =
                 new NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH);
         channel.setDescription(description);
-        channel.setLightColor(context.getColor(R.color.notification_led_color));
+        channel.setLightColor(context.getColor(R.color.colorLedNotification));
         channel.enableLights(true);
         channel.enableVibration(true);
         channel.setShowBadge(true);
@@ -130,7 +130,7 @@ class ApiTwentySixPlus {
                 .setNumber(notif.getMessages().size())
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(true)
-                .setColor(context.getColor(R.color.notification_led_color))
+                .setColor(context.getColor(R.color.colorLedNotification))
                 .setStyle(style)
                 .addAction(ApiTwentyFourPlus.getReplyMessageAction(context, notif))
                 .addAction(ApiTwentyFourPlus.getMarkMessageAsReadAction(context, notif))
@@ -162,7 +162,7 @@ class ApiTwentySixPlus {
                         .setPriority(Notification.PRIORITY_HIGH)
                         .setWhen(System.currentTimeMillis())
                         .setShowWhen(true)
-                        .setColor(context.getColor(R.color.notification_led_color))
+                        .setColor(context.getColor(R.color.colorLedNotification))
                         .addAction(ApiTwentyFourPlus.getCallDeclineAction(context, callId));
 
         if (showAnswerAction) {
@@ -194,7 +194,7 @@ class ApiTwentySixPlus {
                     .setPriority(priority)
                     .setWhen(System.currentTimeMillis())
                     .setShowWhen(true)
-                    .setColor(context.getColor(R.color.notification_led_color))
+                    .setColor(context.getColor(R.color.colorLedNotification))
                     .build();
         } else {
             return new Notification.Builder(
@@ -208,7 +208,7 @@ class ApiTwentySixPlus {
                     .setPriority(priority)
                     .setWhen(System.currentTimeMillis())
                     .setShowWhen(true)
-                    .setColor(context.getColor(R.color.notification_led_color))
+                    .setColor(context.getColor(R.color.colorLedNotification))
                     .build();
         }
     }
@@ -228,7 +228,7 @@ class ApiTwentySixPlus {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(true)
-                .setColor(context.getColor(R.color.notification_led_color))
+                .setColor(context.getColor(R.color.colorLedNotification))
                 .build();
     }
 
@@ -248,7 +248,7 @@ class ApiTwentySixPlus {
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(true)
                 .setColorized(true)
-                .setColor(context.getColor(R.color.notification_led_color))
+                .setColor(context.getColor(R.color.colorLedNotification))
                 .build();
     }
 

@@ -90,7 +90,7 @@
                 android:autoLink="web"
                 android:gravity="center"
                 android:text="@string/neth_about_link"
-                android:textColorLink="@color/primary_color" />
+                android:textColorLink="@color/colorAccent" />
 
         </LinearLayout>
 
@@ -149,7 +149,7 @@
                 android:autoLink="web"
                 android:gravity="center"
                 android:text="@string/about_privacy_policy"
-                android:textColorLink="@color/primary_color"/>
+                android:textColorLink="@color/colorAccent"/>
 
             <TextView
                 android:id="@+id/about_text"

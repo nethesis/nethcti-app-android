@@ -84,7 +84,7 @@ class ApiTwentyFourPlus {
                 .setNumber(notif.getMessages().size())
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(true)
-                .setColor(context.getColor(R.color.notification_led_color))
+                .setColor(context.getColor(R.color.colorLedNotification))
                 .setStyle(style)
                 .addAction(getReplyMessageAction(context, notif))
                 .addAction(getMarkMessageAsReadAction(context, notif))
@@ -114,7 +114,7 @@ class ApiTwentyFourPlus {
                         .setPriority(Notification.PRIORITY_HIGH)
                         .setWhen(System.currentTimeMillis())
                         .setShowWhen(true)
-                        .setColor(context.getColor(R.color.notification_led_color))
+                        .setColor(context.getColor(R.color.colorLedNotification))
                         .addAction(getCallDeclineAction(context, callId));
 
         if (showAnswerAction) {
