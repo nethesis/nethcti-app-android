@@ -19,6 +19,13 @@
     <color name="primaryTextColorInverse">#FFF</color>
     <color name="secondaryTextColor">#808080</color>
 
+    <color name="materialRed">#e53935</color>
+    <color name="nethGreen">#A7E200</color>
+    <color name="nethGreenDark">#66bb6a</color>
+    <color name="nethGreen50">#50A7E200</color>
+    <color name="nethLightGreen">#EDF9CC</color>
+    <color name="nethLightGreen50">#50EDF9CC</color>
+
     <color name="neth_white_color">#fafafa</color>
     <color name="neth_light_grey_color">#e6e6e6</color>
     <color name="neth_grey_color">#494949</color>

@@ -24,13 +24,13 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.widget.EditText;
+import com.google.android.material.textfield.TextInputEditText;
 import org.linphone.LinphoneManager.AddressType;
 import org.linphone.R;
 import org.linphone.fragments.DialerFragment;
 
 @SuppressLint("AppCompatCustomView")
-public class AddressText extends EditText implements AddressType {
+public class AddressText extends TextInputEditText implements AddressType {
 
     private String mDisplayedName;
     private final Paint mTestPaint;

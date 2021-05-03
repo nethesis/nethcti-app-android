@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/dialer"
@@ -17,40 +17,36 @@
         android:id="@+id/address_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:background="?attr/lightToolbarBackgroundColor">
+        android:layout_marginTop="32dp"
+        android:paddingHorizontal="32dp"
+        android:layout_alignParentTop="true">
 
         <org.linphone.views.EraseButton
             android:id="@+id/erase"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:contentDescription="@string/content_description_backspace"
-            android:src="@drawable/backspace" />
+            android:src="@drawable/ic_backspace"
+            android:tint="@color/backspace_icon"/>
 
         <org.linphone.views.AddressText
             android:id="@+id/address"
-            style="@style/numpad_composed_number_font"
-            android:layout_width="wrap_content"
+            style="@style/NethCTIAddressBarText"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/erase"
-            android:background="@color/transparent_color"
-            android:backgroundTint="@color/transparent_color"
-            android:ellipsize="start"
-            android:hint="@string/address_bar_hint"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="20dp"
-            android:paddingRight="5dp"
-            android:textColorHint="@color/light_grey_color" />
+            android:layout_toStartOf="@id/erase"
+            android:hint="@string/address_bar_hint"/>
 
     </RelativeLayout>
 
     <org.linphone.views.Numpad
         android:id="@+id/numpad"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/controls"
@@ -61,37 +57,40 @@
     <LinearLayout
         android:id="@+id/controls"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingHorizontal="32dp"
         android:layout_alignParentBottom="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:focusable="true">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="20dp">
 
-            <ImageView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="?attr/button_background_drawable"
-                android:contentDescription="@string/content_description_add_contact"
-                android:padding="15dp"
-                android:src="@drawable/contact_add" />
+                style="@style/NethCTIButton"
+                app:icon="@drawable/ic_add_user" />
 
-        </RelativeLayout>
-
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+            <View
+                android:id="@+id/placeholder"
+                android:layout_width="64dp"
+                android:layout_height="1dp"/>
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="20dp">
         <org.linphone.views.CallButton
             android:id="@+id/call"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@drawable/call"
-            android:contentDescription="@string/content_description_call"
-            android:padding="12dp"
-            android:src="@drawable/call_audio_start" />
+            style="@style/NethCTICallButton"
+            app:icon="@drawable/ic_phone" />
+        </FrameLayout>
 
     </LinearLayout>
 
