@@ -89,24 +89,18 @@
                     android:id="@+id/history"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/footer_button">
+                    android:layout_weight="1">
 
                     <ImageView
+                        android:id="@+id/history_icon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/content_description_history"
                         android:padding="15dp"
-                        android:src="@drawable/footer_history"
+                        android:src="@drawable/ic_history"
                         android:tint="@color/colorAccent" />
 
-                    <View
-                        android:id="@+id/history_select"
-                        android:layout_width="match_parent"
-                        android:layout_height="5dp"
-                        android:layout_alignParentBottom="true"
-                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/missed_calls"
@@ -124,49 +118,34 @@
                     android:id="@+id/contacts"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/footer_button">
+                    android:layout_weight="1">
 
                     <ImageView
+                        android:id="@+id/contacts_icon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/content_description_contacts"
                         android:padding="15dp"
-                        android:src="@drawable/footer_contacts"
+                        android:src="@drawable/ic_users"
                         android:tint="@color/colorAccent" />
-
-                    <View
-                        android:id="@+id/contacts_select"
-                        android:layout_width="match_parent"
-                        android:layout_height="5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="?attr/accentColor"
-                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/dialer"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/footer_button">
+                    android:layout_weight="1">
 
                     <ImageView
+                        android:id="@+id/dialer_icon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/content_description_dialer"
                         android:padding="15dp"
-                        android:src="@drawable/footer_dialer"
+                        android:src="@drawable/ic_dialpad"
                         android:tint="@color/colorAccent" />
-
-                    <View
-                        android:id="@+id/dialer_select"
-                        android:layout_width="match_parent"
-                        android:layout_height="5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="?attr/accentColor" />
 
                 </RelativeLayout>
 

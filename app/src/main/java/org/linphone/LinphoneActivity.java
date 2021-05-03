@@ -145,7 +145,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private StatusFragment mStatusFragment;
     private TextView mMissedCalls, mMissedChats;
     private RelativeLayout mContacts, mHistory, mDialer, mChat;
-    private View mContactsSelected, mHistorySelected, mDialerSelected, mChatSelected;
+    private ImageView mContactsIcon, mHistoryIcon, mDialerIcon;
     private LinearLayout mTopBar;
     private TextView mTopBarTitle;
     private ImageView mCancel;
@@ -730,10 +730,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
             mChat.setVisibility(View.GONE);
         }
 
-        mHistorySelected = findViewById(R.id.history_select);
-        mContactsSelected = findViewById(R.id.contacts_select);
-        mDialerSelected = findViewById(R.id.dialer_select);
-        mChatSelected = findViewById(R.id.chat_select);
+        mHistoryIcon = findViewById(R.id.history_icon);
+        mContactsIcon = findViewById(R.id.contacts_icon);
+        mDialerIcon = findViewById(R.id.dialer_icon);
 
         mMissedCalls = findViewById(R.id.missed_calls);
         mMissedChats = findViewById(R.id.missed_chats);
@@ -1184,18 +1183,24 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
         if (id == R.id.history) {
             changeCurrentFragment(FragmentsAvailable.HISTORY_LIST, null);
-            mHistorySelected.setVisibility(View.VISIBLE);
+            mHistoryIcon.setColorFilter(
+                    ContextCompat.getColor(this, R.color.colorAccent),
+                    android.graphics.PorterDuff.Mode.SRC_IN);
             LinphoneManager.getLc().resetMissedCallsCount();
             displayMissedCalls(0);
         } else if (id == R.id.contacts) {
             changeCurrentFragment(FragmentsAvailable.CONTACTS_LIST, null);
-            mContactsSelected.setVisibility(View.VISIBLE);
+            mContactsIcon.setColorFilter(
+                    ContextCompat.getColor(this, R.color.colorAccent),
+                    android.graphics.PorterDuff.Mode.SRC_IN);
         } else if (id == R.id.dialer) {
             changeCurrentFragment(FragmentsAvailable.DIALER, null);
-            mDialerSelected.setVisibility(View.VISIBLE);
+            mDialerIcon.setColorFilter(
+                    ContextCompat.getColor(this, R.color.colorAccent),
+                    android.graphics.PorterDuff.Mode.SRC_IN);
         } else if (id == R.id.chat) {
             changeCurrentFragment(FragmentsAvailable.CHAT_LIST, null);
-            mChatSelected.setVisibility(View.VISIBLE);
+            /*mChatSelected.setVisibility(View.VISIBLE);*/
         } else if (id == R.id.cancel) {
             if (mCurrentFragment == FragmentsAvailable.SETTINGS_SUBLEVEL && !isTablet()) {
                 popBackStack();
@@ -1207,10 +1212,17 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     private void resetSelection() {
-        mHistorySelected.setVisibility(View.GONE);
-        mContactsSelected.setVisibility(View.GONE);
-        mDialerSelected.setVisibility(View.GONE);
-        mChatSelected.setVisibility(View.GONE);
+        mHistoryIcon.setColorFilter(
+                ContextCompat.getColor(this, R.color.primaryTextColorLight),
+                android.graphics.PorterDuff.Mode.SRC_IN);
+        mContactsIcon.setColorFilter(
+                ContextCompat.getColor(this, R.color.primaryTextColorLight),
+                android.graphics.PorterDuff.Mode.SRC_IN);
+        mDialerIcon.setColorFilter(
+                ContextCompat.getColor(this, R.color.primaryTextColorLight),
+                android.graphics.PorterDuff.Mode.SRC_IN);
+        // mChatIcon.setColorFilter(ContextCompat.getColor(this, R.color.primaryTextColorLight),
+        // android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
     public void hideTabBar(Boolean hide) {
@@ -1250,24 +1262,34 @@ public class LinphoneActivity extends LinphoneGenericActivity
         switch (menuToSelect) {
             case HISTORY_LIST:
                 hideTabBar(false);
-                mHistorySelected.setVisibility(View.VISIBLE);
+                mHistoryIcon.setColorFilter(
+                        ContextCompat.getColor(this, R.color.colorAccent),
+                        android.graphics.PorterDuff.Mode.SRC_IN);
                 break;
             case HISTORY_DETAIL:
                 hideTabBar(hideBottomBar);
-                mHistorySelected.setVisibility(View.VISIBLE);
+                mHistoryIcon.setColorFilter(
+                        ContextCompat.getColor(this, R.color.colorAccent),
+                        android.graphics.PorterDuff.Mode.SRC_IN);
                 break;
             case CONTACTS_LIST:
                 hideTabBar(false);
-                mContactsSelected.setVisibility(View.VISIBLE);
+                mContactsIcon.setColorFilter(
+                        ContextCompat.getColor(this, R.color.colorAccent),
+                        android.graphics.PorterDuff.Mode.SRC_IN);
                 break;
             case CONTACT_DETAIL:
             case CONTACT_EDITOR:
                 hideTabBar(hideBottomBar);
-                mContactsSelected.setVisibility(View.VISIBLE);
+                mContactsIcon.setColorFilter(
+                        ContextCompat.getColor(this, R.color.colorAccent),
+                        android.graphics.PorterDuff.Mode.SRC_IN);
                 break;
             case DIALER:
                 hideTabBar(false);
-                mDialerSelected.setVisibility(View.VISIBLE);
+                mDialerIcon.setColorFilter(
+                        ContextCompat.getColor(this, R.color.colorAccent),
+                        android.graphics.PorterDuff.Mode.SRC_IN);
                 break;
             case SETTINGS:
             case ACCOUNT_SETTINGS:
@@ -1285,7 +1307,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 break;
             case CHAT_LIST:
                 hideTabBar(false);
-                mChatSelected.setVisibility(View.VISIBLE);
+                // mChatSelected.setVisibility(View.VISIBLE);
                 break;
             case CREATE_CHAT:
             case GROUP_CHAT:
@@ -1294,7 +1316,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
             case CONTACT_DEVICES:
             case CHAT:
                 hideTabBar(hideBottomBar);
-                mChatSelected.setVisibility(View.VISIBLE);
+                // mChatSelected.setVisibility(View.VISIBLE);
                 break;
             case RECORDING_LIST:
                 hideTabBar(hideBottomBar);
@@ -1314,7 +1336,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
         Bundle extras = new Bundle();
         extras.putString("SipUri", "");
         changeCurrentFragment(FragmentsAvailable.DIALER, extras);
-        mDialerSelected.setVisibility(View.VISIBLE);
+        mDialerIcon.setColorFilter(
+                ContextCompat.getColor(this, R.color.colorAccent),
+                android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
     public void updateStatusFragment(StatusFragment fragment) {
