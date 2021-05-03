@@ -11,6 +11,7 @@
     <color name="colorLedNotification">#00a2de</color>
 
     <color name="primaryTextColor">#000</color>
+    <color name="primaryTextColorLight">#808080</color>
     <color name="primaryTextColorInverse">#FFF</color>
     <color name="secondaryTextColor">#808080</color>
 

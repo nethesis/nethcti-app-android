@@ -69,13 +69,49 @@
         <item name="android:fontFamily">@font/roboto_thin</item>
     </style>
 
-    <style name="NethCTIThinHeaderTitle" parent="@style/NethCTITextLight">
+    <style name="NethCTILightHeaderTitle" parent="@style/NethCTITextLight">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:lineSpacingExtra">10sp</item>
+    </style>
+
+    <style name="NethCTILightHeaderSubTitle" parent="@style/NethCTITextLight">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">10sp</item>
+    </style>
+
+    <style name="NethCTILoginControlLabel" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="NethCTIStatusBarText" parent="@style/LinphoneStyleLight">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="NethCTIButton" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon">
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="iconSize">32dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="android:padding">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/CircularShapeAppearanceOverlay</item>
+        <item name="backgroundTint">@color/colorPrimaryDark</item>
+        <item name="iconTint">@color/primaryTextColorLight</item>
+        <item name="rippleColor">@color/colorAccentLight</item>
+    </style>
+
+    <style name="CircularShapeAppearanceOverlay" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 
     <!-- Old-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
