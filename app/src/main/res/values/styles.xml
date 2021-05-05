@@ -134,6 +134,11 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="NethCTIDrawerText" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+
     <style name="NethCTIStatusBarText" parent="@style/LinphoneStyleLight">
         <item name="android:textStyle">bold</item>
     </style>
@@ -143,6 +148,18 @@
         <item name="android:inputType">textEmailAddress</item>
         <item name="android:textSize">30sp</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="NethCTIAccountHeaderText" parent="@style/NethCTITextLight">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingExtra">10sp</item>
+    </style>
+
+    <style name="NethCTIAccountHeaderSecondaryText" parent="@style/NethCTITextLight">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">10sp</item>
     </style>
 
 

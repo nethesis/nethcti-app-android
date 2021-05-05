@@ -1659,7 +1659,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
 
         if (needLogout.get()) {
-            MenuItem logoutItem = new MenuItem(logoutText, R.drawable.quit_default);
+            MenuItem logoutItem = new MenuItem(logoutText, R.drawable.ic_logout);
             mSideMenuItems.add(logoutItem);
         }
 
@@ -1679,7 +1679,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
 
         if (needLogin.get()) {
-            MenuItem loginItem = new MenuItem(assistText, R.drawable.menu_assistant);
+            MenuItem loginItem = new MenuItem(assistText, R.drawable.ic_login_drawer);
             mSideMenuItems.add(loginItem);
         }
 
@@ -1701,27 +1701,26 @@ public class LinphoneActivity extends LinphoneGenericActivity
             mSideMenuItems.add(
                     new MenuItem(
                             getResources().getString(R.string.menu_settings),
-                            R.drawable.menu_options));
+                            R.drawable.ic_settings));
         }
         if (!getResources().getBoolean(R.bool.hide_recordings_from_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
                             getResources().getString(R.string.menu_recordings),
-                            R.drawable.menu_recordings));
+                            R.drawable.ic_recordings));
         }
         mSideMenuItems.add(
-                new MenuItem(getResources().getString(R.string.menu_about), R.drawable.menu_about));
+                new MenuItem(getResources().getString(R.string.menu_about), R.drawable.ic_about));
         if (getResources().getBoolean(R.bool.show_log_out_in_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
-                            getResources().getString(R.string.menu_logout),
-                            R.drawable.quit_default));
+                            getResources().getString(R.string.menu_logout), R.drawable.ic_logout));
         }
         if (!getResources().getBoolean(R.bool.hide_assistant_from_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
                             getResources().getString(R.string.menu_assistant),
-                            R.drawable.menu_assistant));
+                            R.drawable.ic_login_drawer));
         }
         mSideMenuContent = findViewById(R.id.side_menu_content);
         mSideMenuItemList = findViewById(R.id.item_list);
