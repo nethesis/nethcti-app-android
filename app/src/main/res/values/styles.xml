@@ -183,6 +183,29 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="NethCTIContactNameTitle" parent="@style/NethCTITextRegular">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NethCTIContactOrgSubtitle" parent="@style/NethCTITextLight">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="NethCTIContactFieldTitle" parent="@style/NethCTITextRegular">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="NethCTIContactField" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="NethCTIContactInvite" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Android theme override -->
