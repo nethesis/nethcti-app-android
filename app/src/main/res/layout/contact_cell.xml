@@ -47,7 +47,7 @@
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:button="@drawable/checkbox"
             android:clickable="false"
@@ -60,9 +60,9 @@
             android:id="@+id/friendStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
             android:src="@drawable/led_connected"
@@ -73,8 +73,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/delete"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@id/delete"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
             android:src="@drawable/linphone_user"
@@ -84,13 +84,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toLeftOf="@id/friendLinphone"
-            android:layout_toRightOf="@id/avatar">
+            android:layout_marginStart="10dp"
+            android:layout_toStartOf="@id/friendLinphone"
+            android:layout_toEndOf="@id/avatar">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/name"
-                style="@style/contact_name_list_cell_font"
+                style="@style/NethCTIContactName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -98,9 +98,9 @@
                 android:lines="1"
                 android:maxLines="1" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/contactOrganization"
-                style="@style/contact_organization_font"
+                style="@style/NethCTIContactInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
