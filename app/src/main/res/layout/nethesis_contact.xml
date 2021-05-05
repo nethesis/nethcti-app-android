@@ -35,7 +35,7 @@
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/content_description_delete"
                 android:src="@drawable/ic_delete"
-                android:tint="@color/backspace_icon"/>
+                android:tint="@color/neth_delete_button"/>
 
             <ImageView
                 android:id="@+id/editContact"
@@ -201,11 +201,11 @@
 
                         <TextView
                             android:id="@+id/workStateLabel"
+                            style="@style/NethCTIContactFieldTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="@string/workState"
-                            style="@style/NethCTIContactFieldTitle" />
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/workState" />
                     </RelativeLayout>
 
                     <TextView

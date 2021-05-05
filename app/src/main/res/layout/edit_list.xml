@@ -49,7 +49,7 @@
         android:layout_weight="0.2"
         android:contentDescription="@string/content_description_delete_selection"
         android:padding="15dp"
-        android:tint="@color/neth_button_icon"
+        android:tint="@color/neth_delete_button"
         android:src="@drawable/ic_delete" />
 
 </LinearLayout>

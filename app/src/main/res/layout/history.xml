@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +12,6 @@
             android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="?attr/lightToolbarBackgroundColor"
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -25,17 +23,10 @@
                     android:id="@+id/all_calls"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/button_background_drawable"
                     android:contentDescription="@string/content_description_all_contacts"
                     android:padding="15dp"
-                    android:src="@drawable/history_all" />
-
-                <View
-                    android:id="@+id/all_calls_select"
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="?attr/accentColor" />
+                    android:src="@drawable/ic_phone"
+                    android:tint="@color/neth_toggle_button_icon"/>
 
             </RelativeLayout>
 
@@ -48,19 +39,12 @@
                     android:id="@+id/missed_calls"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/button_background_drawable"
                     android:contentDescription="@string/content_description_linphone_contacts"
                     android:gravity="center"
                     android:padding="15dp"
-                    android:src="@drawable/history_missed" />
+                    android:src="@drawable/ic_missed_call"
+                    android:tint="@color/neth_toggle_button_icon"/>
 
-                <View
-                    android:id="@+id/missed_calls_select"
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="?attr/accentColor"
-                    android:visibility="gone" />
             </RelativeLayout>
 
             <View
@@ -73,10 +57,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
-                android:background="?attr/button_background_drawable"
                 android:contentDescription="@string/content_description_edit_list"
                 android:padding="15dp"
-                android:src="@drawable/delete" />
+                android:src="@drawable/ic_delete"
+                android:tint="@color/neth_delete_button"/>
 
         </LinearLayout>
 
@@ -86,15 +70,13 @@
             android:id="@+id/history_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cacheColorHint="@color/transparent_color"
-            android:divider="?attr/dividerColor"
-            android:dividerHeight="1dp" />
+            android:cacheColorHint="@color/transparent_color"/>
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/no_call_history"
-        style="@style/empty_list_font"
+        style="@style/NethCTITextMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -103,7 +85,7 @@
 
     <TextView
         android:id="@+id/no_missed_call_history"
-        style="@style/empty_list_font"
+        style="@style/NethCTITextMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

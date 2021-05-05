@@ -17,7 +17,7 @@
             android:layout_weight="0.2"
             android:contentDescription="@string/content_description_delete"
             android:padding="15dp"
-            android:tint="@color/backspace_icon"
+            android:tint="@color/neth_delete_button"
             android:src="@drawable/ic_delete" />
 
         <View
@@ -32,7 +32,7 @@
             android:layout_weight="0.2"
             android:contentDescription="@string/content_description_cancel_button"
             android:padding="15dp"
-            android:tint="@color/backspace_icon"
+            android:tint="@color/neth_delete_button"
             android:src="@drawable/ic_cancel" />
 
         <ImageView

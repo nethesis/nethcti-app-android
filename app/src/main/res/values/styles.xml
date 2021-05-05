@@ -205,6 +205,17 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="NethCTIHistoryHeader" parent="@style/NethCTITextRegular">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTIHistoryDetailTime" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
