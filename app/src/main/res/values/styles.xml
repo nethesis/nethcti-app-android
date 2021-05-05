@@ -216,6 +216,22 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="NethCTIAboutVersionInfo" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+    </style>
+
+    <style name="NethCTIAboutAppInfo" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTITopBarTitle" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+
 
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">

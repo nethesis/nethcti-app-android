@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,23 +11,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="@style/about_grey_panel">
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
-                android:src="@drawable/nethesis_icon" />
-
-            <TextView
-                style="@style/about_link_font"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingTop="5dp"
-                android:text="@string/app_name"
-                android:visibility="visible" />
+                android:src="@drawable/neth_logo_login" />
 
         </LinearLayout>
 
@@ -36,11 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            style="@style/about_grey_panel">
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
 
             <TextView
                 android:id="@+id/about_android_version"
-                style="@style/about_version_font"
+                style="@style/NethCTIAboutVersionInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -50,7 +42,7 @@
 
             <TextView
                 android:id="@+id/about_liblinphone_sdk_version"
-                style="@style/about_version_font"
+                style="@style/NethCTIAboutVersionInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -63,12 +55,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="@style/about_white_panel">
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
 
             <TextView
                 android:id="@+id/about_link"
-                style="@style/about_link_font"
+                style="@style/NethCTIAboutVersionInfo"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -82,19 +77,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="@style/about_grey_panel">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/about_license_font"
+                style="@style/NethCTIAboutAppInfo"
                 android:text="@string/neth_about_address" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/about_license_font"
+                style="@style/NethCTIAboutAppInfo"
                 android:text="@string/neth_about_address_city" />
 
         </LinearLayout>
@@ -102,19 +100,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="@style/about_grey_panel">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/about_license_font"
+                style="@style/NethCTIAboutAppInfo"
                 android:text="@string/neth_about_tel" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/about_license_font"
+                style="@style/NethCTIAboutAppInfo"
                 android:text="@string/neth_about_fax" />
 
         </LinearLayout>
@@ -122,36 +123,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="@style/about_grey_panel">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
 
             <TextView
                 android:id="@+id/privacy_policy_link"
-                style="@style/about_license_font"
+                style="@style/NethCTIAboutAppInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:autoLink="web"
-                android:paddingTop="10dp"
                 android:gravity="center"
                 android:text="@string/about_privacy_policy"
                 android:textColorLink="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/about_text"
-                style="@style/about_license_font"
+                style="@style/NethCTIAboutAppInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="20dp"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="16dp"
                 android:text="@string/about_text" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?attr/dividerColor" />
 
             <LinearLayout
                 android:background="?attr/backgroundColor"
