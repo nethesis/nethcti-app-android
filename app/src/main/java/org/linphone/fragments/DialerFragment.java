@@ -199,14 +199,14 @@ public class DialerFragment extends Fragment {
 
         if (lc.getCallsNb() > 0) {
             if (CallTransferManager.instance().ismCallTransfer()) {
-                mCall.setIconResource(R.drawable.call_transfer);
+                mCall.setIconResource(R.drawable.ic_phone_out);
                 mCall.setExternalClickListener(mTransferListener);
             } else {
-                mCall.setIconResource(R.drawable.call_add);
+                mCall.setIconResource(R.drawable.ic_phone_add);
                 mCall.resetClickListener();
             }
             mAddContact.setEnabled(true);
-            mAddContact.setIconResource(R.drawable.call_back);
+            mAddContact.setIconResource(R.drawable.ic_phone_in);
             mAddContact.setOnClickListener(mCancelListener);
         } else {
             mCall.resetClickListener();
