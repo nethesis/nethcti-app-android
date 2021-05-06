@@ -53,7 +53,7 @@
             linphone:title="@string/pref_display_name" />
 
         <TextView
-            style="@style/settings_category_font"
+            style="@style/NethCTIContactFieldTitle"
             android:text="@string/pref_manage_title"
             android:paddingTop="15dp"
             android:layout_marginLeft="10dp"
@@ -86,7 +86,7 @@
             linphone:title="@string/pref_delete_account" />
 
         <TextView
-            style="@style/settings_category_font"
+            style="@style/NethCTIContactFieldTitle"
             android:text="@string/pref_advanced_title"
             android:paddingTop="15dp"
             android:layout_marginLeft="10dp"
