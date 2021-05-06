@@ -164,9 +164,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@drawable/assistant_button"
-                    android:textColor="@drawable/assistant_button_text_color"
-                    style="@style/button_font"
+                    android:backgroundTint="@color/neth_button"
+                    android:textColor="@color/primaryTextColor"
                     android:padding="10dp"
                     android:text="@string/menu_send_log" />
 
@@ -175,9 +174,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@drawable/assistant_button"
-                    android:textColor="@drawable/assistant_button_text_color"
-                    style="@style/button_font"
+                    android:backgroundTint="@color/neth_button"
+                    android:textColor="@color/primaryTextColor"
                     android:padding="10dp"
                     android:text="@string/menu_reset_log" />
 
