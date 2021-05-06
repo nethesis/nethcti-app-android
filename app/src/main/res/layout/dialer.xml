@@ -51,15 +51,15 @@
         android:layout_height="match_parent"
         android:layout_above="@id/controls"
         android:layout_below="@id/address_bar"
-        android:layout_centerInParent="true"
-        android:padding="10dp" />
+        android:layout_centerInParent="true" />
 
+
+    <!-- This linear layout simulate a table row. Used to align numpad button with control buttons-->
     <LinearLayout
         android:id="@+id/controls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingHorizontal="32dp"
         android:layout_alignParentBottom="true">
 
         <FrameLayout
