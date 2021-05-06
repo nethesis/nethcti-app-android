@@ -9,28 +9,26 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="?attr/lightToolbarBackgroundColor"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:background="?attr/button_background_drawable"
+            android:layout_height="24dp"
+            android:layout_weight="0.15"
+            android:layout_gravity="center"
             android:contentDescription="@string/content_description_back"
-            android:padding="18dp"
-            android:src="@drawable/back" />
+            android:src="@drawable/ic_back"
+            android:tint="@color/neth_button_icon" />
 
         <TextView
             android:id="@+id/top_bar_title"
-            style="@style/accent_colored_title_font"
+            style="@style/NethCTITopBarTitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
-            android:gravity="center"
             android:maxLines="1"
-            android:padding="15dp"
+            android:gravity="center_vertical"
             android:text="@string/menu_recordings"/>
 
         <ImageView
@@ -38,10 +36,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:background="?attr/button_background_drawable"
             android:contentDescription="@string/content_description_edit_list"
             android:padding="15dp"
-            android:src="@drawable/delete" />
+            android:tint="@color/neth_delete_button"
+            android:src="@drawable/ic_delete"  />
     </LinearLayout>
 
     <include layout="@layout/edit_list" />
@@ -54,9 +52,7 @@
             android:id="@+id/recording_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cacheColorHint="@color/transparent_color"
-            android:divider="?attr/dividerColor"
-            android:dividerHeight="1dp" />
+            android:cacheColorHint="@color/transparent_color"/>
 
         <ProgressBar
             android:id="@+id/recording_fetch_in_progress"
@@ -69,7 +65,7 @@
 
         <TextView
             android:id="@+id/no_recordings"
-            style="@style/empty_list_font"
+            style="@style/NethCTITextRegular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

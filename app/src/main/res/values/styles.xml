@@ -231,6 +231,30 @@
         <item name="android:textSize">26sp</item>
     </style>
 
+    <style name="NethCTISettingsAccountLabel" parent="@style/NethCTITextRegular">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTISettingsLabel" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTISettingsSubtitle" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="NethCTITextSettingTitle" parent="@style/NethCTITextRegular">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SpinnerTheme" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
 
 
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->

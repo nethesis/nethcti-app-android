@@ -3,7 +3,6 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/backgroundColor"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
@@ -15,7 +14,7 @@
 
         <TextView
             android:id="@+id/separator_text"
-            style="@style/accent_colored_title_font"
+            style="@style/NethCTITopBarTitle"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center" />
@@ -23,7 +22,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?attr/dividerColor" />
+            android:background="@color/colorPrimaryLight" />
 
     </LinearLayout>
 
@@ -77,24 +76,26 @@
 
                 <TextView
                     android:id="@+id/record_name"
+                    style="@style/NethCTIContactField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/NethCTIContactField"
                     android:text=" - " />
 
                 <TextView
                     android:id="@+id/record_date"
                     android:layout_width="wrap_content"
+                    style="@style/NethCTIContactField"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/record_time"
-                style="@style/standard_text_font"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -107,16 +108,19 @@
 
                 <TextView
                     android:id="@+id/record_current_time"
+                    style="@style/NethCTIContactField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="/" />
+                    style="@style/NethCTIContactField"
+                    android:text=" | " />
 
                 <TextView
                     android:id="@+id/record_duration"
+                    style="@style/NethCTIContactField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

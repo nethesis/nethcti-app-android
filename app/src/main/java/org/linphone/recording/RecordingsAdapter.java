@@ -96,9 +96,9 @@ public class RecordingsAdapter extends SelectableAdapter<RecordingViewHolder> {
         }
 
         if (record.isPlaying()) {
-            viewHolder.playButton.setImageResource(R.drawable.record_pause);
+            viewHolder.playButton.setImageResource(R.drawable.ic_pause);
         } else {
-            viewHolder.playButton.setImageResource(R.drawable.record_play);
+            viewHolder.playButton.setImageResource(R.drawable.ic_play);
         }
         viewHolder.playButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -106,10 +106,10 @@ public class RecordingsAdapter extends SelectableAdapter<RecordingViewHolder> {
                     public void onClick(View v) {
                         if (record.isPaused()) {
                             record.play();
-                            viewHolder.playButton.setImageResource(R.drawable.record_pause);
+                            viewHolder.playButton.setImageResource(R.drawable.ic_pause);
                         } else {
                             record.pause();
-                            viewHolder.playButton.setImageResource(R.drawable.record_play);
+                            viewHolder.playButton.setImageResource(R.drawable.ic_play);
                         }
                     }
                 });
@@ -196,7 +196,7 @@ public class RecordingsAdapter extends SelectableAdapter<RecordingViewHolder> {
                         record.seek(0);
                         viewHolder.progressionBar.setProgress(0);
                         viewHolder.currentPosition.setText("00:00");
-                        viewHolder.playButton.setImageResource(R.drawable.record_play);
+                        viewHolder.playButton.setImageResource(R.drawable.ic_play);
                     }
                 });
     }
