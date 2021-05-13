@@ -1352,6 +1352,16 @@ public class ChatMessagesFragment extends Fragment
     public void onMessageReceived(ChatRoom cr, ChatMessage msg) {}
 
     @Override
+    public void onEphemeralMessageDeleted(ChatRoom cr, EventLog eventLog) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
+    }
+
+    @Override
     public void onConferenceJoined(ChatRoom cr, EventLog event) {
         // Currently flexisip doesn't send the participants list in the INVITE
         // So we have to refresh the display when information is available
@@ -1395,6 +1405,16 @@ public class ChatMessagesFragment extends Fragment
     }
 
     @Override
+    public void onEphemeralMessageTimerStarted(ChatRoom cr, EventLog eventLog) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
+    }
+
+    @Override
     public void onChatMessageShouldBeStored(ChatRoom cr, ChatMessage msg) {}
 
     @Override
@@ -1420,6 +1440,16 @@ public class ChatMessagesFragment extends Fragment
         getContactsForParticipants();
         ((ChatMessagesGenericAdapter) mChatEventsList.getAdapter()).addToHistory(event);
         scrollToBottom();
+    }
+
+    @Override
+    public void onEphemeralEvent(ChatRoom cr, EventLog eventLog) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
     }
 
     @Override

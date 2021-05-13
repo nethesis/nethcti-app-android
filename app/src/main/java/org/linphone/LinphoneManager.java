@@ -944,6 +944,16 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     }
 
     @Override
+    public void onChatRoomEphemeralMessageDeleted(Core lc, ChatRoom cr) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
+    }
+
+    @Override
     public void onMessageSent(Core core, ChatRoom chatRoom, ChatMessage chatMessage) {}
 
     @Override
@@ -1686,6 +1696,16 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     }
 
     @Override
+    public void onChatRoomSubjectChanged(Core lc, ChatRoom cr) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
+    }
+
+    @Override
     public void onVersionUpdateCheckResultReceived(
             Core lc, VersionUpdateCheckResult result, String version, String url) {
         if (result == VersionUpdateCheckResult.NewVersionAvailable) {
@@ -1821,6 +1841,17 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     @Override
     public void onIsAccountActivated(
             AccountCreator accountCreator, AccountCreator.Status status, String resp) {}
+
+    @Override
+    public void onLoginLinphoneAccount(
+            AccountCreator creator, AccountCreator.Status status, String resp) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
+    }
 
     @Override
     public void onRecoverAccount(

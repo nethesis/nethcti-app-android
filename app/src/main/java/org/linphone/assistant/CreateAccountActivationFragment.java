@@ -124,6 +124,17 @@ public class CreateAccountActivationFragment extends Fragment
     }
 
     @Override
+    public void onLoginLinphoneAccount(
+            AccountCreator creator, AccountCreator.Status status, String resp) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
+    }
+
+    @Override
     public void onRecoverAccount(
             AccountCreator accountCreator, AccountCreator.Status status, String resp) {}
 

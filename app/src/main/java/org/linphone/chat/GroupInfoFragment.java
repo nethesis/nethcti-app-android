@@ -541,8 +541,28 @@ public class GroupInfoFragment extends Fragment implements ChatRoomListener {
     }
 
     @Override
+    public void onEphemeralEvent(ChatRoom cr, EventLog eventLog) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
+    }
+
+    @Override
     public void onParticipantRemoved(ChatRoom cr, EventLog event_log) {
         refreshParticipantsList();
+    }
+
+    @Override
+    public void onEphemeralMessageTimerStarted(ChatRoom cr, EventLog eventLog) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
     }
 
     @Override
@@ -562,6 +582,16 @@ public class GroupInfoFragment extends Fragment implements ChatRoomListener {
 
     @Override
     public void onMessageReceived(ChatRoom cr, ChatMessage msg) {}
+
+    @Override
+    public void onEphemeralMessageDeleted(ChatRoom cr, EventLog eventLog) {
+        /*
+         * 13/05/2021
+         * Method required by sdk 4.4.35
+         *
+         * NethCTIApp doesn't require this method.
+         */
+    }
 
     @Override
     public void onParticipantDeviceRemoved(ChatRoom cr, EventLog event_log) {}
