@@ -47,6 +47,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -56,6 +57,7 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.android.material.button.MaterialButton;
 import it.nethesis.utils.CallTransferManager;
 import java.text.DecimalFormat;
 import java.util.Collections;
@@ -112,7 +114,6 @@ public class CallActivity extends LinphoneGenericActivity
     private RelativeLayout mActiveCallHeader, mSideMenuContent, mAvatarLayout;
     private ImageView mPause,
             mHangUp,
-            mDialer,
             mVideo,
             mMicro,
             mSpeaker,
@@ -123,12 +124,14 @@ public class CallActivity extends LinphoneGenericActivity
             mConferenceStatus,
             mRecordCall,
             mRecording;
+    private MaterialButton mDialer;
     private ImageView mAudioRoute;
     private ImageView mRouteSpeaker;
     private ImageView mRouteEarpiece;
     private ImageView mRouteBluetooth;
     private ImageView mMenu;
-    private LinearLayout mNoCurrentCall, mCallInfo, mCallPaused;
+    private LinearLayout mNoCurrentCall, mCallPaused;
+    private FrameLayout mCallInfo;
     private ProgressBar mVideoProgress;
     private StatusFragment mStatus;
     private CallAudioFragment mAudioCallFragment;
@@ -1147,7 +1150,7 @@ public class CallActivity extends LinphoneGenericActivity
             return;
         }
 
-        mDialer.setImageResource(R.drawable.footer_dialer);
+        mDialer.setIconResource(R.drawable.ic_dialpad);
         mNumpad.setVisibility(View.GONE);
     }
 
@@ -1159,7 +1162,7 @@ public class CallActivity extends LinphoneGenericActivity
         if (mNumpad.getVisibility() == View.VISIBLE) {
             hideNumpad();
         } else {
-            mDialer.setImageResource(R.drawable.dialer_alt_back);
+            mDialer.setIconResource(R.drawable.dialer_alt_back);
             mNumpad.setVisibility(View.VISIBLE);
         }
     }
@@ -1596,11 +1599,7 @@ public class CallActivity extends LinphoneGenericActivity
         }
 
         // Conference
-        if (mIsConferenceRunning) {
-            displayConference(true);
-        } else {
-            displayConference(false);
-        }
+        displayConference(mIsConferenceRunning);
 
         if (mCallsList != null) {
             mCallsList.removeAllViews();
@@ -1636,11 +1635,7 @@ public class CallActivity extends LinphoneGenericActivity
         }
 
         // Paused by remote
-        if (pausedCalls.size() == 1) {
-            displayCallPaused(true);
-        } else {
-            displayCallPaused(false);
-        }
+        displayCallPaused(pausedCalls.size() == 1);
     }
 
     // Conference
@@ -1815,16 +1810,16 @@ public class CallActivity extends LinphoneGenericActivity
             formatText(
                     dl,
                     getString(R.string.call_stats_download),
-                    String.valueOf((int) stats.getDownloadBandwidth()) + " kbits/s");
+                    (int) stats.getDownloadBandwidth() + " kbits/s");
             formatText(
                     ul,
                     getString(R.string.call_stats_upload),
-                    String.valueOf((int) stats.getUploadBandwidth()) + " kbits/s");
+                    (int) stats.getUploadBandwidth() + " kbits/s");
             if (isVideo) {
                 formatText(
                         edl,
                         getString(R.string.call_stats_estimated_download),
-                        String.valueOf(stats.getEstimatedDownloadBandwidth()) + " kbits/s");
+                        stats.getEstimatedDownloadBandwidth() + " kbits/s");
             }
             formatText(ice, getString(R.string.call_stats_ice), stats.getIceState().toString());
             formatText(

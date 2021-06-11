@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +12,7 @@
 
         <TextView
             android:id="@+id/call_stats_audio"
-            style="@style/call_stats_title_font"
+            style="@style/NethCTIContactNameTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center"
@@ -29,7 +30,7 @@
 
             <TextView
                 android:id="@+id/codec_audio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -38,7 +39,7 @@
 
             <TextView
                 android:id="@+id/encoder_audio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -48,7 +49,7 @@
 
             <TextView
                 android:id="@+id/decoder_audio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -58,7 +59,7 @@
 
             <TextView
                 android:id="@+id/uploadBandwith_audio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -67,7 +68,7 @@
 
             <TextView
                 android:id="@+id/downloadBandwith_audio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -77,7 +78,7 @@
 
             <TextView
                 android:id="@+id/ice_audio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -86,7 +87,7 @@
 
             <TextView
                 android:id="@+id/ip_audio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -95,7 +96,7 @@
 
             <TextView
                 android:id="@+id/senderLossRateAudio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -105,7 +106,7 @@
 
             <TextView
                 android:id="@+id/receiverLossRateAudio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -114,7 +115,7 @@
 
             <TextView
                 android:id="@+id/jitterBufferAudio"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -125,7 +126,7 @@
 
         <TextView
             android:id="@+id/call_stats_video"
-            style="@style/call_stats_title_font"
+            style="@style/NethCTIContactNameTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center"
@@ -144,7 +145,7 @@
 
             <TextView
                 android:id="@+id/codec_video"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -154,7 +155,7 @@
 
             <TextView
                 android:id="@+id/encoder_video"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -163,7 +164,7 @@
 
             <TextView
                 android:id="@+id/decoder_video"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -172,7 +173,7 @@
 
             <TextView
                 android:id="@+id/display_filter"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -181,7 +182,7 @@
 
             <TextView
                 android:id="@+id/uploadBandwith_video"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -191,7 +192,7 @@
 
             <TextView
                 android:id="@+id/downloadBandwith_video"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -200,7 +201,7 @@
 
             <TextView
                 android:id="@+id/estimatedDownloadBandwidth_video"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -209,7 +210,7 @@
 
             <TextView
                 android:id="@+id/ice_video"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -218,7 +219,7 @@
 
             <TextView
                 android:id="@+id/ip_video"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -227,7 +228,7 @@
 
             <TextView
                 android:id="@+id/senderLossRateVideo"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -237,7 +238,7 @@
 
             <TextView
                 android:id="@+id/receiverLossRateVideo"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -246,7 +247,7 @@
 
             <TextView
                 android:id="@+id/video_resolution_sent"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -255,7 +256,7 @@
 
             <TextView
                 android:id="@+id/video_resolution_received"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -264,7 +265,7 @@
 
             <TextView
                 android:id="@+id/video_fps_sent"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -273,7 +274,7 @@
 
             <TextView
                 android:id="@+id/video_fps_received"
-                style="@style/call_stats_font"
+                style="@style/NethCTISettingsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
