@@ -79,14 +79,14 @@ public final class LinphoneService extends Service {
     private boolean mTestDelayElapsed = true;
     private CoreListenerStub mListener;
     private WindowManager mWindowManager;
-    public LinphoneOverlay mOverlay;
+    private LinphoneOverlay mOverlay;
     private Application.ActivityLifecycleCallbacks mActivityCallbacks;
     private NotificationsManager mNotificationManager;
     private String mIncomingReceivedActivityName;
     private Class<? extends Activity> mIncomingReceivedActivity = CallIncomingActivity.class;
-    Boolean startFromNotif = false;
+    private Boolean startFromNotif = false;
 
-    private final LoggingServiceListener mJavaLoggingService =
+    private LoggingServiceListener mJavaLoggingService =
             new LoggingServiceListener() {
                 @Override
                 public void onLogMessageWritten(
@@ -190,24 +190,7 @@ public final class LinphoneService extends Service {
                                 new CoreListenerStub() {
                                     @Override
                                     public void onCallStateChanged(
-                                            Core lc, final Call call, State state, String message) {
-                                        android.util.Log.d(
-                                                "LinphoneService",
-                                                "[FirebaseMessaging] call state: "
-                                                        + state.toString());
-
-                                        android.util.Log.d(
-                                                "LinphoneService",
-                                                "[FirebaseMessaging] call status: "
-                                                        + call.getCallLog().getStatus());
-
-                                        android.util.Log.d(
-                                                "LinphoneService",
-                                                "[FirebaseMessaging] calls: "
-                                                        + LinphoneManager.getLc()
-                                                                .getCalls()
-                                                                .length);
-
+                                            Core lc, Call call, Call.State state, String message) {
                                         if (sInstance == null) {
                                             android.util.Log.d(
                                                     "LinphoneService",
@@ -221,7 +204,7 @@ public final class LinphoneService extends Service {
                                             mNotificationManager.displayCallNotification(call);
                                         }
 
-                                        if (state == State.IncomingReceived
+                                        if (state == Call.State.IncomingReceived
                                                 || state == State.IncomingEarlyMedia) {
                                             if (!LinphoneManager.getInstance().getCallGsmON())
                                                 onIncomingReceived();
@@ -232,15 +215,6 @@ public final class LinphoneService extends Service {
                                                 || state == State.Error) {
                                             destroyOverlay();
                                         }
-
-                                        /*if (state == State.Released
-                                                && call.getCallLog().getStatus()
-                                                        == Call.Status.Missed) {
-                                            mNotificationManager.displayMissedCallNotification(
-                                                    call);
-                                        }
-
-                                         */
 
                                         /* destroy service */
                                         if (state == State.Released) {
@@ -271,10 +245,7 @@ public final class LinphoneService extends Service {
                                     @Override
                                     public void onGlobalStateChanged(
                                             Core lc, GlobalState state, String message) {
-                                        android.util.Log.d(
-                                                "LinphoneService",
-                                                "[FirebaseMessaging] global state: "
-                                                        + state.toString());
+                                        // TODO global state if ON
                                     }
 
                                     @Override
@@ -283,10 +254,7 @@ public final class LinphoneService extends Service {
                                             ProxyConfig cfg,
                                             RegistrationState state,
                                             String smessage) {
-                                        android.util.Log.d(
-                                                "LinphoneService",
-                                                "[FirebaseMessaging] registration state: "
-                                                        + state.toString());
+                                        // TODO registration status
                                     }
                                 });
 
@@ -487,10 +455,6 @@ public final class LinphoneService extends Service {
 
     private void onIncomingReceived() {
         Intent intent = new Intent().setClass(this, mIncomingReceivedActivity);
-        android.util.Log.d(
-                "LinphoneService",
-                "[FirebaseMessaging] LinphoneActivity.isInstantiated(): "
-                        + LinphoneActivity.isInstanciated());
         if (LinphoneActivity.isInstanciated()) {
             LinphoneActivity.instance().startActivity(intent);
         } else {
