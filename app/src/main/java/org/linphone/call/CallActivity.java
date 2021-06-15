@@ -54,6 +54,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -111,20 +112,18 @@ public class CallActivity extends LinphoneGenericActivity
     private Runnable mControls;
     private ImageView mSwitchCamera;
     private TextView mMissedChats;
-    private RelativeLayout mActiveCallHeader, mSideMenuContent, mAvatarLayout;
-    private ImageView mPause,
-            mHangUp,
+    private RelativeLayout mSideMenuContent;
+    private LinearLayoutCompat mActiveCallHeader;
+    private FrameLayout mAvatarLayout;
+    private ImageView mHangUp, mOptions, mConference, mConferenceStatus;
+    private MaterialButton mDialer,
             mVideo,
             mMicro,
             mSpeaker,
-            mOptions,
+            mRecordCall,
             mAddCall,
             mTransfer,
-            mConference,
-            mConferenceStatus,
-            mRecordCall,
-            mRecording;
-    private MaterialButton mDialer;
+            mPause;
     private ImageView mAudioRoute;
     private ImageView mRouteSpeaker;
     private ImageView mRouteEarpiece;
@@ -478,11 +477,6 @@ public class CallActivity extends LinphoneGenericActivity
         mRecordCall.setOnClickListener(this);
         mRecordCall.setEnabled(false);
 
-        mRecording = findViewById(R.id.recording);
-        mRecording.setOnClickListener(this);
-        mRecording.setEnabled(false);
-        mRecording.setVisibility(View.GONE);
-
         try {
             mAudioRoute = findViewById(R.id.audio_route);
             mAudioRoute.setOnClickListener(this);
@@ -726,9 +720,6 @@ public class CallActivity extends LinphoneGenericActivity
                         && currentCall.getCurrentParams().getRecordFile() != null);
         mRecordCall.setSelected(mIsRecording);
 
-        mRecording.setEnabled(mIsRecording);
-        mRecording.setVisibility(mIsRecording ? View.VISIBLE : View.GONE);
-
         mVideo.setEnabled(
                 currentCall != null
                         && LinphonePreferences.instance().isVideoEnabled()
@@ -876,17 +867,11 @@ public class CallActivity extends LinphoneGenericActivity
             Log.d("start call mRecording");
             mRecordCall.setSelected(true);
 
-            mRecording.setVisibility(View.VISIBLE);
-            mRecording.setEnabled(true);
-
             mIsRecording = true;
         } else if (!enable && mIsRecording) {
             call.stopRecording();
             Log.d("stop call mRecording");
             mRecordCall.setSelected(false);
-
-            mRecording.setVisibility(View.GONE);
-            mRecording.setEnabled(false);
 
             mIsRecording = false;
         }
@@ -1475,7 +1460,8 @@ public class CallActivity extends LinphoneGenericActivity
     private void displayCurrentCall(Call call) {
         Address lAddress = call.getRemoteAddress();
         TextView contactName = findViewById(R.id.current_contact_name);
-        setContactInformation(contactName, lAddress);
+        TextView contactAddress = findViewById(R.id.current_contact_address);
+        setContactInformation(contactName, contactAddress, lAddress);
         registerCallDurationTimer(null, call);
     }
 
@@ -1521,14 +1507,18 @@ public class CallActivity extends LinphoneGenericActivity
         mCallsList.addView(callView);
     }
 
-    private void setContactInformation(TextView contactName, Address lAddress) {
+    private void setContactInformation(
+            TextView contactName, TextView contactAddress, Address lAddress) {
         LinphoneContact lContact = ContactsManager.getInstance().findContactFromAddress(lAddress);
         if (lContact == null) {
             String displayName = LinphoneUtils.getAddressDisplayName(lAddress);
+            String displayAddress = LinphoneUtils.getDisplayableAddress(lAddress);
             contactName.setText(displayName);
+            contactAddress.setText(displayAddress);
             ContactAvatar.displayAvatar(displayName, mAvatarLayout, true);
         } else {
             contactName.setText(lContact.getFullName());
+            contactAddress.setText(lAddress.asString());
             ContactAvatar.displayAvatar(lContact, mAvatarLayout, true);
         }
     }

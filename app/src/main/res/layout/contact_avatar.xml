@@ -18,27 +18,16 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/generated_avatar_bg"
         android:gravity="center"
         android:maxLines="1" />
 
     <ImageView
-        android:id="@+id/mask"
+        android:id="@+id/avatar"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:adjustViewBounds="true"
-        android:src="@drawable/avatar_mask"
-        android:tint="?attr/backgroundColor" />
-
-    <ImageView
-        android:id="@+id/border"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignParentEnd="true"
-        android:adjustViewBounds="true"
-        android:src="@drawable/avatar_border"
-        android:tint="?attr/accentColor" />
+        android:src="@drawable/ic_avatar" />
 
     <ImageView
         android:id="@+id/security_level"
