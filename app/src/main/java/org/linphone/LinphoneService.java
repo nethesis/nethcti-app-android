@@ -84,6 +84,7 @@ public final class LinphoneService extends Service {
     private NotificationsManager mNotificationManager;
     private String mIncomingReceivedActivityName;
     private Class<? extends Activity> mIncomingReceivedActivity = CallIncomingActivity.class;
+    private Boolean startFromNotif = false;
 
     private LoggingServiceListener mJavaLoggingService =
             new LoggingServiceListener() {
@@ -180,6 +181,7 @@ public final class LinphoneService extends Service {
 
         LinphoneManager.createAndStart(this, isPush);
 
+        startFromNotif = isPush;
         sInstance = this; // sInstance is ready once linphone manager has been created
         mNotificationManager = new NotificationsManager(this);
         LinphoneManager.getLc()
@@ -190,9 +192,8 @@ public final class LinphoneService extends Service {
                                     public void onCallStateChanged(
                                             Core lc, Call call, Call.State state, String message) {
                                         if (sInstance == null) {
-                                            Log.i(
-                                                    "[Service] Service not ready, discarding call state change to ",
-                                                    state.toString());
+                                            Log.d("[Service] Service not ready, discarding call state change to "
+                                                            + state.toString());
                                             return;
                                         }
 
@@ -213,11 +214,29 @@ public final class LinphoneService extends Service {
                                             destroyOverlay();
                                         }
 
-                                        if (state == State.Released
-                                                && call.getCallLog().getStatus()
-                                                        == Call.Status.Missed) {
-                                            mNotificationManager.displayMissedCallNotification(
-                                                    call);
+                                        /* destroy service */
+                                        if (state == State.Released) {
+                                            if (LinphoneManager.getLc().getCalls().length <= 0) {
+                                                boolean status =
+                                                        call.getCallLog().getStatus()
+                                                                        == Call.Status.Missed
+                                                                || call.getCallLog().getStatus()
+                                                                        == Call.Status.Aborted
+                                                                || call.getCallLog().getStatus()
+                                                                        == Call.Status.Declined
+                                                                || call.getCallLog().getStatus()
+                                                                        == Call.Status.Success;
+                                                if (status
+                                                        && call.getDir() == Call.Dir.Incoming
+                                                        && startFromNotif) {
+                                                    stopSelf();
+                                                }
+                                            }
+                                            if (call.getCallLog().getStatus()
+                                                    == Call.Status.Missed) {
+                                                mNotificationManager.displayMissedCallNotification(
+                                                        call);
+                                            }
                                         }
                                     }
 
@@ -396,16 +415,16 @@ public final class LinphoneService extends Service {
         Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
         if (lc != null) {
             lc.removeListener(mListener);
-            lc = null; // To allow the gc calls below to free the Core
         }
-
-        sInstance = null;
-        LinphoneManager.destroy();
 
         // Make sure our notification is gone.
         if (mNotificationManager != null) {
-            mNotificationManager.destroy();
+            removeForegroundServiceNotificationIfPossible();
         }
+
+        sInstance = null;
+        lc = null; // To allow the gc calls below to free the Core
+        LinphoneManager.destroy();
 
         // This will prevent the app from crashing if the service gets killed in background mode
         if (LinphoneActivity.isInstanciated()) {
