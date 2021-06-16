@@ -192,9 +192,7 @@ public final class LinphoneService extends Service {
                                     public void onCallStateChanged(
                                             Core lc, Call call, Call.State state, String message) {
                                         if (sInstance == null) {
-                                            android.util.Log.d(
-                                                    "LinphoneService",
-                                                    "[Service] Service not ready, discarding call state change to "
+                                            Log.d("[Service] Service not ready, discarding call state change to "
                                                             + state.toString());
                                             return;
                                         }
