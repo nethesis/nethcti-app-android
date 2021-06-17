@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="digitIconSize">64dp</dimen>
+    <dimen name="digitSize">128dp</dimen>
+    <dimen name="dialerMargin">24dp</dimen>
+</resources>

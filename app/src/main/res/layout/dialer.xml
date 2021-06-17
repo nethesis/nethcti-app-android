@@ -17,7 +17,6 @@
         android:id="@+id/address_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="32dp"
         android:paddingHorizontal="32dp"
         android:layout_alignParentTop="true">
 
@@ -27,8 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginHorizontal="10dp"
             android:contentDescription="@string/content_description_backspace"
             android:src="@drawable/ic_backspace"
             android:tint="@color/backspace_icon"/>
@@ -47,6 +45,7 @@
     <org.linphone.views.Numpad
         android:id="@+id/numpad"
         android:gravity="center"
+        android:layout_margin="@dimen/dialerMargin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/controls"
@@ -60,36 +59,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_alignParentBottom="true">
+        android:layout_marginHorizontal="@dimen/dialerMargin"
+        android:layout_alignParentBottom="true"
+        android:baselineAligned="false">
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:padding="20dp">
 
-            <com.google.android.material.button.MaterialButton
+            <org.linphone.views.NethSquareButton
                 android:id="@+id/add_contact"
                 style="@style/NethCTIButton"
+                app:iconSize="@dimen/digitIconSize"
                 app:icon="@drawable/ic_add_user" />
 
         </FrameLayout>
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="20dp">
-            <View
-                android:id="@+id/placeholder"
-                android:layout_width="64dp"
-                android:layout_height="1dp"/>
-        </FrameLayout>
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:padding="20dp">
         <org.linphone.views.CallButton
             android:id="@+id/call"
             style="@style/NethCTICallButton"
-            app:icon="@drawable/ic_phone" />
+            app:icon="@drawable/ic_phone"/>
         </FrameLayout>
 
     </LinearLayout>

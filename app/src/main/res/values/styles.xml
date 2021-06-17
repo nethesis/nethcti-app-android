@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <!-- NethCTI Styles -->
     <style name="NethCTIStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Android theme override -->
@@ -59,11 +57,11 @@
 
     <!-- Custom View -->
     <style name="NethCTIButton" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon">
-        <item name="android:layout_width">64dp</item>
-        <item name="android:layout_height">64dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
         <item name="iconSize">32dp</item>
-        <item name="iconGravity">textStart</item>
-        <item name="android:padding">0dp</item>
+        <item name="android:padding">12dp</item>
         <item name="iconPadding">0dp</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
@@ -94,11 +92,9 @@
 
 
     <style name="NethCTIDialpadDigit" parent="NethCTIButton">
-        <item name="iconSize">64dp</item>
-        <item name="iconPadding">0dp</item>
+        <item name="iconSize">@dimen/digitIconSize</item>
     </style>
 
-    <!-- Custom View -->
     <style name="NethCTICallButton" parent="@style/NethCTIButton">
         <item name="backgroundTint">@color/call_button</item>
         <item name="iconTint">@color/call_button_icon</item>
