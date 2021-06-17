@@ -1487,6 +1487,7 @@ public class CallActivity extends LinphoneGenericActivity
             callView.setId(index + 1);
 
             TextView contactName = callView.findViewById(R.id.contact_name);
+            TextView contactAddress = callView.findViewById(R.id.contact_address);
 
             Address lAddress = call.getRemoteAddress();
             LinphoneContact lContact =
@@ -1495,9 +1496,11 @@ public class CallActivity extends LinphoneGenericActivity
             if (lContact == null) {
                 String displayName = LinphoneUtils.getAddressDisplayName(lAddress);
                 contactName.setText(displayName);
+                contactAddress.setText(lAddress.toString());
                 ContactAvatar.displayAvatar(displayName, callView.findViewById(R.id.avatar_layout));
             } else {
                 contactName.setText(lContact.getFullName());
+                contactAddress.setText(LinphoneUtils.getDisplayableAddress(lAddress));
                 ContactAvatar.displayAvatar(lContact, callView.findViewById(R.id.avatar_layout));
             }
 
@@ -1524,7 +1527,7 @@ public class CallActivity extends LinphoneGenericActivity
     }
 
     private void displayCallStatusIconAndReturnCallPaused(LinearLayout callView, Call call) {
-        ImageView onCallStateChanged = callView.findViewById(R.id.call_pause);
+        MaterialButton onCallStateChanged = callView.findViewById(R.id.call_pause);
         onCallStateChanged.setTag(call);
         onCallStateChanged.setOnClickListener(this);
 
