@@ -57,7 +57,7 @@ public class DialerFragment extends Fragment {
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialer, container, false);
+        final View view = inflater.inflate(R.layout.dialer, container, false);
 
         mAddress = view.findViewById(R.id.address);
         mAddress.setDialerFragment(this);
@@ -146,6 +146,14 @@ public class DialerFragment extends Fragment {
 
         sInstance = this;
 
+        view.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        setButtonSize(view);
+                    }
+                });
+
         return view;
     }
 
@@ -153,19 +161,18 @@ public class DialerFragment extends Fragment {
         Digit digit = root.findViewById(R.id.Digit1);
         if (digit != null) {
             int digitSize = digit.getHeight();
+            resizeButtons(digitSize, mCall, mAddContact);
             Log.d("WEDO", "DigitSize: " + digitSize);
-            Log.d("WEDO", "DigitSizeLP: " + digit.getLayoutParams().width);
-            mCall.getLayoutParams().height = digitSize;
-            mCall.getLayoutParams().width = digitSize;
-            mCall.setSize(digitSize);
-            mCall.requestLayout();
-            mCall.invalidate();
+        }
+    }
 
-            mAddContact.getLayoutParams().height = digitSize;
-            mAddContact.getLayoutParams().width = digitSize;
-            mAddContact.setSize(digitSize);
-            mAddContact.requestLayout();
-            mAddContact.invalidate();
+    private void resizeButtons(int size, NethSquareButton... buttons) {
+        for (NethSquareButton button : buttons) {
+            button.getLayoutParams().height = size;
+            button.getLayoutParams().width = size;
+            button.setSize(size);
+            button.requestLayout();
+            button.invalidate();
         }
     }
 
@@ -179,8 +186,6 @@ public class DialerFragment extends Fragment {
     public void onResume() {
         super.onResume();
         sInstance = this;
-
-        setButtonSize(getView());
 
         if (LinphoneActivity.isInstanciated()) {
             LinphoneActivity.instance().selectMenu(FragmentsAvailable.DIALER);
