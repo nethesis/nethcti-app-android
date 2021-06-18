@@ -160,7 +160,7 @@ public class DialerFragment extends Fragment {
     private void setButtonSize(View root) {
         Digit digit = root.findViewById(R.id.Digit1);
         if (digit != null) {
-            int digitSize = digit.getHeight();
+            int digitSize = digit.getWidth();
             resizeButtons(digitSize, mCall, mAddContact);
             Log.d("WEDO", "DigitSize: " + digitSize);
         }
