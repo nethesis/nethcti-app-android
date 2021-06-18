@@ -44,8 +44,9 @@ class NethCTIApplication : Application(), LifecycleObserver {
         Log.d("WEDO", "App in background.")
         //killService
         LinphoneManager.getLcIfManagerNotDestroyedOrNull()?.let {
-            if (it.calls.isEmpty() && LinphonePreferences.instance().serviceNotificationVisibility && LinphoneService.isReady()
+            if (it.calls.isEmpty() && !LinphonePreferences.instance().serviceNotificationVisibility && LinphoneService.isReady()
             ) {
+                Log.d("WEDO", "Service killed.")
                 LinphoneService.instance().stopSelf()
             }
         }
