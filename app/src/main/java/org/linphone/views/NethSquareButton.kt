@@ -12,14 +12,21 @@ open class NethSquareButton @JvmOverloads constructor(
     defStyleAttr: Int = R.style.NethCTIButton
 ) : MaterialButton(ctx, attrs, defStyleAttr) {
 
+    fun recalculateIconPosition() {
+        iconGravity = ICON_GRAVITY_START
+        iconGravity = ICON_GRAVITY_TEXT_START
+    }
+
+    fun setSize(size: Int) {
+        setMeasuredDimension(size, size)
+        recalculateIconPosition()
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         val width = measuredWidth
         val height = measuredHeight
         val dimen = min(width, height)
-        setMeasuredDimension(dimen, dimen)
-        /* recalculate icon position */
-        iconGravity = ICON_GRAVITY_START
-        iconGravity = ICON_GRAVITY_TEXT_START
+        setSize(dimen)
     }
 }
