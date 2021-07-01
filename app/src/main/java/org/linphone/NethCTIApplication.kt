@@ -33,6 +33,10 @@ class NethCTIApplication : Application(), LifecycleObserver {
     fun onMoveToForeground() {
         // app moved to foreground
         backgroundWatcher.value = false
+        if(LinphoneService.isReady()) {
+            android.util.Log.d("LinphoneService", "rimuovo timer perchè in foreground");
+            LinphoneService.instance()?.deleteTimer()
+        }
         Log.d("WEDO", "App in foreground.")
     }
 
