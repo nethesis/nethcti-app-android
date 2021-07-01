@@ -12,10 +12,9 @@ import org.linphone.settings.LinphonePreferences
 class NethCTIApplication : Application(), LifecycleObserver {
 
     companion object {
-        @JvmStatic
-        private lateinit var _instance: NethCTIApplication
 
-        @JvmStatic
+        private lateinit var _instance: NethCTIApplication
+        
         val instance: NethCTIApplication
             get() {
                 return _instance
