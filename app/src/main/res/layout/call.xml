@@ -74,7 +74,7 @@
                             android:layout_margin="8dp"
                             android:layout_gravity="center">
 
-                            <include layout="@layout/contact_avatar_200" />
+                            <include layout="@layout/constact_avatar_anydp" />
 
                         </FrameLayout>
                         <!-- Active call details -->
