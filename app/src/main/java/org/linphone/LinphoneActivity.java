@@ -104,6 +104,7 @@ import org.linphone.core.ProxyConfig;
 import org.linphone.core.Reason;
 import org.linphone.core.RegistrationState;
 import org.linphone.core.tools.Log;
+import org.linphone.dashboard.DashboardFragment;
 import org.linphone.fragments.AboutFragment;
 import org.linphone.fragments.DialerFragment;
 import org.linphone.fragments.EmptyFragment;
@@ -209,6 +210,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
             if (LinphonePreferences.instance().getAccountCount() > 0) {
                 LinphonePreferences.instance().firstLaunchSuccessful();
             } else {
+                // Vado alla assistant perchè prima volta
                 startActivity(new Intent().setClass(this, AssistantActivity.class));
                 finish();
                 return;
@@ -233,7 +235,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
         mCurrentFragment = FragmentsAvailable.EMPTY;
         if (savedInstanceState == null) {
-            changeCurrentFragment(FragmentsAvailable.DIALER, getIntent().getExtras());
+            changeCurrentFragment(FragmentsAvailable.DASHBOARD, getIntent().getExtras());
         } else {
             mCurrentFragment =
                     (FragmentsAvailable) savedInstanceState.getSerializable("mCurrentFragment");
@@ -842,6 +844,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 break;
             case RECORDING_LIST:
                 mFragment = new RecordingsFragment();
+                break;
+            case DASHBOARD:
+                mFragment = new DashboardFragment();
                 break;
             default:
                 break;
