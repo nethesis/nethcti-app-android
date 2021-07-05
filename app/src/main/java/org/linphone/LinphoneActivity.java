@@ -1327,6 +1327,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
             case RECORDING_LIST:
                 hideTabBar(hideBottomBar);
                 break;
+            case DASHBOARD:
+                hideTabBar(true);
+                break;
         }
     }
 
@@ -1353,6 +1356,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
     public void displaySettings() {
         changeCurrentFragment(FragmentsAvailable.SETTINGS, null);
+    }
+
+    public void displayDashboard() {
+        changeCurrentFragment(FragmentsAvailable.DASHBOARD, null);
     }
 
     private void displayDialer() {
@@ -1703,6 +1710,11 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private void initSideMenu() {
         mSideMenu = findViewById(R.id.side_menu);
         mSideMenuItems = new ArrayList<>();
+
+        mSideMenuItems.add(
+                new MenuItem(
+                        getResources().getString(R.string.menu_dashboard),
+                        R.drawable.ic_dashboard));
         if (!getResources().getBoolean(R.bool.hide_settings_from_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
@@ -1755,6 +1767,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
                             LinphoneActivity.instance().displayAbout();
                         } else if (selectedItem.equals(getString(R.string.menu_assistant))) {
                             LinphoneActivity.instance().displayAssistant();
+                        } else if (selectedItem.equals(getString(R.string.menu_dashboard))) {
+                            hideTopBar();
+                            hideTabBar(true);
+                            LinphoneActivity.instance().displayDashboard();
                         }
                         if (mSideMenuItemList
                                 .getAdapter()
