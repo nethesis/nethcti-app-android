@@ -2,14 +2,15 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <TableRow
-        android:layout_weight="0"
+        android:layout_weight="1"
+        android:layout_gravity="center"
         android:gravity="center">
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -24,8 +25,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_gravity="center"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -39,14 +39,12 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_gravity="center"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
                 android:id="@+id/Digit3"
                 style="@style/NethCTIDialpadDigit"
-                android:layout_gravity="center"
                 android:soundEffectsEnabled="true"
                 android:text="3"
                 android:textSize="0sp"
@@ -55,11 +53,11 @@
     </TableRow>
 
     <TableRow
-        android:layout_weight="0"
+        android:layout_weight="1"
         android:gravity="center">
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -73,7 +71,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -87,7 +85,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -102,11 +100,11 @@
     </TableRow>
 
     <TableRow
-        android:layout_weight="0"
+        android:layout_weight="1"
         android:gravity="center">
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -120,7 +118,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -134,7 +132,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -149,11 +147,11 @@
     </TableRow>
 
     <TableRow
-        android:layout_weight="0"
+        android:layout_weight="1"
         android:gravity="center">
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -167,7 +165,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit
@@ -181,7 +179,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:padding="20dp">
 
             <org.linphone.views.Digit

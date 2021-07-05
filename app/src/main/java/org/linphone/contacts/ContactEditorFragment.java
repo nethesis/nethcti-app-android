@@ -46,6 +46,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -69,6 +70,7 @@ public class ContactEditorFragment extends Fragment {
     private ImageView mCancel, mDeleteContact, mOk;
     private ImageView mAddNumber, mAddSipAddress, mContactPicture;
     private LinearLayout mPhoneNumbersSection, mSipAddressesSection;
+    private RelativeLayout mAvatarLayout;
     private EditText mFirstName, mLastName, mOrganization;
     private LayoutInflater mInflater;
     private boolean mIsNewContact;
@@ -319,8 +321,8 @@ public class ContactEditorFragment extends Fragment {
         } else {
             ContactAvatar.displayAvatar("", mView.findViewById(R.id.avatar_layout));
         }
-
-        mContactPicture.setOnClickListener(
+        mAvatarLayout = mView.findViewById(R.id.avatar_layout);
+        mAvatarLayout.setOnClickListener(
                 new OnClickListener() {
                     @Override
                     public void onClick(View view) {

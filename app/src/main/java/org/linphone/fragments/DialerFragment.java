@@ -55,7 +55,7 @@ public class DialerFragment extends Fragment {
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialer, container, false);
+        final View view = inflater.inflate(R.layout.dialer, container, false);
 
         mAddress = view.findViewById(R.id.address);
         mAddress.setDialerFragment(this);
