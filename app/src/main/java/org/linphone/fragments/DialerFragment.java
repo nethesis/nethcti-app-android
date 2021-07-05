@@ -22,12 +22,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import com.google.android.material.button.MaterialButton;
 import it.nethesis.utils.CallTransferManager;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
@@ -36,9 +36,7 @@ import org.linphone.core.Core;
 import org.linphone.views.AddressAware;
 import org.linphone.views.AddressText;
 import org.linphone.views.CallButton;
-import org.linphone.views.Digit;
 import org.linphone.views.EraseButton;
-import org.linphone.views.NethSquareButton;
 
 public class DialerFragment extends Fragment {
     private static DialerFragment sInstance;
@@ -46,7 +44,7 @@ public class DialerFragment extends Fragment {
     private AddressAware mNumpad;
     private AddressText mAddress;
     private CallButton mCall;
-    private NethSquareButton mAddContact;
+    private MaterialButton mAddContact;
     private OnClickListener mAddContactListener, mCancelListener, mTransferListener;
 
     /** @return null if not ready yet */
@@ -146,34 +144,7 @@ public class DialerFragment extends Fragment {
 
         sInstance = this;
 
-        view.post(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        setButtonSize(view);
-                    }
-                });
-
         return view;
-    }
-
-    private void setButtonSize(View root) {
-        Digit digit = root.findViewById(R.id.Digit1);
-        if (digit != null) {
-            int digitSize = digit.getWidth();
-            resizeButtons(digitSize, mCall, mAddContact);
-            Log.d("WEDO", "DigitSize: " + digitSize);
-        }
-    }
-
-    private void resizeButtons(int size, NethSquareButton... buttons) {
-        for (NethSquareButton button : buttons) {
-            button.getLayoutParams().height = size;
-            button.getLayoutParams().width = size;
-            button.setSize(size);
-            button.requestLayout();
-            button.invalidate();
-        }
     }
 
     @Override

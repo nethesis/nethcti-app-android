@@ -70,7 +70,7 @@
             android:layout_height="match_parent"
             android:padding="12dp">
 
-            <org.linphone.views.NethSquareButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_contact"
                 style="@style/NethCTIButton"
                 app:icon="@drawable/ic_add_user" />

@@ -386,7 +386,7 @@
                         <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5">
+                            android:layout_weight="0.25">
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/dialer"
                                 style="@style/NethCTIButton"
@@ -397,12 +397,12 @@
                         <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5">
+                            android:layout_weight="0.75">
 
                             <ImageView
                                 android:id="@+id/hang_up"
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
+                                android:layout_width="@dimen/buttonSize"
+                                android:layout_height="@dimen/buttonSize"
                                 android:layout_gravity="center"
                                 android:src="@drawable/ic_close_call"/>
 
