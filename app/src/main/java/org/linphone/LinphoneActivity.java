@@ -1362,8 +1362,15 @@ public class LinphoneActivity extends LinphoneGenericActivity
         changeCurrentFragment(FragmentsAvailable.DASHBOARD, null);
     }
 
-    private void displayDialer() {
+    public void displayDialer() {
         changeCurrentFragment(FragmentsAvailable.DIALER, null);
+    }
+
+    public void displayHistory() {
+        changeCurrentFragment(FragmentsAvailable.HISTORY_LIST, null);
+
+        LinphoneManager.getLc().resetMissedCallsCount();
+        displayMissedCalls(0);
     }
 
     public void displayAccountSettings(int accountNumber) {
