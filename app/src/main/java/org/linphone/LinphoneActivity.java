@@ -1703,6 +1703,11 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private void initSideMenu() {
         mSideMenu = findViewById(R.id.side_menu);
         mSideMenuItems = new ArrayList<>();
+
+        mSideMenuItems.add(
+                new MenuItem(
+                        getResources().getString(R.string.menu_dashboard),
+                        R.drawable.ic_dashboard));
         if (!getResources().getBoolean(R.bool.hide_settings_from_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
