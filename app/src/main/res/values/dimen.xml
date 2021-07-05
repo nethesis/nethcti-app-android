@@ -3,6 +3,6 @@
     <dimen name="digitIconSize">32dp</dimen>
     <dimen name="digitSize">64dp</dimen>
     <dimen name="dialerMargin">0dp</dimen>
-    <dimen name="buttonIconSize">12dp</dimen>
+    <dimen name="buttonIconSize">16dp</dimen>
     <dimen name="buttonSize">32dp</dimen>
 </resources>
