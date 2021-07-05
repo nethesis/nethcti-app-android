@@ -502,7 +502,6 @@ public class CallActivity extends LinphoneGenericActivity
             mTransfer.setIconTint(ContextCompat.getColorStateList(this, R.color.neth_button_icon));
         }
 
-
         if (BluetoothManager.getInstance().isBluetoothHeadsetAvailable()) {
             try {
                 mAudioRoute.setVisibility(View.VISIBLE);
