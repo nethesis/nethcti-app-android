@@ -6,4 +6,5 @@
     <dimen name="buttonIconSize">32dp</dimen>
     <dimen name="buttonSize">64dp</dimen>
     <dimen name="avatarSize">200dp</dimen>
+    <dimen name="dashboardIconSize">64dp</dimen>
 </resources>

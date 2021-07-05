@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="8dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:padding="8dp"
+        android:elevation="16dp"
+        android:layout_height="70dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:weightSum="100">
+            android:gravity="center_vertical">
 
             <include
                 android:id="@+id/include"
@@ -27,22 +29,27 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="8dp"
-                android:layout_weight="50"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/icon"
+                app:layout_constraintEnd_toStartOf="@+id/call_state_icon"
                 app:layout_constraintStart_toEndOf="@+id/include"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    style="@style/NethCTITextMedium"
+                    android:id="@+id/contact_name_tw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nome chiamante" />
 
                 <TextView
+                    style="@style/NethCTITextRegular"
+                    android:id="@+id/contact_address_tw"
+                    android:textColor="@color/colorAccent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Indirizzo chiamante" />
@@ -50,27 +57,39 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/icon"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
+                android:id="@+id/call_state_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/content_description_call_direction"
+                android:scaleType="centerInside"
                 android:src="@drawable/ic_call_in"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/call"
+                app:layout_constraintEnd_toStartOf="@+id/contacts_container"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <org.linphone.views.CallButton
-                android:id="@+id/call"
-                style="@style/NethCTICallButton"
-                android:layout_width="30dp"
+            <FrameLayout
+                android:id="@+id/contacts_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                app:icon="@drawable/ic_phone"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/call"
+                    style="@style/NethCTICallButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:icon="@drawable/ic_phone"/>
+            </FrameLayout>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

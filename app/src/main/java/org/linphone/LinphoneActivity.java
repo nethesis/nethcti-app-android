@@ -847,6 +847,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 break;
             case DASHBOARD:
                 mFragment = new DashboardFragment();
+                hideTabBar(true);
                 break;
             default:
                 break;
