@@ -32,6 +32,9 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 import org.linphone.BuildConfig;
 import org.linphone.LinphoneActivity;
@@ -64,10 +67,18 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        SimpleDateFormat formatter =
+                new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
+        String dateString = formatter.format(new Date(remoteMessage.getSentTime()));
+
         if (BuildConfig.DEBUG) {
-            sendNotification(remoteMessage.getData().get("message")); // Only for testing.
+            sendNotification("sentTime: " + dateString); // Only for testing.
         }
 
+        android.util.Log.i(
+                "FirebaseMessaging",
+                "[Push Notification] MessageType: " + remoteMessage.getMessageType());
+        android.util.Log.i("FirebaseMessaging", "[Push Notification] SentTime: " + dateString);
         android.util.Log.i("FirebaseMessaging", "[Push Notification] Received");
 
         if (!LinphoneService.isReady()) {
