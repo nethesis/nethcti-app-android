@@ -115,7 +115,7 @@ public class CallActivity extends LinphoneGenericActivity
     private RelativeLayout mSideMenuContent;
     private LinearLayoutCompat mActiveCallHeader;
     private FrameLayout mAvatarLayout;
-    private ImageView mHangUp, mOptions, mConference, mConferenceStatus;
+    private ImageView mHangUp, mConference, mConferenceStatus;
     private MaterialButton mDialer,
             mVideo,
             mMicro,
@@ -416,15 +416,6 @@ public class CallActivity extends LinphoneGenericActivity
         mSpeaker = findViewById(R.id.speaker);
         mSpeaker.setOnClickListener(this);
 
-        mOptions = findViewById(R.id.options);
-        mOptions.setOnClickListener(this);
-        mOptions.setEnabled(false);
-
-        if (CallTransferManager.instance().ismCallTransfer()) {
-            mOptions.setImageDrawable(
-                    getResources().getDrawable(R.drawable.options_transfer_call, this.getTheme()));
-        }
-
         // BottonBar
         mHangUp = findViewById(R.id.hang_up);
         mHangUp.setOnClickListener(this);
@@ -496,8 +487,21 @@ public class CallActivity extends LinphoneGenericActivity
         mControlsLayout = findViewById(R.id.menu);
 
         if (!mIsTransferAllowed) {
-            mAddCall.setBackgroundResource(R.drawable.options_add_call);
+            mAddCall.setIconResource(R.drawable.ic_add_call);
         }
+
+        if (CallTransferManager.instance().ismCallTransfer()) {
+            mAddCall.setVisibility(View.GONE);
+            mTransfer.setBackgroundTintList(
+                    ContextCompat.getColorStateList(this, R.color.call_button));
+            mTransfer.setIconTint(ContextCompat.getColorStateList(this, R.color.call_button_icon));
+        } else {
+            mAddCall.setVisibility(View.VISIBLE);
+            mTransfer.setBackgroundTintList(
+                    ContextCompat.getColorStateList(this, R.color.neth_button));
+            mTransfer.setIconTint(ContextCompat.getColorStateList(this, R.color.neth_button_icon));
+        }
+
 
         if (BluetoothManager.getInstance().isBluetoothHeadsetAvailable()) {
             try {
@@ -697,20 +701,22 @@ public class CallActivity extends LinphoneGenericActivity
                         && LinphoneManager.getLc().getCallsNb() > confsize
                         && !LinphoneManager.getLc().soundResourcesLocked());
 
+        /* manage view during transfer */
         mAddCall.setEnabled(
                 LinphoneManager.getLc().getCallsNb() < LinphoneManager.getLc().getMaxCalls()
                         && !LinphoneManager.getLc().soundResourcesLocked());
-        mOptions.setEnabled(
-                !getResources().getBoolean(R.bool.disable_options_in_call)
-                        && (mAddCall.isEnabled() || mTransfer.isEnabled()));
 
-        Drawable d = null;
         if (CallTransferManager.instance().ismCallTransfer()) {
-            d = getResources().getDrawable(R.drawable.options_transfer_call, this.getTheme());
+            mAddCall.setVisibility(View.GONE);
+            mTransfer.setBackgroundTintList(
+                    ContextCompat.getColorStateList(this, R.color.call_button));
+            mTransfer.setIconTint(ContextCompat.getColorStateList(this, R.color.call_button_icon));
         } else {
-            d = getResources().getDrawable(R.drawable.options, this.getTheme());
+            mAddCall.setVisibility(View.VISIBLE);
+            mTransfer.setBackgroundTintList(
+                    ContextCompat.getColorStateList(this, R.color.neth_button));
+            mTransfer.setIconTint(ContextCompat.getColorStateList(this, R.color.neth_button_icon));
         }
-        mOptions.setImageDrawable(d);
 
         Call currentCall = LinphoneManager.getLc().getCurrentCall();
 
@@ -810,8 +816,6 @@ public class CallActivity extends LinphoneGenericActivity
                 mVideoCallFragment.switchCamera();
             }
         } else if (id == R.id.transfer) {
-            goBackToDialerAndDisplayTransferButton();
-        } else if (id == R.id.options) {
             if (CallTransferManager.instance().ismCallTransfer()) {
                 LinphoneManager.getLc()
                         .getCurrentCall()
@@ -823,7 +827,7 @@ public class CallActivity extends LinphoneGenericActivity
                 CallTransferManager.instance().setmCallTransfer(false);
                 CallTransferManager.instance().setmTransferCallId(null);
             } else {
-                hideOrDisplayCallOptions();
+                goBackToDialerAndDisplayTransferButton();
             }
         } else if (id == R.id.audio_route) {
             hideOrDisplayAudioRoutes();
@@ -1116,7 +1120,6 @@ public class CallActivity extends LinphoneGenericActivity
                                     mRecordCall.setVisibility(View.INVISIBLE);
                                     displayVideoCall(false);
                                     mNumpad.setVisibility(View.GONE);
-                                    mOptions.setSelected(false);
                                 }
                             },
                     SECONDS_BEFORE_HIDING_CONTROLS);
@@ -1169,7 +1172,6 @@ public class CallActivity extends LinphoneGenericActivity
     private void hideOrDisplayCallOptions() {
         // Hide mOptions
         if (mAddCall.getVisibility() == View.VISIBLE) {
-            mOptions.setSelected(false);
             if (mIsTransferAllowed) {
                 mTransfer.setVisibility(View.INVISIBLE);
             }
@@ -1189,7 +1191,6 @@ public class CallActivity extends LinphoneGenericActivity
                             ? View.VISIBLE
                             : View.GONE);
             mRecordCall.setVisibility(View.VISIBLE);
-            mOptions.setSelected(true);
             mTransfer.setEnabled(LinphoneManager.getLc().getCurrentCall() != null);
         }
     }
