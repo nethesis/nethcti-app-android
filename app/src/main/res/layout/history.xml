@@ -26,7 +26,7 @@
                     android:contentDescription="@string/content_description_all_contacts"
                     android:padding="15dp"
                     android:src="@drawable/ic_phone"
-                    android:tint="@color/neth_toggle_button_icon"/>
+                    android:tint="@color/neth_appbar_button_icon"/>
 
             </RelativeLayout>
 
@@ -43,7 +43,7 @@
                     android:gravity="center"
                     android:padding="15dp"
                     android:src="@drawable/ic_missed_call"
-                    android:tint="@color/neth_toggle_button_icon"/>
+                    android:tint="@color/neth_appbar_button_icon"/>
 
             </RelativeLayout>
 
