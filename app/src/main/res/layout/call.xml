@@ -136,7 +136,7 @@
                                     android:id="@+id/transfer"
                                     android:layout_gravity="center"
                                     style="@style/NethCTIButton"
-                                    app:icon="@drawable/ic_transfer_call" />
+                                    app:icon="@drawable/ic_phone_in" />
                             </FrameLayout>
 
                         </androidx.appcompat.widget.LinearLayoutCompat>

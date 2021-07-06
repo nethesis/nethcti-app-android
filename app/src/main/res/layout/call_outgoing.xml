@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/topLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    android:layout_height="match_parent">
 
     <fragment
         android:id="@+id/status"
@@ -18,7 +17,8 @@
     <FrameLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
         app:layout_constraintTop_toBottomOf="@id/status">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:padding="12dp"
             android:text="@string/outgoing_call" />
 
     </FrameLayout>
@@ -42,15 +41,32 @@
         app:layout_constraintTop_toBottomOf="@id/top_bar"
         android:padding="10dp">
 
+        <FrameLayout
+            android:id="@+id/avatar_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <include
+                layout="@layout/constact_avatar_anydp"/>
+
+        </FrameLayout>
+
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/contact_name"
-            style="@style/NethCTITextRegular"
+            style="@style/NethCTIContactName"
             android:textColor="@color/primaryTextColorLight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="8dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="4dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/avatar_layout"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/contact_number"
@@ -61,32 +77,16 @@
             android:gravity="center"
             android:ellipsize="end"
             android:maxLines="1"
-            android:padding="8dp"
+            android:padding="4dp"
             app:layout_constraintTop_toBottomOf="@id/contact_name"/>
 
-        <FrameLayout
-            android:id="@+id/avatar_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/contact_number"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
 
-            <include
-                layout="@layout/constact_avatar_anydp"/>
-
-        </FrameLayout>
-
+        <TextureView
+            android:id="@+id/videoSurface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextureView
-        android:id="@+id/videoSurface"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/menu"
