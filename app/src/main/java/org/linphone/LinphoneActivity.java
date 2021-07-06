@@ -104,6 +104,7 @@ import org.linphone.core.ProxyConfig;
 import org.linphone.core.Reason;
 import org.linphone.core.RegistrationState;
 import org.linphone.core.tools.Log;
+import org.linphone.dashboard.DashboardFragment;
 import org.linphone.fragments.AboutFragment;
 import org.linphone.fragments.DialerFragment;
 import org.linphone.fragments.EmptyFragment;
@@ -204,11 +205,12 @@ public class LinphoneActivity extends LinphoneGenericActivity
             return;
         } else if (savedInstanceState == null
                 && (useFirstLoginActivity
-                        && LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null
-                        && LinphonePreferences.instance().isFirstLaunch())) {
+                        && LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null)) {
+            LinphonePreferences.instance().firstLaunchSuccessful();
             if (LinphonePreferences.instance().getAccountCount() > 0) {
-                LinphonePreferences.instance().firstLaunchSuccessful();
+
             } else {
+                // Vado alla assistant perchè prima volta
                 startActivity(new Intent().setClass(this, AssistantActivity.class));
                 finish();
                 return;
@@ -233,7 +235,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
         mCurrentFragment = FragmentsAvailable.EMPTY;
         if (savedInstanceState == null) {
-            changeCurrentFragment(FragmentsAvailable.DIALER, getIntent().getExtras());
+            changeCurrentFragment(FragmentsAvailable.DASHBOARD, getIntent().getExtras());
         } else {
             mCurrentFragment =
                     (FragmentsAvailable) savedInstanceState.getSerializable("mCurrentFragment");
@@ -843,6 +845,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
             case RECORDING_LIST:
                 mFragment = new RecordingsFragment();
                 break;
+            case DASHBOARD:
+                mFragment = new DashboardFragment();
+                hideTabBar(true);
+                break;
             default:
                 break;
         }
@@ -1206,7 +1212,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 popBackStack();
             } else {
                 hideTopBar();
-                displayDialer();
+                displayDashboard();
             }
         }
     }
@@ -1321,6 +1327,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
             case RECORDING_LIST:
                 hideTabBar(hideBottomBar);
                 break;
+            case DASHBOARD:
+                hideTabBar(true);
+                break;
         }
     }
 
@@ -1349,8 +1358,19 @@ public class LinphoneActivity extends LinphoneGenericActivity
         changeCurrentFragment(FragmentsAvailable.SETTINGS, null);
     }
 
-    private void displayDialer() {
+    public void displayDashboard() {
+        changeCurrentFragment(FragmentsAvailable.DASHBOARD, null);
+    }
+
+    public void displayDialer() {
         changeCurrentFragment(FragmentsAvailable.DIALER, null);
+    }
+
+    public void displayHistory() {
+        changeCurrentFragment(FragmentsAvailable.HISTORY_LIST, null);
+
+        LinphoneManager.getLc().resetMissedCallsCount();
+        displayMissedCalls(0);
     }
 
     public void displayAccountSettings(int accountNumber) {
@@ -1619,6 +1639,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 case CONTACTS_LIST:
                 case HISTORY_LIST:
                 case CHAT_LIST:
+                case DASHBOARD:
                     if (LinphoneUtils.onKeyBackGoHome(this, keyCode, event)) {
                         return true;
                     }
@@ -1636,7 +1657,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 case ACCOUNT_SETTINGS:
                 case ABOUT:
                     hideTopBar(); // just in case
-                    LinphoneActivity.instance().goToDialerFragment();
+                    LinphoneActivity.instance().displayDashboard();
                     return true;
                 default:
                     break;
@@ -1697,6 +1718,11 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private void initSideMenu() {
         mSideMenu = findViewById(R.id.side_menu);
         mSideMenuItems = new ArrayList<>();
+
+        mSideMenuItems.add(
+                new MenuItem(
+                        getResources().getString(R.string.menu_dashboard),
+                        R.drawable.ic_dashboard));
         if (!getResources().getBoolean(R.bool.hide_settings_from_side_menu)) {
             mSideMenuItems.add(
                     new MenuItem(
@@ -1749,6 +1775,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
                             LinphoneActivity.instance().displayAbout();
                         } else if (selectedItem.equals(getString(R.string.menu_assistant))) {
                             LinphoneActivity.instance().displayAssistant();
+                        } else if (selectedItem.equals(getString(R.string.menu_dashboard))) {
+                            hideTopBar();
+                            hideTabBar(true);
+                            LinphoneActivity.instance().displayDashboard();
                         }
                         if (mSideMenuItemList
                                 .getAdapter()
