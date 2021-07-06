@@ -68,8 +68,8 @@
 
                 <ImageView
                     android:id="@+id/call_state_icon"
-                    android:layout_width="@dimen/buttonIconSize"
-                    android:layout_height="@dimen/buttonIconSize"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/content_description_call_direction"
                     android:scaleType="centerInside"
@@ -91,7 +91,10 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/call"
                     style="@style/NethCTICallButton"
-                    app:icon="@drawable/ic_phone"/>
+                    app:icon="@drawable/ic_phone"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:iconSize="16dp"/>
             </FrameLayout>
 
 
