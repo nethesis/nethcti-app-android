@@ -205,10 +205,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
             return;
         } else if (savedInstanceState == null
                 && (useFirstLoginActivity
-                        && LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null
-                        && LinphonePreferences.instance().isFirstLaunch())) {
+                        && LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null)) {
+            LinphonePreferences.instance().firstLaunchSuccessful();
             if (LinphonePreferences.instance().getAccountCount() > 0) {
-                LinphonePreferences.instance().firstLaunchSuccessful();
+
             } else {
                 // Vado alla assistant perchè prima volta
                 startActivity(new Intent().setClass(this, AssistantActivity.class));
@@ -1639,6 +1639,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 case CONTACTS_LIST:
                 case HISTORY_LIST:
                 case CHAT_LIST:
+                case DASHBOARD:
                     if (LinphoneUtils.onKeyBackGoHome(this, keyCode, event)) {
                         return true;
                     }

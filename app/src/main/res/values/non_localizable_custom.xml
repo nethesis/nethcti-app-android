@@ -70,7 +70,7 @@
     <bool name="hide_linphone_accounts_in_assistant">true</bool>
     <bool name="hide_generic_accounts_in_assistant">false</bool>
     <bool name="hide_remote_provisioning_in_assistant">true</bool>
-    <bool name="display_account_assistant_at_first_start">false</bool>
+    <bool name="display_account_assistant_at_first_start">true</bool>
 
     <!-- Remote provisioning -->
     <bool name="display_sms_remote_provisioning_activity">false</bool>
