@@ -6,10 +6,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import com.google.android.material.button.MaterialButton;
+import java.util.Arrays;
+import java.util.List;
 import org.linphone.LinphoneActivity;
+import org.linphone.LinphoneManager;
 import org.linphone.R;
+import org.linphone.contacts.ContactsManager;
+import org.linphone.contacts.LinphoneContact;
+import org.linphone.core.Address;
+import org.linphone.core.Call;
+import org.linphone.core.CallLog;
+import org.linphone.utils.LinphoneUtils;
+import org.linphone.views.ContactAvatar;
 
 public class DashboardFragment extends Fragment {
     @Nullable
@@ -25,6 +37,67 @@ public class DashboardFragment extends Fragment {
         setButtonListener((MaterialButton) view.findViewById(R.id.setting_btn));
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        View card1 = view.findViewById(R.id.card1);
+        View card2 = view.findViewById(R.id.card2);
+        List<CallLog> calls = Arrays.asList(LinphoneManager.getLc().getCallLogs());
+        /* Manage card visibility */
+        switch (calls.size()) {
+            case 0:
+                card1.setVisibility(View.GONE);
+                card2.setVisibility(View.GONE);
+                break;
+            case 1:
+                card1.setVisibility(View.VISIBLE);
+                card2.setVisibility(View.GONE);
+                updateCardWithContactInfo(card1, calls.get(0));
+                break;
+            default:
+                card1.setVisibility(View.VISIBLE);
+                card2.setVisibility(View.VISIBLE);
+                updateCardWithContactInfo(card1, calls.get(0));
+                updateCardWithContactInfo(card2, calls.get(1));
+        }
+    }
+
+    private void updateCardWithContactInfo(View card1, CallLog callLog) {
+        View avatar = card1.findViewById(R.id.avatarImg);
+        AppCompatTextView contactName = card1.findViewById(R.id.contact_name_tw);
+        AppCompatTextView contactAddress = card1.findViewById(R.id.contact_address_tw);
+        ImageView callStateIcon = card1.findViewById(R.id.call_state_icon);
+
+        Address address;
+        if (callLog.getDir() == Call.Dir.Incoming) {
+            address = callLog.getFromAddress();
+            if (callLog.getStatus() == Call.Status.Missed) {
+                callStateIcon.setImageResource(R.drawable.ic_call_missed);
+            } else {
+                callStateIcon.setImageResource(R.drawable.ic_call_in);
+            }
+        } else {
+            address = callLog.getToAddress();
+            callStateIcon.setImageResource(R.drawable.ic_call_out);
+        }
+        LinphoneContact c = ContactsManager.getInstance().findContactFromAddress(address);
+        String displayName = null;
+        final String sipUri = (address != null) ? address.asString() : "";
+
+        if (c != null) {
+            displayName = c.getFullName();
+            ContactAvatar.displayAvatar(c, avatar);
+        }
+        if (displayName == null) {
+            contactName.setText(LinphoneUtils.getAddressDisplayName(sipUri));
+            ContactAvatar.displayAvatar(LinphoneUtils.getAddressDisplayName(sipUri), avatar);
+        } else {
+            contactName.setText(displayName);
+            ContactAvatar.displayAvatar(displayName, avatar);
+        }
+        contactAddress.setText(LinphoneUtils.getDisplayableAddress(address));
     }
 
     @SuppressLint("NonConstantResourceId")

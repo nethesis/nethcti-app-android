@@ -142,10 +142,12 @@
 
             <include
                 layout="@layout/dashboard_card"
+                android:id="@+id/card1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <include
                 layout="@layout/dashboard_card"
+                android:id="@+id/card2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
