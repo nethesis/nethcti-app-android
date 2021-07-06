@@ -1212,7 +1212,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 popBackStack();
             } else {
                 hideTopBar();
-                displayDialer();
+                displayDashboard();
             }
         }
     }
@@ -1657,7 +1657,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 case ACCOUNT_SETTINGS:
                 case ABOUT:
                     hideTopBar(); // just in case
-                    LinphoneActivity.instance().goToDialerFragment();
+                    LinphoneActivity.instance().displayDashboard();
                     return true;
                 default:
                     break;
