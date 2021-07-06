@@ -20,6 +20,7 @@ import org.linphone.contacts.LinphoneContact;
 import org.linphone.core.Address;
 import org.linphone.core.Call;
 import org.linphone.core.CallLog;
+import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.views.ContactAvatar;
 
@@ -40,8 +41,9 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onResume() {
+        super.onResume();
+        View view = getView();
         View card1 = view.findViewById(R.id.card1);
         View card2 = view.findViewById(R.id.card2);
         List<CallLog> calls = Arrays.asList(LinphoneManager.getLc().getCallLogs());
@@ -50,17 +52,52 @@ public class DashboardFragment extends Fragment {
             case 0:
                 card1.setVisibility(View.GONE);
                 card2.setVisibility(View.GONE);
+                setCallButtonListener(card1, null);
+                setCallButtonListener(card2, null);
                 break;
             case 1:
                 card1.setVisibility(View.VISIBLE);
                 card2.setVisibility(View.GONE);
                 updateCardWithContactInfo(card1, calls.get(0));
+                setCallButtonListener(card1, calls.get(0));
+                setCallButtonListener(card2, null);
                 break;
             default:
                 card1.setVisibility(View.VISIBLE);
                 card2.setVisibility(View.VISIBLE);
                 updateCardWithContactInfo(card1, calls.get(0));
                 updateCardWithContactInfo(card2, calls.get(1));
+                setCallButtonListener(card1, calls.get(0));
+                setCallButtonListener(card2, calls.get(1));
+        }
+    }
+
+    private void setCallButtonListener(View card, final CallLog call) {
+        if (call == null) {
+            card.findViewById(R.id.call).setOnClickListener(null);
+        } else {
+            card.findViewById(R.id.call)
+                    .setOnClickListener(
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Address address;
+                                    if (call.getDir() == Call.Dir.Incoming) {
+                                        address = call.getFromAddress();
+                                    } else {
+                                        address = call.getToAddress();
+                                    }
+                                    int accountIndex =
+                                            LinphonePreferences.instance().getDefaultAccountIndex();
+                                    address.setDomain(
+                                            LinphonePreferences.instance()
+                                                    .getAccountDomain(accountIndex));
+                                    LinphoneActivity.instance()
+                                            .setAddresGoToDialerAndCall(
+                                                    address.asStringUriOnly(),
+                                                    address.getDisplayName());
+                                }
+                            });
         }
     }
 
