@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
 import android.util.Log;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.installations.FirebaseInstallations;
 import com.google.gson.GsonBuilder;
+
 import it.nethesis.models.notificatore.RegisterToken;
 import it.nethesis.models.notificatore.RegisterTokenReponse;
 import it.nethesis.webservices.NotificatoreRestAPI;
@@ -15,7 +16,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
+
 import org.linphone.R;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,15 +60,15 @@ public class FCMNotification {
      * @param userId the userId
      */
     public static void updateRegistrationInfo(Context context, String userId) {
-        String regId = FirebaseInstanceId.getInstance().getToken();
-
-        if ((regId != null && !regId.equals(""))) {
-            // User logged successfully
-            Log.d(TAG, "fcm updateRegistrationInfo " + userId + " - " + regId);
-
-            Intent intent = new Intent(context, RegistrationIntentService.class);
-            context.startService(intent);
-        }
+        FirebaseInstallations.getInstance().getToken(true).addOnSuccessListener(installationTokenResult -> {
+            String regId = installationTokenResult.getToken();
+            if (!regId.equals("")) {
+                // User logged successfully
+                Log.d(TAG, "fcm updateRegistrationInfo " + userId + " - " + regId);
+                Intent intent = new Intent(context, RegistrationIntentService.class);
+                context.startService(intent);
+            }
+        });
     }
 
     public static String getNotificatoreUserIdentifier(String netUsername, String domain) {
@@ -79,41 +82,44 @@ public class FCMNotification {
             String notificatoreAppKey,
             String language) {
         try {
+            FirebaseInstallations.getInstance().getToken(true).addOnSuccessListener(installationTokenResult -> {
+                String regId = installationTokenResult.getToken();
+                if (!regId.equals("")) {
 
-            Retrofit retrofit =
-                    new Retrofit.Builder()
-                            .baseUrl(notificatoreUrl)
-                            .addConverterFactory(
-                                    GsonConverterFactory.create(
-                                            new GsonBuilder().serializeNulls().create()))
-                            .build();
+                    Retrofit retrofit =
+                            new Retrofit.Builder()
+                                    .baseUrl(notificatoreUrl)
+                                    .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().serializeNulls().create()))
+                                    .build();
 
-            NotificatoreRestAPI restAPIClass = retrofit.create(NotificatoreRestAPI.class);
+                    NotificatoreRestAPI restAPIClass = retrofit.create(NotificatoreRestAPI.class);
 
-            RegisterToken registerData = new RegisterToken();
-            registerData.setRegID(FirebaseInstanceId.getInstance().getToken());
-            registerData.setOs("2");
-            registerData.setUser(user);
-            registerData.setLanguage(language);
-            registerData.setDevToken(deviceId);
+                    RegisterToken registerData = new RegisterToken();
+                    registerData.setRegID(regId);
+                    registerData.setOs("2");
+                    registerData.setUser(user);
+                    registerData.setLanguage(language);
+                    registerData.setDevToken(deviceId);
 
-            Call<RegisterTokenReponse> call =
-                    restAPIClass.registerToken(notificatoreAppKey, registerData);
-            call.enqueue(
-                    new Callback<RegisterTokenReponse>() {
-                        @Override
-                        public void onResponse(
-                                Call<RegisterTokenReponse> call,
-                                Response<RegisterTokenReponse> response) {
-                            Log.i(TAG, "FCM Token registered");
-                        }
+                    Call<RegisterTokenReponse> call =
+                            restAPIClass.registerToken(notificatoreAppKey, registerData);
+                    call.enqueue(
+                            new Callback<RegisterTokenReponse>() {
+                                @Override
+                                public void onResponse(
+                                        Call<RegisterTokenReponse> call,
+                                        Response<RegisterTokenReponse> response) {
+                                    Log.i(TAG, "FCM Token registered");
+                                }
 
-                        @Override
-                        public void onFailure(
-                                Call<RegisterTokenReponse> call, Throwable exception) {
-                            Log.e(TAG, "FCM Error registering Token");
-                        }
-                    });
+                                @Override
+                                public void onFailure(
+                                        Call<RegisterTokenReponse> call, Throwable exception) {
+                                    Log.e(TAG, "FCM Error registering Token");
+                                }
+                            });
+                }
+            });
         } catch (Exception ex) {
             Log.e(TAG, "FCM Exception", ex);
         }
