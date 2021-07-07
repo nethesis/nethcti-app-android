@@ -76,7 +76,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 4179
-        versionName '1.3.0'
+        versionName '1.2.3'
         applicationId getPackageName()
         multiDexEnabled true
         manifestPlaceholders = [linphone_address_mime_type: "vnd.android.cursor.item/vnd." + getPackageName() + ".provider.sip_address"]
@@ -166,7 +166,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
 
     /*
      * We use retrofit to do calls to nethctiapp web services.
