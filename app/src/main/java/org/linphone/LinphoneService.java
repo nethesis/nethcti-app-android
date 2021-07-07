@@ -87,6 +87,7 @@ public final class LinphoneService extends Service {
     private String mIncomingReceivedActivityName;
     private Class<? extends Activity> mIncomingReceivedActivity = CallIncomingActivity.class;
     private Boolean startFromNotif = false;
+    private Boolean finishAndRemoveTask = false;
 
     private LoggingServiceListener mJavaLoggingService =
             new LoggingServiceListener() {
@@ -232,6 +233,8 @@ public final class LinphoneService extends Service {
                                         /* destroy service */
                                         if (state == State.Released) {
                                             if (LinphoneManager.getLc().getCalls().length <= 0) {
+                                                boolean alwaysOpenServiceFlag =
+                                                        LinphonePreferences.instance().getServiceNotificationVisibility();
                                                 boolean status =
                                                         call.getCallLog().getStatus()
                                                                         == Call.Status.Missed
@@ -243,7 +246,8 @@ public final class LinphoneService extends Service {
                                                                         == Call.Status.Success;
                                                 if (status
                                                         && call.getDir() == Call.Dir.Incoming
-                                                        && startFromNotif) {
+                                                        && startFromNotif && !alwaysOpenServiceFlag) {
+                                                    finishAndRemoveTask = true;
                                                     stopSelf();
                                                 }
                                             }
@@ -493,7 +497,11 @@ public final class LinphoneService extends Service {
         // This will prevent the app from crashing if the service gets killed in background mode
         if (LinphoneActivity.isInstanciated()) {
             Log.w("[Service] Service is getting destroyed, finish LinphoneActivity");
-            LinphoneActivity.instance().finish();
+            if(finishAndRemoveTask) {
+                LinphoneActivity.instance().finishAndRemoveTask();
+            } else {
+                LinphoneActivity.instance().finish();
+            }
         }
 
         if (LinphonePreferences.instance().useJavaLogger()) {

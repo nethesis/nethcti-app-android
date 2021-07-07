@@ -140,7 +140,6 @@
             android:noHistory="true"
             android:showWhenLocked="true"
             android:turnScreenOn="true"
-            android:excludeFromRecents="true"
             android:theme="@style/LinphoneStyleLight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -150,7 +149,6 @@
             android:name=".call.CallOutgoingActivity"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:excludeFromRecents="true"
             android:theme="@style/LinphoneStyleLight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -161,7 +159,6 @@
             android:launchMode="singleTop"
             android:noHistory="true"
             android:showWhenLocked="true"
-            android:excludeFromRecents="true"
             android:theme="@style/LinphoneStyleLight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

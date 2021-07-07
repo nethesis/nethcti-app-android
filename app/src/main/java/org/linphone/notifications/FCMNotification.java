@@ -19,6 +19,8 @@ import java.util.Locale;
 
 import org.linphone.R;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,11 +87,15 @@ public class FCMNotification {
             FirebaseInstallations.getInstance().getToken(true).addOnSuccessListener(installationTokenResult -> {
                 String regId = installationTokenResult.getToken();
                 if (!regId.equals("")) {
-
+                    OkHttpClient.Builder client = new OkHttpClient.Builder();
+                    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                    loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    client.addInterceptor(loggingInterceptor);
                     Retrofit retrofit =
                             new Retrofit.Builder()
                                     .baseUrl(notificatoreUrl)
                                     .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().serializeNulls().create()))
+                                    .client(client.build())
                                     .build();
 
                     NotificatoreRestAPI restAPIClass = retrofit.create(NotificatoreRestAPI.class);
