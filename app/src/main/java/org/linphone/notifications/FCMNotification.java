@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
 import android.util.Log;
-import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.GsonBuilder;
 
 import it.nethesis.models.notificatore.RegisterToken;
@@ -62,8 +62,8 @@ public class FCMNotification {
      * @param userId the userId
      */
     public static void updateRegistrationInfo(Context context, String userId) {
-        FirebaseInstallations.getInstance().getToken(true).addOnSuccessListener(installationTokenResult -> {
-            String regId = installationTokenResult.getToken();
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(installationTokenResult -> {
+            String regId = installationTokenResult;
             if (!regId.equals("")) {
                 // User logged successfully
                 Log.d(TAG, "fcm updateRegistrationInfo " + userId + " - " + regId);
@@ -84,8 +84,8 @@ public class FCMNotification {
             String notificatoreAppKey,
             String language) {
         try {
-            FirebaseInstallations.getInstance().getToken(true).addOnSuccessListener(installationTokenResult -> {
-                String regId = installationTokenResult.getToken();
+            FirebaseMessaging.getInstance().getToken().addOnSuccessListener(installationTokenResult -> {
+                String regId = installationTokenResult;
                 if (!regId.equals("")) {
                     OkHttpClient.Builder client = new OkHttpClient.Builder();
                     HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
