@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.app.Service;
 import android.content.Intent;
@@ -31,8 +32,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.view.WindowManager;
-import it.nethesis.utils.AppBackgroundWatcher;
-import java.util.ArrayList;
+
 import org.linphone.call.CallIncomingActivity;
 import org.linphone.contacts.ContactsManager;
 import org.linphone.core.Call;
@@ -56,6 +56,11 @@ import org.linphone.views.LinphoneGL2JNIViewOverlay;
 import org.linphone.views.LinphoneOverlay;
 import org.linphone.views.LinphoneTextureViewOverlay;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import it.nethesis.utils.AppBackgroundWatcher;
+
 /**
  * Linphone service, reacting to Incoming calls, ...<br>
  *
@@ -78,7 +83,7 @@ public final class LinphoneService extends Service {
     public final Handler handler = new Handler();
     public final Handler nethCallHandler = new Handler();
 
-    private boolean mTestDelayElapsed = true;
+    private final boolean mTestDelayElapsed = true;
     private CoreListenerStub mListener;
     private WindowManager mWindowManager;
     private LinphoneOverlay mOverlay;
@@ -88,7 +93,7 @@ public final class LinphoneService extends Service {
     private Class<? extends Activity> mIncomingReceivedActivity = CallIncomingActivity.class;
     private Boolean startFromNotif = false;
 
-    private LoggingServiceListener mJavaLoggingService =
+    private final LoggingServiceListener mJavaLoggingService =
             new LoggingServiceListener() {
                 @Override
                 public void onLogMessageWritten(
@@ -232,18 +237,30 @@ public final class LinphoneService extends Service {
                                         /* destroy service */
                                         if (state == State.Released) {
                                             if (LinphoneManager.getLc().getCalls().length <= 0) {
+                                                boolean alwaysOpenServiceFlag =
+                                                        LinphonePreferences.instance().getServiceNotificationVisibility();
                                                 boolean status =
                                                         call.getCallLog().getStatus()
-                                                                        == Call.Status.Missed
+                                                                == Call.Status.Missed
                                                                 || call.getCallLog().getStatus()
-                                                                        == Call.Status.Aborted
+                                                                == Call.Status.Aborted
                                                                 || call.getCallLog().getStatus()
-                                                                        == Call.Status.Declined
+                                                                == Call.Status.Declined
                                                                 || call.getCallLog().getStatus()
-                                                                        == Call.Status.Success;
+                                                                == Call.Status.Success;
                                                 if (status
                                                         && call.getDir() == Call.Dir.Incoming
-                                                        && startFromNotif) {
+                                                        && startFromNotif && !alwaysOpenServiceFlag) {
+                                                    try {
+                                                        ActivityManager am = (ActivityManager) getApplicationContext().getSystemService(Activity.ACTIVITY_SERVICE);
+                                                        List<ActivityManager.AppTask> list = am.getAppTasks();
+                                                        for (ActivityManager.AppTask task : list) {
+                                                            task.finishAndRemoveTask();
+                                                        }
+                                                    } catch (Exception ex) {
+                                                        android.util.Log.w("LinphoneService", ex.getLocalizedMessage());
+                                                    }
+
                                                     stopSelf();
                                                 }
                                             }
@@ -277,7 +294,7 @@ public final class LinphoneService extends Service {
 
         if (!Version.sdkAboveOrEqual(Version.API26_O_80)
                 || (ContactsManager.getInstance() != null
-                        && ContactsManager.getInstance().hasReadContactsAccess())) {
+                && ContactsManager.getInstance().hasReadContactsAccess())) {
             getContentResolver()
                     .registerContentObserver(
                             ContactsContract.Contacts.CONTENT_URI,
@@ -521,7 +538,7 @@ public final class LinphoneService extends Service {
             LinphoneActivity.instance().startActivity(intent);
         } else {
             // This flag is required to start an Activity from a Service context
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         }
     }
@@ -572,7 +589,8 @@ public final class LinphoneService extends Service {
         }
 
         @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {}
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+        }
 
         @Override
         public synchronized void onActivityDestroyed(Activity activity) {
