@@ -1079,6 +1079,9 @@ public class CallActivity extends LinphoneGenericActivity
             mCallInfo.setVisibility(View.VISIBLE);
             mAvatarLayout.setVisibility(View.GONE);
             mCallsList.setVisibility(View.VISIBLE);
+            mRecordCall.setVisibility(View.VISIBLE);
+            mAddCall.setVisibility(View.VISIBLE);
+            mTransfer.setVisibility(View.VISIBLE);
             if (mCameraNumber > 1) {
                 mSwitchCamera.setVisibility(View.VISIBLE);
             }
@@ -1088,6 +1091,9 @@ public class CallActivity extends LinphoneGenericActivity
             mActiveCallHeader.setVisibility(View.GONE);
             mSwitchCamera.setVisibility(View.GONE);
             mCallsList.setVisibility(View.GONE);
+            mRecordCall.setVisibility(View.GONE);
+            mAddCall.setVisibility(View.GONE);
+            mTransfer.setVisibility(View.GONE);
         }
     }
 
