@@ -120,8 +120,9 @@ public class ContactAvatar {
                 holder.generatedAvatar.setVisibility(View.VISIBLE);
                 holder.avatar.setVisibility(View.VISIBLE);
             } else {
-                holder.generatedAvatar.setVisibility(View.GONE);
-                holder.avatar.setVisibility(View.GONE);
+                holder.generatedAvatar.setText("");
+                holder.generatedAvatar.setVisibility(View.VISIBLE);
+                holder.avatar.setVisibility(View.VISIBLE);
             }
         }
         holder.securityLevel.setVisibility(View.GONE);
