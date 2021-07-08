@@ -28,17 +28,6 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/main_account_status"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:padding="5dp"
-        android:src="@drawable/led_connected"
-        android:contentDescription="@string/neth_account_status_led"/>
-
-    <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"

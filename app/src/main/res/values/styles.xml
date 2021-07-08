@@ -173,7 +173,7 @@
     </style>
 
     <style name="NethCTIAccountHeaderSecondaryText" parent="@style/NethCTITextLight">
-        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">10sp</item>
     </style>
