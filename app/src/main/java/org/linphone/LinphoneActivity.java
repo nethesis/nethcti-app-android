@@ -1836,14 +1836,12 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
     private void displayMainAccount() {
         mDefaultAccount.setVisibility(View.VISIBLE);
-        ImageView status = mDefaultAccount.findViewById(R.id.main_account_status);
         TextView address = mDefaultAccount.findViewById(R.id.main_account_address);
         TextView displayName = mDefaultAccount.findViewById(R.id.main_account_display_name);
 
         ProxyConfig proxy = LinphoneManager.getLc().getDefaultProxyConfig();
         if (proxy == null) {
             displayName.setText(getString(R.string.no_account));
-            status.setVisibility(View.GONE);
             address.setText("");
             mStatusFragment.resetAccountStatus();
             mDefaultAccount.setOnClickListener(null);
@@ -1860,20 +1858,15 @@ public class LinphoneActivity extends LinphoneGenericActivity
             sideMenuLogin();
             address.setText(proxy.getIdentityAddress().asStringUriOnly());
             displayName.setText(LinphoneUtils.getAddressDisplayName(proxy.getIdentityAddress()));
-            status.setImageResource(getStatusIconResource(proxy.getState()));
-            status.setVisibility(View.VISIBLE);
 
             if (!getResources().getBoolean(R.bool.disable_accounts_settings_from_side_menu)) {
                 mDefaultAccount.setOnClickListener(
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                LinphoneActivity.instance()
-                                        .displayAccountSettings(
-                                                LinphonePreferences.instance()
-                                                        .getDefaultAccountIndex());
-                                openOrCloseSideMenu(false);
-                            }
+                        view -> {
+                            LinphoneActivity.instance()
+                                    .displayAccountSettings(
+                                            LinphonePreferences.instance()
+                                                    .getDefaultAccountIndex());
+                            openOrCloseSideMenu(false);
                         });
             }
         }
