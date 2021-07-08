@@ -251,10 +251,14 @@ public final class LinphoneService extends Service {
                                                 if (status
                                                         && call.getDir() == Call.Dir.Incoming
                                                         && startFromNotif && !alwaysOpenServiceFlag) {
-                                                    ActivityManager am = (ActivityManager) getApplicationContext().getSystemService(Activity.ACTIVITY_SERVICE);
-                                                    List<ActivityManager.AppTask> list = am.getAppTasks();
-                                                    for (ActivityManager.AppTask task : list) {
-                                                        task.finishAndRemoveTask();
+                                                    try {
+                                                        ActivityManager am = (ActivityManager) getApplicationContext().getSystemService(Activity.ACTIVITY_SERVICE);
+                                                        List<ActivityManager.AppTask> list = am.getAppTasks();
+                                                        for (ActivityManager.AppTask task : list) {
+                                                            task.finishAndRemoveTask();
+                                                        }
+                                                    } catch (Exception ex) {
+                                                        android.util.Log.w("LinphoneService", ex.getLocalizedMessage());
                                                     }
 
                                                     stopSelf();
