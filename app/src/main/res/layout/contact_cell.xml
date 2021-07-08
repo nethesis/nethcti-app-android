@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"
@@ -37,7 +38,8 @@
             android:id="@+id/avatar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent">
 
             <include layout="@layout/contact_avatar" />
 
@@ -47,14 +49,14 @@
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
             android:button="@drawable/checkbox"
             android:clickable="false"
             android:contentDescription="@string/content_description_delete"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:visibility="gone" />
+            android:paddingHorizontal="5dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
             android:id="@+id/friendStatus"
@@ -66,27 +68,34 @@
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
             android:src="@drawable/led_connected"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
             android:id="@+id/friendLinphone"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:layout_toStartOf="@id/delete"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:src="@drawable/linphone_user"
-            android:visibility="gone" />
+            android:src="@drawable/ic_nethesis_24"
+            app:tint="@color/colorAccentOverlay"
+            app:layout_constraintEnd_toStartOf="@+id/delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:layout_toStartOf="@id/friendLinphone"
-            android:layout_toEndOf="@id/avatar">
+            app:layout_constraintStart_toEndOf="@id/avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/name"
@@ -108,6 +117,6 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
