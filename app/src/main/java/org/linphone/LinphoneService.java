@@ -33,6 +33,8 @@ import android.provider.ContactsContract;
 import android.view.WindowManager;
 import it.nethesis.utils.AppBackgroundWatcher;
 import java.util.ArrayList;
+
+import org.linphone.call.CallActivity;
 import org.linphone.call.CallIncomingActivity;
 import org.linphone.contacts.ContactsManager;
 import org.linphone.core.Call;
@@ -248,6 +250,14 @@ public final class LinphoneService extends Service {
                                                         && call.getDir() == Call.Dir.Incoming
                                                         && startFromNotif && !alwaysOpenServiceFlag) {
                                                     finishAndRemoveTask = true;
+
+                                                    if(CallIncomingActivity.isInstanciated()) {
+                                                            CallIncomingActivity.instance().finishAndRemoveTask();
+                                                    }
+                                                    if (LinphoneActivity.isInstanciated()) {
+                                                            LinphoneActivity.instance().finishAndRemoveTask();
+                                                    }
+
                                                     stopSelf();
                                                 }
                                             }
@@ -529,7 +539,7 @@ public final class LinphoneService extends Service {
             LinphoneActivity.instance().startActivity(intent);
         } else {
             // This flag is required to start an Activity from a Service context
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         }
     }
