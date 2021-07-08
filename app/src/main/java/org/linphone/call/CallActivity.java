@@ -1496,7 +1496,7 @@ public class CallActivity extends LinphoneGenericActivity
             if (lContact == null) {
                 String displayName = LinphoneUtils.getAddressDisplayName(lAddress);
                 contactName.setText(displayName);
-                contactAddress.setText(lAddress.toString());
+                contactAddress.setText(LinphoneUtils.getDisplayableAddress(lAddress));
                 ContactAvatar.displayAvatar(displayName, callView.findViewById(R.id.avatar_layout));
             } else {
                 contactName.setText(lContact.getFullName());
