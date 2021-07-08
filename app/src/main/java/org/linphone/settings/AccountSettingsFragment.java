@@ -57,7 +57,6 @@ public class AccountSettingsFragment extends Fragment {
 
     private TextSetting mUsername,
             mUserId,
-            mPassword,
             mDomain,
             mDisplayName,
             mProxy,
@@ -135,9 +134,6 @@ public class AccountSettingsFragment extends Fragment {
         mUsername = mRootView.findViewById(R.id.pref_username);
 
         mUserId = mRootView.findViewById(R.id.pref_auth_userid);
-
-        mPassword = mRootView.findViewById(R.id.pref_passwd);
-        mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         mDomain = mRootView.findViewById(R.id.pref_domain);
 
@@ -226,25 +222,6 @@ public class AccountSettingsFragment extends Fragment {
 
                             Core core = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
                             if (core != null) {
-                                core.refreshRegisters();
-                            }
-                        } else {
-                            Log.e("[Account Settings] No auth info !");
-                        }
-                    }
-                });
-
-        mPassword.setListener(
-                new SettingListenerBase() {
-                    @Override
-                    public void onTextValueChanged(String newValue) {
-                        if (mAuthInfo != null) {
-                            mAuthInfo.setHa1(null);
-                            mAuthInfo.setPassword(newValue);
-
-                            Core core = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
-                            if (core != null) {
-                                core.addAuthInfo(mAuthInfo);
                                 core.refreshRegisters();
                             }
                         } else {
@@ -610,8 +587,6 @@ public class AccountSettingsFragment extends Fragment {
 
             if (mAuthInfo != null) {
                 mUserId.setValue(mAuthInfo.getUserid());
-                // If password is hashed we can't display it
-                mPassword.setValue(mAuthInfo.getPassword());
             }
 
             mUsername.setValue(identityAddress.getUsername());
