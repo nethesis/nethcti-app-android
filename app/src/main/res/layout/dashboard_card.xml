@@ -11,6 +11,7 @@
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="6dp"
         app:cardUseCompatPadding="true"
+        app:contentPadding="@dimen/dashboardCardPadding"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -64,6 +64,7 @@
                 android:id="@+id/avatar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/historyDetailAvatarBottomMargin"
                 android:gravity="center">
 
                 <include layout="@layout/contact_avatar_100"/>
