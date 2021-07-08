@@ -59,7 +59,7 @@
         app:iconSize="18dp"
         android:id="@+id/call_pause"
         android:layout_gravity="center"
-        app:icon="@drawable/ic_pause" />
+        app:icon="@drawable/ic_play" />
     </FrameLayout>
 
 </LinearLayout>
