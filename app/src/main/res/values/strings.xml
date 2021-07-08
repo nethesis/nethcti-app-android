@@ -268,8 +268,8 @@
     <string name="quit">Quit</string>
 
     <!-- Call -->
-    <string name="incoming_call">incoming call</string>
-    <string name="outgoing_call">outgoing call</string>
+    <string name="incoming_call">Incoming call</string>
+    <string name="outgoing_call">Outgoing call</string>
     <string name="add_video_dialog">Your caller would like to turn on video</string>
     <string name="no_current_call">No active call</string>
     <string name="call_paused_by_remote">Your caller paused the call</string>

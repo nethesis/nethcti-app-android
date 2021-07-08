@@ -253,8 +253,8 @@
   <string name="menu_about">Informazioni</string>
   <string name="quit">Chiudi</string>
   <!--Call-->
-  <string name="incoming_call">chiamata in arrivo</string>
-  <string name="outgoing_call">chiamata in uscita</string>
+  <string name="incoming_call">Chiamata in arrivo</string>
+  <string name="outgoing_call">Chiamata in uscita</string>
   <string name="add_video_dialog">Il chiamante vorrebbe accendere il video</string>
   <string name="no_current_call">Nessuna chiamata attiva</string>
   <string name="call_paused_by_remote">Il chiamante ha messo in pausa la chiamata</string>
