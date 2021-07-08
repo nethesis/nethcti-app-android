@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="8dp">
 
     <FrameLayout
         android:id="@+id/avatar_layout"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center">
 
         <include layout="@layout/contact_avatar_call_paused" />
@@ -21,6 +21,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_marginStart="6dp"
         android:layout_weight="1">
 
         <TextView
