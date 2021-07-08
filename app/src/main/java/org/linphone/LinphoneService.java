@@ -20,7 +20,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Instrumentation;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -33,6 +35,7 @@ import android.provider.ContactsContract;
 import android.view.WindowManager;
 import it.nethesis.utils.AppBackgroundWatcher;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.linphone.call.CallActivity;
 import org.linphone.call.CallIncomingActivity;
@@ -89,7 +92,6 @@ public final class LinphoneService extends Service {
     private String mIncomingReceivedActivityName;
     private Class<? extends Activity> mIncomingReceivedActivity = CallIncomingActivity.class;
     private Boolean startFromNotif = false;
-    private Boolean finishAndRemoveTask = false;
 
     private LoggingServiceListener mJavaLoggingService =
             new LoggingServiceListener() {
@@ -249,13 +251,10 @@ public final class LinphoneService extends Service {
                                                 if (status
                                                         && call.getDir() == Call.Dir.Incoming
                                                         && startFromNotif && !alwaysOpenServiceFlag) {
-                                                    finishAndRemoveTask = true;
-
-                                                    if(CallIncomingActivity.isInstanciated()) {
-                                                            CallIncomingActivity.instance().finishAndRemoveTask();
-                                                    }
-                                                    if (LinphoneActivity.isInstanciated()) {
-                                                            LinphoneActivity.instance().finishAndRemoveTask();
+                                                    ActivityManager am = (ActivityManager) getApplicationContext().getSystemService(Activity.ACTIVITY_SERVICE);
+                                                    List<ActivityManager.AppTask> list = am.getAppTasks();
+                                                    for(ActivityManager.AppTask task : list) {
+                                                        task.finishAndRemoveTask();
                                                     }
 
                                                     stopSelf();
@@ -507,11 +506,7 @@ public final class LinphoneService extends Service {
         // This will prevent the app from crashing if the service gets killed in background mode
         if (LinphoneActivity.isInstanciated()) {
             Log.w("[Service] Service is getting destroyed, finish LinphoneActivity");
-            if(finishAndRemoveTask) {
-                LinphoneActivity.instance().finishAndRemoveTask();
-            } else {
-                LinphoneActivity.instance().finish();
-            }
+            LinphoneActivity.instance().finish();
         }
 
         if (LinphonePreferences.instance().useJavaLogger()) {
