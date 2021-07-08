@@ -29,14 +29,6 @@
             linphone:title="@string/pref_auth_userid" />
 
         <org.linphone.settings.widget.TextSetting
-            android:id="@+id/pref_passwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            linphone:subtitle="@string/pref_help_password"
-            linphone:hint="@string/pref_passwd"
-            linphone:title="@string/pref_passwd" />
-
-        <org.linphone.settings.widget.TextSetting
             android:id="@+id/pref_domain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
