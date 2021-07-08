@@ -24,6 +24,9 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+
 import java.io.IOException;
 import org.linphone.LinphoneService;
 import org.linphone.R;
@@ -33,12 +36,14 @@ import org.linphone.core.tools.Log;
 
 class ContactAvatarHolder {
     public final ImageView contactPicture;
+    public final CardView contactPictureCard;
     public final ImageView securityLevel;
     public final TextView generatedAvatar;
     public final ImageView avatar;
 
     public ContactAvatarHolder(View v) {
         contactPicture = v.findViewById(R.id.contact_picture);
+        contactPictureCard = v.findViewById(R.id.contact_picture_card);
         securityLevel = v.findViewById(R.id.security_level);
         generatedAvatar = v.findViewById(R.id.generated_avatar);
         avatar = v.findViewById(R.id.avatar);
@@ -49,6 +54,7 @@ class ContactAvatarHolder {
         generatedAvatar.setVisibility(View.GONE);
         securityLevel.setVisibility(View.GONE);
         avatar.setVisibility(View.GONE);
+        contactPictureCard.setVisibility(View.GONE);
     }
 }
 
@@ -189,9 +195,11 @@ public class ContactAvatar {
         if (bm != null) {
             holder.contactPicture.setImageBitmap(bm);
             holder.contactPicture.setVisibility(View.VISIBLE);
+            holder.contactPictureCard.setVisibility(View.VISIBLE);
             holder.generatedAvatar.setVisibility(View.GONE);
             holder.avatar.setVisibility(View.GONE);
         } else if (generated_avatars) {
+            holder.contactPictureCard.setVisibility(View.GONE);
             holder.generatedAvatar.setText(generateAvatar(avatar));
             holder.generatedAvatar.setVisibility(View.VISIBLE);
             holder.avatar.setVisibility(View.VISIBLE);
