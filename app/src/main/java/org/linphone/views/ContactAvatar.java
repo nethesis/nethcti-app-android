@@ -61,6 +61,9 @@ public class ContactAvatar {
             if (name != null && name.length() > 0) {
                 generatedAvatarText.append(name.charAt(0));
             }
+            if (generatedAvatarText.length() >= 2) {
+                break;
+            }
         }
         return generatedAvatarText.toString().toUpperCase();
     }
