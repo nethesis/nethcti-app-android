@@ -7,6 +7,7 @@
     <dimen name="buttonIconSize">16dp</dimen>
     <dimen name="buttonSize">32dp</dimen>
     <dimen name="avatarSize">100dp</dimen>
+    <dimen name="avatarCardRoundedCornerSize">50dp</dimen>
     <dimen name="dashboardIconSize">32dp</dimen>
     <dimen name="dashboardCardPadding">2dp</dimen>
     <dimen name="historyDetailAvatarBottomMargin">0dp</dimen>
