@@ -984,6 +984,9 @@ public class CallActivity extends LinphoneGenericActivity
         mActiveCallHeader.setVisibility(View.VISIBLE);
         mCallInfo.setVisibility(View.VISIBLE);
         mAvatarLayout.setVisibility(View.VISIBLE);
+        mAddCall.setVisibility(View.VISIBLE);
+        mTransfer.setVisibility(View.VISIBLE);
+        mRecordCall.setVisibility(View.VISIBLE);
         mSwitchCamera.setVisibility(View.GONE);
     }
 
