@@ -2,6 +2,7 @@
 <resources>
     <dimen name="digitIconSize">32dp</dimen>
     <dimen name="digitSize">64dp</dimen>
+    <dimen name="digitLayoutPadding">10dp</dimen>
     <dimen name="dialerMargin">0dp</dimen>
     <dimen name="dashboardMargin">12dp</dimen>
     <dimen name="buttonIconSize">16dp</dimen>
