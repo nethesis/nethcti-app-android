@@ -1,7 +1,10 @@
 package it.nethesis.models.notificatore;
 
+import androidx.annotation.Keep;
+
 import com.google.gson.annotations.SerializedName;
 
+@Keep
 public class RegisterTokenReponse {
     @SerializedName("ResultCode")
     private String ResultCode;
