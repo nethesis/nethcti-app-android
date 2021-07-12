@@ -110,7 +110,6 @@ public class CallActivity extends LinphoneGenericActivity
     private static long sTimeRemind = 0;
     private Handler mControlsHandler = new Handler();
     private Runnable mControls;
-    private ImageView mSwitchCamera;
     private TextView mMissedChats;
     private RelativeLayout mSideMenuContent;
     private LinearLayoutCompat mActiveCallHeader;
@@ -123,7 +122,8 @@ public class CallActivity extends LinphoneGenericActivity
             mRecordCall,
             mAddCall,
             mTransfer,
-            mPause;
+            mPause,
+            mSwitchCamera;
     private ImageView mAudioRoute;
     private ImageView mRouteSpeaker;
     private ImageView mRouteEarpiece;
