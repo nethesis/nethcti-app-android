@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dashboardMargin">64dp</dimen>
+    <dimen name="dashboardIconSize">82dp</dimen>
+    <dimen name="dashboardParentMargin">96dp</dimen>
+    <dimen name="dashboardLogoHeight">76dp</dimen>
+</resources>
