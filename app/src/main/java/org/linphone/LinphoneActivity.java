@@ -847,7 +847,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 break;
             case DASHBOARD:
                 mFragment = new DashboardFragment();
-                hideTabBar(true);
+                mTabBar.setVisibility(View.GONE); //Force hide tab bar even in tablet mode
                 break;
             default:
                 break;
