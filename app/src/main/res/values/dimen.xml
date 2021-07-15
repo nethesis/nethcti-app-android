@@ -5,6 +5,8 @@
     <dimen name="digitLayoutPadding">20dp</dimen>
     <dimen name="dialerMargin">24dp</dimen>
     <dimen name="dashboardMargin">48dp</dimen>
+    <dimen name="dashboardParentMargin">48dp</dimen>
+    <dimen name="dashboardLogoHeight">48dp</dimen>
     <dimen name="buttonIconSize">32dp</dimen>
     <dimen name="buttonSize">64dp</dimen>
     <dimen name="avatarSize">200dp</dimen>

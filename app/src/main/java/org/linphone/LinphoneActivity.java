@@ -847,7 +847,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 break;
             case DASHBOARD:
                 mFragment = new DashboardFragment();
-                hideTabBar(true);
+                mTabBar.setVisibility(View.GONE); //Force hide tab bar even in tablet mode
                 break;
             default:
                 break;
@@ -956,7 +956,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
                         || newFragmentType == FragmentsAvailable.ACCOUNT_SETTINGS
                         || newFragmentType == FragmentsAvailable.CREATE_CHAT
                         || newFragmentType == FragmentsAvailable.INFO_GROUP_CHAT
-                        || newFragmentType == FragmentsAvailable.RECORDING_LIST) {
+                        || newFragmentType == FragmentsAvailable.RECORDING_LIST
+                        || newFragmentType == FragmentsAvailable.DASHBOARD) {
                     ll.setVisibility(View.GONE);
                 } else {
                     ll.setVisibility(View.VISIBLE);
