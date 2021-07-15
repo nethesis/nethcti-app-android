@@ -1406,8 +1406,10 @@ public class CallActivity extends LinphoneGenericActivity
 
     @Override
     protected void onDestroy() {
-        LinphoneManager.getInstance().changeStatusToOnline();
-        LinphoneManager.getInstance().enableProximitySensing(false);
+        if(LinphoneManager.isInstanciated()) {
+            LinphoneManager.getInstance().changeStatusToOnline();
+            LinphoneManager.getInstance().enableProximitySensing(false);
+        }
 
         unregisterReceiver(mHeadsetReceiver);
 
