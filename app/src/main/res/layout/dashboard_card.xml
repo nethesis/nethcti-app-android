@@ -8,7 +8,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="6dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="@dimen/dashboardCardPadding"
