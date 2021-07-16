@@ -19,6 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -30,8 +31,12 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowInsetsController;
 import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowInsetsControllerCompat;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneService;
 import org.linphone.R;
@@ -176,6 +181,14 @@ public class AdvancedSettingsFragment extends Fragment {
                     @Override
                     public void onBoolValueChanged(boolean newValue) {
                         mPrefs.enableDarkMode(newValue);
+                        /* Switch status bar icon color */
+                        Activity activity = getActivity();
+                        if(activity != null) {
+                            Window window = activity.getWindow();
+                            if(window != null) {
+                                new WindowInsetsControllerCompat(window, window.getDecorView()).setAppearanceLightStatusBars(!newValue);
+                            }
+                        }
                     }
                 });
 

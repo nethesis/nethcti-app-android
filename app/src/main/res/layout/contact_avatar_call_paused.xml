@@ -21,7 +21,7 @@
     </androidx.cardview.widget.CardView>
     <TextView
         android:id="@+id/generated_avatar"
-        style="@style/generated_contact_avatar_font"
+        style="@style/NethCTIAvatarText"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentLeft="true"

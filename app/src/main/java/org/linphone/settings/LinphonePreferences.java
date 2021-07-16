@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.view.WindowInsetsController;
+
 import androidx.appcompat.app.AppCompatDelegate;
 import java.io.BufferedReader;
 import java.io.File;
@@ -1032,6 +1034,11 @@ public class LinphonePreferences {
 
     public void enableDarkMode(boolean enable) {
         getConfig().setBool("app", "dark_mode", enable);
+        if(enable) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         if (LinphoneActivity.isInstanciated()) {
             LinphoneActivity.instance().recreate();
         }
