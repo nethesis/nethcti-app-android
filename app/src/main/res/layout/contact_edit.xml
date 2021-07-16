@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor"
     android:orientation="vertical">
 
     <LinearLayout
@@ -89,8 +88,7 @@
                     style="@style/contact_edit_form_font"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/resizable_textfield"
-                    android:textColor="@color/black_color"
+                    android:textColor="@color/primaryTextColor"
                     android:contentDescription="@string/content_description_contact_last_name"
                     android:gravity="left"
                     android:inputType="textPersonName|textCapWords"
@@ -111,13 +109,12 @@
                     style="@style/contact_edit_form_font"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/resizable_textfield"
+                    android:textColor="@color/primaryTextColor"
                     android:contentDescription="@string/content_description_contact_first_name"
                     android:gravity="left"
                     android:hint="@string/contact_first_name"
                     android:inputType="textPersonName|textCapWords"
                     android:paddingRight="5dp"
-                    android:textColor="@color/black_color"
                     android:textCursorDrawable="@null" />
 
 
@@ -135,13 +132,12 @@
                     style="@style/contact_edit_form_font"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/resizable_textfield"
+                    android:textColor="@color/primaryTextColor"
                     android:contentDescription="@string/content_description_contact_organization"
                     android:gravity="left"
                     android:hint="@string/contact_organization"
                     android:inputType="textPersonName|textCapWords"
                     android:paddingRight="5dp"
-                    android:textColor="@color/black_color"
                     android:textCursorDrawable="@null" />
 
             </LinearLayout>

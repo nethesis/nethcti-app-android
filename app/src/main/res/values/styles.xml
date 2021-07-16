@@ -254,7 +254,7 @@
     </style>
 
     <style name="NethCTISettingsSubtitle" parent="@style/NethCTITextRegular">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/subtitleTextColor</item>
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -506,7 +506,6 @@
     </style>
 
     <style name="contact_edit_form_font" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">?attr/primaryTextColor</item>
         <item name="android:textSize">18sp</item>
     </style>
 

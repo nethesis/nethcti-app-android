@@ -16,4 +16,6 @@
     <color name="primaryTextColorLight">#c0c0c0</color>
     <color name="primaryTextColorInverse">#000</color>
     <color name="secondaryTextColor">#c0c0c0</color>
+
+    <color name="subtitleTextColor">#c0c0c0</color>
 </resources>

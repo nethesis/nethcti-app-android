@@ -38,11 +38,17 @@ class NethCTIApplication : Application(), LifecycleObserver {
         val darkMode = LinphonePreferences.instance().apply {
             setContext(instance)
         }.config.getBool(
-                "app",
+            "app",
             "dark_mode", AppCompatDelegate.getDefaultNightMode()
                     == MODE_NIGHT_YES
         )
-        AppCompatDelegate.setDefaultNightMode(if(darkMode) { MODE_NIGHT_YES } else { MODE_NIGHT_NO })
+        AppCompatDelegate.setDefaultNightMode(
+            if (darkMode) {
+                MODE_NIGHT_YES
+            } else {
+                MODE_NIGHT_NO
+            }
+        )
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
