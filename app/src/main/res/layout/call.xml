@@ -24,8 +24,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/colorPrimary">
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -166,9 +165,6 @@
                                 android:text="@string/call_paused_by_remote" />
 
                         </LinearLayout>
-
-
-
 
                         <FrameLayout
                             android:layout_width="wrap_content"
