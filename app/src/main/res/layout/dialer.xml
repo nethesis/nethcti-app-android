@@ -19,19 +19,8 @@
         android:id="@+id/address_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:paddingHorizontal="32dp"
+        android:paddingHorizontal="42dp"
         app:layout_constraintTop_toTopOf="parent">
-
-        <org.linphone.views.EraseButton
-            android:id="@+id/erase"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginHorizontal="10dp"
-            android:contentDescription="@string/content_description_backspace"
-            android:src="@drawable/ic_backspace"
-            android:tint="@color/backspace_icon"/>
 
         <org.linphone.views.AddressText
             android:id="@+id/address"
@@ -39,8 +28,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/erase"
-            android:hint="@string/address_bar_hint"/>
+            android:hint="@string/address_bar_hint"
+            android:paddingEnd="60dp" />
+
+        <org.linphone.views.EraseButton
+            android:id="@+id/erase"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/content_description_backspace"
+            android:src="@drawable/ic_backspace"
+            android:tint="@color/backspace_icon"/>
 
     </RelativeLayout>
 

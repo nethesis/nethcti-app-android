@@ -156,7 +156,7 @@
     </style>
 
     <style name="NethCTIAddressBarText" parent="@style/Widget.AppCompat.EditText">
-        <item name="android:gravity">start</item>
+        <item name="android:gravity">start|center_vertical</item>
         <item name="android:inputType">textEmailAddress</item>
         <item name="android:textSize">30sp</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
