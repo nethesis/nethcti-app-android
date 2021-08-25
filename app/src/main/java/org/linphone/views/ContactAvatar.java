@@ -115,21 +115,19 @@ public class ContactAvatar {
 
         boolean generated_avatars =
                 v.getContext().getResources().getBoolean(R.bool.generate_text_avatar);
-        if (displayName.startsWith("+") || !generated_avatars) {
+        if (!generated_avatars) {
             // If display name is a phone number, use default avatar because generated one will be
             // +...
             holder.generatedAvatar.setVisibility(View.GONE);
         } else {
             String generatedAvatar = generateAvatar(displayName);
-            if (generatedAvatar != null && generatedAvatar.length() > 0) {
+            if (generatedAvatar.length() > 0) {
                 holder.generatedAvatar.setText(generatedAvatar);
-                holder.generatedAvatar.setVisibility(View.VISIBLE);
-                holder.avatar.setVisibility(View.VISIBLE);
             } else {
                 holder.generatedAvatar.setText("");
-                holder.generatedAvatar.setVisibility(View.VISIBLE);
-                holder.avatar.setVisibility(View.VISIBLE);
             }
+            holder.generatedAvatar.setVisibility(View.VISIBLE);
+            holder.avatar.setVisibility(View.VISIBLE);
         }
         holder.securityLevel.setVisibility(View.GONE);
     }
