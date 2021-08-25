@@ -268,10 +268,6 @@
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 
-    <style name="NethCTIAddressBar" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="colorPrimary">@color/colorAccent</item>
-    </style>
-
 
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">

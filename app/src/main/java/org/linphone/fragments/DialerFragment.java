@@ -28,7 +28,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputLayout;
 import it.nethesis.utils.CallTransferManager;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
@@ -37,6 +36,7 @@ import org.linphone.core.Core;
 import org.linphone.views.AddressAware;
 import org.linphone.views.AddressText;
 import org.linphone.views.CallButton;
+import org.linphone.views.EraseButton;
 
 public class DialerFragment extends Fragment {
     private static DialerFragment sInstance;
@@ -60,28 +60,8 @@ public class DialerFragment extends Fragment {
         mAddress = view.findViewById(R.id.address);
         mAddress.setDialerFragment(this);
 
-        TextInputLayout til = view.findViewById(R.id.textinputlayout);
-        til.setEndIconOnLongClickListener(
-                new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        mAddress.getEditableText().clear();
-                        return true;
-                    }
-                });
-        til.setEndIconOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int lBegin = mAddress.getSelectionStart();
-                        if (lBegin == -1) {
-                            lBegin = mAddress.getEditableText().length() - 1;
-                        }
-                        if (lBegin > 0) {
-                            mAddress.getEditableText().delete(lBegin - 1, lBegin);
-                        }
-                    }
-                });
+        EraseButton erase = view.findViewById(R.id.erase);
+        erase.setAddressWidget(mAddress);
 
         mCall = view.findViewById(R.id.call);
         mCall.setAddressWidget(mAddress);

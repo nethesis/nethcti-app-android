@@ -19,21 +19,19 @@
         android:id="@+id/address_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:paddingHorizontal="30dp"
-        android:layout_marginHorizontal="@dimen/dialerMargin"
+        android:paddingHorizontal="32dp"
         app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textinputlayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:endIconTint="@color/materialRed"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_backspace"
-        app:boxBackgroundColor="@color/transparent_color"
-        app:boxStrokeColor="@color/colorAccent"
-        android:theme="@style/NethCTIAddressBar"
-        app:hintTextColor="@color/colorAccent">
+        <org.linphone.views.EraseButton
+            android:id="@+id/erase"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="10dp"
+            android:contentDescription="@string/content_description_backspace"
+            android:src="@drawable/ic_backspace"
+            android:tint="@color/backspace_icon"/>
 
         <org.linphone.views.AddressText
             android:id="@+id/address"
@@ -43,8 +41,6 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/erase"
             android:hint="@string/address_bar_hint"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
 
     </RelativeLayout>
 
