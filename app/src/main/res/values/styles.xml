@@ -268,7 +268,29 @@
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 
+    <style name="NethCTIDialogDeleteButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="backgroundTint">@color/materialRed</item>
+    </style>
 
+    <style name="NethCTIDialogOKButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="backgroundTint">@color/colorAccent</item>
+    </style>
+
+    <style name="NethCTIDialogDefaultButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="backgroundTint">@color/light_grey_color</item>
+    </style>
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Android theme override -->

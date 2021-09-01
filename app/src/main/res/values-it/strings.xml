@@ -59,7 +59,7 @@
   <string name="link_account">Collega il tuo account</string>
   <string name="update_available">È disponibile un aggiornamento</string>
   <string name="do_not_ask_again">Non mostrarlo più</string>
-  <string name="delete_contacts_text">Sei sicuro di eliminare questi contatti?\nSaranno eliminati anche dal tuo telefono!</string>
+  <string name="delete_contacts_text">Vuoi eliminare i contatti selezionati?\nSaranno anche eliminati dalla rubrica del telefono</string>
   <string name="logs_url_copied_to_clipboard">Log indirizzi copiati negli appunti</string>
   <!--Launch screen-->
   <string name="app_description">"Un SIP client da <i>Nethesis</i> "</string>
@@ -287,7 +287,7 @@
   <string name="call_log_delete_dialog">Vuoi cancellare il registro delle chiamate selezionate?</string>
   <!--Recordings-->
   <string name="no_recordings">Nessuna registrazione</string>
-  <string name="recordings_delete_dialog">Vuoi eliminare le registrazioni selezionate?</string>
+  <string name="recordings_delete_dialog">Desideri eliminare le registrazioni selezionate?</string>
   <!--About-->
   <string name="menu_send_log">Invia log</string>
   <string name="menu_reset_log">Cancella log</string>
