@@ -63,7 +63,7 @@
     <string name="link_account">Link your account</string>
     <string name="update_available">An update is available</string>
     <string name="do_not_ask_again">Do not show again</string>
-    <string name="delete_contacts_text">Do you want to delete selected contacts?\nThey will also be deleted from your phone's address book</string>
+    <string name="delete_contacts_text">Do you want to delete selected contacts?\nThey will also be deleted from your phone\'s address book</string>
     <string name="logs_url_copied_to_clipboard">Logs url copied into clipboard</string>
 
     <!-- Launch screen -->

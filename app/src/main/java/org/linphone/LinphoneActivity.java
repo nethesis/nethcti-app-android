@@ -235,7 +235,12 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
         mCurrentFragment = FragmentsAvailable.EMPTY;
         if (savedInstanceState == null) {
-            changeCurrentFragment(FragmentsAvailable.DASHBOARD, getIntent().getExtras());
+            Core core = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
+            if(core != null && core.getCalls().length > 0) {
+                    changeCurrentFragment(FragmentsAvailable.DIALER, getIntent().getExtras());
+            } else {
+                changeCurrentFragment(FragmentsAvailable.DASHBOARD, getIntent().getExtras());
+            }
         } else {
             mCurrentFragment =
                     (FragmentsAvailable) savedInstanceState.getSerializable("mCurrentFragment");
