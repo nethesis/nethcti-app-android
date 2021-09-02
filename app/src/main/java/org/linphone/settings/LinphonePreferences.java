@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.view.WindowInsetsController;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import java.io.BufferedReader;
