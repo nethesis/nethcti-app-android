@@ -150,7 +150,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
     private LinearLayout mTopBar;
     private TextView mTopBarTitle;
     private ImageView mCancel;
-    private FragmentsAvailable mPendingFragmentTransaction, mCurrentFragment, mLeftFragment;
+    private FragmentsAvailable mPendingFragmentTransaction, mLeftFragment;
+    private FragmentsAvailable mCurrentFragment;
     private Fragment mFragment;
     private Fragment.SavedState mDialerSavedState;
     private boolean mNewProxyConfig;
@@ -236,7 +237,12 @@ public class LinphoneActivity extends LinphoneGenericActivity
         mCurrentFragment = FragmentsAvailable.EMPTY;
         if (savedInstanceState == null) {
             Core core = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
-            if(core != null && core.getCalls().length > 0) {
+            Bundle intentExtras = getIntent().getExtras();
+            if(
+                (core != null && core.getCalls().length > 0) ||
+                (intentExtras != null && getIntent().getExtras().getBoolean("AddCall")) ||
+                (intentExtras != null && getIntent().getExtras().getBoolean("Transfer"))
+            ) {
                     changeCurrentFragment(FragmentsAvailable.DIALER, getIntent().getExtras());
             } else {
                 changeCurrentFragment(FragmentsAvailable.DASHBOARD, getIntent().getExtras());
@@ -599,6 +605,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 intent.putExtra("DoNotGoToCallActivity", true);
                 // mCallTransfer = true;
                 CallTransferManager.instance().setmCallTransfer(true);
+                if(mCurrentFragment != FragmentsAvailable.DIALER) {
+                    changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
+                }
                 if (LinphoneManager.getLc().getCallsNb() > 0) {
                     initInCallMenuLayout();
                 } else {
@@ -606,6 +615,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 }
             } else if (extras.getBoolean("AddCall", false)) {
                 intent.putExtra("DoNotGoToCallActivity", true);
+                if(mCurrentFragment != FragmentsAvailable.DIALER) {
+                    changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
+                }
             } else if (intent.getStringExtra("msgShared") != null) {
                 String message = intent.getStringExtra("msgShared");
                 Log.i(
