@@ -71,17 +71,14 @@ public class RecordingsFragment extends Fragment
         mNoRecordings = view.findViewById(R.id.no_recordings);
 
         mBackButton = view.findViewById(R.id.back);
-        if (getResources().getBoolean(R.bool.isTablet)) {
-            mBackButton.setVisibility(View.INVISIBLE);
-        } else {
-            mBackButton.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            LinphoneActivity.instance().popBackStack();
-                        }
-                    });
-        }
+        mBackButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        LinphoneActivity.instance().popBackStack();
+                    }
+                });
+
 
         mLayoutManager = new LinearLayoutManager(mContext);
         mRecordingList.setLayoutManager(mLayoutManager);
