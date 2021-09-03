@@ -75,7 +75,16 @@ public class RecordingsFragment extends Fragment
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        LinphoneActivity.instance().popBackStack();
+                        if(getResources().getBoolean(R.bool.isTablet)) {
+                            if(getFragmentManager().getBackStackEntryCount() > 1) {
+                                LinphoneActivity.instance().popBackStack();
+                            } else {
+                                LinphoneActivity.instance().displayDashboard();
+                            }
+                        } else {
+                            LinphoneActivity.instance().popBackStack();
+                        }
+
                     }
                 });
 
