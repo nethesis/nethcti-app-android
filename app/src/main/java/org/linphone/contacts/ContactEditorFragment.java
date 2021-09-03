@@ -287,7 +287,7 @@ public class ContactEditorFragment extends Fragment {
                         public void onClick(View v) {
                             final Dialog dialog =
                                     LinphoneActivity.instance()
-                                            .displayDialog(getString(R.string.delete_text));
+                                            .displayDialog(getString(R.string.delete_contacts_text_2));
                             Button delete = dialog.findViewById(R.id.dialog_delete_button);
                             Button cancel = dialog.findViewById(R.id.dialog_cancel_button);
 

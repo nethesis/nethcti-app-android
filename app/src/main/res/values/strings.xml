@@ -64,6 +64,7 @@
     <string name="update_available">An update is available</string>
     <string name="do_not_ask_again">Do not show again</string>
     <string name="delete_contacts_text">Do you want to delete selected contacts?\nThey will also be deleted from your phone\'s address book</string>
+    <string name="delete_contacts_text_2">Do you want to delete selected contact?\nIt will also be deleted from your phone\'s address book</string>
     <string name="logs_url_copied_to_clipboard">Logs url copied into clipboard</string>
 
     <!-- Launch screen -->
@@ -166,7 +167,7 @@
     <!-- History -->
     <string name="no_call_history">No call in your history</string>
     <string name="no_missed_call_history">No missed call in your history</string>
-    <string name="delete_history_log">Do you want to delete selected call log?</string>
+    <string name="delete_history_log">Do you want to delete the selected calls from  call logs?</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="calls">Calls</string>
@@ -299,7 +300,7 @@
     <string name="call_stats_decoder_name">Decoder:</string>
     <string name="call_stats_display_filter">Display filter:</string>
     <string name="call">Call</string>
-    <string name="call_log_delete_dialog">Do you want to delete the selected call logs?</string>
+    <string name="call_log_delete_dialog">Do you want to delete the selected calls from  call logs?</string>
 
     <!-- Recordings -->
     <string name="no_recordings">No recordings</string>

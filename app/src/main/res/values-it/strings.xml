@@ -60,6 +60,7 @@
   <string name="update_available">È disponibile un aggiornamento</string>
   <string name="do_not_ask_again">Non mostrarlo più</string>
   <string name="delete_contacts_text">Vuoi eliminare i contatti selezionati?\nSaranno anche eliminati dalla rubrica del telefono</string>
+  <string name="delete_contacts_text_2">Vuoi eliminare il contatto selezionato?\nVerrà anche eliminato dalla rubrica del telefono.</string>
   <string name="logs_url_copied_to_clipboard">Log indirizzi copiati negli appunti</string>
   <!--Launch screen-->
   <string name="app_description">"Un SIP client da <i>Nethesis</i> "</string>
@@ -156,7 +157,7 @@
   <!--History-->
   <string name="no_call_history">Nessuna chiamata nella tua cronologia</string>
   <string name="no_missed_call_history">Nessuna chiamata persa nella tua cronologia</string>
-  <string name="delete_history_log">Vuoi cancellare il registro delle chiamate selezionato?</string>
+  <string name="delete_history_log">Vuoi cancellare le chiamate selezionate dal registro?</string>
   <string name="today">Oggi</string>
   <string name="yesterday">Ieri</string>
   <string name="calls">Chiamate</string>
@@ -284,7 +285,7 @@
   <string name="call_stats_decoder_name">Decoder:</string>
   <string name="call_stats_display_filter">Filtro di visualizzazione:</string>
   <string name="call">Chiamata</string>
-  <string name="call_log_delete_dialog">Vuoi cancellare il registro delle chiamate selezionate?</string>
+  <string name="call_log_delete_dialog">Vuoi cancellare le chiamate selezionate dal registro?</string>
   <!--Recordings-->
   <string name="no_recordings">Nessuna registrazione</string>
   <string name="recordings_delete_dialog">Desideri eliminare le registrazioni selezionate?</string>
