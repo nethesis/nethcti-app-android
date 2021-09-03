@@ -234,6 +234,37 @@
                         android:contentDescription="@string/content_description_numpad"
                         android:visibility="gone" />
 
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal"
+                        android:layout_alignParentBottom="true"
+                        android:id="@+id/audioRouteMenu"
+                        android:visibility="gone" >
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/route_bluetooth"
+                            android:layout_gravity="center"
+                            style="@style/NethCTIButton"
+                            app:icon="@drawable/ic_bluetooth"
+                            android:layout_marginHorizontal="6dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/route_earpiece"
+                            android:layout_gravity="center"
+                            style="@style/NethCTIButton"
+                            app:icon="@drawable/ic_phone"
+                            android:layout_marginHorizontal="6dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/route_speaker"
+                            android:layout_gravity="center"
+                            style="@style/NethCTIButton"
+                            app:icon="@drawable/ic_volume"
+                            android:layout_marginHorizontal="6dp"/>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
                 </RelativeLayout>
 
                 <LinearLayout
@@ -298,30 +329,10 @@
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/audio_route"
                                 android:layout_gravity="center"
-                                style="@style/NethCTIButton"
+                                style="@style/NethCTIToggleButton"
                                 app:icon="@drawable/ic_route_bluetooth"
                                 android:visibility="gone"/>
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/route_bluetooth"
-                                android:layout_gravity="center"
-                                style="@style/NethCTIButton"
-                                app:icon="@drawable/ic_bluetooth"
-                                android:visibility="gone" />
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/route_earpiece"
-                                android:layout_gravity="center"
-                                style="@style/NethCTIButton"
-                                app:icon="@drawable/ic_phone"
-                                android:visibility="gone" />
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/route_speaker"
-                                android:layout_gravity="center"
-                                style="@style/NethCTIButton"
-                                app:icon="@drawable/ic_volume"
-                                android:visibility="gone" />
                         </FrameLayout>
 
                         <FrameLayout

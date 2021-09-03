@@ -128,6 +128,7 @@ public class CallActivity extends LinphoneGenericActivity
             mRouteSpeaker,
             mRouteEarpiece,
             mRouteBluetooth;
+    private LinearLayoutCompat mAudioRouteMenu;
     private ImageView mMenu;
     private LinearLayout mNoCurrentCall, mCallPaused;
     private FrameLayout mCallInfo;
@@ -477,6 +478,7 @@ public class CallActivity extends LinphoneGenericActivity
             mRouteEarpiece.setOnClickListener(this);
             mRouteBluetooth = findViewById(R.id.route_bluetooth);
             mRouteBluetooth.setOnClickListener(this);
+            mAudioRouteMenu = findViewById(R.id.audioRouteMenu);
         } catch (NullPointerException npe) {
             Log.e("Bluetooth: Audio routes mMenu disabled on tablets for now (1)");
         }
@@ -1164,16 +1166,12 @@ public class CallActivity extends LinphoneGenericActivity
     }
 
     private void hideOrDisplayAudioRoutes() {
-        if (mRouteSpeaker.getVisibility() == View.VISIBLE) {
-            mRouteSpeaker.setVisibility(View.INVISIBLE);
-            mRouteBluetooth.setVisibility(View.INVISIBLE);
-            mRouteEarpiece.setVisibility(View.INVISIBLE);
+        if (mAudioRouteMenu.getVisibility() == View.VISIBLE) {
             mAudioRoute.setSelected(false);
+            mAudioRouteMenu.setVisibility(View.INVISIBLE);
         } else {
-            mRouteSpeaker.setVisibility(View.VISIBLE);
-            mRouteBluetooth.setVisibility(View.VISIBLE);
-            mRouteEarpiece.setVisibility(View.VISIBLE);
             mAudioRoute.setSelected(true);
+            mAudioRouteMenu.setVisibility(View.VISIBLE);
         }
     }
 
