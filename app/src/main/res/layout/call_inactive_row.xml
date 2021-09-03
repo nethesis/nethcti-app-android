@@ -1,49 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="?attr/accentColorLight30"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="8dp">
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/avatar_layout"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center">
 
         <include layout="@layout/contact_avatar_call_paused" />
 
-    </RelativeLayout>
+    </FrameLayout>
 
-    <TextView
-        android:id="@+id/contact_name"
-        style="@style/call_contact_name_paused_font"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_vertical|left"
-        android:maxLines="1"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="6dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/contact_name"
+            style="@style/NethCTITextRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/contact_address"
+            style="@style/NethCTITextLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@color/colorAccent"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <Chronometer
         android:id="@+id/call_timer"
-        android:textColor="?attr/secondaryTextColor"
         android:textSize="15sp"
+        android:padding="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|right"
-        android:paddingLeft="10dp"
-        android:paddingRight="20dp" />
+        android:gravity="center"/>
 
-    <ImageView
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp">
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/NethCTIButton"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:iconSize="18dp"
         android:id="@+id/call_pause"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:contentDescription="@string/content_description_pause"
-        android:gravity="center_vertical"
-        android:src="@drawable/pause" />
+        android:layout_gravity="center"
+        app:icon="@drawable/ic_play" />
+    </FrameLayout>
 
 </LinearLayout>

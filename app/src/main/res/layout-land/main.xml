@@ -97,7 +97,7 @@
                         android:contentDescription="@string/content_description_history"
                         android:padding="15dp"
                         android:src="@drawable/footer_history"
-                        android:tint="@color/primary_color"/>
+                        android:tint="@color/colorAccent"/>
 
                     <View
                         android:id="@+id/history_select"
@@ -136,7 +136,7 @@
                         android:contentDescription="@string/content_description_contacts"
                         android:padding="15dp"
                         android:src="@drawable/footer_contacts"
-                        android:tint="@color/primary_color"/>
+                        android:tint="@color/colorAccent"/>
 
                     <View
                         android:id="@+id/contacts_select"
@@ -161,7 +161,7 @@
                         android:contentDescription="@string/content_description_dialer"
                         android:padding="15dp"
                         android:src="@drawable/footer_dialer"
-                        android:tint="@color/primary_color"/>
+                        android:tint="@color/colorAccent"/>
 
                     <View
                         android:id="@+id/dialer_select"

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,18 +11,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="?attr/lightToolbarBackgroundColor"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/back"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
-                android:background="?attr/button_background_drawable"
+                android:layout_height="24dp"
+                android:layout_weight="0.12"
+                android:layout_gravity="center_vertical"
                 android:contentDescription="@string/content_description_back"
-                android:padding="18dp"
-                android:src="@drawable/back" />
+                android:src="@drawable/ic_back" />
 
             <View
                 android:layout_width="0dp"
@@ -33,22 +30,22 @@
             <ImageView
                 android:id="@+id/deleteContact"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="24dp"
                 android:layout_weight="0.2"
-                android:background="?attr/button_background_drawable"
+                android:layout_gravity="center_vertical"
                 android:contentDescription="@string/content_description_delete"
-                android:padding="15dp"
-                android:src="@drawable/delete" />
+                android:src="@drawable/ic_delete"
+                android:tint="@color/neth_delete_button"/>
 
             <ImageView
                 android:id="@+id/editContact"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="24dp"
                 android:layout_weight="0.2"
-                android:background="?attr/button_background_drawable"
+                android:layout_gravity="center_vertical"
                 android:contentDescription="@string/content_description_edit"
-                android:padding="15dp"
-                android:src="@drawable/edit" />
+                android:src="@drawable/ic_edit"
+                android:tint="@color/neth_button_icon"/>
 
         </LinearLayout>
 
@@ -78,19 +75,20 @@
 
                 <TextView
                     android:id="@+id/contact_name"
-                    style="@style/big_contact_name_font"
+                    style="@style/NethCTIContactNameTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"/>
 
                 <TextView
                     android:id="@+id/contactOrganization"
-                    style="@style/contact_organization_font"
+                    style="@style/NethCTIContactOrgSubtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:maxLines="1" />
+                    android:gravity="center"/>
 
                 <TableLayout
                     android:id="@+id/controls"
@@ -98,8 +96,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     android:stretchColumns="*" />
-
-
+                
                 <LinearLayout
                     android:id="@+id/workAddress"
                     android:layout_width="match_parent"
@@ -112,7 +109,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -123,15 +122,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:textAllCaps="true"
                             android:text="@string/workAddress"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/workAddressValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -153,7 +150,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -164,15 +163,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/workCity"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/workCityValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -194,7 +191,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -202,18 +201,16 @@
 
                         <TextView
                             android:id="@+id/workStateLabel"
+                            style="@style/NethCTIContactFieldTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/workState"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/workState" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/workStateValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -235,7 +232,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -246,15 +245,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/workCountry"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/workCountryValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -276,7 +273,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -287,15 +286,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:textAllCaps="true"
                             android:text="@string/homeAddress"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/homeAddressValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -317,7 +314,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -328,15 +327,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/homeCity"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/homeCityValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -358,7 +355,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -369,15 +368,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/homeState"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/homeStateValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -399,7 +396,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -410,15 +409,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/homeCountry"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/homeCountryValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -440,7 +437,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -451,14 +450,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/email"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -481,7 +478,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -492,14 +491,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/fax"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -522,7 +519,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -533,14 +532,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/task"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -563,7 +560,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -574,14 +573,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/notes"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -603,7 +600,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -614,14 +613,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/owner"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -644,7 +641,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -655,15 +654,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/source"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/sourceValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -685,7 +682,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -696,15 +695,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/speedDial"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/speedDialValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -726,7 +723,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -737,15 +736,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/type"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/typeValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"
@@ -767,7 +764,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="?attr/dividerColor" />
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorPrimaryLight" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -778,15 +777,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/url"
-                            android:textAllCaps="true"
-                            android:textColor="?attr/primarySubtextLightColor" />
+                            style="@style/NethCTIContactFieldTitle" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/urlValue"
-                        style="@style/contact_name_list_cell_font"
+                        style="@style/NethCTIContactField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fadingEdge="horizontal"

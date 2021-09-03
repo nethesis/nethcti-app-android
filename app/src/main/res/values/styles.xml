@@ -1,12 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- NethCTI Styles -->
+    <style name="NethCTIStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+        <item name="android:textColorHint">@color/secondaryTextColor</item>
+        <item name="android:textColorPrimaryInverse">@color/secondaryTextColor</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar">@bool/lightStatusBar</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="fontFamily">@font/roboto_regular</item>
 
+        <item name="accentColor">@color/colorAccent</item>
+        <item name="accentColorLight30">@color/colorAccentLight</item>
+        <item name="accentTextColor">@color/colorAccentLight</item>
+        <item name="primaryTextColor">@color/primaryTextColor</item>
+        <item name="secondaryTextColor">@color/secondaryTextColor</item>
+        <item name="primarySubtextDarkColor">@color/grey_color</item>
+        <item name="primarySubtextLightColor">@color/light_grey_color</item>
+
+        <item name="backgroundColor">@color/colorPrimary</item>
+        <item name="backgroundColor2">@color/colorPrimaryLight</item>
+        <item name="backgroundContrastColor">@color/neth_grey_color</item>
+        <item name="dividerColor">@color/neth_grey_color</item>
+
+        <item name="drawableTintColor">@color/neth_dark_grey</item>
+        <item name="drawableTintDisabledColor">@color/neth_grey_color</item>
+        <item name="drawableTintOverColor">@color/colorAccentLight</item>
+
+        <item name="lightToolbarBackgroundColor">@color/neth_light_grey_color</item>
+        <item name="lightToolbarBackgroundDisabledColor">@color/neth_grey_color</item>
+        <item name="lightToolbarTextColor">@color/neth_dark_grey</item>
+        <item name="darkToolbarBackgroundColor">@color/neth_dark_grey</item>
+        <item name="darkToolbarTextColor">@color/neth_light_grey_color</item>
+
+        <item name="button_background_drawable">@drawable/button_background_light</item>
+    </style>
+
+    <style name="NethCTIStyleLaunchActivity" parent="NethCTIStyle">
+        <item name="android:colorPrimary">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:colorBackground">@color/colorAccent</item>
+        <item name="backgroundColor">@color/colorAccent</item>
+        <item name="backgroundColor2">@color/colorAccentLight</item>
+        <item name="backgroundContrastColor">@color/neth_grey_color</item>
+    </style>
+
+    <!-- Custom View -->
+    <style name="NethCTIButton" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon">
+        <item name="android:layout_width">@dimen/buttonSize</item>
+        <item name="android:layout_height">@dimen/buttonSize</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="iconSize">@dimen/buttonIconSize</item>
+        <item name="iconGravity">textStart</item>
+        <item name="android:padding">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/CircularShapeAppearanceOverlay</item>
+        <item name="backgroundTint">@color/neth_button</item>
+        <item name="iconTint">@color/neth_button_icon</item>
+        <item name="rippleColor">@color/colorAccentLight</item>
+    </style>
+
+    <style name="NethCTIToggleButton" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon">
+        <item name="android:layout_width">@dimen/buttonSize</item>
+        <item name="android:layout_height">@dimen/buttonSize</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="iconSize">@dimen/buttonIconSize</item>
+        <item name="iconGravity">textStart</item>
+        <item name="android:padding">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/CircularShapeAppearanceOverlay</item>
+        <item name="backgroundTint">@color/neth_toggle_button</item>
+        <item name="iconTint">@color/neth_toggle_button_icon</item>
+        <item name="rippleColor">@color/colorAccentLight</item>
+    </style>
+
+
+    <style name="NethCTIDialpadDigit" parent="NethCTIButton">
+        <item name="iconSize">@dimen/digitIconSize</item>
+    </style>
+
+    <style name="NethCTICallButton" parent="@style/NethCTIButton">
+        <item name="backgroundTint">@color/call_button</item>
+        <item name="iconTint">@color/call_button_icon</item>
+        <item name="rippleColor">@color/nethLightGreen50</item>
+    </style>
+
+    <style name="CircularShapeAppearanceOverlay" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Texts -->
+    <style name="NethCTITextRegular" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="NethCTITextMedium" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="NethCTITextLight" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+    </style>
+
+    <style name="NethCTITextThin" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_thin</item>
+    </style>
+
+    <style name="NethCTILightHeaderTitle" parent="@style/NethCTITextLight">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineSpacingExtra">10sp</item>
+    </style>
+
+    <style name="NethCTILightHeaderSubTitle" parent="@style/NethCTITextLight">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">10sp</item>
+    </style>
+
+    <style name="NethCTILoginControlLabel" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTIDrawerText" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+
+    <style name="NethCTIStatusBarText" parent="@style/LinphoneStyleLight">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NethCTIAddressBarText" parent="@style/Widget.AppCompat.EditText">
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="NethCTIAccountHeaderText" parent="@style/NethCTITextLight">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingExtra">10sp</item>
+    </style>
+
+    <style name="NethCTIAccountHeaderSecondaryText" parent="@style/NethCTITextLight">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">10sp</item>
+    </style>
+
+    <style name="NethCTIAvatarText" parent="@style/NethCTITextMedium">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NethCTIContactName" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NethCTIContactInfo" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="NethCTIEditContactControlLabel" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="NethCTIContactNameTitle" parent="@style/NethCTITextRegular">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NethCTIContactOrgSubtitle" parent="@style/NethCTITextLight">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="NethCTIContactFieldTitle" parent="@style/NethCTITextRegular">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="NethCTIContactField" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="NethCTIContactInvite" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="NethCTIHistoryHeader" parent="@style/NethCTITextRegular">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTIHistoryDetailTime" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTIAboutVersionInfo" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/primaryTextColorLight</item>
+    </style>
+
+    <style name="NethCTIAboutAppInfo" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTITopBarTitle" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="NethCTISettingsAccountLabel" parent="@style/NethCTITextRegular">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTISettingsLabel" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NethCTISettingsSubtitle" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/subtitleTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="NethCTITextSettingTitle" parent="@style/NethCTITextRegular">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SpinnerTheme" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="NethCTIDialogDeleteButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="backgroundTint">@color/materialRed</item>
+    </style>
+
+    <style name="NethCTIDialogOKButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="backgroundTint">@color/colorAccent</item>
+    </style>
+
+    <style name="NethCTIDialogDefaultButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="backgroundTint">@color/light_grey_color</item>
+    </style>
+    <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Android theme override -->
-        <item name="colorAccent">@color/neth_blue_color</item>
-        <item name="android:colorPrimary">@color/neth_blue_color</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
         <!-- Comment out the following line to disable system's status bar coloring -->
-        <item name="android:colorPrimaryDark">@color/neth_dark_blue_color</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/neth_dark_grey</item>
         <item name="android:textColorSecondary">@color/neth_dark_grey</item>
         <item name="android:textColorHint">@color/neth_grey_text_color</item>
@@ -14,8 +305,8 @@
         <item name="android:textColorPrimaryInverse">@color/white_color</item>
         <item name="android:windowBackground">@color/neth_light_grey_color</item>
 
-        <item name="accentColor">@color/neth_blue_color</item>
-        <item name="accentColorLight30">@color/neth_light_blue_color</item>
+        <item name="accentColor">@color/colorAccent</item>
+        <item name="accentColorLight30">@color/colorAccentLight</item>
         <item name="accentTextColor">@color/neth_light_grey_color</item>
         <item name="primaryTextColor">@color/neth_dark_grey</item>
         <item name="secondaryTextColor">@color/neth_light_grey_color</item>
@@ -29,7 +320,7 @@
 
         <item name="drawableTintColor">@color/neth_dark_grey</item>
         <item name="drawableTintDisabledColor">@color/neth_grey_color</item>
-        <item name="drawableTintOverColor">@color/neth_light_blue_color</item>
+        <item name="drawableTintOverColor">@color/colorAccentLight</item>
 
         <item name="lightToolbarBackgroundColor">@color/neth_light_grey_color</item>
         <item name="lightToolbarBackgroundDisabledColor">@color/neth_grey_color</item>
@@ -39,15 +330,15 @@
 
         <item name="button_background_drawable">@drawable/button_background_light</item>
 
-        <item name="android:statusBarColor">@color/neth_blue_color</item>
+        <item name="android:statusBarColor">@color/primaryTextColor</item>
     </style>
 
     <style name="LinphoneStyleDark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Android theme override -->
-        <item name="colorAccent">@color/neth_blue_color</item>
-        <item name="android:colorPrimary">@color/neth_blue_color</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
         <!-- Comment out the following line to disable system's status bar coloring -->
-        <item name="android:colorPrimaryDark">@color/neth_dark_blue_color</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/neth_light_grey_color</item>
         <item name="android:textColorSecondary">@color/neth_light_grey_color</item>
         <item name="android:textColorHint">@color/neth_light_grey_color</item>
@@ -55,8 +346,8 @@
         <item name="android:textColorPrimaryInverse">@color/neth_dark_grey</item>
         <item name="android:windowBackground">@color/neth_dark_grey</item>
 
-        <item name="accentColor">@color/primary_color</item>
-        <item name="accentColorLight30">@color/primary_light_color</item>
+        <item name="accentColor">@color/colorAccent</item>
+        <item name="accentColorLight30">@color/colorAccentLight</item>
         <item name="accentTextColor">@color/white_color</item>
         <item name="primaryTextColor">@color/dark_primary_text_color</item>
         <item name="secondaryTextColor">@color/dark_grey_color</item>
@@ -70,7 +361,7 @@
 
         <item name="drawableTintColor">@color/neth_light_grey_color</item>
         <item name="drawableTintDisabledColor">@color/neth_grey_color</item>
-        <item name="drawableTintOverColor">@color/neth_blue_color</item>
+        <item name="drawableTintOverColor">@color/colorAccent</item>
 
         <item name="lightToolbarBackgroundColor">@color/neth_grey_color</item>
         <item name="lightToolbarBackgroundDisabledColor">@color/neth_dark_grey</item>
@@ -80,8 +371,9 @@
 
         <item name="button_background_drawable">@drawable/button_background_dark</item>
 
-        <item name="android:statusBarColor">@color/neth_blue_color</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
+
 
     <!-- Assistant related -->
 
@@ -232,7 +524,6 @@
     </style>
 
     <style name="contact_edit_form_font" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">?attr/primaryTextColor</item>
         <item name="android:textSize">18sp</item>
     </style>
 

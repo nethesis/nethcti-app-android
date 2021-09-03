@@ -137,7 +137,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            style="@style/neth_primary_button_font"
+            style="@style/NethCTIDialogDefaultButton"
             android:id="@+id/dialog_cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
             android:text="@string/cancel" />
 
         <com.google.android.material.button.MaterialButton
-            style="@style/neth_primary_button_font"
+            style="@style/NethCTIDialogDeleteButton"
             android:id="@+id/dialog_delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
             android:text="@string/delete" />
 
         <com.google.android.material.button.MaterialButton
-            style="@style/neth_primary_button_font"
+            style="@style/NethCTIDialogOKButton"
             android:id="@+id/dialog_ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

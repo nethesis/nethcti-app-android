@@ -3,6 +3,9 @@ package org.linphone
 import android.app.Application
 import android.os.Handler
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -31,6 +34,21 @@ class NethCTIApplication : Application(), LifecycleObserver {
         _instance = this
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+
+        val darkMode = LinphonePreferences.instance().apply {
+            setContext(instance)
+        }.config.getBool(
+            "app",
+            "dark_mode", AppCompatDelegate.getDefaultNightMode()
+                    == MODE_NIGHT_YES
+        )
+        AppCompatDelegate.setDefaultNightMode(
+            if (darkMode) {
+                MODE_NIGHT_YES
+            } else {
+                MODE_NIGHT_NO
+            }
+        )
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/backgroundColor"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
@@ -14,7 +13,7 @@
 
         <TextView
             android:id="@+id/separator_text"
-            style="@style/accent_colored_title_font"
+            style="@style/NethCTIHistoryHeader"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center" />
@@ -22,7 +21,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?attr/dividerColor" />
+            android:background="@color/colorPrimaryLight" />
 
     </LinearLayout>
 
@@ -41,9 +40,9 @@
             android:layout_alignParentRight="true"
             android:adjustViewBounds="true"
             android:contentDescription="@string/content_description_detail"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:src="@drawable/list_detail" />
+            android:padding="8dp"
+            android:src="@drawable/ic_menu_dots"
+            android:tint="@color/neth_button_icon"/>
 
         <CheckBox
             android:id="@+id/delete"
@@ -83,11 +82,11 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/content_description_call_direction"
                 android:padding="7dp"
-                android:src="@drawable/call_status_incoming" />
+                android:src="@drawable/ic_call_in" />
 
             <TextView
                 android:id="@+id/sip_uri"
-                style="@style/contact_name_list_cell_font"
+                style="@style/NethCTIContactField"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"

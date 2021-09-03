@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
+import com.google.android.material.button.MaterialButton;
 import it.nethesis.utils.CallTransferManager;
 import java.util.ArrayList;
 import org.linphone.LinphoneActivity;
@@ -55,7 +56,8 @@ import org.linphone.views.ContactAvatar;
 
 public class CallOutgoingActivity extends LinphoneGenericActivity implements OnClickListener {
     private TextView mName, mNumber;
-    private ImageView mMicro, mSpeaker, mHangUp;
+    private ImageView mHangUp;
+    private MaterialButton mMicro, mSpeaker;
     private Call mCall;
     private CoreListenerStub mListener;
     private boolean mIsMicMuted, mIsSpeakerEnabled;

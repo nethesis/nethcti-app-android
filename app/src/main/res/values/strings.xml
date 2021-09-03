@@ -63,7 +63,8 @@
     <string name="link_account">Link your account</string>
     <string name="update_available">An update is available</string>
     <string name="do_not_ask_again">Do not show again</string>
-    <string name="delete_contacts_text">Are you sure you want to delete these contacts?\nThey will be deleted from your phone as well!</string>
+    <string name="delete_contacts_text">Do you want to delete selected contacts?\nThey will also be deleted from your phone\'s address book</string>
+    <string name="delete_contacts_text_2">Do you want to delete selected contact?\nIt will also be deleted from your phone\'s address book</string>
     <string name="logs_url_copied_to_clipboard">Logs url copied into clipboard</string>
 
     <!-- Launch screen -->
@@ -166,7 +167,7 @@
     <!-- History -->
     <string name="no_call_history">No call in your history</string>
     <string name="no_missed_call_history">No missed call in your history</string>
-    <string name="delete_history_log">Do you want to delete selected call log?</string>
+    <string name="delete_history_log">Do you want to delete the selected calls from  call logs?</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="calls">Calls</string>
@@ -268,8 +269,8 @@
     <string name="quit">Quit</string>
 
     <!-- Call -->
-    <string name="incoming_call">incoming call</string>
-    <string name="outgoing_call">outgoing call</string>
+    <string name="incoming_call">Incoming call</string>
+    <string name="outgoing_call">Outgoing call</string>
     <string name="add_video_dialog">Your caller would like to turn on video</string>
     <string name="no_current_call">No active call</string>
     <string name="call_paused_by_remote">Your caller paused the call</string>
@@ -299,11 +300,11 @@
     <string name="call_stats_decoder_name">Decoder:</string>
     <string name="call_stats_display_filter">Display filter:</string>
     <string name="call">Call</string>
-    <string name="call_log_delete_dialog">Do you want to delete the selected call logs?</string>
+    <string name="call_log_delete_dialog">Do you want to delete the selected calls from  call logs?</string>
 
     <!-- Recordings -->
     <string name="no_recordings">No recordings</string>
-    <string name="recordings_delete_dialog">Do you want to delete the selected recordings?</string>
+    <string name="recordings_delete_dialog">Do you want to delete selected recordings?</string>
 
     <!-- About -->
     <string name="menu_send_log">Send log</string>
@@ -594,6 +595,7 @@
     <string name="content_description_conversation_subject">Group chat room subject</string>
     <string name="content_description_conversation_infos">Group chat room info</string>
     <string name="content_description_record_call">Record call</string>
+    <string name="menu_dashboard">Dashboard</string>
 
 
 </resources>

@@ -24,7 +24,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
+import com.google.android.material.button.MaterialButton;
 import org.linphone.LinphoneManager;
 import org.linphone.core.Call;
 import org.linphone.core.CallLog;
@@ -32,7 +32,7 @@ import org.linphone.core.ProxyConfig;
 import org.linphone.settings.LinphonePreferences;
 
 @SuppressLint("AppCompatCustomView")
-public class CallButton extends ImageView implements OnClickListener, AddressAware {
+public class CallButton extends MaterialButton implements OnClickListener, AddressAware {
 
     private AddressText mAddress;
 

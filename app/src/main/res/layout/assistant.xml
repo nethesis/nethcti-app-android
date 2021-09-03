@@ -14,6 +14,7 @@
         tools:layout="@layout/status" />
 
     <include
+        android:visibility="gone"
         android:id="@+id/topbar"
         layout="@layout/assistant_topbar" />
 

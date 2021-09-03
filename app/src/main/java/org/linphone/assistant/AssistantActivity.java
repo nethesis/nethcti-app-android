@@ -345,35 +345,11 @@ public class AssistantActivity extends ThemableActivity
             return;
         }
         // boolean firstLaunch = LinphonePreferences.instance().isFirstLaunch();
-        if (mCurrentFragment == mFirstFragment) {
-            startActivity(new Intent().setClass(this, LinphoneActivity.class));
-            /*
-             * We don't care about this behavior, we go directly to Linphone Activity or to Login.
-             * LinphonePreferences.instance().firstLaunchSuccessful();
-             * if (getResources().getBoolean(R.bool.assistant_cancel_move_to_back)) {
-             *     moveTaskToBack(true);
-             * } else {
-             *     // LinphonePreferences.instance().firstLaunchSuccessful();
-             *     if (firstLaunch) startActivity(new Intent().setClass(this, LinphoneActivity.class));
-             *     finish();
-             * }
-             * } else if (mCurrentFragment == AssistantFragmentsEnum.LOGIN
-             *         || mCurrentFragment == AssistantFragmentsEnum.LINPHONE_LOGIN
-             *         || mCurrentFragment == AssistantFragmentsEnum.CREATE_ACCOUNT
-             *         || mCurrentFragment == AssistantFragmentsEnum.REMOTE_PROVISIONING) {
-             *     displayMenu();} else if (mCurrentFragment == AssistantFragmentsEnum.WELCOME) {
-             *     if (firstLaunch) startActivity(new Intent().setClass(this, LinphoneActivity.class));
-             *     finish();
-             * } else if (mCurrentFragment == AssistantFragmentsEnum.COUNTRY_CHOOSER) {
-             *     if (mLastFragment.equals(AssistantFragmentsEnum.LINPHONE_LOGIN)) {
-             *         displayLoginLinphone(null, null);
-             *     } else {
-             *         displayCreateAccount();
-             *     }
-             */
-        } else if (mCurrentFragment == AssistantFragmentsEnum.QRCODE_READER) {
+        if (mCurrentFragment == AssistantFragmentsEnum.QRCODE_READER) {
             // displayRemoteProvisioning("");
             displayLoginGeneric();
+        } else {
+            super.onBackPressed();
         }
     }
 
