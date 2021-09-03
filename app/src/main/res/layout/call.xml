@@ -295,44 +295,32 @@
                                 style="@style/NethCTIToggleButton"
                                 app:icon="@drawable/speaker_button" />
 
-                            <ImageView
+                            <com.google.android.material.button.MaterialButton
                                 android:id="@+id/audio_route"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:background="?attr/button_background_drawable"
-                                android:contentDescription="@string/content_description_audio_route"
-                                android:padding="15dp"
-                                android:src="@drawable/routes"
-                                android:visibility="gone" />
+                                android:layout_gravity="center"
+                                style="@style/NethCTIButton"
+                                app:icon="@drawable/ic_route_bluetooth"
+                                android:visibility="gone"/>
 
-                            <ImageView
+                            <com.google.android.material.button.MaterialButton
                                 android:id="@+id/route_bluetooth"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:background="?attr/button_background_drawable"
-                                android:contentDescription="@string/content_description_bluetooth"
-                                android:padding="15dp"
-                                android:src="@drawable/route_bluetooth"
+                                android:layout_gravity="center"
+                                style="@style/NethCTIButton"
+                                app:icon="@drawable/ic_bluetooth"
                                 android:visibility="gone" />
 
-                            <ImageView
+                            <com.google.android.material.button.MaterialButton
                                 android:id="@+id/route_earpiece"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="?attr/button_background_drawable"
-                                android:contentDescription="@string/content_description_earpiece"
-                                android:padding="15dp"
-                                android:src="@drawable/route_earpiece"
+                                android:layout_gravity="center"
+                                style="@style/NethCTIButton"
+                                app:icon="@drawable/ic_phone"
                                 android:visibility="gone" />
 
-                            <ImageView
+                            <com.google.android.material.button.MaterialButton
                                 android:id="@+id/route_speaker"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:background="?attr/button_background_drawable"
-                                android:contentDescription="@string/content_description_toggle_speaker"
-                                android:padding="15dp"
-                                android:src="@drawable/route_speaker"
+                                android:layout_gravity="center"
+                                style="@style/NethCTIButton"
+                                app:icon="@drawable/ic_volume"
                                 android:visibility="gone" />
                         </FrameLayout>
 

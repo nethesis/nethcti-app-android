@@ -123,11 +123,11 @@ public class CallActivity extends LinphoneGenericActivity
             mAddCall,
             mTransfer,
             mPause,
-            mSwitchCamera;
-    private ImageView mAudioRoute;
-    private ImageView mRouteSpeaker;
-    private ImageView mRouteEarpiece;
-    private ImageView mRouteBluetooth;
+            mSwitchCamera,
+            mAudioRoute,
+            mRouteSpeaker,
+            mRouteEarpiece,
+            mRouteBluetooth;
     private ImageView mMenu;
     private LinearLayout mNoCurrentCall, mCallPaused;
     private FrameLayout mCallInfo;
