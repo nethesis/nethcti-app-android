@@ -104,7 +104,7 @@ public class DashboardFragment extends Fragment {
     private void updateCardWithContactInfo(View card1, CallLog callLog) {
         View avatar = card1.findViewById(R.id.avatarImg);
         AppCompatTextView contactName = card1.findViewById(R.id.contact_name_tw);
-        AppCompatTextView contactAddress = card1.findViewById(R.id.contact_address_tw);
+        //AppCompatTextView contactAddress = card1.findViewById(R.id.contact_address_tw);
         ImageView callStateIcon = card1.findViewById(R.id.call_state_icon);
 
         Address address;
@@ -134,7 +134,7 @@ public class DashboardFragment extends Fragment {
             contactName.setText(displayName);
             ContactAvatar.displayAvatar(displayName, avatar);
         }
-        contactAddress.setText(LinphoneUtils.getDisplayableAddress(address));
+        //contactAddress.setText(LinphoneUtils.getDisplayableAddress(address));
     }
 
     @SuppressLint("NonConstantResourceId")
