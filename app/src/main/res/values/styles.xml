@@ -153,6 +153,7 @@
 
     <style name="NethCTIStatusBarText" parent="@style/LinphoneStyleLight">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="NethCTIAddressBarText" parent="@style/Widget.AppCompat.EditText">
