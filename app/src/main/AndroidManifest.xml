@@ -85,6 +85,7 @@
             android:name=".LinphoneActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/NethCTIStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -165,6 +166,7 @@
             android:noHistory="true"
             android:showWhenLocked="true"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/NethCTIStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -181,6 +183,7 @@
         <activity
             android:name=".assistant.AssistantActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/NethCTIStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
