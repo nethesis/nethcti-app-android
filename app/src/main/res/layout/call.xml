@@ -62,7 +62,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:textColor="@color/primaryTextColorLight"/>
+                                android:textColor="@color/primaryTextColorLight" />
 
                         </FrameLayout>
                         <!-- Avatar -->
@@ -71,8 +71,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_margin="8dp"
-                            android:layout_gravity="center">
+                            android:layout_gravity="center"
+                            android:layout_margin="8dp">
 
                             <include layout="@layout/constact_avatar_anydp" />
 
@@ -86,6 +86,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:paddingTop="5dp" />
+
                         <TextView
                             android:id="@+id/current_contact_address"
                             style="@style/NethCTIContactName"
@@ -93,8 +94,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:paddingTop="5dp"
                             android:textColor="@color/colorAccent"
-                            android:paddingTop="5dp" />
+                            android:visibility="gone"/>
                         <!-- First button bar -->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="wrap_content"
@@ -108,12 +110,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="8dp">
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/pause"
-                                android:layout_gravity="center"
-                                style="@style/NethCTIButton"
-                                app:icon="@drawable/ic_pause" />
-                        </FrameLayout>
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/pause"
+                                    style="@style/NethCTIButton"
+                                    android:layout_gravity="center"
+                                    app:icon="@drawable/ic_pause" />
+                            </FrameLayout>
 
                             <FrameLayout
                                 android:layout_width="wrap_content"
@@ -122,8 +124,8 @@
 
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/add_call"
-                                    android:layout_gravity="center"
                                     style="@style/NethCTIButton"
+                                    android:layout_gravity="center"
                                     app:icon="@drawable/ic_add_call" />
                             </FrameLayout>
 
@@ -134,8 +136,8 @@
 
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/transfer"
-                                    android:layout_gravity="center"
                                     style="@style/NethCTIButton"
+                                    android:layout_gravity="center"
                                     app:icon="@drawable/ic_phone_out" />
                             </FrameLayout>
 
@@ -176,10 +178,10 @@
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/switchCamera"
-                                android:layout_gravity="center"
                                 style="@style/NethCTIButton"
-                                app:icon="@drawable/ic_switch_camera"
-                                android:visibility="gone"/>
+                                android:layout_gravity="center"
+                                android:visibility="gone"
+                                app:icon="@drawable/ic_switch_camera" />
                         </FrameLayout>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
