@@ -460,7 +460,7 @@ public class ContactsFragment extends Fragment
                 && !getResources().getBoolean(R.bool.hide_non_linphone_contacts)) {
             mAllContacts.setEnabled(true);
             mLinphoneContacts.setEnabled(false);
-            mRelativeLayoutViews.setVisibility(View.VISIBLE);
+            mRelativeLayoutViews.setVisibility(View.GONE); //TODO: Visible when spinner selection should be shown
         } else {
             mAllContacts.setEnabled(false);
             mLinphoneContacts.setEnabled(true);

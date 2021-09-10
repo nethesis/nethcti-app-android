@@ -98,7 +98,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:visibility="gone">
 
         <Spinner
             android:id="@+id/spinner_views"
@@ -109,8 +110,7 @@
             android:background="@android:color/transparent"
             android:gravity="center"
             android:layout_marginLeft="5dp"
-            android:spinnerMode="dropdown"
-            android:visibility="gone"/>
+            android:spinnerMode="dropdown"/>
 
 
     </RelativeLayout>
