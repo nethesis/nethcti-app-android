@@ -19,7 +19,7 @@
         android:id="@+id/address_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:paddingHorizontal="42dp"
+        android:paddingHorizontal="@dimen/dialerAddressBarHorizontalPadding"
         app:layout_constraintTop_toTopOf="parent">
 
         <org.linphone.views.AddressText
@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
+            android:ellipsize="end"
             android:hint="@string/address_bar_hint"
             android:paddingEnd="60dp" />
 

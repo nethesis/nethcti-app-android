@@ -4,6 +4,7 @@
     <dimen name="digitSize">128dp</dimen>
     <dimen name="digitLayoutPadding">20dp</dimen>
     <dimen name="dialerMargin">24dp</dimen>
+    <dimen name="dialerAddressBarHorizontalPadding">42dp</dimen>
     <dimen name="dashboardMargin">48dp</dimen>
     <dimen name="dashboardParentMargin">48dp</dimen>
     <dimen name="dashboardLogoHeight">48dp</dimen>

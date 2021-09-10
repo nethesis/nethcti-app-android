@@ -153,7 +153,7 @@
   <string name="inapp_notification_trial_expire">Il periodo di prova scade il %s</string>
   <string name="inapp_notification_account_expire">Il periodo di abbonamento scade il %s</string>
   <!--Dailer-->
-  <string name="address_bar_hint">Inserisci un numero o un indirizzo</string>
+  <string name="address_bar_hint"><font size="24">Inserisci un numero</font></string>
   <!--History-->
   <string name="no_call_history">Nessuna chiamata nella tua cronologia</string>
   <string name="no_missed_call_history">Nessuna chiamata persa nella tua cronologia</string>
