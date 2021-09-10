@@ -174,29 +174,47 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.2" />
 
-                <FrameLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3">
+                    android:layout_weight="0.3"
+                    android:orientation="vertical">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/assistant_apply"
                         style="@style/NethCTIButton"
                         android:layout_gravity="center"
                         app:icon="@drawable/ic_login" />
-                </FrameLayout>
 
-                <FrameLayout
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        style="@style/NethCTILightHeaderSubTitle"
+                        android:text="@string/assistant_login"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3">
+                    android:layout_weight="0.3"
+                    android:orientation="vertical">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/launch_qrcode_scan"
                         style="@style/NethCTIButton"
                         android:layout_gravity="center"
                         app:icon="@drawable/ic_qrcode" />
-                </FrameLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        style="@style/NethCTILightHeaderSubTitle"
+                        android:text="@string/assistant_launch_qrcode"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <View
                     android:layout_width="0dp"
