@@ -1981,6 +1981,8 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
                                     // [Notificatore] logout user from Notificatore app.
                                     SharedPreferencesManager.removeUsername(
                                             context.getApplicationContext());
+                                    SharedPreferencesManager.removeMainExtension(
+                                            context.getApplicationContext());
                                     FCMNotification.updateRegistrationInfo(
                                             context.getApplicationContext(), "");
                                 }

@@ -123,6 +123,7 @@ import org.linphone.utils.IntentUtils;
 import org.linphone.utils.LinphoneGenericActivity;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.PushNotificationUtils;
+import org.linphone.utils.SharedPreferencesManager;
 import org.linphone.views.AddressText;
 import org.linphone.xmlrpc.XmlRpcHelper;
 import org.linphone.xmlrpc.XmlRpcListenerBase;
@@ -1874,7 +1875,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
              * So I must hide the login button.
              */
             sideMenuLogin();
-            address.setText(proxy.getIdentityAddress().asStringUriOnly());
+            String mainExt = SharedPreferencesManager.getMainExtension(this);
+            address.setText(mainExt);
+            address.setVisibility((mainExt == null || mainExt.isEmpty()) ? View.GONE : View.VISIBLE);
+
             displayName.setText(LinphoneUtils.getAddressDisplayName(proxy.getIdentityAddress()));
 
             if (!getResources().getBoolean(R.bool.disable_accounts_settings_from_side_menu)) {

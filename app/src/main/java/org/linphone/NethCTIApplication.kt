@@ -1,6 +1,9 @@
 package org.linphone
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
@@ -11,8 +14,15 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import it.nethesis.models.NethUser
 import it.nethesis.utils.AppBackgroundWatcher
+import it.nethesis.webservices.RetrofitGenerator
+import it.nethesis.webservices.UserRestAPI
 import org.linphone.settings.LinphonePreferences
+import org.linphone.utils.SharedPreferencesManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class NethCTIApplication : Application(), LifecycleObserver {
 
@@ -26,8 +36,8 @@ class NethCTIApplication : Application(), LifecycleObserver {
             }
     }
 
-    val backgroundWatcher: AppBackgroundWatcher = AppBackgroundWatcher
-    val killAppHandler = Handler()
+    private val backgroundWatcher: AppBackgroundWatcher = AppBackgroundWatcher
+    private val killAppHandler = Handler()
 
     override fun onCreate() {
         super.onCreate()
@@ -49,6 +59,37 @@ class NethCTIApplication : Application(), LifecycleObserver {
                 MODE_NIGHT_NO
             }
         )
+
+        /* Check if logged and retrieve main ext if not present */
+        getMainExtensionIfNecessary()
+    }
+
+    private fun getMainExtensionIfNecessary() {
+        val authToken = SharedPreferencesManager.getAuthtoken(this)
+        val domain = SharedPreferencesManager.getDomain(this)
+        if (isNetworkOnline(this) && !authToken.isNullOrEmpty() && !domain.isNullOrEmpty()) {
+            val userRestAPI = RetrofitGenerator.createService(
+                UserRestAPI::class.java, domain
+            )
+            userRestAPI.getMe(authToken).enqueue(
+                object : Callback<NethUser?> {
+                    override fun onResponse(call: Call<NethUser?>, response: Response<NethUser?>) {
+                        val nethUser = response.body()
+                        runCatching {
+                            if (nethUser?.endpoints?.mainextension?.get(0) != null) {
+                                val mainExt = nethUser.endpoints.mainextension[0].id
+                                SharedPreferencesManager.setMainExtension(
+                                    applicationContext, mainExt
+                                )
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<NethUser?>, t: Throwable) {
+                        t.printStackTrace()
+                    }
+                })
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
@@ -77,6 +118,13 @@ class NethCTIApplication : Application(), LifecycleObserver {
                 }
             }
         }, 60000)
+    }
+
+    private fun isNetworkOnline(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
+
+        return capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
 
 }
