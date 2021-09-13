@@ -204,7 +204,10 @@ public class SettingsFragment extends Fragment {
                         new SettingListenerBase() {
                             @Override
                             public void onClicked() {
-                                LinphoneActivity.instance().displayAccountSettings(accountIndex);
+                                Fragment frag = new AccountSettingsFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("Account", accountIndex);
+                                LinphoneActivity.instance().displaySubSettings(frag, bundle);
                             }
                         });
 

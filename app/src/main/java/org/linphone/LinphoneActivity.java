@@ -874,9 +874,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
         applyFragmentChanges(newFragmentType, extras);
     }
 
-    private void changeSettingsFragment(Fragment fragment) {
+    private void changeSettingsFragment(Fragment fragment, Bundle extras) {
         mFragment = fragment;
-        applyFragmentChanges(FragmentsAvailable.SETTINGS_SUBLEVEL, null);
+        applyFragmentChanges(FragmentsAvailable.SETTINGS_SUBLEVEL, extras);
     }
 
     private void applyFragmentChanges(FragmentsAvailable newFragmentType, Bundle extras) {
@@ -1076,8 +1076,12 @@ public class LinphoneActivity extends LinphoneGenericActivity
         changeCurrentFragment(FragmentsAvailable.RECORDING_LIST, null);
     }
 
+    public void displaySubSettings(Fragment fragment, Bundle extras) {
+        changeSettingsFragment(fragment, extras);
+    }
+
     public void displaySubSettings(Fragment fragment) {
-        changeSettingsFragment(fragment);
+        displaySubSettings(fragment, null);
     }
 
     public void displayContactsForEdition(String sipAddress, String displayName) {
