@@ -268,10 +268,10 @@ public class VideoSettingsFragment extends Fragment {
         mAutoInitiate.setVisibility(show ? View.VISIBLE : View.GONE);
         mAutoAccept.setVisibility(show ? View.VISIBLE : View.GONE);
         mOverlay.setVisibility(show ? View.VISIBLE : View.GONE);
-        mBandwidth.setVisibility(show ? View.VISIBLE : View.GONE);
-        mPreset.setVisibility(show ? View.VISIBLE : View.GONE);
-        mSize.setVisibility(show ? View.VISIBLE : View.GONE);
-        mFps.setVisibility(show ? View.VISIBLE : View.GONE);
+        //mBandwidth.setVisibility(show ? View.VISIBLE : View.GONE);
+        //mPreset.setVisibility(show ? View.VISIBLE : View.GONE);
+        //mSize.setVisibility(show ? View.VISIBLE : View.GONE);
+        //mFps.setVisibility(show ? View.VISIBLE : View.GONE);
         mVideoCodecs.setVisibility(show ? View.VISIBLE : View.GONE);
         mVideoCodecsHeader.setVisibility(show ? View.VISIBLE : View.GONE);
     }

@@ -178,7 +178,9 @@ public class SettingsFragment extends Fragment {
                         LinphoneUtils.getDisplayableAddress(proxyConfig.getIdentityAddress()));
 
                 if (proxyConfig.equals(core.getDefaultProxyConfig())) {
-                    account.setSubtitle(getString(R.string.default_account_flag));
+                    //account.setSubtitle(getString(R.string.default_account_flag));
+                    //Remove "Default account" label"
+                    account.setSubtitle("");
                 }
 
                 switch (proxyConfig.getState()) {
