@@ -715,6 +715,9 @@ public class CallActivity extends LinphoneGenericActivity
         mAddCall.setEnabled(
                 LinphoneManager.getLc().getCallsNb() < LinphoneManager.getLc().getMaxCalls()
                         && !LinphoneManager.getLc().soundResourcesLocked());
+        mAddCallNoCurrentCall.setEnabled(
+                LinphoneManager.getLc().getCallsNb() < LinphoneManager.getLc().getMaxCalls()
+                        && !LinphoneManager.getLc().soundResourcesLocked());
 
         if (CallTransferManager.instance().ismCallTransfer()) {
             mAddCall.setVisibility(View.GONE);
