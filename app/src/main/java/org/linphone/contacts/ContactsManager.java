@@ -390,10 +390,13 @@ public class ContactsManager extends ContentObserver implements FriendListListen
     public synchronized LinphoneContact findContactFromAddress(Address address) {
         if (address == null) return null;
         Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
-        Friend lf = lc.findFriend(address);
-        if (lf != null) {
-            return (LinphoneContact) lf.getUserData();
+        if(lc != null) {
+            Friend lf = lc.findFriend(address);
+            if (lf != null) {
+                return (LinphoneContact) lf.getUserData();
+            }
         }
+
         return findContactFromPhoneNumber(address.getUsername());
     }
 
@@ -419,6 +422,26 @@ public class ContactsManager extends ContentObserver implements FriendListListen
         if (lf != null) {
             return (LinphoneContact) lf.getUserData();
         }
+        return searchContactInAlreadyDownloadedContactsFromNumber(phoneNumber);
+    }
+
+    private LinphoneContact searchContactInAlreadyDownloadedContactsFromNumber(String number) {
+        for (LinphoneContact c : mSipContacts) {
+            if(c instanceof NethesisContact) {
+                for(NethesisNumberOrAddress addr : ((NethesisContact) c).getNethesisNumbersOrAddresses()){
+                    if(addr.getValue().equals(number)) {
+                        return c;
+                    }
+                }
+            } else {
+                for (LinphoneNumberOrAddress addr : c.getNumbersOrAddresses()) {
+                    if (addr.getValue().equals(number)) {
+                        return c;
+                    }
+                }
+            }
+        }
+
         return null;
     }
 
