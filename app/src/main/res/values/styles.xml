@@ -180,6 +180,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="NethAvatarText100DP" parent="@style/NethCTIAvatarText">
+        <item name="android:textSize">45sp</item>
+    </style>
+
     <style name="NethCTIContactName" parent="@style/NethCTITextRegular">
         <item name="android:textColor">@color/secondaryTextColor</item>
         <item name="android:textSize">16sp</item>
@@ -509,18 +513,6 @@
     <style name="generated_contact_avatar_font" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">?attr/secondaryTextColor</item>
         <item name="android:textSize">21sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="generated_contact_avatar_100_font" parent="@android:style/TextAppearance.Large">
-        <item name="android:textColor">?attr/secondaryTextColor</item>
-        <item name="android:textSize">60sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="generated_contact_avatar_200_font" parent="@android:style/TextAppearance.Large">
-        <item name="android:textColor">?attr/secondaryTextColor</item>
-        <item name="android:textSize">1500sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 

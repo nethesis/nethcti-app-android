@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/generated_avatar"
-        style="@style/generated_contact_avatar_100_font"
+        style="@style/NethAvatarText100DP"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_alignParentLeft="true"
