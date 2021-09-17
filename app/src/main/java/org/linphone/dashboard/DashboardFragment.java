@@ -95,7 +95,7 @@ public class DashboardFragment extends Fragment {
                     address = call.getToAddress();
                 }
 
-                LinphoneActivity.instance().displayHistoryDetail(address.asStringUriOnly(), call);
+                LinphoneActivity.instance().displayHistoryDetail(address.asString(), call);
             });
             /* Set Call Button Listener */
             card.findViewById(R.id.call)
