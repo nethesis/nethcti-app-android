@@ -278,7 +278,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
-        <item name="backgroundTint">@color/materialRed</item>
+        <item name="backgroundTint">@color/nethctiRed</item>
     </style>
 
     <style name="NethCTIDialogOKButton" parent="Widget.MaterialComponents.Button">
