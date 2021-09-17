@@ -296,6 +296,10 @@
         <item name="android:layout_margin">10dp</item>
         <item name="backgroundTint">@color/light_grey_color</item>
     </style>
+
+    <style name="NethCTINoActiveCallText" parent="NethCTITextLight">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Android theme override -->
@@ -545,11 +549,6 @@
     <style name="call_contact_name_paused_font" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">?attr/secondaryTextColor</item>
         <item name="android:textSize">21sp</item>
-    </style>
-
-    <style name="call_status_font" parent="@android:style/TextAppearance.Small">
-        <item name="android:textColor">?attr/secondaryTextColor</item>
-        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="call_log_detail_font" parent="@android:style/TextAppearance.Medium">
