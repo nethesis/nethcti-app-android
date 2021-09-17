@@ -909,7 +909,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
         if (newFragmentType != FragmentsAvailable.DIALER
                 && newFragmentType != FragmentsAvailable.CONTACTS_LIST
                 && newFragmentType != FragmentsAvailable.CHAT_LIST
-                && newFragmentType != FragmentsAvailable.HISTORY_LIST) {
+                && newFragmentType != FragmentsAvailable.HISTORY_LIST
+                && newFragmentType != FragmentsAvailable.DASHBOARD) {
             transaction.addToBackStack(newFragmentType.toString());
         } else {
             while (fm.getBackStackEntryCount() > 0) {
@@ -1535,6 +1536,11 @@ public class LinphoneActivity extends LinphoneGenericActivity
         return mCurrentFragment;
     }
 
+
+    public void setCurrentFragment(FragmentsAvailable fragment) {
+        this.mCurrentFragment = fragment;
+    }
+
     public void addContact(String displayName, String sipUri) {
         Bundle extras = new Bundle();
         extras.putSerializable("NewSipAdress", sipUri);
@@ -1821,11 +1827,11 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     @Override
                     public void onClick(View view) {
 
-                        if (mSideMenu.isDrawerVisible(Gravity.LEFT)) {
-                            mSideMenu.closeDrawer(mSideMenuContent);
-                        } else {
-                            mSideMenu.openDrawer(mSideMenuContent);
-                        }
+                    if (mSideMenu.isDrawerVisible(Gravity.LEFT)) {
+                        mSideMenu.closeDrawer(mSideMenuContent);
+                    } else {
+                        mSideMenu.openDrawer(mSideMenuContent);
+                    }
                     }
                 });
 
@@ -1882,7 +1888,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
             String mainExt = SharedPreferencesManager.getMainExtension(this);
             address.setText(mainExt);
             address.setVisibility((mainExt == null || mainExt.isEmpty()) ? View.GONE : View.VISIBLE);
-
             displayName.setText(LinphoneUtils.getAddressDisplayName(proxy.getIdentityAddress()));
 
             if (!getResources().getBoolean(R.bool.disable_accounts_settings_from_side_menu)) {

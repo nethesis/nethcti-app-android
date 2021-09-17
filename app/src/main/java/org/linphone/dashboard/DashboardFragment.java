@@ -7,11 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+
 import com.google.android.material.button.MaterialButton;
-import java.util.Arrays;
-import java.util.List;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -20,9 +21,13 @@ import org.linphone.contacts.LinphoneContact;
 import org.linphone.core.Address;
 import org.linphone.core.Call;
 import org.linphone.core.CallLog;
+import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.views.ContactAvatar;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class DashboardFragment extends Fragment {
     @Nullable
@@ -47,57 +52,70 @@ public class DashboardFragment extends Fragment {
         View card1 = view.findViewById(R.id.card1);
         View card2 = view.findViewById(R.id.card2);
         List<CallLog> calls = Arrays.asList(LinphoneManager.getLc().getCallLogs());
+        /* Used to make Linphone logic of fragment transactions */
+        if (LinphoneActivity.isInstanciated()) {
+            LinphoneActivity.instance().setCurrentFragment(FragmentsAvailable.DASHBOARD);
+        }
         /* Manage card visibility */
         switch (calls.size()) {
             case 0:
                 card1.setVisibility(View.GONE);
                 card2.setVisibility(View.GONE);
-                setCallButtonListener(card1, null);
-                setCallButtonListener(card2, null);
+                setCardListeners(card1, null);
+                setCardListeners(card2, null);
                 break;
             case 1:
                 card1.setVisibility(View.VISIBLE);
                 card2.setVisibility(View.GONE);
                 updateCardWithContactInfo(card1, calls.get(0));
-                setCallButtonListener(card1, calls.get(0));
-                setCallButtonListener(card2, null);
+                setCardListeners(card1, calls.get(0));
+                setCardListeners(card2, null);
                 break;
             default:
                 card1.setVisibility(View.VISIBLE);
                 card2.setVisibility(View.VISIBLE);
                 updateCardWithContactInfo(card1, calls.get(0));
                 updateCardWithContactInfo(card2, calls.get(1));
-                setCallButtonListener(card1, calls.get(0));
-                setCallButtonListener(card2, calls.get(1));
+                setCardListeners(card1, calls.get(0));
+                setCardListeners(card2, calls.get(1));
         }
     }
 
-    private void setCallButtonListener(View card, final CallLog call) {
+    private void setCardListeners(View card, final CallLog call) {
         if (call == null) {
+            card.setOnClickListener(null);
             card.findViewById(R.id.call).setOnClickListener(null);
         } else {
+            /* Set Card Click Listener */
+            card.setOnClickListener( v -> {
+                Address address;
+                if (call.getDir() == Call.Dir.Incoming) {
+                    address = call.getFromAddress();
+                } else {
+                    address = call.getToAddress();
+                }
+
+                LinphoneActivity.instance().displayHistoryDetail(address.asStringUriOnly(), call);
+            });
+            /* Set Call Button Listener */
             card.findViewById(R.id.call)
-                    .setOnClickListener(
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Address address;
-                                    if (call.getDir() == Call.Dir.Incoming) {
-                                        address = call.getFromAddress();
-                                    } else {
-                                        address = call.getToAddress();
-                                    }
-                                    int accountIndex =
-                                            LinphonePreferences.instance().getDefaultAccountIndex();
-                                    address.setDomain(
-                                            LinphonePreferences.instance()
-                                                    .getAccountDomain(accountIndex));
-                                    LinphoneActivity.instance()
-                                            .setAddresGoToDialerAndCall(
-                                                    address.asStringUriOnly(),
-                                                    address.getDisplayName());
-                                }
-                            });
+                    .setOnClickListener(v -> {
+                        Address address;
+                        if (call.getDir() == Call.Dir.Incoming) {
+                            address = call.getFromAddress();
+                        } else {
+                            address = call.getToAddress();
+                        }
+                        int accountIndex =
+                                LinphonePreferences.instance().getDefaultAccountIndex();
+                        address.setDomain(
+                                LinphonePreferences.instance()
+                                        .getAccountDomain(accountIndex));
+                        LinphoneActivity.instance()
+                                .setAddresGoToDialerAndCall(
+                                        address.asStringUriOnly(),
+                                        address.getDisplayName());
+                    });
         }
     }
 
