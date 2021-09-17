@@ -216,11 +216,12 @@ public class CallActivity extends LinphoneGenericActivity
                     @Override
                     public void onCallStateChanged(
                             Core lc, final Call call, Call.State state, String message) {
+                        Log.i("[CallActivity] New call state [", state, "]");
                         if (LinphoneManager.getLc().getCallsNb() == 0) {
                             finish();
                             return;
                         }
-
+                        String assertedIdentity = "";
                         if (state == State.IncomingReceived || state == State.IncomingEarlyMedia) {
                             // This scenario will be handled by the Service listener
                             return;
@@ -252,6 +253,14 @@ public class CallActivity extends LinphoneGenericActivity
                                 mStatus.refreshStatusItems(call);
                             }
                         } else if (state == State.UpdatedByRemote) {
+                            /* Manage change of caller name */
+                            try {
+                                assertedIdentity = call.getRemoteParams().getCustomHeader("P-Asserted-Identity");
+                                String displayName = assertedIdentity.split("\"")[1];
+                                ((TextView) findViewById(R.id.current_contact_name)).setText(displayName);
+                                ContactAvatar.displayAvatar(displayName, mAvatarLayout, true);
+                            } catch (Exception ignored) {}
+
                             // If the correspondent proposes video while audio call
                             boolean videoEnabled = LinphonePreferences.instance().isVideoEnabled();
                             if (!videoEnabled) {
@@ -288,8 +297,9 @@ public class CallActivity extends LinphoneGenericActivity
 
                             CallTransferManager.instance().setmCallTransfer(false);
                         }
-
-                        refreshIncallUi();
+                        if(assertedIdentity.isEmpty()) {
+                            refreshIncallUi();
+                        }
                         mTransfer.setEnabled(LinphoneManager.getLc().getCurrentCall() != null);
                     }
 
