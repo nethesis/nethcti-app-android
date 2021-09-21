@@ -344,6 +344,10 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
         return mAudioManager != null && mAudioManager.isSpeakerphoneOn();
     }
 
+    public boolean isBluetoothHeadSetEnabled() {
+        return mAudioManager != null && mAudioManager.isBluetoothScoOn();
+    }
+
     public void enableSpeaker(boolean enable) {
         mAudioManager.setSpeakerphoneOn(enable);
     }
