@@ -1738,8 +1738,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
         if (needLogout.get()) {
             MenuItem logoutItem = new MenuItem(logoutText, R.drawable.ic_logout);
-            MenuItem dashBoardItem = new MenuItem(getResources().getString(R.string.menu_dashboard), R.drawable.ic_dashboard);
-            mSideMenuItems.add(dashBoardItem);
             mSideMenuItems.add(logoutItem);
         }
 
