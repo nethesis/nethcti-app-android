@@ -128,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/content_description_contacts"
-                        android:padding="15dp"
+                        android:padding="12dp"
                         android:src="@drawable/ic_contacts"
                         android:tint="@color/colorAccent" />
                 </RelativeLayout>
