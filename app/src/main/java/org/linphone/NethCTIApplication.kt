@@ -20,6 +20,8 @@ import it.nethesis.webservices.RetrofitGenerator
 import it.nethesis.webservices.UserRestAPI
 import org.linphone.settings.LinphonePreferences
 import org.linphone.utils.SharedPreferencesManager
+import org.linphone.utils.expireIfProxyConfigured
+import org.linphone.utils.expireIfProxyNotConfigured
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -67,7 +69,8 @@ class NethCTIApplication : Application(), LifecycleObserver {
     private fun getMainExtensionIfNecessary() {
         val authToken = SharedPreferencesManager.getAuthtoken(this)
         val domain = SharedPreferencesManager.getDomain(this)
-        if (isNetworkOnline(this) && !authToken.isNullOrEmpty() && !domain.isNullOrEmpty()) {
+        val mainExtension = SharedPreferencesManager.getMainExtension(this)
+        if (isNetworkOnline(this) && !authToken.isNullOrEmpty() && !domain.isNullOrEmpty() && mainExtension.isNullOrEmpty()) {
             val userRestAPI = RetrofitGenerator.createService(
                 UserRestAPI::class.java, domain
             )
@@ -81,6 +84,13 @@ class NethCTIApplication : Application(), LifecycleObserver {
                                 SharedPreferencesManager.setMainExtension(
                                     applicationContext, mainExt
                                 )
+                            }
+                            val proxyPort = nethUser?.endpoints?.extension?.find { it.type == "mobile" }?.proxyPort
+                            val proxyConfig = LinphoneManager.getLcIfManagerNotDestroyedOrNull().defaultProxyConfig
+                            if(proxyPort != null) {
+                                proxyConfig.expires = expireIfProxyConfigured
+                            } else {
+                                proxyConfig.expires = expireIfProxyNotConfigured
                             }
                         }
                     }

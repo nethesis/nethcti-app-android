@@ -18,6 +18,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import static org.linphone.utils.ConstantsKt.expireIfProxyConfigured;
+import static org.linphone.utils.ConstantsKt.expireIfProxyNotConfigured;
+
 import android.Manifest;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
@@ -554,7 +557,7 @@ public class AssistantActivity extends ThemableActivity
         core.setMediaEncryption(MediaEncryption.SRTP);
         LinphonePreferences.instance().togglePushNotification(true);
         core.setMediaEncryptionMandatory(proxyPort != null);
-        proxyConfig.setExpires(proxyPort != null ? 2678400 : 3600);
+        proxyConfig.setExpires(proxyPort != null ? expireIfProxyConfigured : expireIfProxyNotConfigured);
 
         core.addProxyConfig(proxyConfig);
         core.setDefaultProxyConfig(proxyConfig);
