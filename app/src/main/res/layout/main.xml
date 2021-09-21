@@ -214,7 +214,8 @@
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:padding="8dp"
-                android:gravity="bottom">
+                android:gravity="bottom"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/quit_button"
