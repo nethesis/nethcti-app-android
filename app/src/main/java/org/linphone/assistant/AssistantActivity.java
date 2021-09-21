@@ -36,21 +36,27 @@ import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -112,6 +118,14 @@ public class AssistantActivity extends ThemableActivity
     private AccountCreator mAccountCreator;
     private CountryListAdapter mCountryListAdapter;
     private LinearLayout mTopBar;
+    /* SideMenu */
+    private DrawerLayout mSideMenu;
+    private RelativeLayout mSideMenuContent, mQuitLayout;
+    private ListView  mSideMenuItemList;
+    private ImageView mMenu;
+    private LinphoneActivity.MenuAdapter menuAdapter;
+    private static List<LinphoneActivity.MenuItem> mSideMenuItems;
+    // private boolean mCallTransfer = false;
 
     /** Used to show or hide the login and logout menu item. */
     private boolean mustHideLogin;
@@ -122,7 +136,7 @@ public class AssistantActivity extends ThemableActivity
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        android.util.Log.w("WEDOASD", "sono nell'oncreate dell'assistant activity");
         if (getResources().getBoolean(R.bool.orientation_portrait_only)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
@@ -171,7 +185,8 @@ public class AssistantActivity extends ThemableActivity
             mEchoCancellerAlreadyDone = false;
         }
         mPrefs = LinphonePreferences.instance();
-        mStatus.enableSideMenu(false);
+
+        initSideMenu();
 
         if (LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null) {
             mAccountCreator =
@@ -539,7 +554,7 @@ public class AssistantActivity extends ThemableActivity
         core.setMediaEncryption(MediaEncryption.SRTP);
         LinphonePreferences.instance().togglePushNotification(true);
         core.setMediaEncryptionMandatory(proxyPort != null);
-        proxyConfig.setExpires(proxyPort != null ? 604800 : 3600);
+        proxyConfig.setExpires(proxyPort != null ? 2678400 : 3600);
 
         core.addProxyConfig(proxyConfig);
         core.setDefaultProxyConfig(proxyConfig);
@@ -778,6 +793,93 @@ public class AssistantActivity extends ThemableActivity
         if (message != null)
             Toast.makeText(AssistantActivity.instance(), message, Toast.LENGTH_LONG).show();
         if (mProgress != null) mProgress.dismiss();
+    }
+
+    private void initSideMenu() {
+        mSideMenu = findViewById(R.id.side_menu);
+        mSideMenuItems = new ArrayList<>();
+
+        mSideMenuItems.add(
+                new LinphoneActivity.MenuItem(
+                        getResources().getString(R.string.assistant_login),
+                        R.drawable.ic_login_drawer));
+        if (!getResources().getBoolean(R.bool.hide_settings_from_side_menu)) {
+            mSideMenuItems.add(
+                    new LinphoneActivity.MenuItem(
+                            getResources().getString(R.string.menu_settings),
+                            R.drawable.ic_settings));
+        }
+        if (!getResources().getBoolean(R.bool.hide_recordings_from_side_menu)) {
+            mSideMenuItems.add(
+                    new LinphoneActivity.MenuItem(
+                            getResources().getString(R.string.menu_recordings),
+                            R.drawable.ic_recordings));
+        }
+        mSideMenuItems.add(
+                new LinphoneActivity.MenuItem(getResources().getString(R.string.menu_about), R.drawable.ic_about));
+        mSideMenuContent = findViewById(R.id.side_menu_content);
+        mSideMenuItemList = findViewById(R.id.item_list);
+        mMenu = findViewById(R.id.side_menu_button);
+
+        menuAdapter = new LinphoneActivity.MenuAdapter(this, R.layout.side_menu_item_cell, mSideMenuItems);
+        mSideMenuItemList.setAdapter(menuAdapter);
+        mSideMenuItemList.setOnItemClickListener(
+                (adapterView, view, i, l) -> {
+                    String selectedItem = mSideMenuItemList.getAdapter().getItem(i).toString();
+                    String extra = "";
+                    if (selectedItem.equals(getString(R.string.menu_settings))) {
+                        extra = "Settings";
+                    } else if (selectedItem.equals(getString(R.string.menu_about))) {
+                        extra = "About";
+                    } else if (selectedItem.equals(getString(R.string.menu_assistant))) {
+                        changeFragment(new LoginFragment());
+                    } else
+                    if (selectedItem.equals(getString(R.string.menu_recordings))) {
+                        extra = "Recordings";
+                    }
+                    if(!extra.isEmpty()) {
+                        startActivity(
+                                new Intent()
+                                        .setClass(this, LinphoneActivity.class)
+                                        .putExtra(extra, true));
+                    } else {
+                        openOrCloseSideMenu(false);
+                    }
+                });
+
+        mMenu.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (mSideMenu.isDrawerVisible(Gravity.LEFT)) {
+                            mSideMenu.closeDrawer(mSideMenuContent);
+                        } else {
+                            mSideMenu.openDrawer(mSideMenuContent);
+                        }
+                    }
+                });
+
+        mQuitLayout = findViewById(R.id.side_menu_quit);
+        mQuitLayout.setOnClickListener(
+                view -> quit()
+        );
+    }
+
+    private void openOrCloseSideMenu(boolean open) {
+        if (open) {
+            mSideMenu.openDrawer(mSideMenuContent);
+        } else {
+            mSideMenu.closeDrawer(mSideMenuContent);
+        }
+    }
+
+    private void quit() {
+        finish();
+        stopService(new Intent(Intent.ACTION_MAIN).setClass(this, LinphoneService.class));
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        am.killBackgroundProcesses(getString(R.string.sync_account_type));
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     public void isAccountVerified() {
