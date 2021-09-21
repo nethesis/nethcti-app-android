@@ -18,4 +18,6 @@
     <color name="secondaryTextColor">#c0c0c0</color>
 
     <color name="subtitleTextColor">#c0c0c0</color>
+
+    <color name="sideMenuDivider">#c7c7c7</color>
 </resources>

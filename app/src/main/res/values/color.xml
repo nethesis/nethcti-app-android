@@ -19,6 +19,8 @@
     <color name="primaryTextColorInverse">#FFF</color>
     <color name="secondaryTextColor">#808080</color>
 
+    <color name="sideMenuDivider">#c7c7c7</color>
+
     <color name="materialRed">#e53935</color>
     <color name="nethctiRed">#EB006E</color>
     <color name="materialDarkRed">#b71c1c</color>
