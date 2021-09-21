@@ -2,37 +2,37 @@ package org.linphone.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context
-import org.linphone.utils.AudioRouteMethod
 import android.content.Intent
 import android.telephony.TelephonyManager
 import android.util.Log
 import org.linphone.LinphoneManager
-import org.linphone.core.Core
+import org.linphone.utils.AudioRouteMethod
 
 /**
  * Pause current SIP calls when GSM phone rings or is active.
  */
 class PhoneStateChangedReceiver : BroadcastReceiver() {
     //Not the safest method to store old values. If multiple class are received this will be unsynced
-    private var routeMethod = AudioRouteMethod.Earpiece
+    private val routeMethod: HashMap<String, AudioRouteMethod> = hashMapOf()
 
     override fun onReceive(context: Context, intent: Intent) {
         val extraState = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
+        val extraNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER) ?: "" //Deprecated after API29
         if (!LinphoneManager.isInstanciated()) return
-        Log.w("WEDOASD", "Stato: $extraState")
-        when(extraState) {
+        Log.w("WEDOASD", "Stato: $extraState, Numero: $extraNumber")
+        when (extraState) {
             TelephonyManager.EXTRA_STATE_OFFHOOK -> {
-                resetAudioRouting()
+                resetAudioRouting(extraNumber)
                 LinphoneManager.getInstance().callGsmON = true
                 val lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull()
                 lc?.pauseAllCalls()
             }
             TelephonyManager.EXTRA_STATE_IDLE -> {
-                resetAudioRouting()
+                resetAudioRouting(extraNumber)
                 LinphoneManager.getInstance().callGsmON = false
             }
             TelephonyManager.EXTRA_STATE_RINGING -> {
-                routeMethod = getActiveRouteMethod()
+                getActiveRouteMethod(extraNumber)
                 if (BluetoothManager.getInstance().isBluetoothHeadsetAvailable) {
                     BluetoothManager.getInstance().routeAudioToBluetooth()
                 } else {
@@ -44,22 +44,26 @@ class PhoneStateChangedReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun getActiveRouteMethod(): AudioRouteMethod {
-        if(!LinphoneManager.isInstanciated()) {
-            return AudioRouteMethod.Earpiece //def
+    private fun getActiveRouteMethod(number: String) {
+        if (!LinphoneManager.isInstanciated()) {
+            return
         }
-        return when {
+        val audioRoute = when {
             LinphoneManager.getInstance().isSpeakerEnabled -> AudioRouteMethod.Speaker
             LinphoneManager.getInstance().isBluetoothHeadSetEnabled -> AudioRouteMethod.Bluetooth
             else -> AudioRouteMethod.Earpiece
         }
+
+        routeMethod[number] = audioRoute
     }
 
-    private fun resetAudioRouting() {
-        when(routeMethod) {
-            AudioRouteMethod.Earpiece -> LinphoneManager.getInstance().routeAudioToReceiver()
-            AudioRouteMethod.Speaker -> LinphoneManager.getInstance().routeAudioToSpeaker()
-            AudioRouteMethod.Bluetooth -> BluetoothManager.getInstance().routeAudioToBluetooth()
+    private fun resetAudioRouting(number: String) {
+        routeMethod[number]?.let {
+            when (it) {
+                AudioRouteMethod.Earpiece -> LinphoneManager.getInstance().routeAudioToReceiver()
+                AudioRouteMethod.Speaker -> LinphoneManager.getInstance().routeAudioToSpeaker()
+                AudioRouteMethod.Bluetooth -> BluetoothManager.getInstance().routeAudioToBluetooth()
+            }
         }
     }
 }
