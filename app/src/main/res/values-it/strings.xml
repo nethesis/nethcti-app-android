@@ -20,7 +20,7 @@
   <string name="notification_call_answer_label">Rispondi</string>
   <string name="notification_mark_as_read_label">Segna come già letto</string>
   <!--Common-->
-  <string name="username">Nome utente</string>
+  <string name="username">Nome Utente</string>
   <string name="userid">ID utente (facoltativo)</string>
   <string name="phone_number">Numero di telefono</string>
   <string name="confirmation_code">Codice di conferma</string>

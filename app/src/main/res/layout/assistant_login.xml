@@ -191,6 +191,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="4dp"
+                        android:textAllCaps="true"
                         style="@style/NethCTILightHeaderSubTitle"
                         android:text="@string/assistant_login"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -212,6 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="4dp"
+                        android:textAllCaps="true"
                         style="@style/NethCTILightHeaderSubTitle"
                         android:text="@string/assistant_launch_qrcode"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
