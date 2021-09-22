@@ -182,6 +182,16 @@
             android:text="@string/no_contact"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/noContactFound"
+            style="@style/NethCTITextMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/no_contact_found"
+            android:visibility="gone" />
+
     </RelativeLayout>
 
 </LinearLayout>
