@@ -290,7 +290,7 @@
     </style>
 
     <style name="NethCTIDialogDeleteButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textColor">@color/neth_white_color</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
@@ -299,7 +299,7 @@
     </style>
 
     <style name="NethCTIDialogOKButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textColor">@color/neth_white_color</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
@@ -308,7 +308,7 @@
     </style>
 
     <style name="NethCTIDialogDefaultButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textColor">@color/neth_white_color</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
@@ -333,6 +333,7 @@
     </style>
 
     <style name="NethCTIDialogMessageText" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/neth_white_color</item>
         <item name="android:textSize">21sp</item>
     </style>
 
