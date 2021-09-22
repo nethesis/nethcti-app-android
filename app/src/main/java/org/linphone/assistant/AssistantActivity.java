@@ -845,9 +845,8 @@ public class AssistantActivity extends ThemableActivity
                                 new Intent()
                                         .setClass(this, LinphoneActivity.class)
                                         .putExtra(extra, true));
-                    } else {
-                        openOrCloseSideMenu(false);
                     }
+                    openOrCloseSideMenu(false);
                 });
 
         mMenu.setOnClickListener(
