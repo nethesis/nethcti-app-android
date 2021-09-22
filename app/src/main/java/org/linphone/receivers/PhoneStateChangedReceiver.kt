@@ -19,7 +19,6 @@ class PhoneStateChangedReceiver : BroadcastReceiver() {
         val extraState = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
         val extraNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER) ?: "" //Deprecated after API29
         if (!LinphoneManager.isInstanciated()) return
-        Log.w("WEDOASD", "Stato: $extraState, Numero: $extraNumber")
         when (extraState) {
             TelephonyManager.EXTRA_STATE_OFFHOOK -> {
                 resetAudioRouting(extraNumber)

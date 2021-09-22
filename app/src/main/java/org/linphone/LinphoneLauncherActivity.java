@@ -90,7 +90,6 @@ public class LinphoneLauncherActivity extends Activity {
                 new Runnable() {
                     @Override
                     public void run() {
-                        android.util.Log.w("WEDOASD","SOno nel postdelayed, classToStart: " + classToStart.getSimpleName());
                         startActivity(
                                 getIntent().setClass(LinphoneLauncherActivity.this, classToStart));
                     }

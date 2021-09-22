@@ -139,7 +139,6 @@ public class AssistantActivity extends ThemableActivity
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        android.util.Log.w("WEDOASD", "sono nell'oncreate dell'assistant activity");
         if (getResources().getBoolean(R.bool.orientation_portrait_only)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
