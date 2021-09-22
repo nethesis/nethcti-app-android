@@ -47,22 +47,4 @@
         <item name="android:layout_margin">10dp</item>
         <item name="strokeColor">@color/colorAccent</item>
     </style>
-
-    <!-- Text fields -->
-    <style name="neth_primary_text_layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxBackgroundMode">outline</item>
-        <item name="backgroundColor">@color/colorAccent</item>
-        <item name="android:textColor">?attr/primaryTextColor</item>
-        <item name="boxStrokeColor">@color/colorAccentLight</item>
-        <item name="colorControlNormal">?attr/backgroundColor</item>
-        <item name="colorControlActivated">@color/colorAccentLight</item>
-        <item name="android:colorControlHighlight">@color/colorAccentLight</item>
-    </style>
-
-    <style name="neth_primary_text_layout_theme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxBackgroundMode">outline</item>
-        <item name="boxStrokeColor">@color/colorAccentLight</item>
-        <item name="colorControlActivated">@color/colorAccentLight</item>
-        <item name="android:colorControlHighlight">@color/colorAccentLight</item>
-    </style>
 </resources>

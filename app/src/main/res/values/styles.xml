@@ -268,6 +268,17 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="NethCTITextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="boxStrokeColor">@color/neth_text_input_layout</item>
+        <item name="android:theme">@style/NethCTITextInputLayoutTheme</item>
+    </style>
+
+    <style name="NethCTITextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="colorControlActivated">@color/colorAccentLight</item>
+        <item name="android:colorControlHighlight">@color/colorAccentLight</item>
+    </style>
+
     <style name="SpinnerTheme" parent="@android:style/Widget.TextView.SpinnerItem">
         <item name="android:textColor">@color/secondaryTextColor</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
