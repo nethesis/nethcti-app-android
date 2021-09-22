@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/separator_text"
-            style="@style/accent_colored_title_font"
+            style="@style/NetchCTISeparatorText"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center" />

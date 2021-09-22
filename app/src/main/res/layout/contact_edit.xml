@@ -85,7 +85,7 @@
 
                 <EditText
                     android:id="@+id/contactLastName"
-                    style="@style/contact_edit_form_font"
+                    style="@style/NethCTIEditContactControl"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:textColor="@color/primaryTextColor"
@@ -106,7 +106,7 @@
 
                 <EditText
                     android:id="@+id/contactFirstName"
-                    style="@style/contact_edit_form_font"
+                    style="@style/NethCTIEditContactControl"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:textColor="@color/primaryTextColor"
@@ -129,7 +129,7 @@
 
                 <EditText
                     android:id="@+id/contactOrganization"
-                    style="@style/contact_edit_form_font"
+                    style="@style/NethCTIEditContactControl"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:textColor="@color/primaryTextColor"

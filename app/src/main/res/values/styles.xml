@@ -200,6 +200,11 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="NethCTIEditContactControl" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="NethCTIContactNameTitle" parent="@style/NethCTITextRegular">
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
@@ -310,6 +315,25 @@
 
     <style name="NethCTINoActiveCallText" parent="NethCTITextLight">
         <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="NethCTIAccentTitle" parent="@style/NethCTITextMedium">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="NethCTIUnreadText" parent="@style/NethCTITextLight">
+        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="NetchCTISeparatorText" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
     </style>
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
