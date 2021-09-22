@@ -1274,6 +1274,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
     }
 
+    public void hideTabBar() {// do not hide if tablet, otherwise won't be able to navigate...
+        mTabBar.setVisibility(View.GONE);
+    }
+
     public void hideTopBar() {
         mTopBar.setVisibility(View.GONE);
         mTopBarTitle.setText("");

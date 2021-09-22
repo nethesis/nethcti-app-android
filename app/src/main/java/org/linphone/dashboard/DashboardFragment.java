@@ -56,7 +56,7 @@ public class DashboardFragment extends Fragment {
         if (LinphoneActivity.isInstanciated()) {
             LinphoneActivity.instance().setCurrentFragment(FragmentsAvailable.DASHBOARD);
 
-            LinphoneActivity.instance().hideTabBar(true);
+            LinphoneActivity.instance().hideTabBar();
             LinphoneActivity.instance().hideTopBar();
         }
         /* Manage card visibility */
