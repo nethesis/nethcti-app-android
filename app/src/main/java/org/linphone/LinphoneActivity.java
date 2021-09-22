@@ -59,6 +59,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -1489,7 +1490,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                         WindowManager.LayoutParams.MATCH_PARENT);
         dialog.getWindow().setBackgroundDrawable(d);
 
-        TextView customText = dialog.findViewById(R.id.dialog_message);
+        AppCompatTextView customText = dialog.findViewById(R.id.dialog_message);
         customText.setText(text);
         return dialog;
     }

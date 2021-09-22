@@ -42,6 +42,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -557,10 +559,10 @@ public final class LinphoneUtils {
                         WindowManager.LayoutParams.MATCH_PARENT);
         dialog.getWindow().setBackgroundDrawable(d);
 
-        TextView title = dialog.findViewById(R.id.dialog_title);
+        AppCompatTextView title = dialog.findViewById(R.id.dialog_title);
         title.setVisibility(View.GONE);
 
-        TextView message = dialog.findViewById(R.id.dialog_message);
+        AppCompatTextView message = dialog.findViewById(R.id.dialog_message);
         message.setVisibility(View.VISIBLE);
         message.setText(context.getString(R.string.trust_denied));
 
