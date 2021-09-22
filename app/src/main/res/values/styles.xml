@@ -295,6 +295,7 @@
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="backgroundTint">@color/nethctiRed</item>
+        <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
     <style name="NethCTIDialogOKButton" parent="Widget.MaterialComponents.Button">
@@ -303,6 +304,7 @@
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="backgroundTint">@color/colorAccent</item>
+        <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
     <style name="NethCTIDialogDefaultButton" parent="Widget.MaterialComponents.Button">
@@ -311,6 +313,7 @@
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="backgroundTint">@color/light_grey_color</item>
+        <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
     <style name="NethCTINoActiveCallText" parent="NethCTITextLight">
@@ -329,11 +332,21 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="NethCTIDialogMessageText" parent="@style/NethCTITextRegular">
+        <item name="android:textSize">21sp</item>
+    </style>
+
     <style name="NetchCTISeparatorText" parent="@style/NethCTITextRegular">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="NethCTIDialogTitleText" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
