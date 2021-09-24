@@ -280,6 +280,14 @@ public class LoginFragment extends Fragment implements OnClickListener, TextWatc
                 // I do login with only one extension.
                 SharedPreferencesManager.setUsername(
                         getActivity().getApplicationContext(), nethUser.username);
+                try {
+                    if (nethUser.endpoints.mainextension.get(0) != null){
+                        String mainExt = nethUser.endpoints.mainextension.get(0).id;
+                        SharedPreferencesManager.setMainExtension(
+                                getActivity().getApplicationContext(), mainExt
+                        );
+                    }
+                } catch (Exception ignored) { /* ... */ }
                 return;
             }
         }

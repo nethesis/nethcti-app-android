@@ -175,7 +175,7 @@ public class SettingsFragment extends Fragment {
             for (ProxyConfig proxyConfig : proxyConfigs) {
                 final LedSetting account = new LedSetting(getActivity());
                 account.setTitle(
-                        LinphoneUtils.getDisplayableAddress(proxyConfig.getIdentityAddress()));
+                        LinphoneUtils.getDisplayableUsernameFromAddress(proxyConfig.getIdentityAddress().asStringUriOnly()));
 
                 if (proxyConfig.equals(core.getDefaultProxyConfig())) {
                     //account.setSubtitle(getString(R.string.default_account_flag));
@@ -204,7 +204,10 @@ public class SettingsFragment extends Fragment {
                         new SettingListenerBase() {
                             @Override
                             public void onClicked() {
-                                LinphoneActivity.instance().displayAccountSettings(accountIndex);
+                                Fragment frag = new AccountSettingsFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("Account", accountIndex);
+                                LinphoneActivity.instance().displaySubSettings(frag, bundle);
                             }
                         });
 

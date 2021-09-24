@@ -21,9 +21,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/content_description_all_contacts"
-                android:padding="15dp"
-                android:tint="@color/neth_appbar_button_icon"
-                android:src="@drawable/ic_contacts" />
+                android:padding="13dp"
+                android:src="@drawable/ic_contacts"
+                android:tint="@color/neth_appbar_button_icon" />
 
         </RelativeLayout>
 
@@ -38,9 +38,9 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/content_description_linphone_contacts"
                 android:gravity="center"
-                android:padding="15dp"
-                android:tint="@color/neth_appbar_button_icon"
-                android:src="@drawable/ic_contacts_sip"  />
+                android:padding="12dp"
+                android:src="@drawable/ic_contacts_sip"
+                android:tint="@color/neth_appbar_button_icon" />
 
         </RelativeLayout>
 
@@ -65,7 +65,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:contentDescription="@string/content_description_edit_list"
-            android:padding="15dp"
+            android:padding="16dp"
             android:tint="@color/neth_button_icon"
             android:src="@drawable/ic_delete" />
 
@@ -180,6 +180,16 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="@string/no_contact"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/noContactFound"
+            style="@style/NethCTITextMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/no_contact_found"
             android:visibility="gone" />
 
     </RelativeLayout>

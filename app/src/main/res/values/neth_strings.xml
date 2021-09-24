@@ -43,7 +43,7 @@
     <string name="e_mail">Email</string>
     <string name="task">Job</string>
     <string name="notes">Note</string>
-    <string name="internal">Internal</string>
+    <string name="internal">Extension</string>
     <string name="spinnerTextView">Select a filter</string>
     <string name="owner">Created by</string>
     <string name="workAddress">Work Address</string>

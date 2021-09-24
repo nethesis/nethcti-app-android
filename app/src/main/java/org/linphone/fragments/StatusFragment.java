@@ -35,6 +35,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
@@ -454,15 +456,15 @@ public class StatusFragment extends Fragment {
                 zrtpToRead = token.substring(2);
             }
 
-            TextView localSas = mZrtpDialog.findViewById(R.id.zrtp_sas_local);
+            AppCompatTextView localSas = mZrtpDialog.findViewById(R.id.zrtp_sas_local);
             localSas.setText(zrtpToRead.toUpperCase());
-            TextView remoteSas = mZrtpDialog.findViewById(R.id.zrtp_sas_remote);
+            AppCompatTextView remoteSas = mZrtpDialog.findViewById(R.id.zrtp_sas_remote);
             remoteSas.setText(zrtpToListen.toUpperCase());
-            TextView message = mZrtpDialog.findViewById(R.id.dialog_message);
+            AppCompatTextView message = mZrtpDialog.findViewById(R.id.dialog_message);
             message.setVisibility(View.GONE);
             mZrtpDialog.findViewById(R.id.dialog_zrtp_layout).setVisibility(View.VISIBLE);
 
-            TextView title = mZrtpDialog.findViewById(R.id.dialog_title);
+            AppCompatTextView title = mZrtpDialog.findViewById(R.id.dialog_title);
             title.setText(getString(R.string.zrtp_dialog_title));
             title.setVisibility(View.VISIBLE);
 

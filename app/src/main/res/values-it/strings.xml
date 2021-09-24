@@ -20,7 +20,7 @@
   <string name="notification_call_answer_label">Rispondi</string>
   <string name="notification_mark_as_read_label">Segna come già letto</string>
   <!--Common-->
-  <string name="username">Nome utente</string>
+  <string name="username">Nome Utente</string>
   <string name="userid">ID utente (facoltativo)</string>
   <string name="phone_number">Numero di telefono</string>
   <string name="confirmation_code">Codice di conferma</string>
@@ -163,6 +163,7 @@
   <string name="calls">Chiamate</string>
   <!--Contacts-->
   <string name="no_contact">Nessun contatto nella tua rubrica.</string>
+  <string name="no_contact_found">Nessun contatto trovato nella tua rubrica.</string>
   <string name="no_sip_contact">Nessun contatto nella tua rubrica.</string>
   <string name="delete_contacts">Vuoi eliminare i contatti selezionati?</string>
   <string name="delete_contact">Vuoi eliminare il contatto selezionato?</string>

@@ -33,7 +33,7 @@
             <ImageView
                 android:id="@+id/add_contact"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="32dp"
                 android:layout_weight="0.2"
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/content_description_add_contact"
@@ -43,7 +43,7 @@
             <ImageView
                 android:id="@+id/goto_contact"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="32dp"
                 android:layout_weight="0.2"
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/content_description_contacts"
@@ -85,7 +85,8 @@
                 style="@style/NethCTIContactInfo"
                 android:textColor="@color/colorAccent"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

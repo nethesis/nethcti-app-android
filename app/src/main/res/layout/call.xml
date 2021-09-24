@@ -96,7 +96,7 @@
                             android:gravity="center"
                             android:paddingTop="5dp"
                             android:textColor="@color/colorAccent"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
                         <!-- First button bar -->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="wrap_content"
@@ -143,7 +143,7 @@
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
                         <!-- ??? -->
-                        <LinearLayout
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/remote_pause"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -159,14 +159,14 @@
                                 android:layout_gravity="center"
                                 android:src="@drawable/waiting_time" />
 
-                            <TextView
-                                style="@style/call_status_font"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/NethCTINoActiveCallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="@string/call_paused_by_remote" />
 
-                        </LinearLayout>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <FrameLayout
                             android:layout_width="wrap_content"
@@ -201,29 +201,36 @@
                             android:orientation="vertical"/>
                     </ScrollView>
 
-                    <LinearLayout
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/no_current_call"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_above="@id/pausedCalls"
                         android:background="?attr/backgroundColor"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:orientation="vertical"
                         android:visibility="gone">
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/NethCTINoActiveCallText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/waiting_time" />
+                            android:text="@string/no_current_call"
+                            android:layout_marginBottom="8dp"/>
 
-                        <TextView
-                            style="@style/call_status_font"
+                        <FrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/no_current_call" />
-                    </LinearLayout>
+                            android:layout_marginHorizontal="8dp">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/add_call_no_current_call"
+                                style="@style/NethCTIButton"
+                                android:layout_gravity="center"
+                                app:icon="@drawable/ic_add_call" />
+                        </FrameLayout>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <org.linphone.views.Numpad
                         android:id="@+id/numpad"
@@ -384,8 +391,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:padding="4dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingVertical="4dp"
+                        android:baselineAligned="false">
 
                         <FrameLayout
                             android:layout_width="0dp"

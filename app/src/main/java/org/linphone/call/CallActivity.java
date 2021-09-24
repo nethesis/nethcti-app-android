@@ -54,6 +54,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -121,6 +123,7 @@ public class CallActivity extends LinphoneGenericActivity
             mSpeaker,
             mRecordCall,
             mAddCall,
+            mAddCallNoCurrentCall,
             mTransfer,
             mPause,
             mSwitchCamera,
@@ -130,7 +133,7 @@ public class CallActivity extends LinphoneGenericActivity
             mRouteBluetooth;
     private LinearLayoutCompat mAudioRouteMenu;
     private ImageView mMenu;
-    private LinearLayout mNoCurrentCall, mCallPaused;
+    private LinearLayoutCompat mNoCurrentCall, mCallPaused;
     private FrameLayout mCallInfo;
     private ProgressBar mVideoProgress;
     private StatusFragment mStatus;
@@ -263,13 +266,17 @@ public class CallActivity extends LinphoneGenericActivity
                             boolean autoAcceptCameraPolicy =
                                     LinphonePreferences.instance()
                                             .shouldAutomaticallyAcceptVideoRequests();
+                            /* Disabled, NethCTI do not support this yet */
                             if (remoteVideo
                                     && !localVideo
                                     && !autoAcceptCameraPolicy
-                                    && !LinphoneManager.getLc().isInConference()) {
+                                    && !LinphoneManager.getLc().isInConference()
+                            && false) {
                                 showAcceptCallUpdateDialog();
                                 createTimerForDialog(SECONDS_BEFORE_DENYING_CALL_UPDATE);
                             }
+
+
                         } else if (state == State.End || state == State.Error) {
                             if (CallTransferManager.instance().ismCallTransfer()
                                     && CallTransferManager.instance().getmTransferCallId()
@@ -456,6 +463,10 @@ public class CallActivity extends LinphoneGenericActivity
         mAddCall = findViewById(R.id.add_call);
         mAddCall.setOnClickListener(this);
         mAddCall.setEnabled(false);
+
+        mAddCallNoCurrentCall = findViewById(R.id.add_call_no_current_call);
+        mAddCallNoCurrentCall.setOnClickListener(this);
+        mAddCallNoCurrentCall.setEnabled(false);
 
         mTransfer = findViewById(R.id.transfer);
         mTransfer.setOnClickListener(this);
@@ -706,6 +717,9 @@ public class CallActivity extends LinphoneGenericActivity
         mAddCall.setEnabled(
                 LinphoneManager.getLc().getCallsNb() < LinphoneManager.getLc().getMaxCalls()
                         && !LinphoneManager.getLc().soundResourcesLocked());
+        mAddCallNoCurrentCall.setEnabled(
+                LinphoneManager.getLc().getCallsNb() < LinphoneManager.getLc().getMaxCalls()
+                        && !LinphoneManager.getLc().soundResourcesLocked());
 
         if (CallTransferManager.instance().ismCallTransfer()) {
             mAddCall.setVisibility(View.GONE);
@@ -780,7 +794,7 @@ public class CallActivity extends LinphoneGenericActivity
             }
         } else if (id == R.id.speaker) {
             toggleSpeaker();
-        } else if (id == R.id.add_call) {
+        } else if (id == R.id.add_call || id == R.id.add_call_no_current_call) {
             goBackToDialer();
         } else if (id == R.id.record_call) {
             int externalStorage =
@@ -1281,7 +1295,7 @@ public class CallActivity extends LinphoneGenericActivity
                         WindowManager.LayoutParams.MATCH_PARENT);
         mDialog.getWindow().setBackgroundDrawable(d);
 
-        TextView customText = mDialog.findViewById(R.id.dialog_message);
+        AppCompatTextView customText = mDialog.findViewById(R.id.dialog_message);
         customText.setText(getResources().getString(R.string.add_video_dialog));
         mDialog.findViewById(R.id.dialog_delete_button).setVisibility(View.GONE);
         Button accept = mDialog.findViewById(R.id.dialog_ok_button);

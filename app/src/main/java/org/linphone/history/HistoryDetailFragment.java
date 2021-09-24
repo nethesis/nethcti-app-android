@@ -211,7 +211,7 @@ public class HistoryDetailFragment extends Fragment implements OnClickListener {
         int id = v.getId();
 
         if (id == R.id.back) {
-            getFragmentManager().popBackStackImmediate();
+            LinphoneActivity.instance().popBackStack();
         }
         if (id == R.id.call) {
             LinphoneActivity.instance().setAddresGoToDialerAndCall(mSipUri, mDisplayName);

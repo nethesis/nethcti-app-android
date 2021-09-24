@@ -57,6 +57,8 @@ import androidx.core.view.inputmethod.InputContentInfoCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.google.android.material.checkbox.MaterialCheckBox;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -903,7 +905,7 @@ public class ChatMessagesFragment extends Fragment
         cancel.setText(getString(R.string.cancel));
 
         dialog.findViewById(R.id.dialog_do_not_ask_again_layout).setVisibility(View.VISIBLE);
-        final CheckBox doNotAskAgain = dialog.findViewById(R.id.doNotAskAgain);
+        final MaterialCheckBox doNotAskAgain = dialog.findViewById(R.id.doNotAskAgain);
         dialog.findViewById(R.id.doNotAskAgainLabel)
                 .setOnClickListener(
                         new View.OnClickListener() {
