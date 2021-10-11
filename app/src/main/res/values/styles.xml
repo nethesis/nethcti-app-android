@@ -41,12 +41,12 @@
     </style>
 
     <style name="NethCTIStyleLaunchActivity" parent="NethCTIStyle">
-        <item name="android:colorPrimary">@color/colorAccent</item>
-        <item name="android:statusBarColor">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/nethSplashColor</item>
+        <item name="android:statusBarColor">@color/nethSplashColor</item>
+        <item name="android:windowBackground">@color/nethSplashColor</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:colorBackground">@color/colorAccent</item>
-        <item name="backgroundColor">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/nethSplashColor</item>
+        <item name="backgroundColor">@color/nethSplashColor</item>
         <item name="backgroundColor2">@color/colorAccentLight</item>
         <item name="backgroundContrastColor">@color/neth_grey_color</item>
     </style>
