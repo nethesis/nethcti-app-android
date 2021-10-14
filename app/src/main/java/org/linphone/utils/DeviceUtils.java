@@ -33,7 +33,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
+
+import com.google.android.material.checkbox.MaterialCheckBox;
+
 import java.util.List;
 import org.linphone.R;
 import org.linphone.compatibility.Compatibility;
@@ -153,15 +158,15 @@ public class DeviceUtils {
                                     WindowManager.LayoutParams.MATCH_PARENT);
                     dialog.getWindow().setBackgroundDrawable(d);
 
-                    TextView customText = dialog.findViewById(R.id.dialog_message);
+                    AppCompatTextView customText = dialog.findViewById(R.id.dialog_message);
                     customText.setText(R.string.device_power_saver_dialog_message);
 
-                    TextView customTitle = dialog.findViewById(R.id.dialog_title);
+                    AppCompatTextView customTitle = dialog.findViewById(R.id.dialog_title);
                     customTitle.setText(R.string.device_power_saver_dialog_title);
 
                     dialog.findViewById(R.id.dialog_do_not_ask_again_layout)
                             .setVisibility(View.VISIBLE);
-                    final CheckBox doNotAskAgain = dialog.findViewById(R.id.doNotAskAgain);
+                    final MaterialCheckBox doNotAskAgain = dialog.findViewById(R.id.doNotAskAgain);
                     dialog.findViewById(R.id.doNotAskAgainLabel)
                             .setOnClickListener(
                                     new View.OnClickListener() {

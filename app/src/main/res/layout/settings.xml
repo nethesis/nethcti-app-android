@@ -3,7 +3,7 @@
     xmlns:linphone="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/accounts_settings_list_header"
-            style="@style/settings_category_font"
+            style="@style/NethCTIContactFieldTitle"
             android:text="@string/pref_sipaccounts"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            style="@style/settings_category_font"
+            style="@style/NethCTIContactFieldTitle"
             android:text="@string/pref_preferences_title"
             android:paddingTop="15dp"
             android:layout_marginLeft="10dp"

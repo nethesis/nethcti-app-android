@@ -3,7 +3,7 @@
     xmlns:linphone="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,13 +22,15 @@
             android:id="@+id/pref_java_debug"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            linphone:title="@string/pref_java_debug" />
+            linphone:title="@string/pref_java_debug"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.SwitchSetting
             android:id="@+id/pref_friendlist_subscribe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            linphone:title="@string/pref_friendlist_subscribe" />
+            linphone:title="@string/pref_friendlist_subscribe"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.SwitchSetting
             android:id="@+id/pref_background_mode"
@@ -41,7 +43,8 @@
             android:id="@+id/pref_autostart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            linphone:title="@string/pref_autostart" />
+            linphone:title="@string/pref_autostart"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.SwitchSetting
             android:id="@+id/pref_dark_mode"
@@ -55,14 +58,16 @@
             android:layout_height="wrap_content"
             linphone:subtitle="@string/pref_display_name_subtitle"
             linphone:hint="@string/pref_device_name"
-            linphone:title="@string/pref_device_name" />
+            linphone:title="@string/pref_device_name"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.TextSetting
             android:id="@+id/pref_remote_provisioning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             linphone:hint="@string/pref_remote_provisioning_title"
-            linphone:title="@string/pref_remote_provisioning_title" />
+            linphone:title="@string/pref_remote_provisioning_title"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.BasicSetting
             android:id="@+id/pref_android_app_settings"
@@ -77,7 +82,7 @@
             android:id="@+id/pref_android_prim_account">
 
             <TextView
-                style="@style/settings_category_font"
+                style="@style/NethCTIContactFieldTitle"
                 android:text="@string/pref_primary_account_title"
                 android:paddingTop="15dp"
                 android:layout_marginLeft="10dp"

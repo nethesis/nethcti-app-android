@@ -25,6 +25,6 @@ public class Endpoints {
     // @SerializedName("voicemail")
     // public List<Object> voicemail = null;
 
-    // @SerializedName("mainextension")
-    // public List<Mainextension> mainextension = null;
+    @SerializedName("mainextension")
+    public List<Extension> mainextension = null;
 }

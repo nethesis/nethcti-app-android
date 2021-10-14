@@ -3,7 +3,7 @@
     xmlns:linphone="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,8 @@
             android:id="@+id/pref_preferred_video_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            linphone:title="@string/pref_preferred_video_size" />
+            linphone:title="@string/pref_preferred_video_size"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.ListSetting
             android:id="@+id/pref_video_preset"
@@ -51,23 +52,26 @@
             android:layout_height="wrap_content"
             linphone:list_items_names="@array/video_preset_entries"
             linphone:list_items_values="@array/video_preset_entries"
-            linphone:title="@string/pref_video_preset" />
+            linphone:title="@string/pref_video_preset"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.ListSetting
             android:id="@+id/pref_preferred_fps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            linphone:title="@string/pref_preferred_fps" />
+            linphone:title="@string/pref_preferred_fps"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.TextSetting
             android:id="@+id/pref_bandwidth_limit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             linphone:hint="@string/pref_bandwidth_limit"
-            linphone:title="@string/pref_bandwidth_limit" />
+            linphone:title="@string/pref_bandwidth_limit"
+            android:visibility="gone" />
 
         <TextView
-            style="@style/settings_category_font"
+            style="@style/NethCTIContactFieldTitle"
             android:id="@+id/pref_video_codecs_header"
             android:text="@string/pref_codecs"
             android:paddingTop="15dp"

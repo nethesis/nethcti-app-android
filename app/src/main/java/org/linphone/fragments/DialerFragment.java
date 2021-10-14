@@ -26,8 +26,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import com.google.android.material.button.MaterialButton;
 import it.nethesis.utils.CallTransferManager;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
@@ -44,7 +44,7 @@ public class DialerFragment extends Fragment {
     private AddressAware mNumpad;
     private AddressText mAddress;
     private CallButton mCall;
-    private ImageView mAddContact;
+    private MaterialButton mAddContact;
     private OnClickListener mAddContactListener, mCancelListener, mTransferListener;
 
     /** @return null if not ready yet */
@@ -55,7 +55,7 @@ public class DialerFragment extends Fragment {
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialer, container, false);
+        final View view = inflater.inflate(R.layout.dialer, container, false);
 
         mAddress = view.findViewById(R.id.address);
         mAddress.setDialerFragment(this);
@@ -69,18 +69,18 @@ public class DialerFragment extends Fragment {
                 && LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null
                 && LinphoneManager.getLcIfManagerNotDestroyedOrNull().getCallsNb() > 0) {
             if (CallTransferManager.instance().ismCallTransfer()) {
-                mCall.setImageResource(R.drawable.call_transfer);
+                mCall.setIconResource(R.drawable.call_transfer);
             } else {
-                mCall.setImageResource(R.drawable.call_add);
+                mCall.setIconResource(R.drawable.call_add);
             }
         } else {
             if (LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null
                     && LinphoneManager.getLcIfManagerNotDestroyedOrNull()
                             .getVideoActivationPolicy()
                             .getAutomaticallyInitiate()) {
-                mCall.setImageResource(R.drawable.call_video_start);
+                mCall.setIconResource(R.drawable.ic_phone);
             } else {
-                mCall.setImageResource(R.drawable.call_audio_start);
+                mCall.setIconResource(R.drawable.ic_phone);
             }
         }
 
@@ -199,24 +199,24 @@ public class DialerFragment extends Fragment {
 
         if (lc.getCallsNb() > 0) {
             if (CallTransferManager.instance().ismCallTransfer()) {
-                mCall.setImageResource(R.drawable.call_transfer);
+                mCall.setIconResource(R.drawable.ic_phone_out);
                 mCall.setExternalClickListener(mTransferListener);
             } else {
-                mCall.setImageResource(R.drawable.call_add);
+                mCall.setIconResource(R.drawable.ic_phone_add);
                 mCall.resetClickListener();
             }
             mAddContact.setEnabled(true);
-            mAddContact.setImageResource(R.drawable.call_back);
+            mAddContact.setIconResource(R.drawable.ic_phone_in);
             mAddContact.setOnClickListener(mCancelListener);
         } else {
             mCall.resetClickListener();
             if (LinphoneManager.getLc().getVideoActivationPolicy().getAutomaticallyInitiate()) {
-                mCall.setImageResource(R.drawable.call_video_start);
+                mCall.setIconResource(R.drawable.ic_phone);
             } else {
-                mCall.setImageResource(R.drawable.call_audio_start);
+                mCall.setIconResource(R.drawable.ic_phone);
             }
             mAddContact.setEnabled(false);
-            mAddContact.setImageResource(R.drawable.contact_add);
+            mAddContact.setIconResource(R.drawable.ic_add_user);
             mAddContact.setOnClickListener(mAddContactListener);
             enableDisableAddContact();
         }

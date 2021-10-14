@@ -22,13 +22,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+
 import androidx.appcompat.app.AppCompatDelegate;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -46,7 +46,6 @@ import org.linphone.core.Tunnel;
 import org.linphone.core.TunnelConfig;
 import org.linphone.core.VideoActivationPolicy;
 import org.linphone.core.tools.Log;
-import org.linphone.purchase.Purchasable;
 import org.linphone.utils.LinphoneUtils;
 
 public class LinphonePreferences {
@@ -865,44 +864,6 @@ public class LinphonePreferences {
         getConfig().setInt("audio", "codec_bitrate_limit", bitrate);
     }
 
-    public String getInAppPurchaseValidatingServerUrl() {
-        return getConfig().getString("in-app-purchase", "server_url", null);
-    }
-
-    public Purchasable getInAppPurchasedItem() {
-        String id = getConfig().getString("in-app-purchase", "purchase_item_id", null);
-        String payload = getConfig().getString("in-app-purchase", "purchase_item_payload", null);
-        String signature =
-                getConfig().getString("in-app-purchase", "purchase_item_signature", null);
-        String username = getConfig().getString("in-app-purchase", "purchase_item_username", null);
-
-        return new Purchasable(id).setPayloadAndSignature(payload, signature).setUserData(username);
-    }
-
-    public void setInAppPurchasedItem(Purchasable item) {
-        if (item == null) return;
-
-        getConfig().setString("in-app-purchase", "purchase_item_id", item.getId());
-        getConfig().setString("in-app-purchase", "purchase_item_payload", item.getPayload());
-        getConfig()
-                .setString(
-                        "in-app-purchase", "purchase_item_signature", item.getPayloadSignature());
-        getConfig().setString("in-app-purchase", "purchase_item_username", item.getUserData());
-    }
-
-    public ArrayList<String> getInAppPurchasables() {
-        ArrayList<String> purchasables = new ArrayList<>();
-        String list = getConfig().getString("in-app-purchase", "purchasable_items_ids", null);
-        if (list != null) {
-            for (String purchasable : list.split(";")) {
-                if (purchasable.length() > 0) {
-                    purchasables.add(purchasable);
-                }
-            }
-        }
-        return purchasables;
-    }
-
     public String getXmlrpcUrl() {
         return getConfig().getString("assistant", "xmlrpc_url", null);
     }
@@ -1072,6 +1033,11 @@ public class LinphonePreferences {
 
     public void enableDarkMode(boolean enable) {
         getConfig().setBool("app", "dark_mode", enable);
+        if(enable) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         if (LinphoneActivity.isInstanciated()) {
             LinphoneActivity.instance().recreate();
         }

@@ -57,7 +57,6 @@ public class HistoryFragment extends Fragment
     private RecyclerView mHistoryList;
     private TextView mNoCallHistory, mNoMissedCallHistory;
     private ImageView mMissedCalls, mAllCalls;
-    private View mAllCallsSelected, mMissedCallsSelected;
     private boolean mOnlyDisplayMissedCalls;
     private List<CallLog> mLogs;
     private HistoryAdapter mHistoryAdapter;
@@ -89,12 +88,8 @@ public class HistoryFragment extends Fragment
         mAllCalls = view.findViewById(R.id.all_calls);
         mAllCalls.setOnClickListener(this);
 
-        mAllCallsSelected = view.findViewById(R.id.all_calls_select);
-
         mMissedCalls = view.findViewById(R.id.missed_calls);
         mMissedCalls.setOnClickListener(this);
-
-        mMissedCallsSelected = view.findViewById(R.id.missed_calls_select);
 
         mAllCalls.setEnabled(false);
         mOnlyDisplayMissedCalls = false;
@@ -195,16 +190,12 @@ public class HistoryFragment extends Fragment
 
         if (id == R.id.all_calls) {
             mAllCalls.setEnabled(false);
-            mAllCallsSelected.setVisibility(View.VISIBLE);
-            mMissedCallsSelected.setVisibility(View.INVISIBLE);
             mMissedCalls.setEnabled(true);
             mOnlyDisplayMissedCalls = false;
             refresh();
         }
         if (id == R.id.missed_calls) {
             mAllCalls.setEnabled(true);
-            mAllCallsSelected.setVisibility(View.INVISIBLE);
-            mMissedCallsSelected.setVisibility(View.VISIBLE);
             mMissedCalls.setEnabled(false);
             mOnlyDisplayMissedCalls = true;
         }

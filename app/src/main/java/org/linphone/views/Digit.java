@@ -26,8 +26,8 @@ import android.content.DialogInterface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
+import com.google.android.material.button.MaterialButton;
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.R;
@@ -37,7 +37,7 @@ import org.linphone.core.tools.Log;
 import org.linphone.settings.LinphonePreferences;
 
 @SuppressLint("AppCompatCustomView")
-public class Digit extends Button implements AddressAware {
+public class Digit extends MaterialButton implements AddressAware {
 
     private AddressText mAddress;
     private boolean mPlayDtmf;

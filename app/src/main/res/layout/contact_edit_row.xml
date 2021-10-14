@@ -7,25 +7,28 @@
 
     <EditText
         android:id="@+id/numoraddr"
-        style="@style/contact_edit_form_font"
+        style="@style/NethCTIEditContactControl"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_toStartOf="@+id/delete_field"
         android:layout_toLeftOf="@+id/delete_field"
-        android:background="@drawable/resizable_textfield"
-        android:textColor="@color/black_color"
+        android:textColor="@color/primaryTextColor"
         android:inputType="textEmailAddress"
         android:textCursorDrawable="@null" />
 
     <ImageView
         android:id="@+id/delete_field"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentRight="true"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:contentDescription="@string/content_description_add"
-        android:paddingLeft="5dp"
-        android:src="@drawable/delete_field" />
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:padding="8dp"
+        android:background="@drawable/round_accent_button_background"
+        android:backgroundTint="@color/delete_address_button"
+        android:src="@drawable/ic_remove"/>
 
 </RelativeLayout>

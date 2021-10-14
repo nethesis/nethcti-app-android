@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="?attr/lightToolbarBackgroundColor"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -21,17 +20,10 @@
                 android:id="@+id/all_contacts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/button_background_drawable"
                 android:contentDescription="@string/content_description_all_contacts"
-                android:padding="15dp"
-                android:src="@drawable/contacts_all" />
-
-            <View
-                android:id="@+id/all_contacts_select"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_alignParentBottom="true"
-                android:background="?attr/accentColor" />
+                android:padding="13dp"
+                android:src="@drawable/ic_contacts"
+                android:tint="@color/neth_appbar_button_icon" />
 
         </RelativeLayout>
 
@@ -44,20 +36,12 @@
                 android:id="@+id/linphone_contacts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/button_background_drawable"
                 android:contentDescription="@string/content_description_linphone_contacts"
                 android:gravity="center"
-                android:padding="15dp"
-                android:tint="@color/contacts_sip"
-                android:src="@drawable/ic_contacts_sip"  />
+                android:padding="12dp"
+                android:src="@drawable/ic_contacts_sip"
+                android:tint="@color/neth_appbar_button_icon" />
 
-            <View
-                android:id="@+id/linphone_contacts_select"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_alignParentBottom="true"
-                android:background="?attr/accentColor"
-                android:visibility="gone" />
         </RelativeLayout>
 
         <View
@@ -70,20 +54,20 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:background="?attr/button_background_drawable"
             android:contentDescription="@string/content_description_new_contact"
             android:padding="15dp"
-            android:src="@drawable/contact_add" />
+            android:tint="@color/neth_button_icon"
+            android:src="@drawable/ic_add_user" />
 
         <ImageView
             android:id="@+id/edit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:background="?attr/button_background_drawable"
             android:contentDescription="@string/content_description_edit_list"
-            android:padding="15dp"
-            android:src="@drawable/delete" />
+            android:padding="16dp"
+            android:tint="@color/neth_button_icon"
+            android:src="@drawable/ic_delete" />
 
     </LinearLayout>
 
@@ -114,7 +98,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:visibility="gone">
 
         <Spinner
             android:id="@+id/spinner_views"
@@ -125,8 +110,7 @@
             android:background="@android:color/transparent"
             android:gravity="center"
             android:layout_marginLeft="5dp"
-            android:spinnerMode="dropdown"
-            android:visibility="gone"/>
+            android:spinnerMode="dropdown"/>
 
 
     </RelativeLayout>
@@ -144,7 +128,7 @@
                 android:id="@+id/contactsList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="?attr/dividerColor"
+                android:divider="@color/colorPrimaryLight"
                 android:dividerHeight="1dp" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -160,7 +144,7 @@
 
         <TextView
             android:id="@+id/noConnection"
-            style="@style/empty_list_font"
+            style="@style/NethCTITextMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -170,7 +154,7 @@
 
         <TextView
             android:id="@+id/sessionExpired"
-            style="@style/empty_list_font"
+            style="@style/NethCTITextMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -180,7 +164,7 @@
 
         <TextView
             android:id="@+id/noSipContact"
-            style="@style/empty_list_font"
+            style="@style/NethCTITextMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -190,12 +174,22 @@
 
         <TextView
             android:id="@+id/noContact"
-            style="@style/empty_list_font"
+            style="@style/NethCTITextMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="@string/no_contact"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/noContactFound"
+            style="@style/NethCTITextMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/no_contact_found"
             android:visibility="gone" />
 
     </RelativeLayout>

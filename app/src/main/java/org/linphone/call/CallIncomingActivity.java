@@ -49,9 +49,6 @@ import org.linphone.core.tools.Log;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneGenericActivity;
 import org.linphone.utils.LinphoneUtils;
-import org.linphone.views.CallIncomingAnswerButton;
-import org.linphone.views.CallIncomingButtonListener;
-import org.linphone.views.CallIncomingDeclineButton;
 import org.linphone.views.ContactAvatar;
 
 public class CallIncomingActivity extends LinphoneGenericActivity {
@@ -59,8 +56,7 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
 
     private TextView mName, mNumber;
     private ImageView mAcceptIcon;
-    private CallIncomingAnswerButton mAccept;
-    private CallIncomingDeclineButton mDecline;
+    private ImageView mAccept, mDecline;
     private Call mCall;
     private CoreListenerStub mListener;
     private boolean mAlreadyAcceptedOrDeniedCall;
@@ -109,30 +105,17 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
         }
 
         mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
-        boolean doNotUseSliders =
-                getResources()
-                        .getBoolean(
-                                R.bool.do_not_use_sliders_to_answer_hangup_call_if_phone_unlocked);
-        if (doNotUseSliders && !mKeyguardManager.inKeyguardRestrictedInputMode()) {
-            mAccept.setSliderMode(false);
-            mDecline.setSliderMode(false);
-        } else {
-            mAccept.setSliderMode(true);
-            mDecline.setSliderMode(true);
-            mAccept.setDeclineButton(mDecline);
-            mDecline.setAnswerButton(mAccept);
-        }
-        mAccept.setListener(
-                new CallIncomingButtonListener() {
+        mAccept.setOnClickListener(
+                new View.OnClickListener() {
                     @Override
-                    public void onAction() {
+                    public void onClick(View v) {
                         answer();
                     }
                 });
-        mDecline.setListener(
-                new CallIncomingButtonListener() {
+        mDecline.setOnClickListener(
+                new View.OnClickListener() {
                     @Override
-                    public void onAction() {
+                    public void onClick(View v) {
                         decline();
                     }
                 });

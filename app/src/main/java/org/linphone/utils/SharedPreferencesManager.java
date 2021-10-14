@@ -8,6 +8,7 @@ public class SharedPreferencesManager {
     private static final String LOGGED_USERNAME = "neth_username";
     private static final String KEY_AUTHTOKEN = "neth_authToken";
     private static final String DOMAIN = "neth_domain";
+    private static final String MAIN_EXTENSION = "neth_main_extension";
 
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -62,5 +63,19 @@ public class SharedPreferencesManager {
     public static void removeDomain(Context context) {
         SharedPreferences pref = getSharedPreferences(context);
         pref.edit().remove(DOMAIN).apply();
+    }
+
+    public static void setMainExtension(Context context, String domain) {
+        SharedPreferences pref = getSharedPreferences(context);
+        pref.edit().putString(MAIN_EXTENSION, domain).apply();
+    }
+
+    public static String getMainExtension(Context context) {
+        return getSharedPreferences(context).getString(MAIN_EXTENSION, null);
+    }
+
+    public static void removeMainExtension(Context context) {
+        SharedPreferences pref = getSharedPreferences(context);
+        pref.edit().remove(MAIN_EXTENSION).apply();
     }
 }

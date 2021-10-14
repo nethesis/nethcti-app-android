@@ -24,6 +24,9 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+
 import java.io.IOException;
 import org.linphone.LinphoneService;
 import org.linphone.R;
@@ -33,24 +36,25 @@ import org.linphone.core.tools.Log;
 
 class ContactAvatarHolder {
     public final ImageView contactPicture;
-    public final ImageView avatarMask;
-    public final ImageView avatarBorder;
+    public final CardView contactPictureCard;
     public final ImageView securityLevel;
     public final TextView generatedAvatar;
+    public final ImageView avatar;
 
     public ContactAvatarHolder(View v) {
         contactPicture = v.findViewById(R.id.contact_picture);
-        avatarMask = v.findViewById(R.id.mask);
+        contactPictureCard = v.findViewById(R.id.contact_picture_card);
         securityLevel = v.findViewById(R.id.security_level);
         generatedAvatar = v.findViewById(R.id.generated_avatar);
-        avatarBorder = v.findViewById(R.id.border);
+        avatar = v.findViewById(R.id.avatar);
     }
 
     public void init() {
-        contactPicture.setVisibility(View.VISIBLE);
-        generatedAvatar.setVisibility(View.VISIBLE);
+        contactPicture.setVisibility(View.GONE);
+        generatedAvatar.setVisibility(View.GONE);
         securityLevel.setVisibility(View.GONE);
-        avatarBorder.setVisibility(View.GONE);
+        avatar.setVisibility(View.GONE);
+        contactPictureCard.setVisibility(View.GONE);
     }
 }
 
@@ -62,6 +66,9 @@ public class ContactAvatar {
         for (String name : names) {
             if (name != null && name.length() > 0) {
                 generatedAvatarText.append(name.charAt(0));
+            }
+            if (generatedAvatarText.length() >= 2) {
+                break;
             }
         }
         return generatedAvatarText.toString().toUpperCase();
@@ -108,27 +115,21 @@ public class ContactAvatar {
 
         boolean generated_avatars =
                 v.getContext().getResources().getBoolean(R.bool.generate_text_avatar);
-        if (displayName.startsWith("+") || !generated_avatars) {
+        if (!generated_avatars) {
             // If display name is a phone number, use default avatar because generated one will be
             // +...
             holder.generatedAvatar.setVisibility(View.GONE);
         } else {
             String generatedAvatar = generateAvatar(displayName);
-            if (generatedAvatar != null && generatedAvatar.length() > 0) {
+            if (generatedAvatar.length() > 0) {
                 holder.generatedAvatar.setText(generatedAvatar);
-                holder.generatedAvatar.setVisibility(View.VISIBLE);
             } else {
-                holder.generatedAvatar.setVisibility(View.GONE);
+                holder.generatedAvatar.setText("");
             }
+            holder.generatedAvatar.setVisibility(View.VISIBLE);
+            holder.avatar.setVisibility(View.VISIBLE);
         }
         holder.securityLevel.setVisibility(View.GONE);
-
-        if (maskResource != 0) {
-            holder.avatarMask.setImageResource(maskResource);
-        }
-        if (showBorder) {
-            holder.avatarBorder.setVisibility(View.VISIBLE);
-        }
     }
 
     public static void displayAvatar(String displayName, View v, boolean showBorder) {
@@ -178,12 +179,6 @@ public class ContactAvatar {
         } else {
             avatar = contact.getFullName();
         }
-        holder.generatedAvatar.setText(generateAvatar(avatar));
-
-        holder.generatedAvatar.setVisibility(View.GONE);
-        holder.contactPicture.setVisibility(View.VISIBLE);
-        holder.securityLevel.setVisibility(View.GONE);
-
         Bitmap bm = null;
         try {
             if (contact.getThumbnailUri() != null) {
@@ -198,18 +193,16 @@ public class ContactAvatar {
         if (bm != null) {
             holder.contactPicture.setImageBitmap(bm);
             holder.contactPicture.setVisibility(View.VISIBLE);
+            holder.contactPictureCard.setVisibility(View.VISIBLE);
             holder.generatedAvatar.setVisibility(View.GONE);
+            holder.avatar.setVisibility(View.GONE);
         } else if (generated_avatars) {
+            holder.contactPictureCard.setVisibility(View.GONE);
             holder.generatedAvatar.setText(generateAvatar(avatar));
             holder.generatedAvatar.setVisibility(View.VISIBLE);
+            holder.avatar.setVisibility(View.VISIBLE);
         }
-
-        if (maskResource != 0) {
-            holder.avatarMask.setImageResource(maskResource);
-        }
-        if (showBorder) {
-            holder.avatarBorder.setVisibility(View.VISIBLE);
-        }
+        holder.securityLevel.setVisibility(View.GONE);
     }
 
     public static void displayAvatar(LinphoneContact contact, View v, boolean showBorder) {
@@ -239,7 +232,6 @@ public class ContactAvatar {
         holder.contactPicture.setImageResource(R.drawable.chat_group_avatar);
         holder.generatedAvatar.setVisibility(View.GONE);
         holder.securityLevel.setVisibility(View.GONE);
-        holder.avatarBorder.setVisibility(View.GONE);
     }
 
     public static void displayGroupChatAvatar(ChatRoomSecurityLevel level, View v) {

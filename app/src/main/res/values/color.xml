@@ -2,11 +2,41 @@
 <resources>
     <color name="transparent_color">#00000000</color>
 
-    <color name="primary_color">#00a2de</color> <!-- Try to have a color that renders well on both light & dark theme -->
-    <!-- You can use https://material.io/design/color/#tools-for-picking-colors to get dark color value from primary -->
-    <color name="primary_dark_color">#0073ac</color>
-    <color name="primary_light_color">#62d3ff</color>
-    <color name="notification_led_color">#00a2de</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#c7c7c7</color>
+    <color name="colorPrimaryLight">#f5f5f5</color>
+    <color name="colorAccent">#00a2de</color>
+    <color name="colorAccentLight">#62d3ff</color>
+    <color name="colorAccentDark">#0073ac</color>
+    <color name="colorLedNotification">#00a2de</color>
+    <!-- Color With Alpha-->
+    <color name="colorAccentOverlay">#e5f6fc</color>
+    <color name="colorPrimaryLight50">#50f5f5f5</color>
+    <color name="primaryTextColorLight50">#50808080</color>
+
+    <color name="primaryTextColor">#000</color>
+    <color name="primaryTextColorLight">#808080</color>
+    <color name="primaryTextColorInverse">#FFF</color>
+    <color name="secondaryTextColor">#808080</color>
+
+    <color name="sideMenuDivider">#c7c7c7</color>
+
+    <color name="materialRed">#e53935</color>
+    <color name="nethctiRed">#EB006E</color>
+    <color name="materialDarkRed">#b71c1c</color>
+    <color name="nethGreen">#A7E200</color>
+    <color name="nethGreenDark">#66bb6a</color>
+    <color name="nethGreen50">#50A7E200</color>
+    <color name="nethLightGreen">#EDF9CC</color>
+    <color name="nethLightGreen50">#50EDF9CC</color>
+
+    <color name="nethSplashColor">#009ed7</color>
+
+    <color name="neth_white_color">#fafafa</color>
+    <color name="neth_light_grey_color">#e6e6e6</color>
+    <color name="neth_grey_color">#494949</color>
+    <color name="neth_grey_text_color">#606060</color>
+    <color name="neth_dark_grey">#212121</color>
 
     <color name="black_color">#000000</color>
     <color name="dark_grey_color">#444444</color>
@@ -27,4 +57,6 @@
 
     <color name="disabled_color">#808080</color>
     <color name="contact_disabled_color">#99ffffff</color>
+
+    <color name="subtitleTextColor">#c7c7c7</color>
 </resources>

@@ -27,6 +27,9 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+
+import org.linphone.assistant.AssistantActivity;
 import org.linphone.assistant.RemoteProvisioningActivity;
 import org.linphone.settings.LinphonePreferences;
 
@@ -75,7 +78,12 @@ public class LinphoneLauncherActivity extends Activity {
                 && LinphonePreferences.instance().isFirstRemoteProvisioning()) {
             classToStart = RemoteProvisioningActivity.class;
         } else {
-            classToStart = LinphoneActivity.class;
+            if(LinphoneManager.getLc().getProxyConfigList() != null
+                    && LinphoneManager.getLc().getProxyConfigList().length == 0) {
+                classToStart = AssistantActivity.class;
+            } else {
+                classToStart = LinphoneActivity.class;
+            }
         }
 
         mHandler.postDelayed(

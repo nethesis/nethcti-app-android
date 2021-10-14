@@ -23,11 +23,12 @@ import android.content.Context;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GoogleApiAvailabilityLight;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.installations.FirebaseInstallations;
+
+import org.jetbrains.annotations.NotNull;
 import org.linphone.R;
 import org.linphone.core.tools.Log;
 import org.linphone.settings.LinphonePreferences;
@@ -35,7 +36,6 @@ import org.linphone.utils.PushNotificationUtils;
 
 @Keep
 public class FirebasePushHelper implements PushNotificationUtils.PushHelperInterface {
-    public FirebasePushHelper() {}
 
     @Override
     public void init(Context context) {
@@ -43,19 +43,18 @@ public class FirebasePushHelper implements PushNotificationUtils.PushHelperInter
                 "[Push Notification] firebase push sender id "
                         + context.getString(R.string.gcm_defaultSenderId));
         try {
-            FirebaseInstanceId.getInstance()
-                    .getInstanceId()
+            FirebaseInstallations.getInstance().getId()
                     .addOnCompleteListener(
-                            new OnCompleteListener<InstanceIdResult>() {
+                            new OnCompleteListener<String>() {
                                 @Override
-                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                public void onComplete(@NonNull @NotNull Task<String> task) {
                                     if (!task.isSuccessful()) {
                                         Log.e(
                                                 "[Push Notification] firebase getInstanceId failed: "
                                                         + task.getException());
                                         return;
                                     }
-                                    String token = task.getResult().getToken();
+                                    String token = task.getResult();
                                     Log.i("[Push Notification] firebase token is: " + token);
                                     LinphonePreferences.instance()
                                             .setPushNotificationRegistrationID(token);
@@ -68,7 +67,7 @@ public class FirebasePushHelper implements PushNotificationUtils.PushHelperInter
 
     @Override
     public boolean isAvailable(Context context) {
-        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        GoogleApiAvailabilityLight googleApiAvailability = GoogleApiAvailabilityLight.getInstance();
         int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(context);
         return resultCode == ConnectionResult.SUCCESS;
     }

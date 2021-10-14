@@ -27,27 +27,27 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="70dp"
-            android:layout_toRightOf="@id/avatar"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="70dp"
+            android:layout_toEndOf="@id/avatar"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/contact_name"
-                style="@style/contact_name_list_cell_font"
+                style="@style/NethCTIContactName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="top|left"
+                android:gravity="top|start"
                 android:lines="1" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/contact_address"
-                style="@style/sip_uri_font"
+                style="@style/NethCTIContactInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:gravity="bottom|left"
+                android:gravity="bottom|start"
                 android:lines="1" />
 
         </LinearLayout>
@@ -55,16 +55,16 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/contact_is_select">
+            android:layout_toStartOf="@+id/contact_is_select">
 
             <ImageView
                 android:id="@+id/contact_linphone"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_gravity="right"
-                android:paddingRight="10dp"
+                android:layout_gravity="end"
+                android:paddingEnd="10dp"
                 android:src="@drawable/linphone_user" />
 
         </RelativeLayout>
@@ -73,10 +73,10 @@
             android:id="@+id/contact_is_select"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_gravity="right"
-            android:paddingRight="20dp"
+            android:layout_gravity="end"
+            android:paddingEnd="20dp"
             android:src="@drawable/check_selected"
             android:visibility="invisible" />
 

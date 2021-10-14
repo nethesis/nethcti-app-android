@@ -38,6 +38,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
+
 import it.nethesis.models.NethesisContact;
 import it.nethesis.models.NethesisNumberOrAddress;
 import java.util.List;
@@ -283,7 +286,7 @@ public class ContactDetailsFragment extends Fragment
                     skip |= getResources().getBoolean(R.bool.hide_contact_phone_numbers);
                 }
 
-                TextView tv = v.findViewById(R.id.numeroOrAddress);
+                AppCompatTextView tv = v.findViewById(R.id.numeroOrAddress);
                 tv.setText(displayednumberOrAddress);
                 tv.setSelected(true);
 
@@ -424,7 +427,7 @@ public class ContactDetailsFragment extends Fragment
             ContactsManager.getInstance().editContact(getActivity(), mContact, null);
         } else if (id == R.id.deleteContact) {
             final Dialog dialog =
-                    LinphoneActivity.instance().displayDialog(getString(R.string.delete_text));
+                    LinphoneActivity.instance().displayDialog(getString(R.string.delete_contacts_text_2));
             Button delete = dialog.findViewById(R.id.dialog_delete_button);
             Button cancel = dialog.findViewById(R.id.dialog_cancel_button);
 

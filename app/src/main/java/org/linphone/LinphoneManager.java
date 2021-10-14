@@ -57,6 +57,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
+import com.google.android.material.checkbox.MaterialCheckBox;
+
 import it.nethesis.webservices.AuthenticationRestAPI;
 import it.nethesis.webservices.RetrofitGenerator;
 import java.io.File;
@@ -342,6 +345,10 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
     public boolean isSpeakerEnabled() {
         return mAudioManager != null && mAudioManager.isSpeakerphoneOn();
+    }
+
+    public boolean isBluetoothHeadSetEnabled() {
+        return mAudioManager != null && mAudioManager.isBluetoothScoOn();
     }
 
     public void enableSpeaker(boolean enable) {
@@ -1540,7 +1547,7 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
         cancel.setText(getString(R.string.maybe_later));
 
         dialog.findViewById(R.id.dialog_do_not_ask_again_layout).setVisibility(View.VISIBLE);
-        final CheckBox doNotAskAgain = dialog.findViewById(R.id.doNotAskAgain);
+        final MaterialCheckBox doNotAskAgain = dialog.findViewById(R.id.doNotAskAgain);
         dialog.findViewById(R.id.doNotAskAgainLabel)
                 .setOnClickListener(
                         new View.OnClickListener() {
@@ -1933,8 +1940,11 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
             if (mAuthInfo != null) {
                 core.removeAuthInfo(mAuthInfo);
             }
-            core.clearAllAuthInfo();
             core.clearProxyConfig();
+            core.clearAllAuthInfo();
+            if (mProxyConfig != null) {
+                mProxyConfig.done();
+            }
         }
     }
 
@@ -1977,6 +1987,8 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
                                     // [Notificatore] logout user from Notificatore app.
                                     SharedPreferencesManager.removeUsername(
+                                            context.getApplicationContext());
+                                    SharedPreferencesManager.removeMainExtension(
                                             context.getApplicationContext());
                                     FCMNotification.updateRegistrationInfo(
                                             context.getApplicationContext(), "");

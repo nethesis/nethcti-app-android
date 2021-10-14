@@ -47,15 +47,20 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.android.material.button.MaterialButton;
 import it.nethesis.utils.CallTransferManager;
 import java.text.DecimalFormat;
 import java.util.Collections;
@@ -107,28 +112,29 @@ public class CallActivity extends LinphoneGenericActivity
     private static long sTimeRemind = 0;
     private Handler mControlsHandler = new Handler();
     private Runnable mControls;
-    private ImageView mSwitchCamera;
     private TextView mMissedChats;
-    private RelativeLayout mActiveCallHeader, mSideMenuContent, mAvatarLayout;
-    private ImageView mPause,
-            mHangUp,
-            mDialer,
+    private RelativeLayout mSideMenuContent;
+    private LinearLayoutCompat mActiveCallHeader;
+    private FrameLayout mAvatarLayout;
+    private ImageView mHangUp, mConference, mConferenceStatus;
+    private MaterialButton mDialer,
             mVideo,
             mMicro,
             mSpeaker,
-            mOptions,
-            mAddCall,
-            mTransfer,
-            mConference,
-            mConferenceStatus,
             mRecordCall,
-            mRecording;
-    private ImageView mAudioRoute;
-    private ImageView mRouteSpeaker;
-    private ImageView mRouteEarpiece;
-    private ImageView mRouteBluetooth;
+            mAddCall,
+            mAddCallNoCurrentCall,
+            mTransfer,
+            mPause,
+            mSwitchCamera,
+            mAudioRoute,
+            mRouteSpeaker,
+            mRouteEarpiece,
+            mRouteBluetooth;
+    private LinearLayoutCompat mAudioRouteMenu;
     private ImageView mMenu;
-    private LinearLayout mNoCurrentCall, mCallInfo, mCallPaused;
+    private LinearLayoutCompat mNoCurrentCall, mCallPaused;
+    private FrameLayout mCallInfo;
     private ProgressBar mVideoProgress;
     private StatusFragment mStatus;
     private CallAudioFragment mAudioCallFragment;
@@ -260,13 +266,17 @@ public class CallActivity extends LinphoneGenericActivity
                             boolean autoAcceptCameraPolicy =
                                     LinphonePreferences.instance()
                                             .shouldAutomaticallyAcceptVideoRequests();
+                            /* Disabled, NethCTI do not support this yet */
                             if (remoteVideo
                                     && !localVideo
                                     && !autoAcceptCameraPolicy
-                                    && !LinphoneManager.getLc().isInConference()) {
+                                    && !LinphoneManager.getLc().isInConference()
+                            && false) {
                                 showAcceptCallUpdateDialog();
                                 createTimerForDialog(SECONDS_BEFORE_DENYING_CALL_UPDATE);
                             }
+
+
                         } else if (state == State.End || state == State.Error) {
                             if (CallTransferManager.instance().ismCallTransfer()
                                     && CallTransferManager.instance().getmTransferCallId()
@@ -414,15 +424,6 @@ public class CallActivity extends LinphoneGenericActivity
         mSpeaker = findViewById(R.id.speaker);
         mSpeaker.setOnClickListener(this);
 
-        mOptions = findViewById(R.id.options);
-        mOptions.setOnClickListener(this);
-        mOptions.setEnabled(false);
-
-        if (CallTransferManager.instance().ismCallTransfer()) {
-            mOptions.setImageDrawable(
-                    getResources().getDrawable(R.drawable.options_transfer_call, this.getTheme()));
-        }
-
         // BottonBar
         mHangUp = findViewById(R.id.hang_up);
         mHangUp.setOnClickListener(this);
@@ -463,6 +464,10 @@ public class CallActivity extends LinphoneGenericActivity
         mAddCall.setOnClickListener(this);
         mAddCall.setEnabled(false);
 
+        mAddCallNoCurrentCall = findViewById(R.id.add_call_no_current_call);
+        mAddCallNoCurrentCall.setOnClickListener(this);
+        mAddCallNoCurrentCall.setEnabled(false);
+
         mTransfer = findViewById(R.id.transfer);
         mTransfer.setOnClickListener(this);
         mTransfer.setEnabled(false);
@@ -475,11 +480,6 @@ public class CallActivity extends LinphoneGenericActivity
         mRecordCall.setOnClickListener(this);
         mRecordCall.setEnabled(false);
 
-        mRecording = findViewById(R.id.recording);
-        mRecording.setOnClickListener(this);
-        mRecording.setEnabled(false);
-        mRecording.setVisibility(View.GONE);
-
         try {
             mAudioRoute = findViewById(R.id.audio_route);
             mAudioRoute.setOnClickListener(this);
@@ -489,6 +489,7 @@ public class CallActivity extends LinphoneGenericActivity
             mRouteEarpiece.setOnClickListener(this);
             mRouteBluetooth = findViewById(R.id.route_bluetooth);
             mRouteBluetooth.setOnClickListener(this);
+            mAudioRouteMenu = findViewById(R.id.audioRouteMenu);
         } catch (NullPointerException npe) {
             Log.e("Bluetooth: Audio routes mMenu disabled on tablets for now (1)");
         }
@@ -499,7 +500,19 @@ public class CallActivity extends LinphoneGenericActivity
         mControlsLayout = findViewById(R.id.menu);
 
         if (!mIsTransferAllowed) {
-            mAddCall.setBackgroundResource(R.drawable.options_add_call);
+            mAddCall.setIconResource(R.drawable.ic_add_call);
+        }
+
+        if (CallTransferManager.instance().ismCallTransfer()) {
+            mAddCall.setVisibility(View.GONE);
+            mTransfer.setBackgroundTintList(
+                    ContextCompat.getColorStateList(this, R.color.call_button));
+            mTransfer.setIconTint(ContextCompat.getColorStateList(this, R.color.call_button_icon));
+        } else {
+            mAddCall.setVisibility(View.VISIBLE);
+            mTransfer.setBackgroundTintList(
+                    ContextCompat.getColorStateList(this, R.color.neth_button));
+            mTransfer.setIconTint(ContextCompat.getColorStateList(this, R.color.neth_button_icon));
         }
 
         if (BluetoothManager.getInstance().isBluetoothHeadsetAvailable()) {
@@ -700,20 +713,25 @@ public class CallActivity extends LinphoneGenericActivity
                         && LinphoneManager.getLc().getCallsNb() > confsize
                         && !LinphoneManager.getLc().soundResourcesLocked());
 
+        /* manage view during transfer */
         mAddCall.setEnabled(
                 LinphoneManager.getLc().getCallsNb() < LinphoneManager.getLc().getMaxCalls()
                         && !LinphoneManager.getLc().soundResourcesLocked());
-        mOptions.setEnabled(
-                !getResources().getBoolean(R.bool.disable_options_in_call)
-                        && (mAddCall.isEnabled() || mTransfer.isEnabled()));
+        mAddCallNoCurrentCall.setEnabled(
+                LinphoneManager.getLc().getCallsNb() < LinphoneManager.getLc().getMaxCalls()
+                        && !LinphoneManager.getLc().soundResourcesLocked());
 
-        Drawable d = null;
         if (CallTransferManager.instance().ismCallTransfer()) {
-            d = getResources().getDrawable(R.drawable.options_transfer_call, this.getTheme());
+            mAddCall.setVisibility(View.GONE);
+            mTransfer.setBackgroundTintList(
+                    ContextCompat.getColorStateList(this, R.color.call_button));
+            mTransfer.setIconTint(ContextCompat.getColorStateList(this, R.color.call_button_icon));
         } else {
-            d = getResources().getDrawable(R.drawable.options, this.getTheme());
+            mAddCall.setVisibility(View.VISIBLE);
+            mTransfer.setBackgroundTintList(
+                    ContextCompat.getColorStateList(this, R.color.neth_button));
+            mTransfer.setIconTint(ContextCompat.getColorStateList(this, R.color.neth_button_icon));
         }
-        mOptions.setImageDrawable(d);
 
         Call currentCall = LinphoneManager.getLc().getCurrentCall();
 
@@ -722,9 +740,6 @@ public class CallActivity extends LinphoneGenericActivity
                         && currentCall != null
                         && currentCall.getCurrentParams().getRecordFile() != null);
         mRecordCall.setSelected(mIsRecording);
-
-        mRecording.setEnabled(mIsRecording);
-        mRecording.setVisibility(mIsRecording ? View.VISIBLE : View.GONE);
 
         mVideo.setEnabled(
                 currentCall != null
@@ -779,7 +794,7 @@ public class CallActivity extends LinphoneGenericActivity
             }
         } else if (id == R.id.speaker) {
             toggleSpeaker();
-        } else if (id == R.id.add_call) {
+        } else if (id == R.id.add_call || id == R.id.add_call_no_current_call) {
             goBackToDialer();
         } else if (id == R.id.record_call) {
             int externalStorage =
@@ -816,8 +831,6 @@ public class CallActivity extends LinphoneGenericActivity
                 mVideoCallFragment.switchCamera();
             }
         } else if (id == R.id.transfer) {
-            goBackToDialerAndDisplayTransferButton();
-        } else if (id == R.id.options) {
             if (CallTransferManager.instance().ismCallTransfer()) {
                 LinphoneManager.getLc()
                         .getCurrentCall()
@@ -829,7 +842,7 @@ public class CallActivity extends LinphoneGenericActivity
                 CallTransferManager.instance().setmCallTransfer(false);
                 CallTransferManager.instance().setmTransferCallId(null);
             } else {
-                hideOrDisplayCallOptions();
+                goBackToDialerAndDisplayTransferButton();
             }
         } else if (id == R.id.audio_route) {
             hideOrDisplayAudioRoutes();
@@ -873,17 +886,11 @@ public class CallActivity extends LinphoneGenericActivity
             Log.d("start call mRecording");
             mRecordCall.setSelected(true);
 
-            mRecording.setVisibility(View.VISIBLE);
-            mRecording.setEnabled(true);
-
             mIsRecording = true;
         } else if (!enable && mIsRecording) {
             call.stopRecording();
             Log.d("stop call mRecording");
             mRecordCall.setSelected(false);
-
-            mRecording.setVisibility(View.GONE);
-            mRecording.setEnabled(false);
 
             mIsRecording = false;
         }
@@ -993,6 +1000,9 @@ public class CallActivity extends LinphoneGenericActivity
         mActiveCallHeader.setVisibility(View.VISIBLE);
         mCallInfo.setVisibility(View.VISIBLE);
         mAvatarLayout.setVisibility(View.VISIBLE);
+        mAddCall.setVisibility(View.VISIBLE);
+        mTransfer.setVisibility(View.VISIBLE);
+        mRecordCall.setVisibility(View.VISIBLE);
         mSwitchCamera.setVisibility(View.GONE);
     }
 
@@ -1088,6 +1098,9 @@ public class CallActivity extends LinphoneGenericActivity
             mCallInfo.setVisibility(View.VISIBLE);
             mAvatarLayout.setVisibility(View.GONE);
             mCallsList.setVisibility(View.VISIBLE);
+            mRecordCall.setVisibility(View.VISIBLE);
+            mAddCall.setVisibility(View.VISIBLE);
+            mTransfer.setVisibility(View.VISIBLE);
             if (mCameraNumber > 1) {
                 mSwitchCamera.setVisibility(View.VISIBLE);
             }
@@ -1097,6 +1110,9 @@ public class CallActivity extends LinphoneGenericActivity
             mActiveCallHeader.setVisibility(View.GONE);
             mSwitchCamera.setVisibility(View.GONE);
             mCallsList.setVisibility(View.GONE);
+            mRecordCall.setVisibility(View.GONE);
+            mAddCall.setVisibility(View.GONE);
+            mTransfer.setVisibility(View.GONE);
         }
     }
 
@@ -1128,7 +1144,6 @@ public class CallActivity extends LinphoneGenericActivity
                                     mRecordCall.setVisibility(View.INVISIBLE);
                                     displayVideoCall(false);
                                     mNumpad.setVisibility(View.GONE);
-                                    mOptions.setSelected(false);
                                 }
                             },
                     SECONDS_BEFORE_HIDING_CONTROLS);
@@ -1147,7 +1162,7 @@ public class CallActivity extends LinphoneGenericActivity
             return;
         }
 
-        mDialer.setImageResource(R.drawable.footer_dialer);
+        mDialer.setIconResource(R.drawable.ic_dialpad);
         mNumpad.setVisibility(View.GONE);
     }
 
@@ -1159,29 +1174,24 @@ public class CallActivity extends LinphoneGenericActivity
         if (mNumpad.getVisibility() == View.VISIBLE) {
             hideNumpad();
         } else {
-            mDialer.setImageResource(R.drawable.dialer_alt_back);
+            mDialer.setIconResource(R.drawable.dialer_alt_back);
             mNumpad.setVisibility(View.VISIBLE);
         }
     }
 
     private void hideOrDisplayAudioRoutes() {
-        if (mRouteSpeaker.getVisibility() == View.VISIBLE) {
-            mRouteSpeaker.setVisibility(View.INVISIBLE);
-            mRouteBluetooth.setVisibility(View.INVISIBLE);
-            mRouteEarpiece.setVisibility(View.INVISIBLE);
+        if (mAudioRouteMenu.getVisibility() == View.VISIBLE) {
             mAudioRoute.setSelected(false);
+            mAudioRouteMenu.setVisibility(View.INVISIBLE);
         } else {
-            mRouteSpeaker.setVisibility(View.VISIBLE);
-            mRouteBluetooth.setVisibility(View.VISIBLE);
-            mRouteEarpiece.setVisibility(View.VISIBLE);
             mAudioRoute.setSelected(true);
+            mAudioRouteMenu.setVisibility(View.VISIBLE);
         }
     }
 
     private void hideOrDisplayCallOptions() {
         // Hide mOptions
         if (mAddCall.getVisibility() == View.VISIBLE) {
-            mOptions.setSelected(false);
             if (mIsTransferAllowed) {
                 mTransfer.setVisibility(View.INVISIBLE);
             }
@@ -1201,7 +1211,6 @@ public class CallActivity extends LinphoneGenericActivity
                             ? View.VISIBLE
                             : View.GONE);
             mRecordCall.setVisibility(View.VISIBLE);
-            mOptions.setSelected(true);
             mTransfer.setEnabled(LinphoneManager.getLc().getCurrentCall() != null);
         }
     }
@@ -1286,7 +1295,7 @@ public class CallActivity extends LinphoneGenericActivity
                         WindowManager.LayoutParams.MATCH_PARENT);
         mDialog.getWindow().setBackgroundDrawable(d);
 
-        TextView customText = mDialog.findViewById(R.id.dialog_message);
+        AppCompatTextView customText = mDialog.findViewById(R.id.dialog_message);
         customText.setText(getResources().getString(R.string.add_video_dialog));
         mDialog.findViewById(R.id.dialog_delete_button).setVisibility(View.GONE);
         Button accept = mDialog.findViewById(R.id.dialog_ok_button);
@@ -1409,8 +1418,10 @@ public class CallActivity extends LinphoneGenericActivity
 
     @Override
     protected void onDestroy() {
-        LinphoneManager.getInstance().changeStatusToOnline();
-        LinphoneManager.getInstance().enableProximitySensing(false);
+        if(LinphoneManager.isInstanciated()) {
+            LinphoneManager.getInstance().changeStatusToOnline();
+            LinphoneManager.getInstance().enableProximitySensing(false);
+        }
 
         unregisterReceiver(mHeadsetReceiver);
 
@@ -1472,7 +1483,8 @@ public class CallActivity extends LinphoneGenericActivity
     private void displayCurrentCall(Call call) {
         Address lAddress = call.getRemoteAddress();
         TextView contactName = findViewById(R.id.current_contact_name);
-        setContactInformation(contactName, lAddress);
+        TextView contactAddress = findViewById(R.id.current_contact_address);
+        setContactInformation(contactName, contactAddress, lAddress);
         registerCallDurationTimer(null, call);
     }
 
@@ -1498,6 +1510,7 @@ public class CallActivity extends LinphoneGenericActivity
             callView.setId(index + 1);
 
             TextView contactName = callView.findViewById(R.id.contact_name);
+            TextView contactAddress = callView.findViewById(R.id.contact_address);
 
             Address lAddress = call.getRemoteAddress();
             LinphoneContact lContact =
@@ -1506,9 +1519,11 @@ public class CallActivity extends LinphoneGenericActivity
             if (lContact == null) {
                 String displayName = LinphoneUtils.getAddressDisplayName(lAddress);
                 contactName.setText(displayName);
+                contactAddress.setText(LinphoneUtils.getDisplayableAddress(lAddress));
                 ContactAvatar.displayAvatar(displayName, callView.findViewById(R.id.avatar_layout));
             } else {
                 contactName.setText(lContact.getFullName());
+                contactAddress.setText(LinphoneUtils.getDisplayableAddress(lAddress));
                 ContactAvatar.displayAvatar(lContact, callView.findViewById(R.id.avatar_layout));
             }
 
@@ -1518,20 +1533,24 @@ public class CallActivity extends LinphoneGenericActivity
         mCallsList.addView(callView);
     }
 
-    private void setContactInformation(TextView contactName, Address lAddress) {
+    private void setContactInformation(
+            TextView contactName, TextView contactAddress, Address lAddress) {
         LinphoneContact lContact = ContactsManager.getInstance().findContactFromAddress(lAddress);
         if (lContact == null) {
             String displayName = LinphoneUtils.getAddressDisplayName(lAddress);
+            String displayAddress = LinphoneUtils.getDisplayableAddress(lAddress);
             contactName.setText(displayName);
+            contactAddress.setText(displayAddress);
             ContactAvatar.displayAvatar(displayName, mAvatarLayout, true);
         } else {
             contactName.setText(lContact.getFullName());
+            contactAddress.setText(lAddress.asString());
             ContactAvatar.displayAvatar(lContact, mAvatarLayout, true);
         }
     }
 
     private void displayCallStatusIconAndReturnCallPaused(LinearLayout callView, Call call) {
-        ImageView onCallStateChanged = callView.findViewById(R.id.call_pause);
+        MaterialButton onCallStateChanged = callView.findViewById(R.id.call_pause);
         onCallStateChanged.setTag(call);
         onCallStateChanged.setOnClickListener(this);
 
@@ -1596,11 +1615,7 @@ public class CallActivity extends LinphoneGenericActivity
         }
 
         // Conference
-        if (mIsConferenceRunning) {
-            displayConference(true);
-        } else {
-            displayConference(false);
-        }
+        displayConference(mIsConferenceRunning);
 
         if (mCallsList != null) {
             mCallsList.removeAllViews();
@@ -1636,11 +1651,7 @@ public class CallActivity extends LinphoneGenericActivity
         }
 
         // Paused by remote
-        if (pausedCalls.size() == 1) {
-            displayCallPaused(true);
-        } else {
-            displayCallPaused(false);
-        }
+        displayCallPaused(pausedCalls.size() == 1);
     }
 
     // Conference
@@ -1815,16 +1826,16 @@ public class CallActivity extends LinphoneGenericActivity
             formatText(
                     dl,
                     getString(R.string.call_stats_download),
-                    String.valueOf((int) stats.getDownloadBandwidth()) + " kbits/s");
+                    (int) stats.getDownloadBandwidth() + " kbits/s");
             formatText(
                     ul,
                     getString(R.string.call_stats_upload),
-                    String.valueOf((int) stats.getUploadBandwidth()) + " kbits/s");
+                    (int) stats.getUploadBandwidth() + " kbits/s");
             if (isVideo) {
                 formatText(
                         edl,
                         getString(R.string.call_stats_estimated_download),
-                        String.valueOf(stats.getEstimatedDownloadBandwidth()) + " kbits/s");
+                        stats.getEstimatedDownloadBandwidth() + " kbits/s");
             }
             formatText(ice, getString(R.string.call_stats_ice), stats.getIceState().toString());
             formatText(

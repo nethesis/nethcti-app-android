@@ -2,164 +2,226 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            style="@style/neth_base_panel"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <!-- Org Logo -->
+        <FrameLayout
+            android:id="@+id/logoContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="30dp"
-            android:background="?attr/backgroundColor">
+            android:layout_marginBottom="32dp"
+            android:padding="16dp">
 
-            <!-- Informations -->
-            <LinearLayout
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/logo"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/neth_logo_login" />
+        </FrameLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/labelArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="22dp"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-                <TextView
-                    style="@style/neth_medium_font"
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/NethCTILightHeaderTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="@string/assistant_generic_account"
+                    android:text="@string/assistant_login"
                     android:textAllCaps="true" />
 
-                <TextView
-                    style="@style/neth_small_font"
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/NethCTILightHeaderSubTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:paddingTop="10dp"
                     android:text="@string/assistant_login_desc" />
 
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <!-- Domain -->
-            <LinearLayout
-                style="@style/neth_field_container_panel"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/controlsArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginBottom="22dp"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-                <TextView
-                    style="@style/neth_field_header_font"
+                <!-- Domain -->
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/domain"
-                    android:labelFor="@id/assistant_domain"/>
+                    android:layout_marginBottom="6dp"
+                    android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/neth_primary_text_layout"
-                    android:theme="@style/neth_primary_text_layout_theme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/assistant_domain"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/NethCTILoginControlLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:inputType="textUri"/>
+                        android:labelFor="@id/assistant_domain"
+                        android:text="@string/domain" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/NethCTITextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            </LinearLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/assistant_domain"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textUri"
+                            android:maxLines="1" />
 
-            <!-- Username -->
-            <LinearLayout
-                style="@style/neth_field_container_panel"
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Username -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/NethCTILoginControlLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/assistant_username"
+                        android:text="@string/username" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/NethCTITextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/assistant_username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Password -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="18dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/NethCTILoginControlLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/assistant_password"
+                        android:text="@string/password" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/NethCTITextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/assistant_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <TextView
-                    style="@style/neth_field_header_font"
-                    android:layout_width="match_parent"
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/username"
-                    android:labelFor="@id/assistant_username"/>
+                    android:layout_weight="0.3"
+                    android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/neth_primary_text_layout"
-                    android:theme="@style/neth_primary_text_layout_theme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/assistant_apply"
+                        style="@style/NethCTIButton"
+                        android:layout_gravity="center"
+                        app:icon="@drawable/ic_login" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/assistant_username"
-                        android:layout_width="match_parent"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:inputType="text" />
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:textAllCaps="true"
+                        style="@style/NethCTILightHeaderSubTitle"
+                        android:text="@string/assistant_login"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-            <!-- Password -->
-            <LinearLayout
-                style="@style/neth_field_container_panel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/neth_field_header_font"
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/password"
-                    android:labelFor="@id/assistant_password"/>
+                    android:layout_weight="0.3"
+                    android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/neth_primary_text_layout"
-                    android:theme="@style/neth_primary_text_layout_theme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/launch_qrcode_scan"
+                        style="@style/NethCTIButton"
+                        android:layout_gravity="center"
+                        app:icon="@drawable/ic_qrcode" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/assistant_password"
-                        android:layout_width="match_parent"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:inputType="textPassword" />
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:textAllCaps="true"
+                        style="@style/NethCTILightHeaderSubTitle"
+                        android:text="@string/assistant_launch_qrcode"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/neth_primary_button_font"
-                android:id="@+id/assistant_apply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/assistant_login" />
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/neth_secondary_button_font"
-                android:id="@+id/launch_qrcode_scan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/assistant_launch_qrcode"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>

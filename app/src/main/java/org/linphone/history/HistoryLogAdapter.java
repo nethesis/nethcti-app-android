@@ -95,11 +95,11 @@ class HistoryLogAdapter extends ArrayAdapter<CallLog> {
         ImageView callDirection = rowView.findViewById(R.id.direction);
 
         if (status.equals(mContext.getResources().getString(R.string.missed))) {
-            callDirection.setImageResource(R.drawable.call_missed);
+            callDirection.setImageResource(R.drawable.ic_call_missed);
         } else if (status.equals(mContext.getResources().getString(R.string.incoming))) {
-            callDirection.setImageResource(R.drawable.call_incoming);
+            callDirection.setImageResource(R.drawable.ic_call_in);
         } else if (status.equals(mContext.getResources().getString(R.string.outgoing))) {
-            callDirection.setImageResource(R.drawable.call_outgoing);
+            callDirection.setImageResource(R.drawable.ic_call_out);
         }
 
         time.setText(callTime == null ? "" : callTime);

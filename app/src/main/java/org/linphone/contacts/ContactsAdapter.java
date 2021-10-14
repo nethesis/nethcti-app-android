@@ -80,7 +80,7 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
         }
         // Nasconde le letterine
         holder.separator.setVisibility(View.GONE);
-        holder.linphoneFriend.setVisibility(contact.isInFriendList() ? View.VISIBLE : View.GONE);
+        holder.linphoneFriend.setVisibility(contact.hasAddress() ? View.VISIBLE : View.GONE);
 
         ContactAvatar.displayAvatar(contact, holder.avatarLayout);
 
@@ -99,7 +99,7 @@ public class ContactsAdapter extends SelectableAdapter<ContactViewHolder>
             holder.organization.setVisibility(View.GONE);
         }
 
-        holder.delete.setVisibility(isEditionEnabled() ? View.VISIBLE : View.INVISIBLE);
+        holder.delete.setVisibility(isEditionEnabled() ? View.VISIBLE : View.GONE);
         holder.delete.setChecked(isSelected(position));
     }
 

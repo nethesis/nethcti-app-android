@@ -26,8 +26,8 @@ import org.linphone.core.XmlRpcRequestListener;
 import org.linphone.core.XmlRpcSession;
 import org.linphone.core.XmlRpcStatus;
 import org.linphone.core.tools.Log;
-import org.linphone.settings.LinphonePreferences;
 
+/** Not used in NethCTI */
 public class XmlRpcHelper {
     public static final String SERVER_ERROR_INVALID_ACCOUNT = "ERROR_INVALID_ACCOUNT";
     public static final String SERVER_RESPONSE_OK = "OK";
@@ -47,11 +47,7 @@ public class XmlRpcHelper {
     private final XmlRpcSession mXmlRpcSession;
 
     public XmlRpcHelper() {
-        mXmlRpcSession =
-                LinphoneManager.getLcIfManagerNotDestroyedOrNull()
-                        .createXmlRpcSession(
-                                LinphonePreferences.instance()
-                                        .getInAppPurchaseValidatingServerUrl());
+        mXmlRpcSession = LinphoneManager.getLcIfManagerNotDestroyedOrNull().createXmlRpcSession("");
     }
 
     public void createAccountAsync(
