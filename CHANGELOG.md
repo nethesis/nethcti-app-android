@@ -25,7 +25,9 @@ Group changes to describe their impact on the project, as follows:
 
 ### Fixed
 - Fix for various crash
+- Audio route to earpiece when receiving a gsm call during an active call
 
 ### Removed
 - Support for landscape orientation
 - Old non supported in-app billing dependancies
+- Useless (not used anymore) settings
