@@ -10,13 +10,14 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
-## [1.3.0] - 03/09/2021
+## [1.3.0] - 14/10/2021
 
 ### Added
 - New dashboard
 - New FontAwesome icons
 - New overall flat style 
 - New font (Roboto)
+- Side menu when not logged in
 - Kotlin support
 
 ### Changed
