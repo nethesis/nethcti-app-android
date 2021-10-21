@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <bool name="splashScreenLightStatusBar">false</bool>
     <bool name="lightStatusBar">true</bool>
 </resources>

@@ -40,15 +40,12 @@
         <item name="button_background_drawable">@drawable/button_background_light</item>
     </style>
 
-    <style name="NethCTIStyleLaunchActivity" parent="NethCTIStyle">
-        <item name="android:colorPrimary">@color/nethSplashColor</item>
-        <item name="android:statusBarColor">@color/nethSplashColor</item>
-        <item name="android:windowBackground">@color/nethSplashColor</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:colorBackground">@color/nethSplashColor</item>
-        <item name="backgroundColor">@color/nethSplashColor</item>
-        <item name="backgroundColor2">@color/colorAccentLight</item>
-        <item name="backgroundContrastColor">@color/neth_grey_color</item>
+    <style name="NethCTIStyleLaunchActivity" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLightStatusBar">@bool/splashScreenLightStatusBar</item>
     </style>
 
     <!-- Custom View -->

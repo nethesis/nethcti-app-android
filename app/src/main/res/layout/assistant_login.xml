@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/neth_logo_login" />
+                app:srcCompat="@drawable/logo_dashboard" />
         </FrameLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat

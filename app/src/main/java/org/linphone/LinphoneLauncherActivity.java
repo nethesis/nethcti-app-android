@@ -22,18 +22,25 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import static android.content.Intent.ACTION_MAIN;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.util.AttributeSet;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.linphone.assistant.AssistantActivity;
 import org.linphone.assistant.RemoteProvisioningActivity;
 import org.linphone.settings.LinphonePreferences;
 
-/** Launch Linphone main activity when Service is ready. */
+/**
+ * Launch Linphone main activity when Service is ready.
+ */
 public class LinphoneLauncherActivity extends Activity {
 
     private Handler mHandler;
@@ -69,6 +76,23 @@ public class LinphoneLauncherActivity extends Activity {
         }
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+        View root = super.onCreateView(name, context, attrs);
+        /* Make splash screen full screen and color status bar*/
+        boolean isStatusBarLight = getResources().getBoolean(R.bool.splashScreenLightStatusBar);
+        int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+        if(isStatusBarLight) {
+            flags = flags | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        }
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(flags);
+        return root;
+    }
+
     private void onServiceReady() {
         final Class<? extends Activity> classToStart;
         /*if (getResources().getBoolean(R.bool.show_tutorials_instead_of_app)) {
@@ -78,7 +102,7 @@ public class LinphoneLauncherActivity extends Activity {
                 && LinphonePreferences.instance().isFirstRemoteProvisioning()) {
             classToStart = RemoteProvisioningActivity.class;
         } else {
-            if(LinphoneManager.getLc().getProxyConfigList() != null
+            if (LinphoneManager.getLc().getProxyConfigList() != null
                     && LinphoneManager.getLc().getProxyConfigList().length == 0) {
                 classToStart = AssistantActivity.class;
             } else {
@@ -90,11 +114,12 @@ public class LinphoneLauncherActivity extends Activity {
                 new Runnable() {
                     @Override
                     public void run() {
+                        android.util.Log.d("ASD", "LightStatusBAar: " + getResources().getBoolean(R.bool.splashScreenLightStatusBar));
                         startActivity(
                                 getIntent().setClass(LinphoneLauncherActivity.this, classToStart));
                     }
                 },
-                500);
+                5000);
 
         LinphoneManager.getInstance().changeStatusToOnline();
     }

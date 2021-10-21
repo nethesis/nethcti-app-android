@@ -8,7 +8,7 @@
     <color name="colorAccentDark">#0073ac</color>
     <color name="colorLedNotification">#00a2de</color>
     <!-- Color With Alpha-->
-    <color name="colorAccentOverlay">#5062d3ff</color>
+    <color name="colorAccentOverlay">#e5f6fc</color>
     <color name="colorPrimaryLight50">#506d6d6d</color>
     <color name="primaryTextColorLight50">#50c0c0c0</color>
 

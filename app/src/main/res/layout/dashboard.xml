@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dashboardLogoHeight"
         android:padding="8dp"
-        android:src="@drawable/neth_logo_login"
+        android:src="@drawable/logo_dashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Custom-->
-    <string name="service_name">Servizio NethCTI</string>
+  <string name="app_name">NethCTI</string>
+  <string name="service_name">Servizio NethCTI</string>
   <string name="addressbook_label">Linphone</string>
-  <string name="notification_title">LinphoNethCTIne</string>
+  <string name="notification_title">NethCTI</string>
   <string name="wait_dialog_text">Avvio</string>
   <string name="notification_registered">%sè connesso</string>
   <string name="notification_register_failure">%s non è riuscito a connettersi</string>
@@ -12,7 +13,7 @@
   <string name="about_liblinphone_version">Linphone Core %s</string>
   <string name="about_liblinphone_sdk_version">Linphone SDK %s</string>
   <string name="about_privacy_policy">Leggi le nostre regole della privacy</string>
-  <string name="sync_account_name">contatti NethCTI</string>
+  <string name="sync_account_name">Contatti NethCTI</string>
   <!--Notifications-->
   <string name="notification_reply_label">Rispondi</string>
   <string name="notification_replied_label">Risposta inviata: %s</string>
@@ -564,7 +565,4 @@
   <string name="content_description_conversation_subject">Oggetto della chat room di gruppo</string>
   <string name="content_description_conversation_infos">Informazioni sulla chat room di gruppo</string>
   <string name="content_description_record_call">Registra chiamata</string>
-    <string name="app_name">NethCTI</string>
-
-
 </resources>
