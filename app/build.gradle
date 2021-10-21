@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'placeholder-resolver'
+apply from:'../nethcti-brands/flavours.gradle'
 
 static def getPackageName() {
     return "it.nethesis.nethctiapp" // "org.linphone"
@@ -26,21 +27,6 @@ static def isLocalReleaseAarAvailable() {
 static def isLocalAarAvailable() {
     return isLocalDebugAarAvailable() || isLocalReleaseAarAvailable()
 }
-
-///// Exclude Files /////
-
-def excludeFiles = []
-if (!firebaseEnabled()) {
-    excludeFiles.add('**/Firebase*')
-    println '[Push Notification] Firebase disabled'
-}
-
-def excludePackage = []
-
-excludePackage.add('**/gdb.*')
-excludePackage.add('**/libopenh264**')
-excludePackage.add('**/**tester**')
-excludePackage.add('**/LICENSE.txt')
 
 
 def gitVersion = new ByteArrayOutputStream()
@@ -128,18 +114,6 @@ android {
             if (!firebaseEnabled()) {
                 resValue "string", "gcm_defaultSenderId", "none"
             }
-        }
-    }
-
-    sourceSets {
-        main {
-            java.excludes = excludeFiles
-
-            packagingOptions {
-                excludes = excludePackage
-            }
-            res.srcDirs = ['src/main/res', 'src/main/res/values/neth_strings']
-            resources.srcDirs = ['src/main/resources', 'src/main/res/values/neth_strings']
         }
     }
 
