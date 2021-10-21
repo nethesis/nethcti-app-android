@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'placeholder-resolver'
 
 static def getPackageName() {
     return "it.nethesis.nethctiapp" // "org.linphone"
