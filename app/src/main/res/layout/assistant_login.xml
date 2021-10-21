@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/logo_dashboard" />
+                app:srcCompat="@drawable/logo_login" />
         </FrameLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
