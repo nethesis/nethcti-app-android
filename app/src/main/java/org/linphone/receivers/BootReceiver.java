@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.compatibility.Compatibility;
@@ -46,7 +48,12 @@ public class BootReceiver extends BroadcastReceiver {
                 lLinphoneServiceIntent.setClass(context, LinphoneService.class);
                 lLinphoneServiceIntent.putExtra("ForceStartForeground", true);
                 lLinphoneServiceIntent.putExtra("startFromBootReceiver", true);
-                Compatibility.startService(context, lLinphoneServiceIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    intent.putExtra(LinphoneService.FOREGROUND_KEY, true);
+                    context.startForegroundService(intent);
+                } else {
+                    context.startService(intent);
+                }
             }
         }
     }

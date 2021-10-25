@@ -67,6 +67,7 @@ public class LinphoneLauncherActivity extends Activity {
             Intent i = new Intent(ACTION_MAIN).setClass(this, LinphoneService.class);
             // start linphone as background
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                i.putExtra(LinphoneService.FOREGROUND_KEY, true);
                 startForegroundService(i);
             } else {
                 startService(i);

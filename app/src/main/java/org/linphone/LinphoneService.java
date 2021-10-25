@@ -77,6 +77,7 @@ public final class LinphoneService extends Service {
      * setLatestEventInfo and startActivity() which needs a context.
      */
     private static final String START_LINPHONE_LOGS = " ==== Phone information dump ====";
+    public static final String FOREGROUND_KEY = "LinphoneServiceStartForeground";
 
     private static LinphoneService sInstance;
 
@@ -196,6 +197,11 @@ public final class LinphoneService extends Service {
             return START_STICKY;
         }
 
+        boolean startForeground = intent != null && intent.getBooleanExtra("FOREGROUND_KEY", false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O || startForeground) {
+            mNotificationManager.startForeground();
+        }
+
         LinphoneManager.createAndStart(this, isPush);
 
         startFromNotif = isPush;
@@ -287,10 +293,6 @@ public final class LinphoneService extends Service {
                                         // TODO registration status
                                     }
                                 });
-
-        if (Version.sdkAboveOrEqual(Version.API26_O_80)) {
-            mNotificationManager.startForeground();
-        }
 
         if (!Version.sdkAboveOrEqual(Version.API26_O_80)
                 || (ContactsManager.getInstance() != null

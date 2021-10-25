@@ -34,6 +34,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Gravity;
@@ -467,7 +468,13 @@ public class LinphoneActivity extends LinphoneGenericActivity
     protected void onResume() {
         super.onResume();
         if (!LinphoneService.isReady()) {
-            startService(new Intent(Intent.ACTION_MAIN).setClass(this, LinphoneService.class));
+            Intent intent = new Intent(Intent.ACTION_MAIN).setClass(this, LinphoneService.class);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                intent.putExtra(LinphoneService.FOREGROUND_KEY, true);
+                startForegroundService(intent);
+            } else {
+                startService(intent);
+            }
         }
 
         Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();

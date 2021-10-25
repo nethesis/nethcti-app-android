@@ -87,6 +87,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
                 intent.putExtra("PushNotification", true);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    intent.putExtra(LinphoneService.FOREGROUND_KEY, true);
                     startForegroundService(intent);
                 } else {
                     startService(intent);
