@@ -1,6 +1,7 @@
 package org.linphone.notifications;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.content.Intent;
 import android.util.Log;
 import org.linphone.LinphoneManager;
@@ -12,6 +13,7 @@ import org.linphone.utils.SharedPreferencesManager;
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
+    public static final String FOREGROUND_EXTRA = "RegIntentServiceStartForeground";
 
     /** Instantiates a new Registration intent service. */
     public RegistrationIntentService() {
@@ -20,7 +22,12 @@ public class RegistrationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.i(TAG, "onHandleIntent");
+        boolean foreground = intent.getBooleanExtra(FOREGROUND_EXTRA, false);
+        if(foreground) {
+            startForeground(1, new Notification()); //TODO: create a proper notification
+        }
+
+
         try {
             // In the (unlikely) event that multiple refresh operations occur simultaneously,
             // ensure that they are processed sequentially.

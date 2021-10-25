@@ -55,6 +55,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         // [Notificatore] send new token to Notificatore app.
         Intent intent = new Intent(this, RegistrationIntentService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            intent.putExtra(RegistrationIntentService.FOREGROUND_EXTRA, true);
             startForegroundService(intent);
         } else {
             startService(intent);
