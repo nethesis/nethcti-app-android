@@ -197,6 +197,7 @@ public final class LinphoneService extends Service {
             return START_STICKY;
         }
 
+        mNotificationManager = new NotificationsManager(this);
         boolean startForeground = intent != null && intent.getBooleanExtra("FOREGROUND_KEY", false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O || startForeground) {
             mNotificationManager.startForeground();
@@ -206,7 +207,6 @@ public final class LinphoneService extends Service {
 
         startFromNotif = isPush;
         sInstance = this; // sInstance is ready once linphone manager has been created
-        mNotificationManager = new NotificationsManager(this);
         LinphoneManager.getLc()
                 .addListener(
                         mListener =
