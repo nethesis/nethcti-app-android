@@ -196,17 +196,16 @@ public final class LinphoneService extends Service {
                     "[Service] Attempt to start the LinphoneService but it is already running !");
             return START_STICKY;
         }
-
+        /* Init */
+        LinphoneManager.createAndStart(this, isPush);
+        startFromNotif = isPush;
+        sInstance = this; // sInstance is ready once linphone manager has been created
         mNotificationManager = new NotificationsManager(this);
+
         boolean startForeground = intent != null && intent.getBooleanExtra("FOREGROUND_KEY", false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O || startForeground) {
             mNotificationManager.startForeground();
         }
-
-        LinphoneManager.createAndStart(this, isPush);
-
-        startFromNotif = isPush;
-        sInstance = this; // sInstance is ready once linphone manager has been created
         LinphoneManager.getLc()
                 .addListener(
                         mListener =
