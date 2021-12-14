@@ -1,5 +1,7 @@
 package org.linphone.notifications;
 
+import static org.linphone.notifications.NotificationsManager.REG_SERVICE_NOTIF_ID;
+
 import android.app.IntentService;
 import android.app.Notification;
 import android.content.Intent;
@@ -24,7 +26,8 @@ public class RegistrationIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         boolean foreground = intent.getBooleanExtra(FOREGROUND_EXTRA, false);
         if(foreground) {
-            startForeground(1, new Notification()); //TODO: create a proper notification
+            Notification notif = new NotificationsManager(this).createRegisterServiceNotification(this);
+            startForeground(REG_SERVICE_NOTIF_ID, notif);
         }
 
 

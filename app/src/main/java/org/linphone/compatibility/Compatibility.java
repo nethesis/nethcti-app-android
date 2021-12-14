@@ -161,10 +161,7 @@ public class Compatibility {
     }
 
     public static boolean canDrawOverlays(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return Settings.canDrawOverlays(context);
-        }
-        return true;
+        return Settings.canDrawOverlays(context);
     }
 
     public static void setTextAppearance(TextView textview, Context context, int style) {

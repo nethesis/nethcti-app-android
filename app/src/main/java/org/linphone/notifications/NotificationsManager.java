@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -29,6 +30,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
+
+import androidx.core.app.NotificationCompat;
+
 import java.util.HashMap;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
@@ -49,6 +54,7 @@ import org.linphone.utils.LinphoneUtils;
 
 public class NotificationsManager {
     private static final int SERVICE_NOTIF_ID = 1;
+    public static final int REG_SERVICE_NOTIF_ID = 6;
     private static final int MISSED_CALLS_NOTIF_ID = 2;
     private static final int IN_APP_NOTIF_ID = 3;
 
@@ -429,5 +435,31 @@ public class NotificationsManager {
 
     public void dismissNotification(int notifId) {
         mNM.cancel(notifId);
+    }
+
+    public Notification createRegisterServiceNotification(Context ctx) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)  {
+            Compatibility.createNotificationChannels(ctx);
+        }
+
+        Bitmap bm = null;
+        try {
+            bm = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
+        } catch (Exception e) {
+            Log.e(e);
+        }
+        Intent notifIntent = new Intent(mContext, LinphoneActivity.class);
+        notifIntent.putExtra("Notification", true);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(
+                        mContext, SERVICE_NOTIF_ID, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return Compatibility.createNotification(mContext,
+                mContext.getString(R.string.service_name),
+                "",
+                R.drawable.ic_nethesis_24,
+                R.mipmap.ic_launcher,
+                bm,
+                pendingIntent,
+                Notification.PRIORITY_MIN);
     }
 }
