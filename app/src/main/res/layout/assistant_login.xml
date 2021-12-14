@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/neth_logo_login" />
+                app:srcCompat="@drawable/logo_login" />
         </FrameLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -83,10 +83,9 @@
                         android:text="@string/domain" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/neth_primary_text_layout"
+                        style="@style/NethCTITextInputLayoutStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/neth_primary_text_layout_theme">
+                        android:layout_height="wrap_content">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/assistant_domain"
@@ -113,10 +112,9 @@
                         android:text="@string/username" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/neth_primary_text_layout"
+                        style="@style/NethCTITextInputLayoutStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/neth_primary_text_layout_theme">
+                        android:layout_height="wrap_content">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/assistant_username"
@@ -145,10 +143,9 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/neth_primary_text_layout"
+                        style="@style/NethCTITextInputLayoutStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/neth_primary_text_layout_theme">
+                        android:layout_height="wrap_content">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/assistant_password"
@@ -191,6 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="4dp"
+                        android:textAllCaps="true"
                         style="@style/NethCTILightHeaderSubTitle"
                         android:text="@string/assistant_login"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -212,6 +210,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="4dp"
+                        android:textAllCaps="true"
                         style="@style/NethCTILightHeaderSubTitle"
                         android:text="@string/assistant_launch_qrcode"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>

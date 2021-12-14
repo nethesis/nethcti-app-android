@@ -1,18 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Custom-->
-    <string name="service_name">Servizio NethCTI</string>
-  <string name="addressbook_label">Linphone</string>
-  <string name="notification_title">LinphoNethCTIne</string>
+  <string name="app_name">NethCTI</string>
   <string name="wait_dialog_text">Avvio</string>
   <string name="notification_registered">%sè connesso</string>
   <string name="notification_register_failure">%s non è riuscito a connettersi</string>
-  <string name="tunnel_host"></string>
-  <string name="about_version">NethCTI Android %s</string>
   <string name="about_liblinphone_version">Linphone Core %s</string>
   <string name="about_liblinphone_sdk_version">Linphone SDK %s</string>
   <string name="about_privacy_policy">Leggi le nostre regole della privacy</string>
-  <string name="sync_account_name">contatti NethCTI</string>
+  <!-- Template Strings -->
+  <string name="template_service_name">Servizio ${app_name}</string>
+  <string name="template_notification_title">${app_name}</string>
+  <string name="template_about_version">${app_name} Android %s</string>
+  <string name="template_sync_account_name">Contatti ${app_name}</string>
+  <string name="template_assistant_linphone_login_desc">Inserisci il tuo nome utente e la password dell\'account ${app_name}</string>
+  <string name="template_assistant_login_linphone">Usa l\'account ${app_name}</string>
+  <string name="template_assistant_linphone_account">Usa il tuo ${app_name} Account</string>
+  <string name="template_phone_number_link_info_content_already_account">Puoi utilizzare il tuo numero di telefono solo con un account ${app_name}.  Se avevi già collegato il tuo numero a un altro account ma preferisci utilizzare questo, collegalo semplicemente ora e il tuo numero verrà automaticamente spostato su questo account.</string>
+  <string name="template_invite_friend_text">Ciao, chiamami con ${app_name}! Puoi scaricarlo gratuitamente a %s</string>
+  <string name="template_pref_dialer_call">Utilizza ${app_name} come app telefono predefinita</string>
+  <string name="template_content_description_linphone_contacts">Contatti ${app_name}</string>
+  <string name="template_content_title_notification_service">Notifica del servizio ${app_name}</string>
+  <string name="template_assistant_create_account_part_email">Inserisci un nome utente, un indirizzo e-mail e una password per il tuo account ${app_name}</string>
+  <string name="template_content_title_notification">Notifiche di messaggi istantanei ${app_name}</string>
   <!--Notifications-->
   <string name="notification_reply_label">Rispondi</string>
   <string name="notification_replied_label">Risposta inviata: %s</string>
@@ -20,7 +30,7 @@
   <string name="notification_call_answer_label">Rispondi</string>
   <string name="notification_mark_as_read_label">Segna come già letto</string>
   <!--Common-->
-  <string name="username">Nome utente</string>
+  <string name="username">Nome Utente</string>
   <string name="userid">ID utente (facoltativo)</string>
   <string name="phone_number">Numero di telefono</string>
   <string name="confirmation_code">Codice di conferma</string>
@@ -62,8 +72,6 @@
   <string name="delete_contacts_text">Vuoi eliminare i contatti selezionati?\nSaranno anche eliminati dalla rubrica del telefono</string>
   <string name="delete_contacts_text_2">Vuoi eliminare il contatto selezionato?\nVerrà anche eliminato dalla rubrica del telefono.</string>
   <string name="logs_url_copied_to_clipboard">Log indirizzi copiati negli appunti</string>
-  <!--Launch screen-->
-  <string name="app_description">"Un SIP client da <i>Nethesis</i> "</string>
   <!--Assistant-->
   <string name="welcome">Benvenuto</string>
   <string name="assistant">Login</string>
@@ -75,20 +83,16 @@
   <string name="assistant_validate_account_1">Il tuo account è stato creato. Controlla le tue e-mail per convalidare il tuo account:</string>
   <string name="assistant_validate_account_2">Una volta terminato, torna qui e fai clic sul pulsante.</string>
   <string name="assistant_welcome_desc">Questo assistente ti aiuterà a configurare e utilizzare il tuo account SIP.</string>
-  <string name="assistant_linphone_login_desc">Inserisci il tuo nome utente e la password dell\'account NethCTI</string>
   <string name="assistant_login_desc">Inserisci le seguenti informazioni</string>
   <string name="assistant_remote_provisioning_desc">Inserisci l\'URL di provisioning</string>
   <string name="transport">Trasporto</string>
   <string name="assistant_create_account_phone_number_address">Il tuo indirizzo SIP è</string>
-  <string name="assistant_login_linphone">Usa l\'account NethCTI</string>
   <string name="assistant_login_generic">Usa l\'account</string>
   <string name="assistant_remote_provisioning">Recupera la configurazione remota</string>
   <string name="assistant_create_account_part_1">Conferma il codice paese e inserisci il tuo numero di telefono</string>
   <string name="assistant_create_account_part_2">Ti abbiamo inviato un SMS con un codice di convalida al tuo numero di telefono:</string>
   <string name="assistant_create_account_part_3">Per completare la verifica del numero di telefono, inserisci il codice di 4 cifre di seguito:\n</string>
-  <string name="assistant_create_account_part_email">Inserisci un nome utente, un indirizzo e-mail e una password per il tuo account NethCTI</string>
   <string name="assistant_display_name_optional">Nome visualizzato (facoltativo)</string>
-  <string name="assistant_linphone_account">Usa il tuo NethCTI Account</string>
   <string name="assistant_generic_account">Usa l\'account</string>
   <string name="assistant_remote_provisioning_title">Recupera la configurazione remota</string>
   <string name="assistant_fetch_apply">Recupera ed applica</string>
@@ -127,7 +131,6 @@
   <string name="phone_number_info_title">Per cosa verrà utilizzato il mio numero di telefono?</string>
   <string name="phone_number_info_content">\nGrazie al tuo numero di telefono, i tuoi amici ti troveranno più facilmente.\n\nVedrai nella tua rubrica chi usa Linphone e i tuoi amici sapranno che possono contattarti anche su Linphone.\n</string>
   <string name="phone_number_link_info_content">\nI tuoi amici ti troveranno più facilmente se colleghi il tuo account al tuo numero di telefono\n\nSi vedrai nella tua rubrica che sta usando Linphone e i tuoi amici sapranno che possono contattarti anche su Linphone.\n</string>
-  <string name="phone_number_link_info_content_already_account">Puoi utilizzare il tuo numero di telefono solo con un account NethCTI.  Se avevi già collegato il tuo numero a un altro account ma preferisci utilizzare questo, collegalo semplicemente ora e il tuo numero verrà automaticamente spostato su questo account.</string>
   <!--Status-->
   <string name="invalid_email">E-mail non valida</string>
   <string name="account_already_exist">Account già esistente</string>
@@ -163,6 +166,7 @@
   <string name="calls">Chiamate</string>
   <!--Contacts-->
   <string name="no_contact">Nessun contatto nella tua rubrica.</string>
+  <string name="no_contact_found">Nessun contatto trovato nella tua rubrica.</string>
   <string name="no_sip_contact">Nessun contatto nella tua rubrica.</string>
   <string name="delete_contacts">Vuoi eliminare i contatti selezionati?</string>
   <string name="delete_contact">Vuoi eliminare il contatto selezionato?</string>
@@ -171,7 +175,6 @@
   <string name="contact_last_name">Cognome</string>
   <string name="contact_organization">Organizzazione</string>
   <string name="invite_friend">Invito</string>
-  <string name="invite_friend_text">Ciao, chiamami con NethCTI! Puoi scaricarlo gratuitamente a %s</string>
   <string name="toast_choose_contact_for_edition">Scegli un contatto o creane uno nuovo</string>
   <!--Chat-->
   <string name="no_chat_history">Nessuna conversazione</string>
@@ -412,7 +415,6 @@
   <string name="pref_sipinfo_dtmf">Invia DTMF out-band (SIP INFO)</string>
   <string name="pref_call_timeout_title">Timeout della chiamata (in secondi)</string>
   <string name="pref_voice_mail">URI della segreteria telefonica</string>
-  <string name="pref_dialer_call">Utilizza NethCTI come app telefono predefinita</string>
   <string name="pref_accept_early_media">Accetta early-media</string>
   <!--Chat settings-->
   <string name="pref_chat_title">Chat</string>
@@ -515,7 +517,6 @@
   <string name="content_description_search_contact">Cerca contatto</string>
   <string name="content_description_search_country">Cerca paese</string>
   <string name="content_description_all_contacts">Tutti i contatti</string>
-  <string name="content_description_linphone_contacts">Contatti NethCTI</string>
   <string name="content_description_call_direction">Direzione della chiamata</string>
   <string name="content_description_all_calls">Tutte le chiamate</string>
   <string name="content_description_missed_calls">Chiamate perse</string>
@@ -558,12 +559,7 @@
   <string name="content_description_call_options">Opzioni di chiamata</string>
   <string name="content_description_audio_route">Instradamento audio</string>
   <string name="content_description_exit_conference">Esci dalla conferenza</string>
-  <string name="content_title_notification_service">Notifica del servizio NethCTI</string>
-  <string name="content_title_notification">Notifiche di messaggi istantanei NethCTI</string>
   <string name="content_description_conversation_subject">Oggetto della chat room di gruppo</string>
   <string name="content_description_conversation_infos">Informazioni sulla chat room di gruppo</string>
   <string name="content_description_record_call">Registra chiamata</string>
-    <string name="app_name">NethCTI</string>
-
-
 </resources>

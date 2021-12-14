@@ -415,10 +415,18 @@ public class ContactsManager extends ContentObserver implements FriendListListen
         if (addr == null) {
             return null;
         }
-        addr.setUriParam("user", "phone");
+        /* Search between sip numbers */
         Friend lf =
                 lc.findFriend(
-                        addr); // Without this, the hashmap inside liblinphone won't find it...
+                        addr);
+        if (lf != null) {
+            return (LinphoneContact) lf.getUserData();
+        }
+        /* Search between phone numbers */
+        addr.setUriParam("user", "phone");
+        lf =
+                lc.findFriend(
+                        addr);
         if (lf != null) {
             return (LinphoneContact) lf.getUserData();
         }

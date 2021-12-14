@@ -184,6 +184,7 @@
             android:name=".assistant.AssistantActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTask"
             android:theme="@style/NethCTIStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

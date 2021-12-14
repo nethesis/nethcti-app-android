@@ -55,7 +55,6 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
     private static CallIncomingActivity sInstance;
 
     private TextView mName, mNumber;
-    private ImageView mAcceptIcon;
     private ImageView mAccept, mDecline;
     private Call mCall;
     private CoreListenerStub mListener;
@@ -93,7 +92,6 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
 
         mAccept = findViewById(R.id.answer_button);
         mDecline = findViewById(R.id.decline_button);
-        mAcceptIcon = findViewById(R.id.acceptIcon);
         lookupCurrentCall();
 
         if (LinphonePreferences.instance() != null
@@ -101,7 +99,7 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
                 && mCall.getRemoteParams() != null
                 && LinphonePreferences.instance().shouldAutomaticallyAcceptVideoRequests()
                 && mCall.getRemoteParams().videoEnabled()) {
-            mAcceptIcon.setImageResource(R.drawable.call_video_start);
+            /* Insert here the logic to change the "answer call" button icon with the "answer video call" icon */
         }
 
         mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);

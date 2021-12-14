@@ -49,6 +49,9 @@
     <!-- Time between two inapp notifications in milliseconds -->
     <integer name="popup_time_interval">86400000</integer>
 
+    <!-- Dashboard -->
+    <string name="menu_dashboard" translatable="false">Dashboard</string>
+
     <!-- Assistant -->
     <!-- Allow to use an username instead of the phone number for account creation -->
     <bool name="assistant_allow_username">true</bool>

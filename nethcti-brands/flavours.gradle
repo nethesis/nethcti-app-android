@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+
+///// Exclude Files /////
+
+def excludeFiles = []
+if (!firebaseEnabled()) {
+    excludeFiles.add('**/Firebase*')
+    println '[Push Notification] Firebase disabled'
+}
+
+def excludePackage = []
+
+excludePackage.add('**/gdb.*')
+excludePackage.add('**/libopenh264**')
+excludePackage.add('**/**tester**')
+excludePackage.add('**/LICENSE.txt')
+
+android {
+    flavorDimensions 'nethcti'
+
+    productFlavors {
+        nethcti{
+            dimension = 'nethcti'
+        }
+    }
+
+    sourceSets {
+            main {
+                java.excludes = excludeFiles
+
+                packagingOptions {
+                    excludes = excludePackage
+                }
+                res.srcDirs = ['src/main/res', 'src/main/res/values/neth_strings']
+                resources.srcDirs = ['src/main/resources', 'src/main/res/values/neth_strings']
+            }
+    }
+}

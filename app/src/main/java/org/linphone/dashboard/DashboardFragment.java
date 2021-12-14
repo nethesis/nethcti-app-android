@@ -55,6 +55,9 @@ public class DashboardFragment extends Fragment {
         /* Used to make Linphone logic of fragment transactions */
         if (LinphoneActivity.isInstanciated()) {
             LinphoneActivity.instance().setCurrentFragment(FragmentsAvailable.DASHBOARD);
+
+            LinphoneActivity.instance().hideTabBar();
+            LinphoneActivity.instance().hideTopBar();
         }
         /* Manage card visibility */
         switch (calls.size()) {

@@ -207,7 +207,7 @@
                         android:layout_height="match_parent"
                         android:layout_above="@id/pausedCalls"
                         android:background="?attr/backgroundColor"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -216,7 +216,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@string/no_current_call" />
+                            android:text="@string/no_current_call"
+                            android:layout_marginBottom="8dp"/>
 
                         <FrameLayout
                             android:layout_width="wrap_content"

@@ -40,15 +40,12 @@
         <item name="button_background_drawable">@drawable/button_background_light</item>
     </style>
 
-    <style name="NethCTIStyleLaunchActivity" parent="NethCTIStyle">
-        <item name="android:colorPrimary">@color/colorAccent</item>
-        <item name="android:statusBarColor">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/colorAccent</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:colorBackground">@color/colorAccent</item>
-        <item name="backgroundColor">@color/colorAccent</item>
-        <item name="backgroundColor2">@color/colorAccentLight</item>
-        <item name="backgroundContrastColor">@color/neth_grey_color</item>
+    <style name="NethCTIStyleLaunchActivity" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLightStatusBar">@bool/splashScreenLightStatusBar</item>
     </style>
 
     <!-- Custom View -->
@@ -164,7 +161,7 @@
     </style>
 
     <style name="NethCTIAccountHeaderText" parent="@style/NethCTITextLight">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">19sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:lineSpacingExtra">10sp</item>
     </style>
@@ -198,6 +195,11 @@
     <style name="NethCTIEditContactControlLabel" parent="@style/NethCTITextRegular">
         <item name="android:textColor">@color/secondaryTextColor</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="NethCTIEditContactControl" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="NethCTIContactNameTitle" parent="@style/NethCTITextRegular">
@@ -268,37 +270,81 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="NethCTITextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="boxStrokeColor">@color/neth_text_input_layout</item>
+        <item name="android:theme">@style/NethCTITextInputLayoutTheme</item>
+    </style>
+
+    <style name="NethCTITextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="colorControlActivated">@color/colorAccentLight</item>
+        <item name="android:colorControlHighlight">@color/colorAccentLight</item>
+    </style>
+
     <style name="SpinnerTheme" parent="@android:style/Widget.TextView.SpinnerItem">
         <item name="android:textColor">@color/secondaryTextColor</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 
     <style name="NethCTIDialogDeleteButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textColor">@color/neth_white_color</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="backgroundTint">@color/materialRed</item>
+        <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
     <style name="NethCTIDialogOKButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textColor">@color/neth_white_color</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="backgroundTint">@color/colorAccent</item>
+        <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
     <style name="NethCTIDialogDefaultButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textColor">@color/neth_white_color</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="backgroundTint">@color/light_grey_color</item>
+        <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
     <style name="NethCTINoActiveCallText" parent="NethCTITextLight">
         <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="NethCTIAccentTitle" parent="@style/NethCTITextMedium">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="NethCTIUnreadText" parent="@style/NethCTITextLight">
+        <item name="android:textColor">@color/primaryTextColorInverse</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="NethCTIDialogMessageText" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/neth_white_color</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="NetchCTISeparatorText" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="NethCTIDialogTitleText" parent="@style/NethCTITextRegular">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <!-- ******* ******* ******* *******  ******* OLD ******* ******* ******* *******  *******-->
     <style name="LinphoneStyleLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">

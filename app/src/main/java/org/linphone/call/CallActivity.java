@@ -54,6 +54,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -725,6 +727,9 @@ public class CallActivity extends LinphoneGenericActivity
         mAddCall.setEnabled(
                 LinphoneManager.getLc().getCallsNb() < LinphoneManager.getLc().getMaxCalls()
                         && !LinphoneManager.getLc().soundResourcesLocked());
+        mAddCallNoCurrentCall.setEnabled(
+                LinphoneManager.getLc().getCallsNb() < LinphoneManager.getLc().getMaxCalls()
+                        && !LinphoneManager.getLc().soundResourcesLocked());
 
         if (CallTransferManager.instance().ismCallTransfer()) {
             mAddCall.setVisibility(View.GONE);
@@ -1300,7 +1305,7 @@ public class CallActivity extends LinphoneGenericActivity
                         WindowManager.LayoutParams.MATCH_PARENT);
         mDialog.getWindow().setBackgroundDrawable(d);
 
-        TextView customText = mDialog.findViewById(R.id.dialog_message);
+        AppCompatTextView customText = mDialog.findViewById(R.id.dialog_message);
         customText.setText(getResources().getString(R.string.add_video_dialog));
         mDialog.findViewById(R.id.dialog_delete_button).setVisibility(View.GONE);
         Button accept = mDialog.findViewById(R.id.dialog_ok_button);
