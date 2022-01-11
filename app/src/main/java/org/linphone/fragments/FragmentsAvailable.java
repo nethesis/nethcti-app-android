@@ -40,7 +40,8 @@ public enum FragmentsAvailable {
     MESSAGE_IMDN,
     CONTACT_DEVICES,
     RECORDING_LIST,
-    DASHBOARD;
+    DASHBOARD,
+    USERS_BY_PRESENCE;
 
     public boolean shouldAddItselfToTheRightOf(FragmentsAvailable fragment) {
         switch (this) {

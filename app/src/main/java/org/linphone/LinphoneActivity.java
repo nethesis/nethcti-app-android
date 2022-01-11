@@ -105,6 +105,7 @@ import org.linphone.fragments.DialerFragment;
 import org.linphone.fragments.EmptyFragment;
 import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.fragments.StatusFragment;
+import org.linphone.fragments.UsersByPresenceFragment;
 import org.linphone.history.HistoryDetailFragment;
 import org.linphone.history.HistoryFragment;
 import org.linphone.notifications.FCMNotification;
@@ -875,6 +876,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 mFragment = new DashboardFragment();
                 mTabBar.setVisibility(View.GONE); //Force hide tab bar even in tablet mode
                 break;
+            case USERS_BY_PRESENCE:
+                mFragment = UsersByPresenceFragment.newInstance();
+                break;
             default:
                 break;
         }
@@ -1406,6 +1410,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
         changeCurrentFragment(FragmentsAvailable.DIALER, null);
     }
 
+    public void displayUsersByPresence() {
+        changeCurrentFragment(FragmentsAvailable.USERS_BY_PRESENCE, null);
+    }
+
     public void displayHistory() {
         changeCurrentFragment(FragmentsAvailable.HISTORY_LIST, null);
 
@@ -1687,6 +1695,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 case HISTORY_LIST:
                 case CHAT_LIST:
                 case DASHBOARD:
+                case USERS_BY_PRESENCE:
                     if (LinphoneUtils.onKeyBackGoHome(this, keyCode, event)) {
                         return true;
                     }
