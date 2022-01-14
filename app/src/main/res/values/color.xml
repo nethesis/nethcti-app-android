@@ -59,4 +59,8 @@
     <color name="contact_disabled_color">#99ffffff</color>
 
     <color name="subtitleTextColor">#c7c7c7</color>
+
+    <color name="icon_ripple_dark_selected">#26A0DD</color>
+    <color name="icon_ripple_light_selected">#A8E3FE</color>
+
 </resources>

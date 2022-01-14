@@ -127,7 +127,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     app:iconSize="@dimen/dashboardIconSize"
-                    app:icon="@drawable/ic_settings" />
+                    app:icon="@drawable/ic_presence" />
             </FrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

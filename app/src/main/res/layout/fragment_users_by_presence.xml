@@ -1,14 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.UsersByPresenceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="60dp"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_weight="0.15"
+            android:layout_gravity="center"
+            android:contentDescription="@string/content_description_dialer_back"
+            android:src="@drawable/ic_back"
+            app:tint="@color/neth_button_icon" />
+
+        <RelativeLayout
+            android:layout_weight="0.8"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rlv_status"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="22dp"
+                android:layout_marginEnd="22dp"
+                android:background="@color/green_color">
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/top_bar_title"
+                style="@style/NethCTITopBarTitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/rlv_status"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:text="@string/presence" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_weight=".45"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white_color"
+                    android:backgroundTint="@color/white_color"
+                    android:drawableTop="@drawable/ic_presence_circle_group_selector"
+                    android:text="asdasd"
+                    android:textColor="@drawable/ic_presence_color_text_selector"
+                    app:backgroundTint="@color/white_color" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight=".1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:layout_weight=".45"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white_color"
+                    android:backgroundTint="@color/white_color"
+                    android:drawableTop="@drawable/ic_presence_circle_favourites_selector"
+                    android:text="asdasd"
+                    android:textColor="@drawable/ic_presence_color_text_selector"
+                    app:backgroundTint="@color/white_color" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

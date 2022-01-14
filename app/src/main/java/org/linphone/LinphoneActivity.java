@@ -1695,7 +1695,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 case HISTORY_LIST:
                 case CHAT_LIST:
                 case DASHBOARD:
-                case USERS_BY_PRESENCE:
                     if (LinphoneUtils.onKeyBackGoHome(this, keyCode, event)) {
                         return true;
                     }
@@ -1710,6 +1709,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                         return true;
                     }
                 case SETTINGS:
+                case USERS_BY_PRESENCE:
                 case ACCOUNT_SETTINGS:
                 case RECORDING_LIST:
                 case ABOUT:
