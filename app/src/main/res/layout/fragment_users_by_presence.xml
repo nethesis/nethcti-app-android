@@ -62,59 +62,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="20dp"
-        android:weightSum="1">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
 
         <RelativeLayout
-            android:layout_weight=".45"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_alignParentEnd="true"
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white_color"
-                    android:backgroundTint="@color/white_color"
-                    android:drawableTop="@drawable/ic_presence_circle_group_selector"
-                    android:text="@string/presence_groups"
-                    android:textColor="@drawable/ic_presence_color_text_selector"
-                    app:backgroundTint="@color/white_color" />
-
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:background="@color/white_color"
+                android:backgroundTint="@color/white_color"
+                android:drawableTop="@drawable/ic_presence_circle_group_selector"
+                android:text="@string/presence_groups"
+                android:textColor="@drawable/ic_presence_color_text_selector"
+                app:backgroundTint="@color/white_color" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_weight=".1"
-            android:layout_width="0dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"/>
 
         <RelativeLayout
-            android:layout_weight=".45"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_alignParentStart="true"
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white_color"
-                    android:backgroundTint="@color/white_color"
-                    android:drawableTop="@drawable/ic_presence_circle_favourites_selector"
-                    android:text="@string/presence_favourites"
-                    android:textColor="@drawable/ic_presence_color_text_selector"
-                    app:backgroundTint="@color/white_color" />
-
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:background="@color/white_color"
+                android:backgroundTint="@color/white_color"
+                android:drawableTop="@drawable/ic_presence_circle_favourites_selector"
+                android:text="@string/presence_favourites"
+                android:textColor="@drawable/ic_presence_color_text_selector"
+                app:backgroundTint="@color/white_color" />
 
         </RelativeLayout>
 
