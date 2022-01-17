@@ -58,4 +58,9 @@
     <string name="speedDial">Speed Dial</string>
     <string name="type">Type</string>
     <string name="url" translatable="false">Url</string>
+
+    <!-- Sezione Presence -->
+    <string name="presence">Presence</string>
+    <string name="presence_groups">Groups (friends)</string>
+    <string name="presence_favourites">Favorites</string>
 </resources>

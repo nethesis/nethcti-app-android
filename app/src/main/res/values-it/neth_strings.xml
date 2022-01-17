@@ -50,4 +50,9 @@
     <string name="speedDial">Chiamata Rapida</string>
     <string name="type">Tipo</string>
 
+    <!-- Sezione Presence -->
+    <string name="presence">Presence</string>
+    <string name="presence_groups">Gruppi (amici)</string>
+    <string name="presence_favourites">Preferiti</string>
+
 </resources>

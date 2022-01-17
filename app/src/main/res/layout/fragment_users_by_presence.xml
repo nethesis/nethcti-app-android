@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.UsersByPresenceFragment">
+    tools:context=".presence.UsersByPresenceFragment">
 
     <LinearLayout
         android:background="@color/colorPrimary"
@@ -48,7 +48,6 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/rlv_status"
-                android:layout_weight="0.5"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:padding="8dp"
@@ -63,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
         android:weightSum="1">
 
         <RelativeLayout
@@ -81,7 +81,7 @@
                     android:background="@color/white_color"
                     android:backgroundTint="@color/white_color"
                     android:drawableTop="@drawable/ic_presence_circle_group_selector"
-                    android:text="asdasd"
+                    android:text="@string/presence_groups"
                     android:textColor="@drawable/ic_presence_color_text_selector"
                     app:backgroundTint="@color/white_color" />
 
@@ -110,7 +110,7 @@
                     android:background="@color/white_color"
                     android:backgroundTint="@color/white_color"
                     android:drawableTop="@drawable/ic_presence_circle_favourites_selector"
-                    android:text="asdasd"
+                    android:text="@string/presence_favourites"
                     android:textColor="@drawable/ic_presence_color_text_selector"
                     app:backgroundTint="@color/white_color" />
 
@@ -119,5 +119,10 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rclr_contacts_presence"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

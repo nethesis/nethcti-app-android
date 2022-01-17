@@ -105,7 +105,7 @@ import org.linphone.fragments.DialerFragment;
 import org.linphone.fragments.EmptyFragment;
 import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.fragments.StatusFragment;
-import org.linphone.fragments.UsersByPresenceFragment;
+import org.linphone.presence.UsersByPresenceFragment;
 import org.linphone.history.HistoryDetailFragment;
 import org.linphone.history.HistoryFragment;
 import org.linphone.notifications.FCMNotification;
