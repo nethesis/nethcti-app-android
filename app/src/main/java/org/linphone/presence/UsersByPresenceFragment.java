@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.linphone.R;
@@ -66,7 +67,13 @@ public class UsersByPresenceFragment extends Fragment implements Callback<HashMa
     public void onResponse(Call<HashMap<String, PresenceUser>> call, Response<HashMap<String, PresenceUser>> response) {
         if (response.body() == null) return;
         ArrayList userList = new ArrayList(response.body().values());
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         ContactPresenceListAdapter adapter = new ContactPresenceListAdapter(userList);
+
+        recyclerContactsPresence.setLayoutManager(layoutManager);
+        recyclerContactsPresence.setAdapter(adapter);
+
     }
 
     @Override
