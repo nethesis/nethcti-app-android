@@ -1,6 +1,8 @@
 package it.nethesis.webservices;
 
-import it.nethesis.models.presence.PresenceUserList;
+import java.util.HashMap;
+
+import it.nethesis.models.presence.PresenceUser;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -15,6 +17,6 @@ public interface PresenceRestAPI {
      * @return
      */
     @GET("user/endpoints/all")
-    Call<PresenceUserList> getAll(@Header("Authorization") String authorizationHeader);
+    Call<HashMap<String, PresenceUser>> getAll(@Header("Authorization") String authorizationHeader);
 
 }

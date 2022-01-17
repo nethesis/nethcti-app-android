@@ -2,7 +2,7 @@ package it.nethesis.models.presence;
 
 import it.nethesis.models.Endpoints;
 
-class PresenceUser {
+public class PresenceUser {
 
     private String name = "";
 
