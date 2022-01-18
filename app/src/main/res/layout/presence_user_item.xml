@@ -2,16 +2,13 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="1">
+    android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_weight="0.2"
         android:id="@+id/rlv_content_avatar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
 
@@ -20,11 +17,11 @@
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_presence_status_border_online"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,32 +41,63 @@
             app:layout_constraintTop_toTopOf="@+id/img_presence_status" />
 
         <ImageView
-            android:layout_marginStart="-5dp"
-            android:layout_marginTop="-5dp"
+            android:id="@+id/imageView2"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignEnd="@id/img_presence_status"
             android:layout_alignBottom="@id/img_presence_status"
+            android:layout_marginStart="-5dp"
+            android:layout_marginTop="-5dp"
             android:src="@drawable/ic_presence_status_online"
             app:layout_constraintStart_toEndOf="@+id/txt_user_initials"
             app:layout_constraintTop_toBottomOf="@+id/txt_user_initials" />
 
+        <TextView
+            android:id="@+id/txt_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:lines="1"
+            android:text="Username"
+            android:textSize="@dimen/listItemTitleTextSize"
+            app:layout_constraintBottom_toTopOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/img_presence_status" />
+
+        <TextView
+            android:id="@+id/txt_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/ic_square_status_online"
+            android:padding="3dp"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:text="Disponibile"
+            android:textAllCaps="true"
+            android:textColor="@color/white_color"
+            android:textSize="@dimen/listItemSecondaryTextSize"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/txt_username" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:src="@drawable/ic_presence_button_options"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/neth_button_icon" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
-        android:layout_weight="0.6"
-        android:id="@+id/rlv_content_body"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_weight="0.2"
-        android:id="@+id/rlv_content_options"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-
-    </RelativeLayout>
 
 </LinearLayout>

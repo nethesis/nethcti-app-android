@@ -15,4 +15,8 @@
     <dimen name="dashboardIconSize">64dp</dimen>
     <dimen name="dashboardCardPadding">6dp</dimen>
     <dimen name="historyDetailAvatarBottomMargin">8dp</dimen>
+
+    <!-- presence -->
+    <dimen name="listItemTitleTextSize">19sp</dimen>
+    <dimen name="listItemSecondaryTextSize">11sp</dimen>
 </resources>

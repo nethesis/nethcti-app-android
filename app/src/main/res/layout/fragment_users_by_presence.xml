@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,8 +9,9 @@
     tools:context=".presence.UsersByPresenceFragment">
 
     <LinearLayout
-        android:background="@color/colorPrimary"
         android:id="@+id/top_bar"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal">
@@ -58,6 +60,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lnr_content_buttons"
+        android:layout_below="@id/top_bar"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,6 +75,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white_color"
@@ -91,6 +96,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_favourites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white_color"
@@ -106,7 +112,18 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rclr_contacts_presence"
+        android:layout_below="@id/lnr_content_buttons"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/pgrss_presence_list"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+</RelativeLayout>
