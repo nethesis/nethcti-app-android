@@ -8,7 +8,7 @@
     android:orientation="horizontal"
     android:weightSum="1">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_weight="0.2"
         android:id="@+id/rlv_content_avatar"
         android:layout_width="0dp"
@@ -17,32 +17,44 @@
 
         <ImageView
             android:id="@+id/img_presence_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_presence_status_online"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_presence_status_border_online"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/txt_user_initials"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@id/img_presence_status"
+            android:layout_alignEnd="@id/img_presence_status"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="AS" />
+            android:text="AS"
+            android:textSize="19sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_presence_status"
+            app:layout_constraintEnd_toEndOf="@+id/img_presence_status"
+            app:layout_constraintStart_toStartOf="@+id/img_presence_status"
+            app:layout_constraintTop_toTopOf="@+id/img_presence_status" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@color/colorAccent"
-            android:layout_marginBottom="-5dp"
+            android:layout_marginStart="-5dp"
+            android:layout_marginTop="-5dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignEnd="@id/img_presence_status"
             android:layout_alignBottom="@id/img_presence_status"
-            />
+            android:src="@drawable/ic_presence_status_online"
+            app:layout_constraintStart_toEndOf="@+id/txt_user_initials"
+            app:layout_constraintTop_toBottomOf="@+id/txt_user_initials" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:layout_weight="0.6"
