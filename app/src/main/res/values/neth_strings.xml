@@ -64,11 +64,11 @@
     <string name="presence_groups">Groups (friends)</string>
     <string name="presence_favourites">Favorites</string>
 
-    <string name="presence_satus_online">Disponibile</string>
-    <string name="presence_satus_do_not_disturb">Non disturbare</string>
-    <string name="presence_satus_voicemail">Casella vocale</string>
-    <string name="presence_satus_cellphone">Cellulare</string>
-    <string name="presence_satus_call_forward">Inoltro</string>
+    <string name="presence_satus_online">Online</string>
+    <string name="presence_satus_do_not_disturb">Do not disturb</string>
+    <string name="presence_satus_voicemail">Voicemail</string>
+    <string name="presence_satus_cellphone">Cellphone</string>
+    <string name="presence_satus_call_forward">Call forward</string>
     <string name="presence_satus_busy">Busy</string>
     <string name="presence_satus_incoming">Incoming</string>
     <string name="presence_satus_offline">Offline</string>
