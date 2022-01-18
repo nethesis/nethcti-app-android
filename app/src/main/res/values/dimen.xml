@@ -17,6 +17,7 @@
     <dimen name="historyDetailAvatarBottomMargin">8dp</dimen>
 
     <!-- presence -->
+    <dimen name="headerStatusPresence">11sp</dimen>
     <dimen name="listItemTitleTextSize">19sp</dimen>
     <dimen name="listItemSecondaryTextSize">11sp</dimen>
 </resources>

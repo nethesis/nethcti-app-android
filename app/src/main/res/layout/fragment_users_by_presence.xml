@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rlv_status"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
@@ -39,9 +39,36 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="22dp"
                 android:layout_marginEnd="22dp"
-                android:background="@color/green_color">
+                android:background="@drawable/ic_square_status_online">
 
-            </RelativeLayout>
+                <ImageView
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:id="@+id/img_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_header_presence_online"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_status"
+                    android:layout_width="0dp"
+                    android:layout_height="39dp"
+                    android:gravity="right|center"
+                    android:paddingEnd="13dp"
+                    android:text="Online"
+                    android:textSize="@dimen/headerStatusPresence"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/img_status"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/top_bar_title"
