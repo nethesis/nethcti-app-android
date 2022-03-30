@@ -133,6 +133,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import it.nethesis.models.presence.PresenceUser;
 import it.nethesis.utils.CallTransferManager;
 
 public class LinphoneActivity extends LinphoneGenericActivity
@@ -481,6 +482,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
             LinearLayout ll = findViewById(R.id.fragmentContainer2);
             if (mCurrentFragment == FragmentsAvailable.DIALER
                     || mCurrentFragment == FragmentsAvailable.ABOUT
+                    || mCurrentFragment == FragmentsAvailable.USERS_BY_PRESENCE
                     || mCurrentFragment == FragmentsAvailable.SETTINGS
                     || mCurrentFragment == FragmentsAvailable.SETTINGS_SUBLEVEL
                     || mCurrentFragment == FragmentsAvailable.ACCOUNT_SETTINGS) {
@@ -983,6 +985,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
                 if (newFragmentType == FragmentsAvailable.DIALER
                         || newFragmentType == FragmentsAvailable.ABOUT
+                        || newFragmentType == FragmentsAvailable.USERS_BY_PRESENCE
                         || newFragmentType == FragmentsAvailable.SETTINGS
                         || newFragmentType == FragmentsAvailable.ACCOUNT_SETTINGS
                         || newFragmentType == FragmentsAvailable.CREATE_CHAT
@@ -1844,6 +1847,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
                                             .setClass(
                                                     LinphoneManager.getInstance().getContext(),
                                                     AssistantActivity.class));
+
+                            PresenceUser.removeAllFavorites(getApplicationContext());
                             finish();
 
                         } else if (selectedItem.equals(getString(R.string.menu_settings))) {

@@ -93,11 +93,7 @@ public class FCMNotification {
                     HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
                     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                     client.addInterceptor(loggingInterceptor);
-
-                    if (DEBUG) {
-                        if (notificatoreUrl.isEmpty()) return;
-                    }
-
+                    if (notificatoreUrl == null || notificatoreUrl.isEmpty()) return;
                     Retrofit retrofit =
                             new Retrofit.Builder()
                                     .baseUrl(notificatoreUrl)

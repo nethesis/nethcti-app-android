@@ -598,5 +598,7 @@
     <string name="content_description_record_call">Record call</string>
     <string name="menu_dashboard">Dashboard</string>
 
-
+    <string name="actions">Azioni</string>
+    <string name="attention">Attenzione</string>
+    <string name="incorrect_number_message">Devi inserire il numero telefonico da utilizzare per inoltrare la chiamata</string>
 </resources>

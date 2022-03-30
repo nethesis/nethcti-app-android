@@ -82,3 +82,6 @@
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
 -dontwarn org.conscrypt.ConscryptHostnameVerifier
 ##---------------End: proguard configuration for OkHttp  ----------
+
+-printseeds obfuscation/seeds.txt
+-printmapping obfuscation/mapping.txt

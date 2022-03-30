@@ -2,6 +2,7 @@ package it.nethesis.webservices;
 
 import java.util.HashMap;
 
+import it.nethesis.models.OpGroupsUsers;
 import it.nethesis.models.presence.PresenceUser;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -17,6 +18,15 @@ public interface PresenceRestAPI {
      * @return
      */
     @GET("user/endpoints/all")
-    Call<HashMap<String, PresenceUser>> getAll(@Header("Authorization") String authorizationHeader);
+    Call<HashMap<String, PresenceUser>> getAllPresenceUsers(@Header("Authorization") String authorizationHeader);
+
+    /**
+     * Perform the GET astproxy/opgroups.
+     *
+     * @param authorizationHeader username plus digest
+     * @return
+     */
+    @GET("astproxy/opgroups")
+    Call<HashMap<String, OpGroupsUsers>> getAllPresenceGroups(@Header("Authorization") String authorizationHeader);
 
 }

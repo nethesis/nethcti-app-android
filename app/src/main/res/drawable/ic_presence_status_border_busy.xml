@@ -8,15 +8,15 @@
         </shape>
     </item>
 
-    <item android:top="3dp"
-        android:left="3dp"
-        android:right="3dp"
-        android:bottom="3dp"
+    <item android:top="@dimen/presence_icon_circle_color_padding"
+        android:left="@dimen/presence_icon_circle_color_padding"
+        android:right="@dimen/presence_icon_circle_color_padding"
+        android:bottom="@dimen/presence_icon_circle_color_padding"
         android:drawable="@drawable/ic_presence_status_white"/>
 
-    <item android:top="6dp"
-        android:left="6dp"
-        android:right="6dp"
-        android:bottom="6dp"
+    <item android:top="@dimen/presence_icon_gray_color_padding"
+        android:left="@dimen/presence_icon_gray_color_padding"
+        android:right="@dimen/presence_icon_gray_color_padding"
+        android:bottom="@dimen/presence_icon_gray_color_padding"
         android:drawable="@drawable/ic_presence_status_background"/>
 </layer-list>

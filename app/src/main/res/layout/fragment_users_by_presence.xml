@@ -10,44 +10,57 @@
 
     <LinearLayout
         android:id="@+id/top_bar"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal">
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <ImageView
             android:id="@+id/cancel"
             android:layout_width="0dp"
             android:layout_height="24dp"
-            android:layout_weight="0.15"
             android:layout_gravity="center"
+            android:layout_weight="0.5"
             android:contentDescription="@string/content_description_dialer_back"
             android:src="@drawable/ic_back"
             app:tint="@color/neth_button_icon" />
 
-        <RelativeLayout
-            android:layout_weight="0.8"
+        <TextView
+            android:id="@+id/top_bar_title"
+            style="@style/PresenceTitle"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingStart="3dp"
+            android:paddingEnd="0dp"
+            android:text="@string/presence" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/rlv_status"
-                android:layout_width="120dp"
+                android:id="@+id/cnstrnt_status"
+                android:layout_width="150dp"
                 android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="22dp"
                 android:layout_marginEnd="22dp"
-                android:background="@drawable/ic_square_status_online">
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
                     android:id="@+id/img_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_header_presence_online"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -56,13 +69,18 @@
                     android:id="@+id/txt_status"
                     android:layout_width="0dp"
                     android:layout_height="39dp"
-                    android:gravity="right|center"
-                    android:paddingEnd="13dp"
-                    android:text="Online"
-                    android:textSize="@dimen/headerStatusPresence"
-                    android:textStyle="bold"
+                    android:autoSizeMaxTextSize="12sp"
+                    android:autoSizeMinTextSize="5sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:ellipsize="end"
+                    android:gravity="start|center"
+                    android:lines="1"
+                    android:paddingEnd="5dp"
                     android:textAllCaps="true"
                     android:textColor="@color/white_color"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/img_status"
@@ -70,87 +88,104 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/top_bar_title"
-                style="@style/NethCTITopBarTitle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/rlv_status"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:text="@string/presence" />
-
         </RelativeLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lnr_content_buttons"
-        android:layout_below="@id/top_bar"
-        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/top_bar"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginBottom="20dp">
+        android:weightSum="3">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.35" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_group"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white_color"
                 android:backgroundTint="@color/white_color"
-                android:drawableTop="@drawable/ic_presence_circle_group_selector"
-                android:text="@string/presence_groups"
-                android:textColor="@drawable/ic_presence_color_text_selector"
+                android:drawableTop="@drawable/ic_presence_circle_group_gray_selector"
+                android:text="@string/presence_group"
+                android:textColor="@drawable/ic_presence_color_gray_text_selector"
+                android:textStyle="bold"
                 app:backgroundTint="@color/white_color" />
+        </LinearLayout>
 
-        </RelativeLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.1" />
 
-        <RelativeLayout
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"/>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_favourites"
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_favorites"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white_color"
                 android:backgroundTint="@color/white_color"
-                android:drawableTop="@drawable/ic_presence_circle_favourites_selector"
-                android:text="@string/presence_favourites"
-                android:textColor="@drawable/ic_presence_color_text_selector"
+                android:drawableTop="@drawable/ic_presence_circle_favorites_gray_selector"
+                android:text="@string/presence_favorites"
+                android:textColor="@drawable/ic_presence_color_gray_text_selector"
+                android:textStyle="bold"
                 app:backgroundTint="@color/white_color" />
+        </LinearLayout>
 
-        </RelativeLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.35" />
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rclr_contacts_presence"
-        android:layout_below="@id/lnr_content_buttons"
-        android:layout_alignParentBottom="true"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/SwipeRefresh_presence_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/lnr_content_buttons"
+        android:layout_alignParentBottom="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rclr_contacts_presence"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
-        android:id="@+id/pgrss_presence_list"
+        android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txt_alert_message"
+        style="@style/NethCTITextMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center"
         android:visibility="gone" />
 
 </RelativeLayout>
