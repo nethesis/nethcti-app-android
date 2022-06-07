@@ -398,7 +398,7 @@ public class UsersByPresenceFragment extends Fragment implements
                     .toString();
         String groupNameToShow = groupName == null
                 ? getString(R.string.presence_group)
-                : String.format(getString(R.string.presence_groups), groupName);
+                : groupName;
         btnGroup.setText(groupNameToShow);
 
         //switchToBetweenGroupOrFavoritesButtons(GROUPS_BUTTON);
