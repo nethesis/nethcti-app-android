@@ -601,4 +601,7 @@
     <string name="actions">Azioni</string>
     <string name="attention">Attenzione</string>
     <string name="incorrect_number_message">Devi inserire il numero telefonico da utilizzare per inoltrare la chiamata</string>
+    <string name="logout_alert_message">Eseguendo il logout verranno cancellate le credenziali, sarà quindi necessario eseguire nuovamente la procedura di login.</string>
+    <string name="alert_action_continue">Continua</string>
+    <string name="alert_action_cancel">Annulla</string>
 </resources>

@@ -1,8 +1,12 @@
 package it.nethesis.models;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.linphone.BuildConfig;
 import org.linphone.utils.FileManager;
 import java.io.File;
 import java.lang.reflect.Type;
@@ -84,9 +88,17 @@ public class NethPermissionWithOpGroups {
         return new File(path, SECURE_FILE);
     }
 
-    public static void saveGroupsUser(Context context, String json, File store) {
+    public static void saveGroupUser(Context context, String json, File store) {
         FileManager fileManager = new FileManager();
         fileManager.writeToFile(json, store.getParent(), store.getName());
+    }
+
+    public static NethPermissionWithOpGroups restoreGroupUser(Context context, File store) {
+        if(!store.exists()) return null;
+        FileManager fileManager = new FileManager();
+
+        String json = fileManager.readJSONFromFile(store);
+        return new Gson().fromJson(json, NethPermissionWithOpGroups.class);
     }
 
     public static ArrayList<NethPermissionWithOpGroups> restoreGroupsUser(Context context, File store) {
@@ -99,6 +111,12 @@ public class NethPermissionWithOpGroups {
                 json,
                 collectionType
         );
+    }
+
+    public static void removeSelected(Context context) {
+        File file = getGroupsUserFile(context);
+        boolean deleted = file.delete();
+        if(BuildConfig.DEBUG) Log.e("remove selected group", String.valueOf(deleted));
     }
 
     public static final String SECURE_FOLDER = "/groups/";

@@ -2,11 +2,9 @@ package org.linphone.presence;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static org.linphone.BuildConfig.DEBUG;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -38,9 +36,6 @@ import retrofit2.Response;
 public class PresenceGroupsDialogActivity extends AppCompatActivity implements OnNethGroupSelected,
         View.OnClickListener, Callback<NethUser>, SwipeRefreshLayout.OnRefreshListener {
 
-    public static final String START_SELECTED_GROUP = "start_selected_group";
-    public static final String SELECTED_GROUP = "selected_group";
-
     private SwipeRefreshLayout swpGroups;
     private ProgressBar progressBar;
     private RecyclerView _groupRecycler;
@@ -71,9 +66,9 @@ public class PresenceGroupsDialogActivity extends AppCompatActivity implements O
     }
 
     private void initData() {
-        userWithGroupsSelected = new Gson().fromJson(
-                getIntent().getStringExtra(START_SELECTED_GROUP),
-                NethPermissionWithOpGroups.class
+        userWithGroupsSelected = NethPermissionWithOpGroups.restoreGroupUser(
+                this,
+                NethPermissionWithOpGroups.getGroupsUserFile(this)
         );
     }
 
@@ -185,12 +180,11 @@ public class PresenceGroupsDialogActivity extends AppCompatActivity implements O
     @Override
     public void onNethGroupSelected(NethPermissionWithOpGroups userWithGroups) {
         this.userWithGroupsSelected = userWithGroups;
-        if (DEBUG) Log.e("selected", userWithGroups == null ? "null" : userWithGroups.toJson());
         _groupRecycler.getAdapter().notifyDataSetChanged();
 
         Intent groupResultIntent = new Intent();
-        groupResultIntent.putExtra(SELECTED_GROUP, new Gson().toJson(userWithGroupsSelected));
         setResult(RESULT_OK, groupResultIntent);
+
         finish();
     }
 
@@ -204,6 +198,13 @@ public class PresenceGroupsDialogActivity extends AppCompatActivity implements O
     @Override
     public void finish() {
         super.finish();
+
+        NethPermissionWithOpGroups.saveGroupUser(
+                this,
+                new Gson().toJson(userWithGroupsSelected),
+                NethPermissionWithOpGroups.getGroupsUserFile(this)
+        );
+
         overridePendingTransition(
                 R.anim.slide_in_top_to_bottom,
                 R.anim.slide_out_top_to_bottom

@@ -12,8 +12,6 @@ import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_INTRUDE;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_PICKUP;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_RECORD;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_SPY;
-import static org.linphone.presence.PresenceGroupsDialogActivity.SELECTED_GROUP;
-import static org.linphone.presence.PresenceGroupsDialogActivity.START_SELECTED_GROUP;
 import static org.linphone.presence.PresenceStatusActivity.STATUS_SELECTED;
 
 import android.app.Fragment;
@@ -22,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +49,8 @@ import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.SharedPreferencesManager;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Objects;
 
 import it.nethesis.models.NethPermissionWithOpGroups;
 import it.nethesis.models.NethUser;
@@ -124,6 +123,10 @@ public class UsersByPresenceFragment extends Fragment implements
                 getContext(),
                 this,
                 _actionCallRestAPI
+        );
+        nethSelectedWithOpGroups = NethPermissionWithOpGroups.restoreGroupUser(
+                getContext(),
+                NethPermissionWithOpGroups.getGroupsUserFile(getContext())
         );
     }
 
@@ -369,8 +372,29 @@ public class UsersByPresenceFragment extends Fragment implements
 
         if (!assigned.isEmpty()) {
             //lo assegno solo se non è stato già selezionato
-            if (nethSelectedWithOpGroups == null)
+            if (nethSelectedWithOpGroups == null) {
+                Log.e("NethPermissionWithOpGroups", "FIRST TIME SAVING");
                 nethSelectedWithOpGroups = assigned.get(0);
+                NethPermissionWithOpGroups.saveGroupUser(
+                        getContext(),
+                        new Gson().toJson(nethSelectedWithOpGroups),
+                        NethPermissionWithOpGroups.getGroupsUserFile(getContext())
+                );
+            } else {
+                //aggiorna nethSelectedWithOpGroups con i dati ricevuti dal server
+                Log.e("NethPermissionWithOpGroups", "UPDATE");
+                for (NethPermissionWithOpGroups item : assigned) {
+                    if (item.nethPermission.id.equals(nethSelectedWithOpGroups.nethPermission.id)) {
+                        nethSelectedWithOpGroups = item;
+                        NethPermissionWithOpGroups.saveGroupUser(
+                                getContext(),
+                                new Gson().toJson(nethSelectedWithOpGroups),
+                                NethPermissionWithOpGroups.getGroupsUserFile(getContext())
+                        );
+                        break;
+                    }
+                }
+            }
         }
 
         showSelectedGroup();
@@ -532,11 +556,6 @@ public class UsersByPresenceFragment extends Fragment implements
         //if (_presenceGroups == null || _presenceGroups.isEmpty()) return;
         //TODO mettere messaggio di errore
 
-        showGroupsIntent.putExtra(
-                START_SELECTED_GROUP,
-                new Gson().toJson(nethSelectedWithOpGroups)
-        );
-
         startActivityForResult(showGroupsIntent, PRESENCE_GROUP_DIALOG_REQUEST);
         getActivity().overridePendingTransition(
                 R.anim.slide_in_bottom_to_top,
@@ -552,10 +571,12 @@ public class UsersByPresenceFragment extends Fragment implements
         if (requestCode == PRESENCE_GROUP_DIALOG_REQUEST) {
             switch (resultCode) {
                 case RESULT_OK:
-                    nethSelectedWithOpGroups = new Gson().fromJson(
-                            data.getStringExtra(SELECTED_GROUP),
-                            NethPermissionWithOpGroups.class
-                    );
+                    nethSelectedWithOpGroups = NethPermissionWithOpGroups
+                            .restoreGroupUser(
+                                    getContext(),
+                                    NethPermissionWithOpGroups.getGroupsUserFile(getContext())
+                            );
+
                     showSelectedGroup();
                     showPresenceListFilteredByGroups();
                     break;
