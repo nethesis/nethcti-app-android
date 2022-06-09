@@ -19,6 +19,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import static android.content.Intent.ACTION_VIEW;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -660,6 +662,10 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
                     goToDialerFragment();
                 }
+            } else if (intent.getAction().equals(ACTION_VIEW)
+                    && intent.getData().getScheme().equals("tel")
+            ) {
+
             }
         }
         setIntent(intent);
