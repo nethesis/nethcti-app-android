@@ -380,7 +380,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         LinphonePreferences.instance().setMediaEncryption(MediaEncryption.SRTP);
     }
 
-    @Override
+    @Override  //TODO [CLICK TO DIAL] Contiene il numero di telefono
     protected void onStart() {
         super.onStart();
 
@@ -572,15 +572,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
     }
 
-    @Override
+    @Override //TODO [CLICK TO DIAL] Contiene il numero di telefono
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
-        /*if (getCurrentFragment() == FragmentsAvailable.SETTINGS) {
-            if (mFragment instanceof SettingsFragment) {
-                ((SettingsFragment) mFragment).closePreferenceScreen();
-            }
-        }*/
 
         Bundle extras = intent.getExtras();
         // mCallTransfer = false;
@@ -651,24 +645,20 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 extras.putString("fileSharedUri", file);
                 changeCurrentFragment(FragmentsAvailable.CHAT_LIST, extras);
                 intent.removeExtra("fileShared");
-            } else {
+            } else if (extras.containsKey("SipUriOrNumber")) {
                 DialerFragment dialerFragment = DialerFragment.instance();
                 if (dialerFragment != null) {
-                    if (extras.containsKey("SipUriOrNumber")) {
-                        if (getResources()
-                                .getBoolean(
-                                        R.bool.automatically_start_intercepted_outgoing_gsm_call)) {
-                            dialerFragment.newOutgoingCall(extras.getString("SipUriOrNumber"));
-                        } else {
-                            dialerFragment.displayTextInAddressBar(
-                                    extras.getString("SipUriOrNumber"));
-                        }
+                    if (getResources()
+                            .getBoolean(
+                                    R.bool.automatically_start_intercepted_outgoing_gsm_call)) {
+                        dialerFragment.newOutgoingCall(extras.getString("SipUriOrNumber"));
+                    } else {
+                        dialerFragment.displayTextInAddressBar(
+                                extras.getString("SipUriOrNumber"));
                     }
                 } else {
-                    if (extras.containsKey("SipUriOrNumber")) {
-                        addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
-                        goToDialerFragment();
-                    }
+                    addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
+                    goToDialerFragment();
                 }
             }
         }

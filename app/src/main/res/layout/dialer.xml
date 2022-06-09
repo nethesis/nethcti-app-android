@@ -28,13 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
+            android:cursorVisible="true"
             android:ellipsize="end"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
             android:hint="@string/address_bar_hint"
             android:paddingEnd="60dp"
-            android:focusableInTouchMode="true"
-            android:cursorVisible="true"
-            android:focusable="false"
-            app:backgroundTint="@color/colorAccent"/>
+            app:backgroundTint="@color/colorAccent" />
 
         <org.linphone.views.EraseButton
             android:id="@+id/erase"
