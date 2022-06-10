@@ -85,11 +85,12 @@ public class IntentUtils {
                 newIntent.putExtra("SipUriOrNumber", addressToCall);
             }
         } else if (Intent.ACTION_VIEW.equals(action)) {
-            addressToCall =
-                    ContactsManager.getInstance()
+            addressToCall = intent.getData().getEncodedSchemeSpecificPart();
+
+                    /*ContactsManager.getInstance()
                             .getAddressOrNumberForAndroidContact(
-                                    context.getContentResolver(), intent.getData());
-            newIntent.putExtra("SipUriOrNumber", addressToCall);
+                                    context.getContentResolver(), intent.getData());*/
+            newIntent.putExtra("tel", addressToCall);
             Log.i("[Intent Utils] ACTION_VIEW with number: " + addressToCall);
         } else {
             Log.i("[Intent Utils] Unknown action [" + action + "], skipping");

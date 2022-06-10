@@ -446,8 +446,43 @@ public class LinphoneActivity extends LinphoneGenericActivity
             Log.w("[Linphone Activity] Push notifications won't work !");
         }
 
+        if (getIntent() != null
+                && getIntent().getAction() != null
+                && getIntent().getAction() != null
+                && getIntent().getAction().equals(ACTION_VIEW)
+                && getIntent().getData().getScheme().equals("tel")
+        ) {
+            //TODO pensare ad una logica
+        }
+
         IntentUtils.handleIntent(this, getIntent());
     }
+
+    /*
+    DialerFragment dialerFragment = DialerFragment.instance();
+                if (dialerFragment != null) {
+                    if (getResources()
+                            .getBoolean(
+                                    R.bool.automatically_start_intercepted_outgoing_gsm_call)) {
+                        dialerFragment.newOutgoingCall(extras.getString("SipUriOrNumber"));
+                    } else {
+                        dialerFragment.displayTextInAddressBar(
+                                extras.getString("SipUriOrNumber"));
+                    }
+                } else {
+                    addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
+                    goToDialerFragment();
+                }
+            } else if (intent != null
+                    && intent.getAction() != null
+                    && intent.getAction() != null
+                    && intent.getAction().equals(ACTION_VIEW)
+                    && intent.getData().getScheme().equals("tel")
+            ) {
+                intent.putExtra("tel", intent.getData().getEncodedSchemeSpecificPart());
+                changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
+            }
+     */
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -662,10 +697,14 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
                     goToDialerFragment();
                 }
-            } else if (intent.getAction().equals(ACTION_VIEW)
+            } else if (intent != null
+                    && intent.getAction() != null
+                    && intent.getAction() != null
+                    && intent.getAction().equals(ACTION_VIEW)
                     && intent.getData().getScheme().equals("tel")
             ) {
-
+                intent.putExtra("tel", intent.getData().getEncodedSchemeSpecificPart());
+                changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
             }
         }
         setIntent(intent);

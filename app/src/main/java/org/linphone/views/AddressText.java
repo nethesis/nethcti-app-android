@@ -64,7 +64,7 @@ public class AddressText extends TextInputEditText implements AddressType {
     }
 
     @Override
-    protected void onTextChanged(CharSequence text, int start, int before, int after) {
+    public void onTextChanged(CharSequence text, int start, int before, int after) {
         clearDisplayedName();
 
         refitText(getWidth(), getHeight());
