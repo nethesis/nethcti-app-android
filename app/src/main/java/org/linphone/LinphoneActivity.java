@@ -30,7 +30,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -446,43 +445,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
             Log.w("[Linphone Activity] Push notifications won't work !");
         }
 
-        if (getIntent() != null
-                && getIntent().getAction() != null
-                && getIntent().getAction() != null
-                && getIntent().getAction().equals(ACTION_VIEW)
-                && getIntent().getData().getScheme().equals("tel")
-        ) {
-            //TODO pensare ad una logica
-        }
-
         IntentUtils.handleIntent(this, getIntent());
     }
-
-    /*
-    DialerFragment dialerFragment = DialerFragment.instance();
-                if (dialerFragment != null) {
-                    if (getResources()
-                            .getBoolean(
-                                    R.bool.automatically_start_intercepted_outgoing_gsm_call)) {
-                        dialerFragment.newOutgoingCall(extras.getString("SipUriOrNumber"));
-                    } else {
-                        dialerFragment.displayTextInAddressBar(
-                                extras.getString("SipUriOrNumber"));
-                    }
-                } else {
-                    addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
-                    goToDialerFragment();
-                }
-            } else if (intent != null
-                    && intent.getAction() != null
-                    && intent.getAction() != null
-                    && intent.getAction().equals(ACTION_VIEW)
-                    && intent.getData().getScheme().equals("tel")
-            ) {
-                intent.putExtra("tel", intent.getData().getEncodedSchemeSpecificPart());
-                changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
-            }
-     */
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -697,14 +661,16 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
                     goToDialerFragment();
                 }
-            } else if (intent != null
+            } else if (intent != null //TODO qui entra la prima volta
                     && intent.getAction() != null
                     && intent.getAction() != null
                     && intent.getAction().equals(ACTION_VIEW)
                     && intent.getData().getScheme().equals("tel")
             ) {
+                mEmptyFragment = true;
                 intent.putExtra("tel", intent.getData().getEncodedSchemeSpecificPart());
                 changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
+                mEmptyFragment = false;
             }
         }
         setIntent(intent);
