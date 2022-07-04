@@ -3,5 +3,5 @@
     android:shape="oval">
     <size android:width="50dp"
         android:height="50dp" />
-    <solid android:color="@color/presence_status_border_white" />
+    <solid android:color="@color/transparent_color" />
 </shape>

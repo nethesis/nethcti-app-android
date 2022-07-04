@@ -4,7 +4,7 @@
         <shape android:shape="oval">
             <size android:width="60dp"
                 android:height="60dp" />
-            <solid android:color="@color/precense_status_call_offline"/>
+            <stroke android:width="2dp" android:color="@color/precense_status_call_offline"/>
         </shape>
     </item>
 
@@ -12,7 +12,7 @@
         android:left="@dimen/presence_icon_circle_color_padding"
         android:right="@dimen/presence_icon_circle_color_padding"
         android:bottom="@dimen/presence_icon_circle_color_padding"
-        android:drawable="@drawable/ic_presence_status_white"/>
+        android:drawable="@drawable/ic_presence_status_transparent"/>
 
     <item android:top="@dimen/presence_icon_gray_color_padding"
         android:left="@dimen/presence_icon_gray_color_padding"
