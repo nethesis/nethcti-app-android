@@ -13,6 +13,7 @@ import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_PICKUP;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_RECORD;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_SPY;
 import static org.linphone.presence.PresenceStatusActivity.STATUS_SELECTED;
+import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +47,7 @@ import org.linphone.core.ProxyConfig;
 import org.linphone.interfaces.OnActionResul;
 import org.linphone.interfaces.OnAdapterItemListener;
 import org.linphone.interfaces.OnUserActionListener;
+import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.SharedPreferencesManager;
 import java.util.ArrayList;
@@ -170,6 +173,7 @@ public class UsersByPresenceFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
         switchToBetweenGroupOrFavoritesButtons(GROUPS_BUTTON);
 
+        setDayNightThemeColor();
         btnGroup.setText(R.string.presence_group);
         btnGroup.setOnClickListener(this);
         btnFavorites.setOnClickListener(this);
@@ -178,6 +182,21 @@ public class UsersByPresenceFragment extends Fragment implements
         constraintStatus.setOnClickListener(this);
 
         TimerSingleton.initialize(this);
+    }
+
+    //TODO
+    private void setDayNightThemeColor() {
+        boolean darkMode = LinphonePreferences.instance().getConfig().getBool(
+                "app",
+                "dark_mode", AppCompatDelegate.getDefaultNightMode()
+                        == MODE_NIGHT_YES
+        );
+        Log.e("DARK MODE", darkMode+"");
+        int color = darkMode
+                ? R.color.ic_presence_color_gray_text_selector_dark
+                : R.color.ic_presence_color_gray_text_selector;
+        btnFavorites.setTextColor(getContext().getColorStateList(color));
+        btnGroup.setTextColor(getContext().getColorStateList(color));
     }
 
     @Override
