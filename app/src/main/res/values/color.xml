@@ -18,6 +18,7 @@
     <color name="primaryTextColorLight">#808080</color>
     <color name="primaryTextColorInverse">#FFF</color>
     <color name="secondaryTextColor">#808080</color>
+    <color name="buttonTextColor">#575757</color>
 
     <color name="sideMenuDivider">#c7c7c7</color>
 

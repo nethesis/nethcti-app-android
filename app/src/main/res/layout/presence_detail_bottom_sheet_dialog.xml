@@ -69,6 +69,7 @@
             android:gravity="center"
             android:textStyle="bold"
             android:text="AS"
+            android:textColor="@color/buttonTextColor"
             android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="@+id/img_dlg_background_border_presence_status"
             app:layout_constraintEnd_toEndOf="@+id/img_dlg_background_border_presence_status"
