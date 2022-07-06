@@ -42,6 +42,7 @@ import com.google.gson.Gson;
 
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
+import org.linphone.NethCTIApplication;
 import org.linphone.R;
 import org.linphone.core.ProxyConfig;
 import org.linphone.interfaces.OnActionResul;
@@ -184,14 +185,11 @@ public class UsersByPresenceFragment extends Fragment implements
         TimerSingleton.initialize(this);
     }
 
-    //TODO
     private void setDayNightThemeColor() {
-        boolean darkMode = LinphonePreferences.instance().getConfig().getBool(
-                "app",
-                "dark_mode", AppCompatDelegate.getDefaultNightMode()
-                        == MODE_NIGHT_YES
-        );
-        Log.e("DARK MODE", darkMode+"");
+        boolean darkMode = NethCTIApplication
+                .Companion
+                .getDayNightThemeColor();
+
         int color = darkMode
                 ? R.color.ic_presence_color_gray_text_selector_dark
                 : R.color.ic_presence_color_gray_text_selector;

@@ -1,14 +1,18 @@
 package org.linphone.presence;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import org.linphone.NethCTIApplication;
 import org.linphone.R;
 import org.linphone.interfaces.OnUserActionListener;
 import it.nethesis.models.NethProfile;
@@ -50,6 +54,8 @@ class PresenceActionsBottomDialog extends BottomSheetDialog implements View.OnCl
     private TextView btnBook;
     private TextView btnPickup;
     private TextView btnSpy;
+
+    private LinearLayout linearContentActions;
 
     private BottomSheetBehavior mBehavior;
 
@@ -102,6 +108,7 @@ class PresenceActionsBottomDialog extends BottomSheetDialog implements View.OnCl
         );
 
         initUi(view);
+        setDayNightThemeColor();
         initUiContent();
         setContentView(view);
         initListeners();
@@ -124,6 +131,7 @@ class PresenceActionsBottomDialog extends BottomSheetDialog implements View.OnCl
     }
 
     private void initUi(View view) {
+        linearContentActions = view.findViewById(R.id.lnr_content_actions);
         imgClose = view.findViewById(R.id.img_close);
 
         txtDlgUsername = view.findViewById(R.id.txt_dlg_username);
@@ -145,6 +153,29 @@ class PresenceActionsBottomDialog extends BottomSheetDialog implements View.OnCl
         btnSpy = view.findViewById(R.id.btn_spy);
         btnPickup = view.findViewById(R.id.btn_pickup);
         btnRecord = view.findViewById(R.id.btn_record);
+    }
+
+    private void setDayNightThemeColor() {
+        boolean darkMode = NethCTIApplication
+                .Companion
+                .getDayNightThemeColor();
+
+        int color = darkMode
+                ? R.color.ic_presence_color_gray_text_selector_dark
+                : R.color.ic_presence_color_gray_text_selector;
+
+        btnCall.setTextColor(getContext().getColorStateList(color));
+        btnClose.setTextColor(getContext().getColorStateList(color));
+        btnRecord.setTextColor(getContext().getColorStateList(color));
+        btnIntrude.setTextColor(getContext().getColorStateList(color));
+        btnBook.setTextColor(getContext().getColorStateList(color));
+        btnPickup.setTextColor(getContext().getColorStateList(color));
+        btnSpy.setTextColor(getContext().getColorStateList(color));
+
+        int backgroundColor = darkMode ? R.color.black_color : R.color.white_color;
+        linearContentActions.setBackgroundColor(backgroundColor);
+        linearContentActions.setBackgroundTintList(getContext().getResources().getColorStateList(backgroundColor, null));
+
     }
 
     private void initUiContent() {

@@ -36,6 +36,16 @@ class NethCTIApplication : Application(), LifecycleObserver {
             get() {
                 return _instance
             }
+
+        val dayNightThemeColor: Boolean
+            get() {
+                return LinphonePreferences.instance().config.getBool(
+                    "app",
+                    "dark_mode", AppCompatDelegate.getDefaultNightMode()
+                        == MODE_NIGHT_YES
+                )
+            }
+
     }
 
     private val backgroundWatcher: AppBackgroundWatcher = AppBackgroundWatcher

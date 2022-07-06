@@ -17,12 +17,12 @@
         android:layout_width="@dimen/presence_select_status_dialog_width"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="16dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
+            android:background="@color/transparent_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
@@ -40,6 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="end"
+                    android:layout_marginEnd="0dp"
                     android:background="?selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"
@@ -47,6 +48,7 @@
                     android:src="@drawable/ic_close" />
 
                 <TextView
+                    android:background="@color/transparent_color"
                     android:id="@+id/txt_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,16 +71,19 @@
 
 
             <RelativeLayout
+                android:background="@color/transparent_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:background="@color/transparent_color"
                     android:id="@+id/swp_status"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/presence_select_status_dialog_min_height"
                     android:layout_marginBottom="0dp">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:background="@color/transparent_color"
                         android:id="@+id/recycler_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

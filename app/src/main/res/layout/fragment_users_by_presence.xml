@@ -146,7 +146,6 @@
                 android:backgroundTint="@color/transparent_color"
                 android:drawableTop="@drawable/ic_presence_circle_favorites_gray_selector"
                 android:text="@string/presence_favorites"
-                android:textColor="@color/ic_presence_color_gray_text_selector"
                 android:textStyle="bold"
                 app:backgroundTint="@color/transparent_color" />
         </LinearLayout>

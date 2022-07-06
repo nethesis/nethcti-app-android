@@ -2,7 +2,6 @@ package org.linphone.presence
 
 import PresenceStatusAdapter
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,27 +9,30 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import it.nethesis.models.decorator.PresenceDecorator.PRESENCE_STATUS_CALL_FORWARD
+import it.nethesis.models.decorator.PresenceDecorator.PRESENCE_STATUS_DISABLED
+import it.nethesis.models.presence.PresenceStatusRequest
+import it.nethesis.models.presence.PresenceStatusWithCodeRequest
 import it.nethesis.webservices.RetrofitGenerator
 import it.nethesis.webservices.UserRestAPI
+import okhttp3.ResponseBody
+import org.linphone.BuildConfig.DEBUG
+import org.linphone.LinphoneManager
+import org.linphone.NethCTIApplication.Companion.dayNightThemeColor
+import org.linphone.R
+import org.linphone.core.ProxyConfig
+import org.linphone.interfaces.OnNethStatusSelected
 import org.linphone.utils.SharedPreferencesManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import it.nethesis.models.presence.PresenceStatusRequest
-import okhttp3.ResponseBody
-import org.linphone.interfaces.OnNethStatusSelected
-import androidx.appcompat.app.AlertDialog
-import android.widget.*
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import it.nethesis.models.decorator.PresenceDecorator.PRESENCE_STATUS_CALL_FORWARD
-import it.nethesis.models.decorator.PresenceDecorator.PRESENCE_STATUS_DISABLED
-import it.nethesis.models.presence.PresenceStatusWithCodeRequest
-import org.linphone.BuildConfig.DEBUG
-import org.linphone.LinphoneManager
-import org.linphone.R
-import org.linphone.core.ProxyConfig
 
 
 class PresenceStatusActivity : AppCompatActivity(), Callback<MutableList<String>>,
@@ -40,6 +42,8 @@ class PresenceStatusActivity : AppCompatActivity(), Callback<MutableList<String>
     private var mProxyConfig: ProxyConfig? = null
 
     private var userRestAPI: UserRestAPI? = null
+
+    private var questionCard: CardView? = null
     private var imgClose: ImageView? = null
     private var recyclerStatusRecycler: RecyclerView? = null
     private var txtAlertMessage: TextView? = null
@@ -99,6 +103,14 @@ class PresenceStatusActivity : AppCompatActivity(), Callback<MutableList<String>
     private fun initUi() {
         imgClose = findViewById(R.id.img_close)
         imgClose?.setOnClickListener(this)
+
+        questionCard = findViewById(R.id.question_card)
+        questionCard?.setCardBackgroundColor(
+            if (dayNightThemeColor)
+                getColor(R.color.black_color)
+            else
+                getColor(R.color.white_color)
+        )
 
         txtAlertMessage = findViewById(R.id.txt_alert_message)
         recyclerStatusRecycler = findViewById(R.id.recycler_status)

@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lnr_content_actions"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -184,7 +185,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@color/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView
@@ -203,7 +203,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@color/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView
@@ -222,7 +221,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@color/ic_presence_color_gray_text_selector"
             android:enabled="false" />
 
         <TextView
@@ -241,7 +239,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@color/ic_presence_color_gray_text_selector"
             android:enabled="false" />
 
         <TextView
@@ -260,7 +257,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@color/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView
@@ -279,7 +275,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@color/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView
@@ -303,7 +298,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@color/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView
