@@ -1,7 +1,6 @@
 package org.linphone.presence;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
@@ -158,7 +157,7 @@ class PresenceActionsBottomDialog extends BottomSheetDialog implements View.OnCl
     private void setDayNightThemeColor() {
         boolean darkMode = NethCTIApplication
                 .Companion
-                .getDayNightThemeColor();
+                .isNightTheme();
 
         int color = darkMode
                 ? R.color.ic_presence_color_gray_text_selector_dark

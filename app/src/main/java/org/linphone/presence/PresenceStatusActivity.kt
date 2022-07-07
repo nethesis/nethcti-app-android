@@ -25,7 +25,7 @@ import it.nethesis.webservices.UserRestAPI
 import okhttp3.ResponseBody
 import org.linphone.BuildConfig.DEBUG
 import org.linphone.LinphoneManager
-import org.linphone.NethCTIApplication.Companion.dayNightThemeColor
+import org.linphone.NethCTIApplication.Companion.isNightTheme
 import org.linphone.R
 import org.linphone.core.ProxyConfig
 import org.linphone.interfaces.OnNethStatusSelected
@@ -106,7 +106,7 @@ class PresenceStatusActivity : AppCompatActivity(), Callback<MutableList<String>
 
         questionCard = findViewById(R.id.question_card)
         questionCard?.setCardBackgroundColor(
-            if (dayNightThemeColor)
+            if (isNightTheme)
                 getColor(R.color.black_color)
             else
                 getColor(R.color.white_color)

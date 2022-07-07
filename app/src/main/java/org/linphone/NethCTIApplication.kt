@@ -37,7 +37,7 @@ class NethCTIApplication : Application(), LifecycleObserver {
                 return _instance
             }
 
-        val dayNightThemeColor: Boolean
+        val isNightTheme: Boolean
             get() {
                 return LinphonePreferences.instance().config.getBool(
                     "app",

@@ -70,6 +70,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
+import org.linphone.NethCTIApplication;
 import org.linphone.R;
 import org.linphone.compatibility.Compatibility;
 import org.linphone.contacts.ContactsManager;
@@ -430,6 +431,7 @@ public class CallActivity extends LinphoneGenericActivity
 
         mDialer = findViewById(R.id.dialer);
         mDialer.setOnClickListener(this);
+
 
         mNumpad = findViewById(R.id.numpad);
         mNumpad.getBackground().setAlpha(240);

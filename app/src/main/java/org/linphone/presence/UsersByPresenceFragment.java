@@ -13,7 +13,6 @@ import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_PICKUP;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_RECORD;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_SPY;
 import static org.linphone.presence.PresenceStatusActivity.STATUS_SELECTED;
-import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -31,7 +30,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,13 +46,11 @@ import org.linphone.core.ProxyConfig;
 import org.linphone.interfaces.OnActionResul;
 import org.linphone.interfaces.OnAdapterItemListener;
 import org.linphone.interfaces.OnUserActionListener;
-import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.SharedPreferencesManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Objects;
 
 import it.nethesis.models.NethPermissionWithOpGroups;
 import it.nethesis.models.NethUser;
@@ -190,7 +186,7 @@ public class UsersByPresenceFragment extends Fragment implements
     private void setDayNightThemeColor() {
         boolean darkMode = NethCTIApplication
                 .Companion
-                .getDayNightThemeColor();
+                .isNightTheme();
 
         int color = darkMode
                 ? R.color.ic_presence_color_gray_text_selector_dark

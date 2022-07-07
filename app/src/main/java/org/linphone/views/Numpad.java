@@ -28,6 +28,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.linphone.NethCTIApplication;
 import org.linphone.R;
 
 public class Numpad extends LinearLayout implements AddressAware {
@@ -40,6 +42,11 @@ public class Numpad extends LinearLayout implements AddressAware {
         LayoutInflater.from(context).inflate(R.layout.numpad, this);
         setLongClickable(true);
         onFinishInflate();
+
+        int backgroundColor = NethCTIApplication.Companion.isNightTheme()
+                ? context.getColor(R.color.black_color)
+                : context.getColor(R.color.white_color);
+        setBackgroundColor(backgroundColor);
     }
 
     public Numpad(Context context, AttributeSet attrs) {
@@ -49,6 +56,11 @@ public class Numpad extends LinearLayout implements AddressAware {
         a.recycle();
         LayoutInflater.from(context).inflate(R.layout.numpad, this);
         setLongClickable(true);
+
+        int backgroundColor = NethCTIApplication.Companion.isNightTheme()
+                ? context.getColor(R.color.black_color)
+                : context.getColor(R.color.white_color);
+        setBackgroundColor(backgroundColor);
     }
 
     @Override
