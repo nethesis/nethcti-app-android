@@ -5,7 +5,7 @@
         <shape android:shape="oval">
             <size android:width="60dp"
                 android:height="60dp" />
-            <stroke android:width="2dp" android:color="@color/precense_status_online"/>
+            <stroke android:width="@dimen/presence_icon_border_size" android:color="@color/precense_status_online"/>
         </shape>
     </item>
 

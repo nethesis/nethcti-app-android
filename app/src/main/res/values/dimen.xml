@@ -30,4 +30,6 @@
     <dimen name="presence_select_status_dialog_width">@dimen/match_parent</dimen>
     <dimen name="presence_select_status_dialog_min_height">370dp</dimen>
 
+    <dimen name="presence_icon_border_size">1dp</dimen>
+
 </resources>
