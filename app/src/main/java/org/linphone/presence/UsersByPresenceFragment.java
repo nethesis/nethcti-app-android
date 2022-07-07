@@ -109,6 +109,7 @@ public class UsersByPresenceFragment extends Fragment implements
     private NethPermissionWithOpGroups nethSelectedWithOpGroups;
     private PresenceActionManager presenceActionManager;
 
+    private boolean firstCreation = false;
     private Parcelable recyclerViewState;
 
     public static UsersByPresenceFragment newInstance() {
@@ -182,6 +183,7 @@ public class UsersByPresenceFragment extends Fragment implements
         swipeRefreshListPresence.setOnRefreshListener(this);
         constraintStatus.setOnClickListener(this);
 
+        firstCreation = true;
         TimerSingleton.initialize(this);
     }
 
@@ -221,7 +223,10 @@ public class UsersByPresenceFragment extends Fragment implements
                 SharedPreferencesManager.getAuthtoken(getContext())
         ).enqueue(UsersByPresenceFragment.this);
         if (pullToRefresh) return;
-        progressBar.setVisibility(VISIBLE);
+        if (firstCreation){
+            progressBar.setVisibility(VISIBLE);
+            firstCreation = false;
+        }
     }
 
     @Override
