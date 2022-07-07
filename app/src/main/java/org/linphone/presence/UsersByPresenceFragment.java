@@ -109,7 +109,7 @@ public class UsersByPresenceFragment extends Fragment implements
     private NethPermissionWithOpGroups nethSelectedWithOpGroups;
     private PresenceActionManager presenceActionManager;
 
-    private boolean firstCreation = false;
+    private boolean firstCreation = true;
     private Parcelable recyclerViewState;
 
     public static UsersByPresenceFragment newInstance() {
@@ -252,8 +252,10 @@ public class UsersByPresenceFragment extends Fragment implements
                 _userRestAPI.getMe(SharedPreferencesManager.getAuthtoken(getContext()))
                         .enqueue(nethUser);
 
-                if (!swipeRefreshListPresence.isRefreshing())
-                    progressBar.setVisibility(VISIBLE);
+                if (!swipeRefreshListPresence.isRefreshing()){
+                    if (firstCreation)
+                        progressBar.setVisibility(VISIBLE);
+                }
 
                 hideAlertMessage();
                 break;
@@ -296,8 +298,10 @@ public class UsersByPresenceFragment extends Fragment implements
                             SharedPreferencesManager.getAuthtoken(getContext())
                     ).enqueue(groupResponse);
 
-                    if (!swipeRefreshListPresence.isRefreshing())
-                        progressBar.setVisibility(VISIBLE);
+                    if (!swipeRefreshListPresence.isRefreshing()){
+                        if (firstCreation)
+                            progressBar.setVisibility(VISIBLE);
+                    }
 
                     hideAlertMessage();
                     break;
