@@ -73,7 +73,7 @@ android {
 
     compileSdkVersion 30
     defaultConfig {
-        minSdkVersion 23
+        minSdkVersion 28
         targetSdkVersion 30
         versionCode 4201
         versionName '1.4.7'

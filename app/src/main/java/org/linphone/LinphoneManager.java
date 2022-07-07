@@ -40,15 +40,20 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.media.ToneGenerator;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
@@ -73,6 +78,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import org.linphone.assistant.AssistantActivity;
 import org.linphone.call.CallActivity;
 import org.linphone.call.CallIncomingActivity;
@@ -204,6 +213,14 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     private final Vibrator mVibrator;
     private boolean mIsRinging;
     private boolean mHasLastCallSasBeenRejected;
+
+    private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+    private ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 70);
+    private ScheduledFuture beepScheduleFuture;
+    private Runnable beepRunnable = () -> toneGenerator.startTone(
+            ToneGenerator.TONE_CDMA_NETWORK_CALLWAITING,
+            150
+    );
 
     private LinphoneManager(Context c) {
         mUnreadChatsPerRoom = new HashMap();
@@ -1215,18 +1232,28 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
                         && mRessources.getBoolean(R.bool.allow_ringing_while_early_media))) {
             // Brighten screen for at least 10 seconds
             if (mCore.getCallsNb() == 1) {
-                requestAudioFocus(STREAM_RING);
+                Log.e("isInSystemCall", isInSystemCall(getContext()));
 
+                requestAudioFocus(STREAM_RING);
                 mRingingCall = call;
-                startRinging();
-                // otherwise there is the beep
+
+                if (isInSystemCall(getContext()))
+                    startBeeping();
+                else
+                    startRinging();
             }
         } else if (call == mRingingCall && mIsRinging) {
             // previous state was ringing, so stop ringing
             stopRinging();
+            if (beepScheduleFuture != null) {
+                stopBeeping();
+            }
         }
 
         if (state == State.Connected) {
+            if (beepScheduleFuture != null) {
+                stopBeeping();
+            }
             if (mCore.getCallsNb() == 1) {
                 // It is for incoming calls, because outgoing calls enter MODE_IN_COMMUNICATION
                 // immediately when they start.
@@ -1245,6 +1272,9 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
         }
 
         if (state == State.End || state == State.Error) {
+            if (beepScheduleFuture != null) {
+                stopBeeping();
+            }
             if (mCore.getCallsNb() == 0) {
                 // Disabling proximity sensor
                 enableProximitySensing(false);
@@ -1378,6 +1408,20 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
         }
     }
 
+    private synchronized void startBeeping() {
+        beepScheduleFuture = executor.scheduleAtFixedRate(
+                beepRunnable,
+                0,
+                5000,
+                TimeUnit.MILLISECONDS
+        );
+    }
+
+    private synchronized void stopBeeping() {
+        beepScheduleFuture.cancel(true);
+        beepScheduleFuture = null;
+    }
+
     private synchronized void startRinging() {
         if (!LinphonePreferences.instance().isDeviceRingtoneEnabled()) {
             // Enable speaker audio route, linphone library will do the ringing itself automatically
@@ -1397,17 +1441,26 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
                             || mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL)
                     && mVibrator != null
                     && LinphonePreferences.instance().isIncomingCallVibrationEnabled()) {
-                long[] patern = {0, 1000, 1000};
-                mVibrator.vibrate(patern, 1);
+                VibrationEffect vibrateEffect = VibrationEffect
+                        .createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE);
+                mVibrator.vibrate(vibrateEffect);
+                //long[] patern = {0, 1000, 1000};
+                //mVibrator.vibrate(patern, 1);
             }
             if (mRingerPlayer == null) {
                 requestAudioFocus(STREAM_RING);
                 mRingerPlayer = new MediaPlayer();
                 mRingerPlayer.setAudioStreamType(STREAM_RING);
 
+                Uri ringtoneUri = Settings.System.DEFAULT_RINGTONE_URI;
+                        /*isInSystemCall(getContext())
+                        ? Settings.System.DEFAULT_NOTIFICATION_URI
+                        : Settings.System.DEFAULT_RINGTONE_URI;*/
+
                 String ringtone =
                         LinphonePreferences.instance()
-                                .getRingtone(Settings.System.DEFAULT_RINGTONE_URI.toString());
+                                .getRingtone(ringtoneUri.toString());
+
                 try {
                     if (ringtone.startsWith("content://")) {
                         mRingerPlayer.setDataSource(mServiceContext, Uri.parse(ringtone));
@@ -2001,4 +2054,12 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
                             });
         }
     }
+
+    public static boolean isInSystemCall(Context context) {
+        TelephonyManager telManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if (telManager == null)
+            return false;
+        return (telManager.getCallState() != TelephonyManager.CALL_STATE_IDLE);
+    }
+
 }
