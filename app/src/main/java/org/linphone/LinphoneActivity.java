@@ -19,6 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import static android.content.Intent.ACTION_CALL;
 import static android.content.Intent.ACTION_VIEW;
 
 import android.Manifest;
@@ -646,7 +647,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 extras.putString("fileSharedUri", file);
                 changeCurrentFragment(FragmentsAvailable.CHAT_LIST, extras);
                 intent.removeExtra("fileShared");
-            } else if (extras.containsKey("SipUriOrNumber")) {
+            } else if (extras.containsKey("SipUriOrNumber")) { //FIXME
                 DialerFragment dialerFragment = DialerFragment.instance();
                 if (dialerFragment != null) {
                     if (getResources()
@@ -664,7 +665,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
             } else if (intent != null //TODO qui entra la prima volta
                     && intent.getAction() != null
                     && intent.getAction() != null
-                    && intent.getAction().equals(ACTION_VIEW)
+                    && (intent.getAction().equals(ACTION_VIEW) || intent.getAction().equals(ACTION_CALL) )
                     && intent.getData().getScheme().equals("tel")
             ) {
                 mEmptyFragment = true;
