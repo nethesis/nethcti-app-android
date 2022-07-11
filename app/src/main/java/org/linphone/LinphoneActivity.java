@@ -382,7 +382,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         LinphonePreferences.instance().setMediaEncryption(MediaEncryption.SRTP);
     }
 
-    @Override  //TODO [CLICK TO DIAL] Contiene il numero di telefono
+    @Override  // [CLICK TO DIAL] Contiene il numero di telefono
     protected void onStart() {
         super.onStart();
 
@@ -574,7 +574,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
     }
 
-    @Override //TODO [CLICK TO DIAL] Contiene il numero di telefono
+    @Override // [CLICK TO DIAL] Contiene il numero di telefono
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
@@ -647,7 +647,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 extras.putString("fileSharedUri", file);
                 changeCurrentFragment(FragmentsAvailable.CHAT_LIST, extras);
                 intent.removeExtra("fileShared");
-            } else if (extras.containsKey("SipUriOrNumber")) { //FIXME
+            } else if (extras.containsKey("SipUriOrNumber")) {
                 DialerFragment dialerFragment = DialerFragment.instance();
                 if (dialerFragment != null) {
                     if (getResources()
@@ -662,7 +662,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
                     goToDialerFragment();
                 }
-            } else if (intent != null //TODO qui entra la prima volta
+            } else if (intent != null
                     && intent.getAction() != null
                     && intent.getAction() != null
                     && (intent.getAction().equals(ACTION_VIEW) || intent.getAction().equals(ACTION_CALL) )

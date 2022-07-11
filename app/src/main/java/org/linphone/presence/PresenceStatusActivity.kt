@@ -1,6 +1,7 @@
 package org.linphone.presence
 
 import PresenceStatusAdapter
+import android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
@@ -25,6 +26,7 @@ import it.nethesis.webservices.UserRestAPI
 import okhttp3.ResponseBody
 import org.linphone.BuildConfig.DEBUG
 import org.linphone.LinphoneManager
+import org.linphone.NethCTIApplication
 import org.linphone.NethCTIApplication.Companion.isNightTheme
 import org.linphone.R
 import org.linphone.core.ProxyConfig
@@ -267,7 +269,10 @@ class PresenceStatusActivity : AppCompatActivity(), Callback<MutableList<String>
         val child: View = layoutInflater.inflate(R.layout.phone_number_edit_text, null)
         phoneNumberEditText = child.findViewById(R.id.edtText_insert_phone_number)
 
-        insertCellphoneAlertDialog = AlertDialog.Builder(this, R.style.AlertDialogTheme)
+        insertCellphoneAlertDialog = AlertDialog.Builder(
+            this,
+            if (isNightTheme) R.style.AlertDialogDarkTheme else R.style.AlertDialogTheme
+        )
             .setTitle(getString(R.string.presence_alert_title))
             .setMessage(getString(R.string.presence_alert_message))
             .setView(child)
@@ -280,7 +285,10 @@ class PresenceStatusActivity : AppCompatActivity(), Callback<MutableList<String>
     }
 
     private fun buildAlertDialog() : AlertDialog.Builder {
-        return AlertDialog.Builder(this, R.style.AlertDialogTheme)
+        return AlertDialog.Builder(
+            this,
+            if (isNightTheme) R.style.AlertDialogDarkTheme else R.style.AlertDialogTheme
+        )
             .setTitle(resources.getString(R.string.attention))
             .setMessage(resources.getString(R.string.incorrect_number_message))
             .setCancelable(false)

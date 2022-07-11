@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/transparent_color">
 
     <EditText
         android:id="@+id/edtText_insert_phone_number"
@@ -10,7 +11,6 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:lines="1"
-        android:background="@drawable/rounded_border_edittext"
         android:inputType="phone"/>
 
 </RelativeLayout>

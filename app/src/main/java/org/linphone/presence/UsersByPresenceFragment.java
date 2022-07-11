@@ -775,7 +775,10 @@ public class UsersByPresenceFragment extends Fragment implements
                 break;
         }
 
-        new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
+        new AlertDialog.Builder(
+                getContext(),
+                NethCTIApplication.Companion.isNightTheme() ? R.style.AlertDialogDarkTheme : R.style.AlertDialogTheme
+        )
                 .setTitle(getString(R.string.presence_attention_title))
                 .setMessage(alertMessage)
                 .setCancelable(false)
