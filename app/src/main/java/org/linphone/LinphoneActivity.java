@@ -395,7 +395,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.WRITE_CONTACTS,
-                Manifest.permission.READ_CONTACTS
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.CALL_PHONE
         };
 
         for (String permissionToHave : permissionsToHave) {
