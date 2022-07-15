@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import static android.content.Intent.ACTION_CALL;
+import static android.content.Intent.ACTION_DIAL;
 import static android.content.Intent.ACTION_VIEW;
 
 import android.Manifest;
@@ -663,18 +664,34 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
                     goToDialerFragment();
                 }
-            } else if (intent != null
+            } /*else if (intent != null
                     && intent.getAction() != null
                     && intent.getAction() != null
-                    && (intent.getAction().equals(ACTION_VIEW) || intent.getAction().equals(ACTION_CALL) )
+                    && (intent.getAction().equals(ACTION_VIEW)
+                    || intent.getAction().equals(ACTION_DIAL)
+                    || intent.getAction().equals(ACTION_CALL))
                     && intent.getData().getScheme().equals("tel")
             ) {
                 mEmptyFragment = true;
                 intent.putExtra("tel", intent.getData().getEncodedSchemeSpecificPart());
                 changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
                 mEmptyFragment = false;
-            }
+            }*/
         }
+
+        if (intent.getAction() != null
+                && intent.getAction() != null
+                && (intent.getAction().equals(ACTION_VIEW)
+                || intent.getAction().equals(ACTION_DIAL)
+                || intent.getAction().equals(ACTION_CALL))
+                && intent.getData().getScheme().equals("tel")
+        ) {
+            mEmptyFragment = true;
+            intent.putExtra("tel", intent.getData().getEncodedSchemeSpecificPart());
+            changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
+            mEmptyFragment = false;
+        }
+
         setIntent(intent);
     }
 
