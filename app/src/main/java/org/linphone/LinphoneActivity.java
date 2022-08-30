@@ -19,6 +19,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import static android.content.Intent.ACTION_CALL;
+import static android.content.Intent.ACTION_DIAL;
+import static android.content.Intent.ACTION_VIEW;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -59,6 +63,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -133,6 +138,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import it.nethesis.models.NethPermissionWithOpGroups;
 import it.nethesis.models.presence.PresenceUser;
 import it.nethesis.utils.CallTransferManager;
 
@@ -176,6 +182,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     // private boolean mCallTransfer = false;
     private boolean mIsOnBackground = false;
     private int mAlwaysChangingPhoneAngle = -1;
+    private AlertDialog logoutAlert;
 
     public static boolean isInstanciated() {
         return sInstance != null;
@@ -376,7 +383,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         LinphonePreferences.instance().setMediaEncryption(MediaEncryption.SRTP);
     }
 
-    @Override
+    @Override  // [CLICK TO DIAL] Contiene il numero di telefono
     protected void onStart() {
         super.onStart();
 
@@ -389,7 +396,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.WRITE_CONTACTS,
-                Manifest.permission.READ_CONTACTS
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.CALL_PHONE
         };
 
         for (String permissionToHave : permissionsToHave) {
@@ -568,15 +576,9 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
     }
 
-    @Override
+    @Override // [CLICK TO DIAL] Contiene il numero di telefono
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
-        /*if (getCurrentFragment() == FragmentsAvailable.SETTINGS) {
-            if (mFragment instanceof SettingsFragment) {
-                ((SettingsFragment) mFragment).closePreferenceScreen();
-            }
-        }*/
 
         Bundle extras = intent.getExtras();
         // mCallTransfer = false;
@@ -647,27 +649,49 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 extras.putString("fileSharedUri", file);
                 changeCurrentFragment(FragmentsAvailable.CHAT_LIST, extras);
                 intent.removeExtra("fileShared");
-            } else {
+            } else if (extras.containsKey("SipUriOrNumber")) {
                 DialerFragment dialerFragment = DialerFragment.instance();
                 if (dialerFragment != null) {
-                    if (extras.containsKey("SipUriOrNumber")) {
-                        if (getResources()
-                                .getBoolean(
-                                        R.bool.automatically_start_intercepted_outgoing_gsm_call)) {
-                            dialerFragment.newOutgoingCall(extras.getString("SipUriOrNumber"));
-                        } else {
-                            dialerFragment.displayTextInAddressBar(
-                                    extras.getString("SipUriOrNumber"));
-                        }
+                    if (getResources()
+                            .getBoolean(
+                                    R.bool.automatically_start_intercepted_outgoing_gsm_call)) {
+                        dialerFragment.newOutgoingCall(extras.getString("SipUriOrNumber"));
+                    } else {
+                        dialerFragment.displayTextInAddressBar(
+                                extras.getString("SipUriOrNumber"));
                     }
                 } else {
-                    if (extras.containsKey("SipUriOrNumber")) {
-                        addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
-                        goToDialerFragment();
-                    }
+                    addressWaitingToBeCalled = extras.getString("SipUriOrNumber");
+                    goToDialerFragment();
                 }
-            }
+            } /*else if (intent != null
+                    && intent.getAction() != null
+                    && intent.getAction() != null
+                    && (intent.getAction().equals(ACTION_VIEW)
+                    || intent.getAction().equals(ACTION_DIAL)
+                    || intent.getAction().equals(ACTION_CALL))
+                    && intent.getData().getScheme().equals("tel")
+            ) {
+                mEmptyFragment = true;
+                intent.putExtra("tel", intent.getData().getEncodedSchemeSpecificPart());
+                changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
+                mEmptyFragment = false;
+            }*/
         }
+
+        if (intent.getAction() != null
+                && intent.getAction() != null
+                && (intent.getAction().equals(ACTION_VIEW)
+                || intent.getAction().equals(ACTION_DIAL)
+                || intent.getAction().equals(ACTION_CALL))
+                && intent.getData().getScheme().equals("tel")
+        ) {
+            mEmptyFragment = true;
+            intent.putExtra("tel", intent.getData().getEncodedSchemeSpecificPart());
+            changeCurrentFragment(FragmentsAvailable.DIALER, intent.getExtras());
+            mEmptyFragment = false;
+        }
+
         setIntent(intent);
     }
 
@@ -1840,17 +1864,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String selectedItem = mSideMenuItemList.getAdapter().getItem(i).toString();
                         if (selectedItem.equals(getString(R.string.menu_logout))) {
-                            LinphoneManager.clearProxys(getApplicationContext());
-                            sideMenuLogout();
-                            startActivity(
-                                    new Intent()
-                                            .setClass(
-                                                    LinphoneManager.getInstance().getContext(),
-                                                    AssistantActivity.class));
-
-                            PresenceUser.removeAllFavorites(getApplicationContext());
-                            finish();
-
+                            showLogoutAlert();
                         } else if (selectedItem.equals(getString(R.string.menu_settings))) {
                             LinphoneActivity.instance().displaySettings();
                         } else if (selectedItem.equals(getString(R.string.menu_about))) {
@@ -1883,6 +1897,39 @@ public class LinphoneActivity extends LinphoneGenericActivity
         mQuitLayout = findViewById(R.id.side_menu_quit);
         mQuitLayout.setOnClickListener(
                 view -> LinphoneActivity.instance().quit());
+    }
+
+    private void showLogoutAlert() {
+        if (logoutAlert == null)
+            logoutAlert = new AlertDialog.Builder(this)
+                    .setTitle(R.string.attention)
+                    .setMessage(R.string.logout_alert_message)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.alert_action_continue, (dialog, which) -> {
+                        dialog.dismiss();
+                        logout();
+                    })
+                    .setNegativeButton(R.string.alert_action_cancel, (dialog, which) -> {
+                        dialog.dismiss();
+                    })
+                    .create();
+
+        if (logoutAlert.isShowing()) return;
+        logoutAlert.show();
+    }
+
+    private void logout() {
+        LinphoneManager.clearProxys(getApplicationContext());
+        sideMenuLogout();
+        startActivity(
+                new Intent()
+                        .setClass(
+                                LinphoneManager.getInstance().getContext(),
+                                AssistantActivity.class));
+
+        PresenceUser.removeAllFavorites(getApplicationContext());
+        NethPermissionWithOpGroups.removeSelected(getApplicationContext());
+        finish();
     }
 
     private int getStatusIconResource(RegistrationState state) {

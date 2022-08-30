@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lnr_content_actions"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -68,6 +69,7 @@
             android:gravity="center"
             android:textStyle="bold"
             android:text="AS"
+            android:textColor="@color/buttonTextColor"
             android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="@+id/img_dlg_background_border_presence_status"
             app:layout_constraintEnd_toEndOf="@+id/img_dlg_background_border_presence_status"
@@ -184,7 +186,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@drawable/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView
@@ -203,7 +204,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@drawable/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView
@@ -222,7 +222,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@drawable/ic_presence_color_gray_text_selector"
             android:enabled="false" />
 
         <TextView
@@ -241,7 +240,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@drawable/ic_presence_color_gray_text_selector"
             android:enabled="false" />
 
         <TextView
@@ -260,7 +258,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@drawable/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView
@@ -279,7 +276,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@drawable/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView
@@ -303,7 +299,6 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="@drawable/ic_presence_color_gray_text_selector"
             android:enabled="false"/>
 
         <TextView

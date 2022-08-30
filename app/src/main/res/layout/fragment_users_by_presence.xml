@@ -115,15 +115,15 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_group"
+                android:stateListAnimator="@null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white_color"
-                android:backgroundTint="@color/white_color"
+                android:backgroundTint="@color/transparent_color"
                 android:drawableTop="@drawable/ic_presence_circle_group_gray_selector"
                 android:text="@string/presence_group"
-                android:textColor="@drawable/ic_presence_color_gray_text_selector"
                 android:textStyle="bold"
-                app:backgroundTint="@color/white_color" />
+                app:backgroundTint="@color/transparent_color" />
         </LinearLayout>
 
         <View
@@ -139,15 +139,15 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_favorites"
+                android:stateListAnimator="@null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white_color"
-                android:backgroundTint="@color/white_color"
+                android:backgroundTint="@color/transparent_color"
                 android:drawableTop="@drawable/ic_presence_circle_favorites_gray_selector"
                 android:text="@string/presence_favorites"
-                android:textColor="@drawable/ic_presence_color_gray_text_selector"
                 android:textStyle="bold"
-                app:backgroundTint="@color/white_color" />
+                app:backgroundTint="@color/transparent_color" />
         </LinearLayout>
 
         <View

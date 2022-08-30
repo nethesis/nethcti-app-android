@@ -27,6 +27,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import androidx.annotation.Nullable;
+
 import com.google.android.material.button.MaterialButton;
 import it.nethesis.utils.CallTransferManager;
 import org.linphone.LinphoneActivity;
@@ -46,6 +49,7 @@ public class DialerFragment extends Fragment {
     private CallButton mCall;
     private MaterialButton mAddContact;
     private OnClickListener mAddContactListener, mCancelListener, mTransferListener;
+    private String number;
 
     /** @return null if not ready yet */
     public static DialerFragment instance() {
@@ -142,9 +146,22 @@ public class DialerFragment extends Fragment {
             }
         }
 
+        if (getArguments() != null) {
+            String number = getArguments().getString("tel");
+            if (number != null) {
+                mAddress.setText(number);
+                mAddress.setSelection(number.length());
+            }
+        }
+
         sInstance = this;
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override

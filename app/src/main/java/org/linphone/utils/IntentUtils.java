@@ -72,7 +72,11 @@ public class IntentUtils {
             Log.i("[Intent Utils] ACTION_CALL_LINPHONE with number: " + numberToCall);
             LinphoneManager.getInstance().newOutgoingCall(numberToCall, null);
         } else if (Intent.ACTION_CALL.equals(action)) {
-            if (intent.getData() != null) {
+            //FIXME
+            addressToCall = intent.getData().getEncodedSchemeSpecificPart();
+            newIntent.putExtra("tel", addressToCall);
+
+            /*if (intent.getData() != null) {
                 addressToCall = intent.getData().toString();
                 addressToCall = addressToCall.replace("%40", "@");
                 addressToCall = addressToCall.replace("%3A", ":");
@@ -83,13 +87,14 @@ public class IntentUtils {
                 }
                 Log.i("[Intent Utils] ACTION_CALL with number: " + addressToCall);
                 newIntent.putExtra("SipUriOrNumber", addressToCall);
-            }
+            }*/
         } else if (Intent.ACTION_VIEW.equals(action)) {
-            addressToCall =
-                    ContactsManager.getInstance()
+            addressToCall = intent.getData().getEncodedSchemeSpecificPart();
+
+                    /*ContactsManager.getInstance()
                             .getAddressOrNumberForAndroidContact(
-                                    context.getContentResolver(), intent.getData());
-            newIntent.putExtra("SipUriOrNumber", addressToCall);
+                                    context.getContentResolver(), intent.getData());*/
+            newIntent.putExtra("tel", addressToCall);
             Log.i("[Intent Utils] ACTION_VIEW with number: " + addressToCall);
         } else {
             Log.i("[Intent Utils] Unknown action [" + action + "], skipping");

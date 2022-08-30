@@ -12,8 +12,6 @@ import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_INTRUDE;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_PICKUP;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_RECORD;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_SPY;
-import static org.linphone.presence.PresenceGroupsDialogActivity.SELECTED_GROUP;
-import static org.linphone.presence.PresenceGroupsDialogActivity.START_SELECTED_GROUP;
 import static org.linphone.presence.PresenceStatusActivity.STATUS_SELECTED;
 
 import android.app.Fragment;
@@ -22,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,7 @@ import com.google.gson.Gson;
 
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
+import org.linphone.NethCTIApplication;
 import org.linphone.R;
 import org.linphone.core.ProxyConfig;
 import org.linphone.interfaces.OnActionResul;
@@ -50,7 +50,6 @@ import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.SharedPreferencesManager;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 
 import it.nethesis.models.NethPermissionWithOpGroups;
@@ -106,6 +105,7 @@ public class UsersByPresenceFragment extends Fragment implements
     private NethPermissionWithOpGroups nethSelectedWithOpGroups;
     private PresenceActionManager presenceActionManager;
 
+    private boolean firstCreation = true;
     private Parcelable recyclerViewState;
 
     public static UsersByPresenceFragment newInstance() {
@@ -124,6 +124,10 @@ public class UsersByPresenceFragment extends Fragment implements
                 getContext(),
                 this,
                 _actionCallRestAPI
+        );
+        nethSelectedWithOpGroups = NethPermissionWithOpGroups.restoreGroupUser(
+                getContext(),
+                NethPermissionWithOpGroups.getGroupsUserFile(getContext())
         );
     }
 
@@ -167,6 +171,7 @@ public class UsersByPresenceFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
         switchToBetweenGroupOrFavoritesButtons(GROUPS_BUTTON);
 
+        setDayNightThemeColor();
         btnGroup.setText(R.string.presence_group);
         btnGroup.setOnClickListener(this);
         btnFavorites.setOnClickListener(this);
@@ -174,7 +179,20 @@ public class UsersByPresenceFragment extends Fragment implements
         swipeRefreshListPresence.setOnRefreshListener(this);
         constraintStatus.setOnClickListener(this);
 
+        firstCreation = true;
         TimerSingleton.initialize(this);
+    }
+
+    private void setDayNightThemeColor() {
+        boolean darkMode = NethCTIApplication
+                .Companion
+                .isNightTheme();
+
+        int color = darkMode
+                ? R.color.ic_presence_color_gray_text_selector_dark
+                : R.color.ic_presence_color_gray_text_selector;
+        btnFavorites.setTextColor(getContext().getColorStateList(color));
+        btnGroup.setTextColor(getContext().getColorStateList(color));
     }
 
     @Override
@@ -201,7 +219,10 @@ public class UsersByPresenceFragment extends Fragment implements
                 SharedPreferencesManager.getAuthtoken(getContext())
         ).enqueue(UsersByPresenceFragment.this);
         if (pullToRefresh) return;
-        progressBar.setVisibility(VISIBLE);
+        if (firstCreation){
+            progressBar.setVisibility(VISIBLE);
+            firstCreation = false;
+        }
     }
 
     @Override
@@ -227,8 +248,10 @@ public class UsersByPresenceFragment extends Fragment implements
                 _userRestAPI.getMe(SharedPreferencesManager.getAuthtoken(getContext()))
                         .enqueue(nethUser);
 
-                if (!swipeRefreshListPresence.isRefreshing())
-                    progressBar.setVisibility(VISIBLE);
+                if (!swipeRefreshListPresence.isRefreshing()){
+                    if (firstCreation)
+                        progressBar.setVisibility(VISIBLE);
+                }
 
                 hideAlertMessage();
                 break;
@@ -271,8 +294,10 @@ public class UsersByPresenceFragment extends Fragment implements
                             SharedPreferencesManager.getAuthtoken(getContext())
                     ).enqueue(groupResponse);
 
-                    if (!swipeRefreshListPresence.isRefreshing())
-                        progressBar.setVisibility(VISIBLE);
+                    if (!swipeRefreshListPresence.isRefreshing()){
+                        if (firstCreation)
+                            progressBar.setVisibility(VISIBLE);
+                    }
 
                     hideAlertMessage();
                     break;
@@ -369,8 +394,29 @@ public class UsersByPresenceFragment extends Fragment implements
 
         if (!assigned.isEmpty()) {
             //lo assegno solo se non è stato già selezionato
-            if (nethSelectedWithOpGroups == null)
+            if (nethSelectedWithOpGroups == null) {
+                Log.e("NethPermissionWithOpGroups", "FIRST TIME SAVING");
                 nethSelectedWithOpGroups = assigned.get(0);
+                NethPermissionWithOpGroups.saveGroupUser(
+                        getContext(),
+                        new Gson().toJson(nethSelectedWithOpGroups),
+                        NethPermissionWithOpGroups.getGroupsUserFile(getContext())
+                );
+            } else {
+                //aggiorna nethSelectedWithOpGroups con i dati ricevuti dal server
+                Log.e("NethPermissionWithOpGroups", "UPDATE");
+                for (NethPermissionWithOpGroups item : assigned) {
+                    if (item.nethPermission.id.equals(nethSelectedWithOpGroups.nethPermission.id)) {
+                        nethSelectedWithOpGroups = item;
+                        NethPermissionWithOpGroups.saveGroupUser(
+                                getContext(),
+                                new Gson().toJson(nethSelectedWithOpGroups),
+                                NethPermissionWithOpGroups.getGroupsUserFile(getContext())
+                        );
+                        break;
+                    }
+                }
+            }
         }
 
         showSelectedGroup();
@@ -398,7 +444,7 @@ public class UsersByPresenceFragment extends Fragment implements
                     .toString();
         String groupNameToShow = groupName == null
                 ? getString(R.string.presence_group)
-                : String.format(getString(R.string.presence_groups), groupName);
+                : groupName;
         btnGroup.setText(groupNameToShow);
 
         //switchToBetweenGroupOrFavoritesButtons(GROUPS_BUTTON);
@@ -532,11 +578,6 @@ public class UsersByPresenceFragment extends Fragment implements
         //if (_presenceGroups == null || _presenceGroups.isEmpty()) return;
         //TODO mettere messaggio di errore
 
-        showGroupsIntent.putExtra(
-                START_SELECTED_GROUP,
-                new Gson().toJson(nethSelectedWithOpGroups)
-        );
-
         startActivityForResult(showGroupsIntent, PRESENCE_GROUP_DIALOG_REQUEST);
         getActivity().overridePendingTransition(
                 R.anim.slide_in_bottom_to_top,
@@ -552,10 +593,12 @@ public class UsersByPresenceFragment extends Fragment implements
         if (requestCode == PRESENCE_GROUP_DIALOG_REQUEST) {
             switch (resultCode) {
                 case RESULT_OK:
-                    nethSelectedWithOpGroups = new Gson().fromJson(
-                            data.getStringExtra(SELECTED_GROUP),
-                            NethPermissionWithOpGroups.class
-                    );
+                    nethSelectedWithOpGroups = NethPermissionWithOpGroups
+                            .restoreGroupUser(
+                                    getContext(),
+                                    NethPermissionWithOpGroups.getGroupsUserFile(getContext())
+                            );
+
                     showSelectedGroup();
                     showPresenceListFilteredByGroups();
                     break;
@@ -732,7 +775,10 @@ public class UsersByPresenceFragment extends Fragment implements
                 break;
         }
 
-        new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
+        new AlertDialog.Builder(
+                getContext(),
+                NethCTIApplication.Companion.isNightTheme() ? R.style.AlertDialogDarkTheme : R.style.AlertDialogTheme
+        )
                 .setTitle(getString(R.string.presence_attention_title))
                 .setMessage(alertMessage)
                 .setCancelable(false)

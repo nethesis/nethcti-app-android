@@ -73,10 +73,10 @@ android {
 
     compileSdkVersion 30
     defaultConfig {
-        minSdkVersion 23
+        minSdkVersion 28
         targetSdkVersion 30
-        versionCode 4201
-        versionName '1.4.7'
+        versionCode 4204
+        versionName '1.5.0'
         applicationId getPackageName()
         multiDexEnabled true
         manifestPlaceholders = [linphone_address_mime_type: "vnd.android.cursor.item/vnd." + getPackageName() + ".provider.sip_address"]
@@ -110,10 +110,6 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            resValue "string", "lgn_domain", ""
-            resValue "string", "lgn_username", ""
-            resValue "string", "lgn_password", ""
-
             resValue "string", "sync_account_type", getPackageName() + ".sync"
             resValue "string", "file_provider", getPackageName() + ".provider"
             resValue "string", "linphone_address_mime_type", "vnd.android.cursor.item/vnd." + getPackageName() + ".provider.sip_address"
@@ -126,10 +122,6 @@ android {
             debuggable true
             jniDebuggable true
             versionNameSuffix '-debug'
-
-            resValue "string", "lgn_domain", ""
-            resValue "string", "lgn_username", ""
-            resValue "string", "lgn_password", ""
 
             resValue "string", "sync_account_type", getPackageName() + ".sync"
             resValue "string", "file_provider", getPackageName() + ".provider"

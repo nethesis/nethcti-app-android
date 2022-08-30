@@ -836,6 +836,10 @@
         <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
     </style>
 
+    <style name="AlertDialogDarkTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:background">@color/black_color</item>
+    </style>
+
     <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/black_color</item>
     </style>

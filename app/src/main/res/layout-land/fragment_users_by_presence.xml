@@ -123,7 +123,7 @@
                 android:backgroundTint="@color/white_color"
                 android:drawableTop="@drawable/ic_presence_circle_group_gray_selector"
                 android:text="@string/presence_group"
-                android:textColor="@drawable/ic_presence_color_gray_text_selector"
+                android:textColor="@color/ic_presence_color_gray_text_selector"
                 app:backgroundTint="@color/white_color" />
         </LinearLayout>
 
@@ -145,7 +145,7 @@
                 android:backgroundTint="@color/white_color"
                 android:drawableTop="@drawable/ic_presence_circle_favorites_gray_selector"
                 android:text="@string/presence_favorites"
-                android:textColor="@drawable/ic_presence_color_gray_text_selector"
+                android:textColor="@color/ic_presence_color_gray_text_selector"
                 app:backgroundTint="@color/white_color" />
         </LinearLayout>
 
