@@ -1,0 +1,215 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
+static def getPackageName() {
+    return "it.nethesis.nethctiapp" // "org.linphone"
+}
+
+static def firebaseEnabled() {
+    File googleFile = new File('app/google-services.json')
+    return googleFile.exists()
+}
+
+static def isLocalDebugAarAvailable() {
+    File debugAar = new File('linphone-sdk-android/linphone-sdk-android-debug.aar')
+    return debugAar.exists()
+}
+
+static def isLocalReleaseAarAvailable() {
+    File releaseAar = new File('linphone-sdk-android/linphone-sdk-android-release.aar')
+    return releaseAar.exists()
+}
+
+static def isLocalAarAvailable() {
+    return isLocalDebugAarAvailable() || isLocalReleaseAarAvailable()
+}
+
+///// Exclude Files /////
+
+def excludeFiles = []
+if (!firebaseEnabled()) {
+    excludeFiles.add('**/Firebase*')
+    println '[Push Notification] Firebase disabled'
+}
+
+def excludePackage = []
+
+excludePackage.add('**/gdb.*')
+excludePackage.add('**/libopenh264**')
+excludePackage.add('**/**tester**')
+excludePackage.add('**/LICENSE.txt')
+
+
+def gitVersion = new ByteArrayOutputStream()
+
+task getGitVersion {
+    exec {
+        commandLine 'git', 'describe', '--always'
+        standardOutput = gitVersion
+    }
+    doLast {
+        gitVersion = gitVersion.toString().trim()
+        println("Git version: " + gitVersion)
+    }
+}
+
+project.tasks['preBuild'].dependsOn 'getGitVersion'
+
+/////////////////////////
+
+repositories {
+    maven {
+        // Replace snapshots by releases for releases !
+        url "https://linphone.org/maven_repository"
+    }
+}
+
+android {
+    lintOptions {
+        abortOnError false
+    }
+
+    compileSdkVersion 30
+    defaultConfig {
+        minSdkVersion 28
+        targetSdkVersion 30
+        versionCode 4204
+        versionName '1.5.0'
+        applicationId getPackageName()
+        multiDexEnabled true
+        manifestPlaceholders = [linphone_address_mime_type: "vnd.android.cursor.item/vnd." + getPackageName() + ".provider.sip_address"]
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "nethctiapp-android-${variant.buildType.name}-${gitVersion.toString().trim()}.apk"
+        }
+    }
+
+    def keystorePropertiesFile = rootProject.file("keystore.properties")
+    def keystoreProperties = new Properties()
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            debuggable false
+            jniDebuggable true
+
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            resValue "string", "sync_account_type", getPackageName() + ".sync"
+            resValue "string", "file_provider", getPackageName() + ".provider"
+            resValue "string", "linphone_address_mime_type", "vnd.android.cursor.item/vnd." + getPackageName() + ".provider.sip_address"
+
+            if (!firebaseEnabled()) {
+                resValue "string", "gcm_defaultSenderId", "none"
+            }
+        }
+        debug {
+            debuggable true
+            jniDebuggable true
+            versionNameSuffix '-debug'
+
+            resValue "string", "sync_account_type", getPackageName() + ".sync"
+            resValue "string", "file_provider", getPackageName() + ".provider"
+            resValue "string", "linphone_address_mime_type", "vnd.android.cursor.item/vnd." + getPackageName() + ".provider.sip_address"
+
+            if (!firebaseEnabled()) {
+                resValue "string", "gcm_defaultSenderId", "none"
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            java.excludes = excludeFiles
+
+            packagingOptions {
+                excludes = excludePackage
+            }
+            res.srcDirs = ['src/main/res', 'src/main/res/values/neth_strings']
+            resources.srcDirs = ['src/main/resources', 'src/main/res/values/neth_strings']
+        }
+    }
+
+    packagingOptions {
+        pickFirst 'META-INF/NOTICE'
+        pickFirst 'META-INF/LICENSE'
+        exclude 'META-INF/MANIFEST.MF'
+    }
+}
+
+dependencies {
+    if (firebaseEnabled()) {
+        implementation platform('com.google.firebase:firebase-bom:25.12.0')
+        implementation 'com.google.firebase:firebase-crashlytics-ktx'
+        implementation 'com.google.firebase:firebase-analytics-ktx'
+    }
+    implementation 'org.apache.commons:commons-compress:1.20'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android:flexbox:1.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    /*
+     * We use retrofit to do calls to nethctiapp web services.
+     */
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation 'org.conscrypt:conscrypt-android:2.4.0'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+
+    /** ViewModel & LiveData */
+    // A versioni superiori devo impostare Android 12. compileSdkVersion 31 non funziona.
+    def lifecycle_version = "1.0.0-alpha07"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+
+    if (isLocalAarAvailable()) {
+        if (isLocalReleaseAarAvailable()) {
+            //debug AAR is a lot bigger than release one, and APK install time will be much longer so use release one for day-to-day development
+            implementation project(path: ":linphone-sdk-android", configuration: 'release')
+        } else {
+            releaseImplementation project(path: ":linphone-sdk-android", configuration: 'release')
+            debugImplementation project(path: ":linphone-sdk-android", configuration: 'debug')
+        }
+    } else {
+        implementation "org.linphone:linphone-sdk-android:4.2+"
+    }
+}
+
+task generateContactsXml(type: Copy) {
+    from 'contacts.xml'
+    into "src/main/res/xml/"
+    filter {
+        line ->
+            line
+                    .replaceAll('%%AUTO_GENERATED%%', 'This file has been automatically generated, do not edit or commit !')
+                    .replaceAll('%%PACKAGE_NAME%%', getPackageName())
+
+    }
+}
+project.tasks['preBuild'].dependsOn 'generateContactsXml'

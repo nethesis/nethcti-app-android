@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="digitIconSize">32dp</dimen>
+    <dimen name="digitSize">64dp</dimen>
+    <dimen name="digitLayoutPadding">10dp</dimen>
+    <dimen name="dialerMargin">0dp</dimen>
+    <dimen name="dialerAddressBarHorizontalPadding">24dp</dimen>
+    <dimen name="dashboardMargin">12dp</dimen>
+    <dimen name="buttonIconSize">16dp</dimen>
+    <dimen name="buttonSize">32dp</dimen>
+    <dimen name="avatarSize">100dp</dimen>
+    <dimen name="avatarCardRoundedCornerSize">50dp</dimen>
+    <dimen name="dashboardIconSize">32dp</dimen>
+    <dimen name="dashboardCardPadding">2dp</dimen>
+    <dimen name="historyDetailAvatarBottomMargin">0dp</dimen>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_list"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal"
+    android:visibility="gone">
+
+    <ImageView
+        android:id="@+id/cancel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:contentDescription="@string/content_description_cancel_button"
+        android:padding="15dp"
+        android:tint="@color/neth_button_icon"
+        android:src="@drawable/ic_cancel" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.4" />
+
+    <ImageView
+        android:id="@+id/select_all"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:contentDescription="@string/content_description_select_all"
+        android:padding="15dp"
+        android:tint="@color/neth_button_icon"
+        android:src="@drawable/ic_check_all" />
+
+    <ImageView
+        android:id="@+id/deselect_all"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:contentDescription="@string/content_description_deselect_all"
+        android:padding="15dp"
+        android:tint="@color/neth_button_icon"
+        android:src="@drawable/ic_uncheck_all"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:contentDescription="@string/content_description_delete_selection"
+        android:padding="15dp"
+        android:tint="@color/neth_delete_button"
+        android:src="@drawable/ic_delete" />
+
+</LinearLayout>

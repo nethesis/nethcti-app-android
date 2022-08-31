@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lnr_content_actions"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
+            android:text="@string/actions"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/presence_divider"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id= "@+id/rlv_content_avatar"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/img_dlg_background_border_presence_status"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_presence_status_border_online"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_dlg_user_initials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/img_dlg_background_border_presence_status"
+            android:layout_alignEnd="@id/img_dlg_background_border_presence_status"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="AS"
+            android:textColor="@color/buttonTextColor"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_dlg_background_border_presence_status"
+            app:layout_constraintEnd_toEndOf="@+id/img_dlg_background_border_presence_status"
+            app:layout_constraintStart_toStartOf="@+id/img_dlg_background_border_presence_status"
+            app:layout_constraintTop_toTopOf="@+id/img_dlg_background_border_presence_status" />
+
+        <ImageView
+            android:id="@+id/img_dlg_small_status_icon"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_alignEnd="@id/img_dlg_background_border_presence_status"
+            android:layout_alignBottom="@id/img_dlg_background_border_presence_status"
+            android:layout_marginStart="-14dp"
+            android:layout_marginTop="-14dp"
+            android:src="@drawable/ic_presence_status_online"
+            app:layout_constraintStart_toEndOf="@+id/txt_dlg_user_initials"
+            app:layout_constraintTop_toBottomOf="@+id/txt_dlg_user_initials" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_dlg_small_status_icon"
+            app:layout_constraintTop_toTopOf="@+id/img_dlg_background_border_presence_status">
+
+            <TextView
+                android:id="@+id/txt_dlg_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="15dp"
+                android:lines="1"
+                android:text="Username"
+                android:textSize="24sp" />
+
+            <RelativeLayout
+                android:layout_below="@id/txt_dlg_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="25dp"
+                    android:src="@drawable/ic_star_selector" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/img_favorite">
+
+                    <TextView
+                        android:id="@+id/txt_main_extension_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:text="@string/presence_satus_nd_lower"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txt_dlg_status"
+                        android:layout_marginEnd="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_toEndOf="@id/txt_main_extension_id"
+                        android:background="@drawable/ic_square_status_online"
+                        android:padding="3dp"
+                        android:paddingStart="2dp"
+                        android:paddingEnd="2dp"
+                        android:text="Disponibile"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white_color"
+                        android:textSize="@dimen/listItemSecondaryTextSize"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <GridLayout
+        android:id="@+id/grid_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="3"
+        android:columnCount="3">
+
+        <TextView
+            android:id="@+id/btn_call"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:drawablePadding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/presence_action_call"
+            android:gravity="center"
+            android:drawableTop="@drawable/ic_presence_action_call_selector"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:enabled="false"/>
+
+        <TextView
+            android:id="@+id/btn_close"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:drawablePadding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/presence_action_hangup"
+            android:gravity="center"
+            android:drawableTop="@drawable/ic_presence_action_close_selector"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:enabled="false"/>
+
+        <TextView
+            android:id="@+id/btn_record"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:drawablePadding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/presence_action_record"
+            android:gravity="center"
+            android:drawableTop="@drawable/ic_presence_action_record_selector"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:enabled="false" />
+
+        <TextView
+            android:id="@+id/btn_intrude"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:drawablePadding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/presence_action_intrude"
+            android:gravity="center"
+            android:drawableTop="@drawable/ic_presence_action_intrude_selector"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:enabled="false" />
+
+        <TextView
+            android:id="@+id/btn_book"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:drawablePadding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/presence_action_book"
+            android:gravity="center"
+            android:drawableTop="@drawable/ic_presence_action_book_selector"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:enabled="false"/>
+
+        <TextView
+            android:id="@+id/btn_pickup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:drawablePadding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/presence_action_pickup"
+            android:gravity="center"
+            android:drawableTop="@drawable/ic_presence_action_pickup_selector"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:enabled="false"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"/>
+
+        <TextView
+            android:id="@+id/btn_spy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:drawablePadding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/presence_action_spy"
+            android:gravity="center"
+            android:drawableTop="@drawable/ic_presence_action_spy_selector"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:enabled="false"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"/>
+
+    </GridLayout>
+
+</LinearLayout>

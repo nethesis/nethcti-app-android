@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.12"
+                android:contentDescription="@string/content_description_back"
+                android:src="@drawable/ic_back"
+                android:tint="@color/neth_button_icon"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6" />
+
+            <ImageView
+                android:id="@+id/add_contact"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="0.2"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/content_description_add_contact"
+                android:src="@drawable/ic_add_user"
+                android:tint="@color/neth_button_icon"/>
+
+            <ImageView
+                android:id="@+id/goto_contact"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="0.2"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/content_description_contacts"
+                android:src="@drawable/ic_contacts"
+                android:tint="@color/neth_button_icon"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="5dp">
+
+            <RelativeLayout
+                android:id="@+id/avatar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/historyDetailAvatarBottomMargin"
+                android:gravity="center">
+
+                <include layout="@layout/contact_avatar_100"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/contact_name"
+                style="@style/NethCTIContactName"
+                android:textColor="@color/primaryTextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/contact_address"
+                style="@style/NethCTIContactInfo"
+                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/call"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="6dp"
+                    android:padding="8dp"
+                    android:background="@drawable/round_accent_button_background"
+                    android:contentDescription="@string/content_description_call"
+                    android:src="@drawable/ic_phone"
+                    android:backgroundTint="@color/neth_phone_icon"
+                    android:tint="@color/colorAccent"/>
+
+                <ImageView
+                    android:id="@+id/chat"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_orange_button_background"
+                    android:contentDescription="@string/content_description_chat"
+                    android:src="@drawable/chat_start_default"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
+                    android:id="@+id/chat_secured"
+                    android:layout_width="65dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/round_orange_button_background"
+                        android:contentDescription="@string/content_description_chat"
+                        android:src="@drawable/chat_start_default" />
+
+                    <ImageView
+                        android:id="@+id/security_level"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/security_toogle_icon_green" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimaryLight" />
+
+                <TextView
+                    style="@style/NethCTIContactFieldTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="6dp"
+                    android:text="@string/calls"/>
+
+                <ListView
+                    android:id="@+id/logs_list"
+                    android:cacheColorHint="@color/transparent_color"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/waitScreen"
+        layout="@layout/wait_layout" />
+
+</RelativeLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="colorPrimaryLight">#6d6d6d</color>
+    <color name="colorAccent">#00a2de</color>
+    <color name="colorAccentLight">#62d3ff</color>
+    <color name="colorAccentDark">#0073ac</color>
+    <color name="colorLedNotification">#00a2de</color>
+    <!-- Color With Alpha-->
+    <color name="colorAccentOverlay">#5062d3ff</color>
+    <color name="colorPrimaryLight50">#506d6d6d</color>
+    <color name="primaryTextColorLight50">#50c0c0c0</color>
+
+    <color name="primaryTextColor">#FFF</color>
+    <color name="primaryTextColorLight">#c0c0c0</color>
+    <color name="primaryTextColorInverse">#000</color>
+    <color name="secondaryTextColor">#c0c0c0</color>
+
+    <color name="subtitleTextColor">#c0c0c0</color>
+
+    <color name="sideMenuDivider">#c7c7c7</color>
+</resources>

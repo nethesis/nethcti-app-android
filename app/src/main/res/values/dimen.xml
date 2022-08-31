@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="digitIconSize">64dp</dimen>
+    <dimen name="digitSize">128dp</dimen>
+    <dimen name="digitLayoutPadding">20dp</dimen>
+    <dimen name="dialerMargin">24dp</dimen>
+    <dimen name="dialerAddressBarHorizontalPadding">42dp</dimen>
+    <dimen name="dashboardMargin">48dp</dimen>
+    <dimen name="dashboardParentMargin">48dp</dimen>
+    <dimen name="dashboardLogoHeight">48dp</dimen>
+    <dimen name="buttonIconSize">32dp</dimen>
+    <dimen name="buttonSize">64dp</dimen>
+    <dimen name="avatarSize">200dp</dimen>
+    <dimen name="avatarCardRoundedCornerSize">100dp</dimen>
+    <dimen name="dashboardIconSize">64dp</dimen>
+    <dimen name="dashboardCardPadding">6dp</dimen>
+    <dimen name="historyDetailAvatarBottomMargin">8dp</dimen>
+
+    <!-- presence -->
+    <dimen name="headerStatusPresence">11sp</dimen>
+    <dimen name="listItemTitleTextSize">19sp</dimen>
+    <dimen name="listItemSecondaryTextSize">11sp</dimen>
+
+    <dimen name="presence_icon_circle_color_padding">1.5dp</dimen>
+    <dimen name="presence_icon_gray_color_padding">4dp</dimen>
+
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
+
+    <dimen name="presence_select_status_dialog_width">@dimen/match_parent</dimen>
+    <dimen name="presence_select_status_dialog_min_height">370dp</dimen>
+
+    <dimen name="presence_icon_border_size">1dp</dimen>
+
+</resources>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/delete_contact"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:contentDescription="@string/content_description_delete"
+            android:padding="15dp"
+            android:tint="@color/neth_delete_button"
+            android:src="@drawable/ic_delete" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" />
+
+        <ImageView
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:contentDescription="@string/content_description_cancel_button"
+            android:padding="15dp"
+            android:tint="@color/neth_delete_button"
+            android:src="@drawable/ic_cancel" />
+
+        <ImageView
+            android:id="@+id/ok"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:contentDescription="@string/content_description_valid"
+            android:padding="18dp"
+            android:tint="@color/call_button_icon"
+            android:src="@drawable/ic_done" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/controlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
+                android:paddingRight="10dp">
+
+                <RelativeLayout
+                    android:id="@+id/avatar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <include layout="@layout/contact_avatar_100" />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/NethCTIEditContactControlLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/contact_last_name"/>
+
+                <EditText
+                    android:id="@+id/contactLastName"
+                    style="@style/NethCTIEditContactControl"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:contentDescription="@string/content_description_contact_last_name"
+                    android:gravity="left"
+                    android:inputType="textPersonName|textCapWords"
+                    android:paddingRight="5dp"
+                    android:hint="@string/contact_last_name"
+                    android:textCursorDrawable="@null" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/NethCTIEditContactControlLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/contact_first_name" />
+
+                <EditText
+                    android:id="@+id/contactFirstName"
+                    style="@style/NethCTIEditContactControl"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:contentDescription="@string/content_description_contact_first_name"
+                    android:gravity="left"
+                    android:hint="@string/contact_first_name"
+                    android:inputType="textPersonName|textCapWords"
+                    android:paddingRight="5dp"
+                    android:textCursorDrawable="@null" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/NethCTIEditContactControlLabel"
+                    android:id="@+id/contactOrganizationTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/contact_organization"/>
+
+                <EditText
+                    android:id="@+id/contactOrganization"
+                    style="@style/NethCTIEditContactControl"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:contentDescription="@string/content_description_contact_organization"
+                    android:gravity="left"
+                    android:hint="@string/contact_organization"
+                    android:inputType="textPersonName|textCapWords"
+                    android:paddingRight="5dp"
+                    android:textCursorDrawable="@null" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sip_addresses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/NethCTIEditContactControlLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/sip_address"/>
+
+                    <ImageView
+                        android:id="@+id/add_address_field"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/round_accent_button_background"
+                        android:contentDescription="@string/content_description_add"
+                        android:src="@drawable/ic_add"
+                        android:padding="8dp"
+                        android:tint="@color/colorAccent"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/controls_sip_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/phone_numbers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/NethCTIEditContactControlLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/phone_number"/>
+
+                    <ImageView
+                        android:id="@+id/add_number_field"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/round_accent_button_background"
+                        android:contentDescription="@string/content_description_add"
+                        android:src="@drawable/ic_add"
+                        android:padding="8dp"
+                        android:tint="@color/colorAccent"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/controls_numbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

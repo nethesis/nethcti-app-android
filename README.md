@@ -1,93 +1,104 @@
-# NethCTI 3 Android
+[![pipeline status](https://gitlab.linphone.org/BC/public/linphone-sdk/badges/master/pipeline.svg)](https://gitlab.linphone.org/BC/public/linphone-android/commits/master)
 
+Linphone is a free VoIP and video softphone based on the SIP protocol.
 
+# What's new
 
-## Getting started
+Now the default way of building linphone-android is to download the AAR SDK in our maven repository.
+Compared to previous versions, this project no longer uses submodules developper has to build in order to get a working app.
+However, if you wish to use a locally compiled SDK see below how to proceed.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+We offer different flavors for the SDK in our maven repository: org.linphone.no-video (a build without video) and org.linphone.legacy (old java wrapper if you didn't migrate your app code to the new one yet).
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+The repository structure has also been cleaned and updated, and changing the package name can now be done in a single step.
+This allows developpers to keep a stable version as well as a developpment one on the same device easily.
 
-## Add your files
+# Building the app
 
-- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+If you have Android Studio, simply open the project, wait for the gradle synchronization and then build/install the app.
+It will download the linphone library from our Maven repository as an AAR file so you don't have to build anything yourself.
 
+If you don't have Android Studio, you can build and install the app using gradle:
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/nethcti-3/nethcti-3-android.git
-git branch -M main
-git push -uf origin main
+./gradlew assembleDebug
+```
+will compile the APK file (assembleRelease to instead if you want to build a release package), and then
+```
+./gradlew installDebug
+```
+to install the generated APK in the previous step (use installRelease instead if you built a release package).
+
+APK files are stored within ```./app/build/outputs/apk/debug/``` and ```./app/build/outputs/apk/release/``` directories.
+
+## Building a local SDK
+
+1. Clone the linphone-sdk repository from out gitlab:
+```
+git clone https://gitlab.linphone.org/BC/public/linphone-sdk.git --recursive
 ```
 
-## Integrate with your tools
+2. Follow the instructions in the linphone-sdk/README file to build the SDK.
 
-- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://gitlab.com/nethcti-3/nethcti-3-android/-/settings/integrations)
+3. Edit in the linphone-sdk-android folder of this project the symbolic link (debug and/or release) to the generated AAR.
+We recommend to at least create the link for the release AAR that can be used for debug APK flavor because it is smaller and will reduce the time required to install the APK.
+```
+ln -s <path to linphone-sdk>/linphone-sdk/build/linphone-sdk/bin/outputs/aar/linphone-sdk-android-release.aar linphone-sdk-android/linphone-sdk-android-release.aar
+ln -s <path to linphone-sdk>/linphone-sdk/build/linphone-sdk/bin/outputs/aar/linphone-sdk-android-debug.aar linphone-sdk-android/linphone-sdk-android-debug.aar
+```
 
-## Collaborate with your team
+4. Rebuild the app in Android Studio.
 
-- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## Native debugging
 
-## Test and Deploy
+1. Install LLDB from SDK Tools in Android-studio.
 
-Use the built-in continuous integration in GitLab.
+2. In Android-studio go to Run->Edit Configurations->Debugger.
 
-- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://gitlab.com/-/experiment/new_project_readme_content:32c55acd517d879bcc745243414252f9?https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+3. Select 'Dual' or 'Native' and add the path to linphone-sdk libraries.
 
-***
+4. Open native file and put your breakpoint on it.
 
-# Editing this README
+5. Make sure you are using the debug AAR in the app/build.gradle script and not the release one (to have faster builds by default the release AAR is used even for debug APK flavor).
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com) for this template.
+6. Debug app.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## Create an APK with a different package name
 
-## Name
-Choose a self-explaining name for your project.
+Before the 4.1 release, there were a lot of files to edit to change the package name.
+Now, simply edit the app/build.gradle file and change the value returned by method ```getPackageName()```
+The next build will automatically use this value everywhere thanks to ```manifestPlaceholders``` feature of gradle and Android.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+You may have already noticed that the app installed by Android Studio has ```org.linphone.debug``` package name.
+If you build the app as release, the package name will be ```org.linphone```. 
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## Firebase push notifications
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Now that Google Cloud Messaging has been deprecated and will be completely removed on April 11th 2019, the only official way of using push notifications is through Firebase.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+However to make Firebase push notifications work, the project needs to have a file named app/google-services.json that contains some confidential informations, so you won't find it (it has been added to the .gitignore file).
+This means that if you compile this project, you won't have push notification feature working in the app!
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+To enable them, just add your own ```google-services.json``` in the app folder.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## Translations
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+We use transifex so the community can translate the strings of the app in their own language.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+Note for developpers: here's how to push/pull string resources to/from transifex:
+```
+tx pull -af
+```
+to update local translations with latest transifex changes
+```
+tx push -s -f --no-interactive
+```
+to push new strings to transifex so they can be translated.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+# CONTRIBUTIONS
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+In order to submit a patch for inclusion in linphone's source code:
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+1.    First make sure your patch applies to latest git sources before submitting: patches made to old versions can't and won't be merged.
+2.    Fill out and send us an email with the link of pullrequest and the [Contributor Agreement](http://www.belledonne-communications.com/downloads/Belledonne_communications_CA.pdf) for your patch to be included in the git tree.
 
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
-
+The goal of this agreement to grant us peaceful exercise of our rights on the linphone source code, while not losing your rights on your contribution.

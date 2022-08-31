@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/colorPrimary">
+
+<fragment
+    android:id="@+id/status"
+    android:name="org.linphone.fragments.StatusFragment"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    tools:layout="@layout/status" />
+
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/side_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/status">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            android:visibility="gone"
+            android:id="@+id/topbar"
+            layout="@layout/assistant_topbar" />
+
+        <LinearLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/backgroundColor"
+            android:orientation="horizontal" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- Side Menu -->
+    <RelativeLayout
+        android:id="@+id/side_menu_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:id="@+id/side_menu_quit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:padding="8dp"
+            android:gravity="bottom"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/quit_button"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_quit" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/quit"
+                style="@style/NethCTIDrawerText"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toEndOf="@id/quit_button"
+                android:gravity="center_vertical"
+                android:text="@string/quit" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/side_menu_quit"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/item_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="1dp"
+                android:footerDividersEnabled="true" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+</RelativeLayout>

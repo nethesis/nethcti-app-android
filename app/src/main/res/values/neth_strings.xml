@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Accessibility strings -->
+    <string name="neth_account_status_led">Account status</string>
+    <string name="neth_layout_divider">Divider</string>
+
+    <!-- Nethesis customizations -->
+    <string name="neth_about_address">Nethesis Srl, Strada degli Olmi, 12</string>
+    <string name="neth_about_address_city">61122 - Pesaro (PU)</string>
+    <string name="neth_app_name" translatable="false">Nethesis</string>
+    <string name="neth_about_link" translatable="false">https://nethesis.it</string>
+    <string name="neth_about_fax" translatable="false">Fax: +39 0721 268147</string>
+    <string name="neth_about_tel" translatable="false">Tel: +39 0721 1791157</string>
+    <string name="neth_privacy_policy_link" translatable="false">https://blog.nethesis.it/terms-and-privacy-nethcti-app/</string>
+
+    <string name="neth_login_1_call_failed">Can not reach server. Check domain and network connection.</string>
+    <string name="neth_login_2_call_failed">Fail get me api call.</string>
+    <string name="neth_login_wrong_credentials">Login failed, retry later or check your credentials.</string>
+    <string name="neth_login_missing_authentication_header">No user information header provided, check data or contact an administrator.</string>
+    <string name="neth_login_missing_crypt_algorithm">No crypto algorithm provided, contact an administrator.</string>
+    <string name="neth_login_missing_crypt_key">No password provided, contact an administrator or check it.</string>
+    <string name="neth_login_missing_crypt_encoding">Can\'t crypt data, contact an administrator.</string>
+    <string name="neth_login_qrcode_split_error">Error while reading the QRCODE.</string>
+    <string name="neth_login_missing_neth_user">No user information provided, contact an administrator.</string>
+    <string name="neth_login_missing_neth_extension">No extensions for this user, contact an administrator.</string>
+    <string name="neth_test_domain" translatable="false">nethctiapp.nethserver.net</string>
+    <string name="neth_session_expired">Session expired. To see contacts you need to logout and login again.</string>
+    <string name="neth_permissions_expired">Permissions not found.</string>
+    <string name="neth_no_connection">API call failed. Please check connection.</string>
+    <string name="neth_something_wrong">Something went wrong, please try again later.</string>
+    <string name="neth_no_contacts">No contacts.</string>
+    <string name="neth_no_status">No status.</string>
+    <string name="neth_no_groups">No groups.</string>
+
+    <!--Custom-->
+    <string name="views_spin">select a view</string>
+    <string-array name="views">
+        <item>all</item>
+        <item>company</item>
+        <item>person</item>
+    </string-array>
+    <string name="work_tel">Work Telephone</string>
+    <string name="home_tel">Home Telephone</string>
+    <string name="cell">Mobile phone</string>
+    <string name="fax">Fax</string>
+    <string name="e_mail">Email</string>
+    <string name="task">Job</string>
+    <string name="notes">Note</string>
+    <string name="internal">Extension</string>
+    <string name="spinnerTextView">Select a filter</string>
+    <string name="owner">Created by</string>
+    <string name="workAddress">Work Address</string>
+    <string name="workCity">Work City</string>
+    <string name="workState">Work State</string>
+    <string name="workCountry">Work Country</string>
+    <string name="homeAddress">Home Address</string>
+    <string name="homeCity">Home City</string>
+    <string name="homeState">Home State</string>
+    <string name="homeCountry">Home Country</string>
+    <string name="source">Source</string>
+    <string name="speedDial">Speed Dial</string>
+    <string name="type">Type</string>
+    <string name="url" translatable="false">Url</string>
+
+    <!-- Sezione Presence -->
+    <string name="presence">Presence</string>
+    <string name="presence_groups">Gruppi (%s)</string>
+    <string name="presence_group">Gruppi</string>
+    <string name="presence_end">Fine</string>
+    <string name="presence_favorites">Preferiti</string>
+    <string name="presence_set_status">Imposta stato</string>
+
+    <string name="presence_satus_online">Disponibile</string>
+    <string name="presence_satus_do_not_disturb">Non disturbare</string>
+    <string name="presence_satus_voicemail">Casella vocale</string>
+    <string name="presence_satus_cellphone">Cellulare</string>
+    <string name="presence_satus_call_forward">Inoltro</string>
+    <string name="presence_satus_busy">Occupato</string>
+    <string name="presence_satus_incoming">In entrata</string>
+    <string name="presence_satus_offline">Non disponibile</string>
+    <string name="presence_status_disabled">Disconnesso</string>
+
+    <string name="presence_action_call">Chiama</string>
+    <string name="presence_action_hangup">Chiudi</string>
+    <string name="presence_action_record">Registra</string>
+    <string name="presence_action_intrude">Intromettiti</string>
+    <string name="presence_action_book">Prenota</string>
+    <string name="presence_action_pickup">Pickup</string>
+    <string name="presence_action_spy">Spia</string>
+
+    <string name="presence_alert_ok">Ok</string>
+    <string name="presence_alert_cancel">Annulla</string>
+
+    <string name="presence_alert_title">Inserisci</string>
+    <string name="presence_alert_message">Numero di telefono</string>
+
+    <string name="presence_alert_empty_phone_title">Attenzione</string>
+    <string name="presence_alert_empty_phone_message">Devi inserire il numero telefonico da utilizzare per inoltrare la chiamata</string>
+
+    <string name="presence_satus_nd">N/D</string>
+    <string name="presence_satus_nd_lower">N/D</string>
+
+
+    <string name="presence_attention_title">Attenzione</string>
+    <string name="presence_action_impossible">Impossibile eseguire %s</string>
+    <!--
+    <string name="presence">Presence</string>
+    <string name="presence_groups">Groups (%s)</string>
+    <string name="presence_group">Groups</string>
+    <string name="presence_favorites">Favorites</string>
+    <string name="presence_set_status">Set status</string>
+
+    <string name="presence_satus_online">Online</string>
+    <string name="presence_satus_do_not_disturb">Do not disturb</string>
+    <string name="presence_satus_voicemail">Voicemail</string>
+    <string name="presence_satus_cellphone">Cellphone</string>
+    <string name="presence_satus_call_forward">Call forward</string>
+    <string name="presence_satus_busy">Busy</string>
+    <string name="presence_satus_incoming">Incoming</string>
+    <string name="presence_satus_offline">Offline</string>
+
+    <string name="presence_action_call">Call</string>
+    <string name="presence_action_close">Close</string>
+    <string name="presence_action_record">Record</string>
+    <string name="presence_action_intrude">Intrude</string>
+    <string name="presence_action_book">Book</string>
+    <string name="presence_action_pickup">Pickup</string>
+    <string name="presence_action_spy">Spy</string>
+
+    <string name="presence_alert_ok">Ok</string>
+    <string name="presence_alert_cancel">Cancel</string>
+
+    <string name="presence_alert_title">Insert</string>
+    <string name="presence_alert_message">Phone number</string>
+
+    <string name="presence_alert_empty_phone_title">Attention</string>
+    <string name="presence_alert_empty_phone_message">You must enter the telephone number to be used to forward the call</string>
+    -->
+
+</resources>

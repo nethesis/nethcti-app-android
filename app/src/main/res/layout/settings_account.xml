@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:linphone="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="vertical">
+
+        <org.linphone.settings.widget.TextSetting
+            android:id="@+id/pref_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:subtitle="@string/pref_help_username"
+            linphone:hint="@string/pref_username"
+            linphone:title="@string/pref_username"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.TextSetting
+            android:id="@+id/pref_auth_userid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:subtitle="@string/pref_help_auth_userid"
+            linphone:hint="@string/pref_auth_userid"
+            linphone:title="@string/pref_auth_userid"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.TextSetting
+            android:id="@+id/pref_domain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:subtitle="@string/pref_help_domain"
+            linphone:hint="@string/pref_domain"
+            linphone:title="@string/pref_domain"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.TextSetting
+            android:id="@+id/pref_display_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:subtitle="@string/pref_help_display_name"
+            linphone:hint="@string/pref_display_name"
+            linphone:title="@string/pref_display_name" />
+
+        <TextView
+            style="@style/NethCTIContactFieldTitle"
+            android:text="@string/pref_manage_title"
+            android:paddingTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <org.linphone.settings.widget.SwitchSetting
+            android:id="@+id/pref_disable_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_disable_account" />
+
+        <org.linphone.settings.widget.SwitchSetting
+            android:id="@+id/pref_default_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_default_account"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.BasicSetting
+            android:id="@+id/pref_change_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_change_password"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.BasicSetting
+            android:id="@+id/pref_delete_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_delete_account"
+            android:visibility="gone"/>
+
+        <TextView
+            style="@style/NethCTIContactFieldTitle"
+            android:text="@string/pref_advanced_title"
+            android:paddingTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <org.linphone.settings.widget.ListSetting
+            android:id="@+id/pref_transport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_transport"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.TextSetting
+            android:id="@+id/pref_proxy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:hint="@string/pref_proxy"
+            linphone:title="@string/pref_proxy"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.SwitchSetting
+            android:id="@+id/pref_enable_outbound_proxy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:subtitle="@string/pref_help_outbound_proxy"
+            linphone:title="@string/pref_enable_outbound_proxy"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.TextSetting
+            android:id="@+id/pref_stun_server"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:hint="@string/pref_stun_server"
+            linphone:title="@string/pref_stun_server"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.SwitchSetting
+            android:id="@+id/pref_ice_enable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_ice_enable"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.TextSetting
+            android:id="@+id/pref_expire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:hint="@string/pref_expire_title"
+            linphone:title="@string/pref_expire_title"/>
+
+        <org.linphone.settings.widget.TextSetting
+            android:id="@+id/pref_prefix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:hint="@string/pref_prefix"
+            linphone:title="@string/pref_prefix"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.SwitchSetting
+            android:id="@+id/pref_avpf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_avpf"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.TextSetting
+            android:id="@+id/pref_avpf_rr_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:hint="@string/pref_avpf_rr_interval"
+            linphone:title="@string/pref_avpf_rr_interval"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.SwitchSetting
+            android:id="@+id/pref_escape_plus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_escape_plus"
+            android:visibility="gone"/>
+
+        <org.linphone.settings.widget.BasicSetting
+            android:id="@+id/pref_link_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_link_account"
+            android:visibility="gone"
+            />
+
+        <org.linphone.settings.widget.SwitchSetting
+            android:id="@+id/pref_push_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            linphone:title="@string/pref_proxy_push_notif" />
+
+    </LinearLayout>
+
+</ScrollView>

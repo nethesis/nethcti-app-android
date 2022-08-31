@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rlv_content_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/img_background_border_presence_status"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_presence_status_border_nd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/txt_user_initials"
+            android:layout_width="27dp"
+            android:layout_height="28dp"
+            android:layout_alignStart="@id/img_background_border_presence_status"
+            android:layout_alignEnd="@id/img_background_border_presence_status"
+            android:layout_centerInParent="true"
+            android:textColor="@color/buttonTextColor"
+            android:gravity="center"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/img_background_border_presence_status"
+            app:layout_constraintEnd_toEndOf="@+id/img_background_border_presence_status"
+            app:layout_constraintStart_toStartOf="@+id/img_background_border_presence_status"
+            app:layout_constraintTop_toTopOf="@+id/img_background_border_presence_status" />
+
+        <ImageView
+            android:id="@+id/img_small_status_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignEnd="@id/img_background_border_presence_status"
+            android:layout_alignBottom="@id/img_background_border_presence_status"
+            android:layout_marginStart="-11dp"
+            android:layout_marginTop="-11dp"
+            android:src="@drawable/ic_presence_status_nd"
+            app:layout_constraintStart_toEndOf="@+id/txt_user_initials"
+            app:layout_constraintTop_toBottomOf="@+id/txt_user_initials" />
+
+        <TextView
+            android:id="@+id/txt_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:lines="1"
+            android:text="Username"
+            android:textSize="19sp"
+            android:textColor="@color/secondaryTextColor"
+            app:layout_constraintBottom_toTopOf="@+id/txt_status"
+            app:layout_constraintEnd_toStartOf="@+id/img_menu"
+            app:layout_constraintStart_toEndOf="@+id/img_small_status_icon"
+            app:layout_constraintTop_toTopOf="@+id/img_background_border_presence_status" />
+
+        <TextView
+            android:id="@+id/txt_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/ic_square_status_nd"
+            android:padding="3dp"
+            android:text="@string/presence_satus_nd"
+            android:textAllCaps="true"
+            android:textColor="@color/white_color"
+            android:textSize="@dimen/listItemSecondaryTextSize"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_small_status_icon"
+            app:layout_constraintTop_toBottomOf="@+id/txt_username" />
+
+        <ImageView
+            android:id="@+id/img_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:src="@drawable/ic_presence_button_options"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/neth_button_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
