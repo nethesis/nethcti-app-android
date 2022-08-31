@@ -40,7 +40,7 @@ public class DashboardFragment extends Fragment {
         setButtonListener((MaterialButton) view.findViewById(R.id.dialer_btn));
         setButtonListener((MaterialButton) view.findViewById(R.id.history_btn));
         setButtonListener((MaterialButton) view.findViewById(R.id.contacts_btn));
-        setButtonListener((MaterialButton) view.findViewById(R.id.setting_btn));
+        setButtonListener((MaterialButton) view.findViewById(R.id.presence_btn));
 
         return view;
     }
@@ -160,25 +160,21 @@ public class DashboardFragment extends Fragment {
 
     @SuppressLint("NonConstantResourceId")
     private void setButtonListener(final MaterialButton button) {
-
         button.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        switch (button.getId()) {
-                            case R.id.dialer_btn:
-                                LinphoneActivity.instance().displayDialer();
-                                break;
-                            case R.id.history_btn:
-                                LinphoneActivity.instance().displayHistory();
-                                break;
-                            case R.id.contacts_btn:
-                                LinphoneActivity.instance().displayContacts(false);
-                                break;
-                            case R.id.setting_btn:
-                                LinphoneActivity.instance().displaySettings();
-                                break;
-                        }
+                view -> {
+                    switch (button.getId()) {
+                        case R.id.dialer_btn:
+                            LinphoneActivity.instance().displayDialer();
+                            break;
+                        case R.id.history_btn:
+                            LinphoneActivity.instance().displayHistory();
+                            break;
+                        case R.id.contacts_btn:
+                            LinphoneActivity.instance().displayContacts(false);
+                            break;
+                        case R.id.presence_btn:
+                            LinphoneActivity.instance().displayUsersByPresence();
+                            break;
                     }
                 });
     }

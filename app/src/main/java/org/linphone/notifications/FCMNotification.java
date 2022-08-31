@@ -1,5 +1,7 @@
 package org.linphone.notifications;
 
+import static org.linphone.BuildConfig.DEBUG;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -91,6 +93,7 @@ public class FCMNotification {
                     HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
                     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                     client.addInterceptor(loggingInterceptor);
+                    if (notificatoreUrl == null || notificatoreUrl.isEmpty()) return;
                     Retrofit retrofit =
                             new Retrofit.Builder()
                                     .baseUrl(notificatoreUrl)

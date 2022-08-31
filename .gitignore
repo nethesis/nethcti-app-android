@@ -26,4 +26,5 @@ keystore.properties
 app/src/main/res/xml/contacts.xml
 app/NethCTIKeyStore
 app/src/main/res/values/notificatore_strings.xml
-keystore.properties
+app/src/debug/res/values/credentials.xml
+app/google-services.json

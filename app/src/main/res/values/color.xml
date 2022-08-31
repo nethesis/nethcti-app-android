@@ -18,6 +18,7 @@
     <color name="primaryTextColorLight">#808080</color>
     <color name="primaryTextColorInverse">#FFF</color>
     <color name="secondaryTextColor">#808080</color>
+    <color name="buttonTextColor">#7F7F7F</color>
 
     <color name="sideMenuDivider">#c7c7c7</color>
 
@@ -34,6 +35,7 @@
 
     <color name="neth_white_color">#fafafa</color>
     <color name="neth_light_grey_color">#e6e6e6</color>
+    <color name="neth_light_grey_color_2">#6E6E6E</color>
     <color name="neth_grey_color">#494949</color>
     <color name="neth_grey_text_color">#606060</color>
     <color name="neth_dark_grey">#212121</color>
@@ -59,4 +61,47 @@
     <color name="contact_disabled_color">#99ffffff</color>
 
     <color name="subtitleTextColor">#c7c7c7</color>
+
+    <color name="icon_ripple_dark_selected">#00a2dd</color>
+    <color name="icon_ripple_light_selected">#e6f5fc</color>
+
+    <color name="divider">#ECECEC</color>
+
+    <!-- presence -->
+    <color name="precense_status_online">#5abb46</color>
+    <color name="precense_status_do_not_disturb">#1B1C1D</color>
+    <color name="precense_status_voicemail">#f37d32</color>
+    <color name="precense_status_cellphone">#ad62ce</color>
+    <color name="precense_status_call_forward">#fcc33c</color>
+    <color name="precense_status_call_busy">#de4539</color>
+    <color name="precense_status_call_incoming">#0486C1</color>
+    <color name="precense_status_call_offline">#767676</color>
+    <color name="precense_status_call_nd">#767676</color>
+    <color name="precense_status_call_disabled">#767676</color>
+
+    <color name="precense_status_selected_online">#489538</color>
+    <color name="precense_status_selected_do_not_disturb">#151617</color>
+    <color name="precense_status_selected_voicemail">#c26428</color>
+    <color name="precense_status_selected_cellphone">#8a4ea4</color>
+    <color name="precense_status_selected_call_forward">#c99c30</color>
+    <color name="precense_status_selected_call_busy">#b1372d</color>
+    <color name="precense_status_selected_call_incoming">#036b9a</color>
+    <color name="precense_status_selected_call_offline">#5e5e5e</color>
+    <color name="precense_status_selected_call_nd">#5e5e5e</color>
+    <color name="precense_status_selected_call_disabled">#5e5e5e</color>
+
+    <color name="presence_status_background">#E8E8E8</color>
+    <color name="presence_status_border_white">#FFFFFF</color>
+
+    <color name="presence_divider">#D8D8D8</color>
+
+    <color name="presence_unselected_item">@color/primaryTextColor</color>
+    <color name="presence_selected_item">#17ABE1</color>
+
+    <color name="ms_black_85_opacity">#D9000000</color>
+    <color name="ms_black_55_opacity">#8C000000</color>
+    <color name="ms_black_25_opacity">#4C000000</color>
+
+    <color name="colorTransparent">#10FFFFFF</color>
+
 </resources>

@@ -10,41 +10,33 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!-- Needed to allow Linphone to install on tablets, since android.permission.CALL_PHONE implies android.hardware.telephony is required -->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- Needed to allow Linphone to install on tablets, since android.permission.CALL_PHONE implies android.hardware.telephony is required -->
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- Needed to allow Linphone to install on tablets, since android.permission.CAMERA implies android.hardware.camera and android.hardware.camera.autofocus are required -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- Needed to allow Linphone to install on tablets, since android.permission.CAMERA implies android.hardware.camera and android.hardware.camera.autofocus are required -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- Needed to store received images if the user wants to -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- Needed to use our own Contact editor -->
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <!-- Needed to route the audio to the bluetooth headset if available -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Needed to store received images if the user wants to -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Needed to use our own Contact editor -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" /> <!-- Needed to route the audio to the bluetooth headset if available -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <!-- Needed to pre fill the wizard email field (only if enabled in custom settings) -->
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" /> <!-- Needed to pre fill the wizard email field (only if enabled in custom settings) -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-    <!-- Needed for in-app purchase -->
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" /> <!-- Needed for in-app purchase -->
     <!-- <uses-permission android:name="com.android.vending.BILLING"/> -->
     <!-- Needed for overlay widget and floating notifications -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!-- Needed for kill application yourself -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- Needed for kill application yourself -->
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
@@ -58,22 +50,31 @@
     <application
         android:name=".NethCTIApplication"
         android:allowBackup="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/nethcti_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/nethcti_launcher_round"
         android:requestLegacyExternalStorage="true"
-        android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="true">
-
+        android:roundIcon="@mipmap/nethcti_launcher_round"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".presence.PresenceStatusActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".presence.PresenceGroupsDialogActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/NethCTIStyle" />
         <activity
             android:name=".LinphoneLauncherActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:noHistory="true"
-            android:theme="@style/NethCTIStyleLaunchActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/NethCTIStyleLaunchActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -83,18 +84,22 @@
         </activity>
         <activity
             android:name=".LinphoneActivity"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/NethCTIStyle">
+            android:theme="@style/NethCTIStyle"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.DIAL" />
                 <action android:name="android.intent.action.CALL" />
                 <action android:name="android.intent.action.CALL_PRIVILEGED" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="tel" />
                 <data android:scheme="sip" />
@@ -109,8 +114,10 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="${linphone_address_mime_type}" />
             </intent-filter>
             <intent-filter>
@@ -135,23 +142,26 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="org.linphone.intent.action.CallLaunched" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".call.CallIncomingActivity"
+            android:exported="true"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:showWhenLocked="true"
-            android:turnScreenOn="true"
             android:screenOrientation="portrait"
-            android:theme="@style/NethCTIStyle">
+            android:showWhenLocked="true"
+            android:theme="@style/NethCTIStyle"
+            android:turnScreenOn="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name=".call.CallOutgoingActivity"
+            android:exported="true"
             android:launchMode="singleTop"
             android:noHistory="true"
             android:screenOrientation="portrait"
@@ -162,12 +172,13 @@
         </activity>
         <activity
             android:name=".call.CallActivity"
+            android:exported="true"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:showWhenLocked="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/NethCTIStyle">
+            android:showWhenLocked="true"
+            android:theme="@style/NethCTIStyle"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -182,16 +193,18 @@
         </activity>
         <activity
             android:name=".assistant.AssistantActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
+            android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/NethCTIStyle">
+            android:screenOrientation="portrait"
+            android:theme="@style/NethCTIStyle"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name=".assistant.RemoteProvisioningLoginActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/NethCTIStyle">
             <intent-filter>
@@ -200,6 +213,7 @@
         </activity>
         <activity
             android:name=".assistant.RemoteProvisioningActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/NethCTIStyle">
             <intent-filter>
@@ -213,9 +227,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <service android:name=".notifications.RegistrationIntentService" />
         <service
             android:name=".LinphoneService"
+            android:exported="true"
             android:label="@string/service_name" />
         <service
             android:name=".sync.SyncService"
@@ -231,7 +247,9 @@
                 android:name="android.provider.CONTACTS_STRUCTURE"
                 android:resource="@xml/contacts" />
         </service>
-        <service android:name=".sync.AuthenticationService">
+        <service
+            android:name=".sync.AuthenticationService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -243,7 +261,7 @@
 
         <receiver
             android:name=".receivers.BluetoothManager"
-            android:enabled="false"/>
+            android:enabled="false" />
         <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -257,21 +275,20 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".receivers.HookReceiver">
             <intent-filter>
                 <action android:name="com.base.module.phone.HOOKEVENT" />
             </intent-filter>
         </receiver>
-
-        <!--<receiver
+        <!--
+<receiver
             android:name=".receivers.OutgoingCallReceiver"
             android:permission="android.permission.PROCESS_OUTGOING_CALLS">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
-        </receiver>-->
-
+        </receiver>
+        -->
         <receiver
             android:name=".receivers.AccountEnableReceiver"
             android:permission="android.permission.USE_SIP">
@@ -302,6 +319,6 @@
             android:name=".notifications.NotificationBroadcastReceiver"
             android:enabled="true"
             android:exported="false" />
-
     </application>
+
 </manifest>

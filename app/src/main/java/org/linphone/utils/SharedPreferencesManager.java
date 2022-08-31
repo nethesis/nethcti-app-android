@@ -78,4 +78,12 @@ public class SharedPreferencesManager {
         SharedPreferences pref = getSharedPreferences(context);
         pref.edit().remove(MAIN_EXTENSION).apply();
     }
+
+    /*
+    Devo mettere una voce nella lista
+     */
+    public static void setPresencePref() {
+
+    }
+
 }

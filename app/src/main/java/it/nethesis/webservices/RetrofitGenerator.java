@@ -79,7 +79,11 @@ public class RetrofitGenerator {
                             .baseUrl(endpoint)
                             .addConverterFactory(
                                     GsonConverterFactory.create(
-                                            new GsonBuilder().serializeNulls().create()))
+                                            new GsonBuilder()
+                                                    //.registerTypeAdapter(NethUser.class, new NethUserSerializer())
+                                                    .serializeNulls().create()
+                                    )
+                            )
                             .client(httpClient.build())
                             .build();
         }

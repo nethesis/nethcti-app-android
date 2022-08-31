@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/transparent_color"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/lnr_status_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_color">
+
+            <ImageView
+                android:id="@+id/img_status"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:background="@color/transparent_color"
+                android:foregroundGravity="center" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:background="@color/transparent_color"
+            android:gravity="center|start"
+            android:text=""
+            android:textSize="@dimen/listItemTitleTextSize" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_below="@id/lnr_status_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:id="@+id/img_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="@color/divider"/>
+
+</RelativeLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <size android:width="60dp"
+                android:height="60dp" />
+            <stroke android:width="@dimen/presence_icon_border_size" android:color="@color/precense_status_call_disabled"/>
+        </shape>
+    </item>
+
+    <item android:top="@dimen/presence_icon_circle_color_padding"
+        android:left="@dimen/presence_icon_circle_color_padding"
+        android:right="@dimen/presence_icon_circle_color_padding"
+        android:bottom="@dimen/presence_icon_circle_color_padding"
+        android:drawable="@drawable/ic_presence_status_transparent"/>
+
+    <item android:top="@dimen/presence_icon_gray_color_padding"
+        android:left="@dimen/presence_icon_gray_color_padding"
+        android:right="@dimen/presence_icon_gray_color_padding"
+        android:bottom="@dimen/presence_icon_gray_color_padding"
+        android:drawable="@drawable/ic_presence_status_background"/>
+</layer-list>

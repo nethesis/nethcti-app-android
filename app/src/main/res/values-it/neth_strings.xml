@@ -19,7 +19,12 @@
     <string name="neth_login_missing_neth_user">Nessun utente trovato, contattare un amministratore.</string>
     <string name="neth_login_wrong_credentials">Login fallito, controllare le credenziali o riprovare più tardi.</string>
     <string name="neth_session_expired">Sessione scaduta. Per poter vedere la lista contatti è necessario fare logout e login di nuovo.</string>
+    <string name="neth_permissions_expired">Nessun permesso individuato.</string>
     <string name="neth_no_connection">Chiamata API fallita. Prova a controllare la connessione.</string>
+    <string name="neth_something_wrong">Qualcosa è andato storto, riprovare più tardi.</string>
+    <string name="neth_no_contacts">Nessun utente.</string>
+    <string name="neth_no_status">Nessuno status.</string>
+    <string name="neth_no_groups">Nessuno gruppo.</string>
 
     <!--Custom-->
     <string name="views_spin">seleziona una view</string>
@@ -49,4 +54,43 @@
     <string name="source">Sorgente</string>
     <string name="speedDial">Chiamata Rapida</string>
     <string name="type">Tipo</string>
+
+    <!-- Sezione Presence -->
+    <string name="presence">Presence</string>
+    <string name="presence_groups">Gruppi (%s)</string>
+    <string name="presence_group">Gruppi</string>
+    <string name="presence_end">Fine</string>
+    <string name="presence_favorites">Preferiti</string>
+    <string name="presence_set_status">Imposta stato</string>
+
+    <string name="presence_satus_online">Disponibile</string>
+    <string name="presence_satus_do_not_disturb">Non disturbare</string>
+    <string name="presence_satus_voicemail">Casella vocale</string>
+    <string name="presence_satus_cellphone">Cellulare</string>
+    <string name="presence_satus_call_forward">Inoltro</string>
+    <string name="presence_satus_busy">Occupato</string>
+    <string name="presence_satus_incoming">In entrata</string>
+    <string name="presence_satus_offline">Non disponibile</string>
+    <string name="presence_status_disabled">Disconnesso</string>
+
+    <string name="presence_action_call">Chiama</string>
+    <string name="presence_action_hangup">Chiudi</string>
+    <string name="presence_action_record">Registra</string>
+    <string name="presence_action_intrude">Intromettiti</string>
+    <string name="presence_action_book">Prenota</string>
+    <string name="presence_action_pickup">Pickup</string>
+    <string name="presence_action_spy">Spia</string>
+
+    <string name="presence_alert_ok">Ok</string>
+    <string name="presence_alert_cancel">Annulla</string>
+
+    <string name="presence_alert_title">Inserisci</string>
+    <string name="presence_alert_message">Numero di telefono</string>
+
+    <string name="presence_alert_empty_phone_title">Attenzione</string>
+    <string name="presence_alert_empty_phone_message">Devi inserire il numero telefonico da utilizzare per inoltrare la chiamata</string>
+
+    <string name="presence_attention_title">Attenzione</string>
+    <string name="presence_action_impossible">Impossibile eseguire %s</string>
+
 </resources>

@@ -15,4 +15,21 @@
     <dimen name="dashboardIconSize">64dp</dimen>
     <dimen name="dashboardCardPadding">6dp</dimen>
     <dimen name="historyDetailAvatarBottomMargin">8dp</dimen>
+
+    <!-- presence -->
+    <dimen name="headerStatusPresence">11sp</dimen>
+    <dimen name="listItemTitleTextSize">19sp</dimen>
+    <dimen name="listItemSecondaryTextSize">11sp</dimen>
+
+    <dimen name="presence_icon_circle_color_padding">1.5dp</dimen>
+    <dimen name="presence_icon_gray_color_padding">4dp</dimen>
+
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
+
+    <dimen name="presence_select_status_dialog_width">@dimen/match_parent</dimen>
+    <dimen name="presence_select_status_dialog_min_height">370dp</dimen>
+
+    <dimen name="presence_icon_border_size">1dp</dimen>
+
 </resources>

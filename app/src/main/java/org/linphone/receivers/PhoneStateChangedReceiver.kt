@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.telephony.TelephonyManager
-import android.util.Log
 import org.linphone.LinphoneManager
 import org.linphone.utils.AudioRouteMethod
 
