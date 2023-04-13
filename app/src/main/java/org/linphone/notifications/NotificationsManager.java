@@ -29,6 +29,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
+
 import java.util.HashMap;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
@@ -85,7 +87,7 @@ public class NotificationsManager {
 
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(
-                        mContext, SERVICE_NOTIF_ID, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        mContext, SERVICE_NOTIF_ID, notifIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
         mServiceNotification =
                 Compatibility.createNotification(
                         mContext,
@@ -190,7 +192,7 @@ public class NotificationsManager {
                         mContext,
                         notif.getNotificationId(),
                         notifIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification =
                 Compatibility.createMessageNotification(
@@ -243,7 +245,7 @@ public class NotificationsManager {
                         mContext,
                         notif.getNotificationId(),
                         notifIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification =
                 Compatibility.createMessageNotification(
@@ -259,7 +261,7 @@ public class NotificationsManager {
                         mContext,
                         MISSED_CALLS_NOTIF_ID,
                         missedCallNotifIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
         int missedCallCount =
                 LinphoneManager.getLcIfManagerNotDestroyedOrNull().getMissedCallsCount();
@@ -309,7 +311,7 @@ public class NotificationsManager {
 
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(
-                        mContext, 0, callNotifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        mContext, 0, callNotifIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
         Address address = call.getRemoteAddress();
         String addressAsString = address.asStringUriOnly();
@@ -416,7 +418,7 @@ public class NotificationsManager {
         notifIntent.putExtra("GoToInapp", true);
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(
-                        mContext, IN_APP_NOTIF_ID, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        mContext, IN_APP_NOTIF_ID, notifIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notif =
                 Compatibility.createSimpleNotification(

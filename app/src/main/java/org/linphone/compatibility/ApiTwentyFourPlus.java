@@ -36,6 +36,8 @@ import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
+
 import org.linphone.R;
 import org.linphone.notifications.Notifiable;
 import org.linphone.notifications.NotifiableMessage;
@@ -139,7 +141,7 @@ class ApiTwentyFourPlus {
                         context,
                         notif.getNotificationId(),
                         replyIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Action replyAction =
                 new Notification.Action.Builder(
@@ -164,7 +166,7 @@ class ApiTwentyFourPlus {
                         context,
                         notif.getNotificationId(),
                         markAsReadIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Action markAsReadAction =
                 new Notification.Action.Builder(
@@ -183,7 +185,7 @@ class ApiTwentyFourPlus {
 
         PendingIntent answerPendingIntent =
                 PendingIntent.getBroadcast(
-                        context, callId, answerIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        context, callId, answerIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Action answerAction =
                 new Notification.Action.Builder(
@@ -202,7 +204,7 @@ class ApiTwentyFourPlus {
 
         PendingIntent hangupPendingIntent =
                 PendingIntent.getBroadcast(
-                        context, callId, hangupIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        context, callId, hangupIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Action declineAction =
                 new Notification.Action.Builder(

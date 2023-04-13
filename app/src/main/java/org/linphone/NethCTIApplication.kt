@@ -9,10 +9,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.*
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import it.nethesis.models.NethUser
 import it.nethesis.utils.AppBackgroundWatcher
@@ -26,7 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NethCTIApplication : Application(), LifecycleObserver {
+class NethCTIApplication : Application(), LifecycleEventObserver {
 
     companion object {
 
@@ -118,8 +115,15 @@ class NethCTIApplication : Application(), LifecycleObserver {
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onMoveToForeground() {
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        when(event){
+            Lifecycle.Event.ON_START -> onMoveToForeground()
+            Lifecycle.Event.ON_STOP -> onMoveToBackground()
+            else -> {}
+        }
+    }
+
+    private fun onMoveToForeground() {
         // app moved to foreground
         backgroundWatcher.value = false
         killAppHandler.removeCallbacksAndMessages(null)
@@ -130,8 +134,7 @@ class NethCTIApplication : Application(), LifecycleObserver {
         Log.d("WEDO", "App in foreground.")
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onMoveToBackground() {
+    private fun onMoveToBackground() {
         // app moved to background
         Log.d("WEDO", "App in background.")
         backgroundWatcher.value = true

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.linphone"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -112,7 +112,8 @@
                 <data android:scheme="sip" />
                 <data android:scheme="imto" />
             </intent-filter>
-            <intent-filter>
+            <intent-filter android:scheme="http"
+                tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -262,7 +263,7 @@
         <receiver
             android:name=".receivers.BluetoothManager"
             android:enabled="false" />
-        <receiver android:name=".receivers.BootReceiver">
+        <receiver android:name=".receivers.BootReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -270,12 +271,12 @@
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.PhoneStateChangedReceiver">
+        <receiver android:name=".receivers.PhoneStateChangedReceiver" android:exported="true">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.HookReceiver">
+        <receiver android:name=".receivers.HookReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="com.base.module.phone.HOOKEVENT" />
             </intent-filter>
@@ -291,13 +292,13 @@
         -->
         <receiver
             android:name=".receivers.AccountEnableReceiver"
-            android:permission="android.permission.USE_SIP">
+            android:permission="android.permission.USE_SIP" android:exported="true">
             <intent-filter>
                 <action android:name="org.linphone.intent.ACCOUNTACTIVATE" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".firebase.FirebaseMessaging">
+        <service android:name=".firebase.FirebaseMessaging" android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
