@@ -1,7 +1,6 @@
 package org.linphone.dashboard;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -17,6 +17,7 @@ import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.contacts.ContactsManager;
+import org.linphone.contacts.ContactsUpdatedListener;
 import org.linphone.contacts.LinphoneContact;
 import org.linphone.core.Address;
 import org.linphone.core.Call;
@@ -29,7 +30,9 @@ import org.linphone.views.ContactAvatar;
 import java.util.Arrays;
 import java.util.List;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements ContactsUpdatedListener {
+
+    private View card1, card2;
     @Nullable
     @Override
     public View onCreateView(
@@ -42,16 +45,17 @@ public class DashboardFragment extends Fragment {
         setButtonListener((MaterialButton) view.findViewById(R.id.contacts_btn));
         setButtonListener((MaterialButton) view.findViewById(R.id.presence_btn));
 
+        card1 = view.findViewById(R.id.card1);
+        card2 = view.findViewById(R.id.card2);
+
+        ContactsManager.getInstance().addContactsListener(this);
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        View view = getView();
-        View card1 = view.findViewById(R.id.card1);
-        View card2 = view.findViewById(R.id.card2);
-        List<CallLog> calls = Arrays.asList(LinphoneManager.getLc().getCallLogs());
         /* Used to make Linphone logic of fragment transactions */
         if (LinphoneActivity.isInstanciated()) {
             LinphoneActivity.instance().setCurrentFragment(FragmentsAvailable.DASHBOARD);
@@ -59,6 +63,16 @@ public class DashboardFragment extends Fragment {
             LinphoneActivity.instance().hideTabBar();
             LinphoneActivity.instance().hideTopBar();
         }
+        updateLastCalls();
+    }
+
+    @Override
+    public void onContactsUpdated() {
+        updateLastCalls();
+    }
+
+    private void updateLastCalls(){
+        List<CallLog> calls = Arrays.asList(LinphoneManager.getLc().getCallLogs());
         /* Manage card visibility */
         switch (calls.size()) {
             case 0:

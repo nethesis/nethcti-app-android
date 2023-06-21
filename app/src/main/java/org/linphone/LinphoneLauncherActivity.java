@@ -24,10 +24,8 @@ import static android.content.Intent.ACTION_MAIN;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import org.linphone.assistant.AssistantActivity;
 import org.linphone.assistant.RemoteProvisioningActivity;
@@ -59,11 +57,7 @@ public class LinphoneLauncherActivity extends Activity {
         } else {
             Intent i = new Intent(ACTION_MAIN).setClass(this, LinphoneService.class);
             // start linphone as background
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(i);
-            } else {
-                startService(i);
-            }
+            startForegroundService(i);
             mServiceThread = new ServiceWaitThread();
             mServiceThread.start();
         }

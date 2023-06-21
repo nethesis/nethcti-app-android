@@ -20,7 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -33,8 +32,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
+
 import androidx.annotation.Nullable;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.fragment.app.Fragment;
 
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneService;
@@ -106,6 +107,7 @@ public class AdvancedSettingsFragment extends Fragment {
         }
 
         mDarkMode = mRootView.findViewById(R.id.pref_dark_mode);
+        mDarkMode.setVisibility(View.GONE);
 
         mRemoteProvisioningUrl = mRootView.findViewById(R.id.pref_remote_provisioning);
         mRemoteProvisioningUrl.setInputType(

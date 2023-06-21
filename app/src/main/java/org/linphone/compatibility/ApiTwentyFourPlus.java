@@ -28,7 +28,6 @@ import static org.linphone.compatibility.Compatibility.INTENT_NOTIF_ID;
 import static org.linphone.compatibility.Compatibility.INTENT_REPLY_NOTIF_ACTION;
 import static org.linphone.compatibility.Compatibility.KEY_TEXT_REPLY;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.RemoteInput;
@@ -43,7 +42,6 @@ import org.linphone.notifications.Notifiable;
 import org.linphone.notifications.NotifiableMessage;
 import org.linphone.notifications.NotificationBroadcastReceiver;
 
-@TargetApi(24)
 class ApiTwentyFourPlus {
 
     public static Notification createRepliedNotification(Context context, String reply) {
@@ -117,7 +115,8 @@ class ApiTwentyFourPlus {
                         .setWhen(System.currentTimeMillis())
                         .setShowWhen(true)
                         .setColor(context.getColor(R.color.colorLedNotification))
-                        .addAction(getCallDeclineAction(context, callId));
+                        //.addAction(getCallDeclineAction(context, callId))
+                ;
 
         if (showAnswerAction) {
             builder.addAction(getCallAnswerAction(context, callId));

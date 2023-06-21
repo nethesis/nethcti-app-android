@@ -21,8 +21,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +29,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -60,17 +59,13 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.button.MaterialButton;
-import it.nethesis.utils.CallTransferManager;
-import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
-import org.linphone.NethCTIApplication;
 import org.linphone.R;
 import org.linphone.compatibility.Compatibility;
 import org.linphone.contacts.ContactsManager;
@@ -99,6 +94,15 @@ import org.linphone.utils.LinphoneGenericActivity;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.views.ContactAvatar;
 import org.linphone.views.Numpad;
+
+import java.text.DecimalFormat;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import it.nethesis.utils.CallTransferManager;
 
 public class CallActivity extends LinphoneGenericActivity
         implements OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -272,7 +276,7 @@ public class CallActivity extends LinphoneGenericActivity
                                     && !localVideo
                                     && !autoAcceptCameraPolicy
                                     && !LinphoneManager.getLc().isInConference()
-                            && false) {
+                                    && false) {
                                 showAcceptCallUpdateDialog();
                                 createTimerForDialog(SECONDS_BEFORE_DENYING_CALL_UPDATE);
                             }
@@ -281,7 +285,7 @@ public class CallActivity extends LinphoneGenericActivity
                         } else if (state == State.End || state == State.Error) {
                             if (CallTransferManager.instance().ismCallTransfer()
                                     && CallTransferManager.instance().getmTransferCallId()
-                                            != null) {
+                                    != null) {
                                 pauseOrResumeCall(
                                         LinphoneManager.getLc()
                                                 .getCallByRemoteAddress2(
@@ -304,8 +308,8 @@ public class CallActivity extends LinphoneGenericActivity
                             String authenticationToken) {
                         if (mStatus != null) {
                             if (call.getCurrentParams()
-                                            .getMediaEncryption()
-                                            .equals(MediaEncryption.ZRTP)
+                                    .getMediaEncryption()
+                                    .equals(MediaEncryption.ZRTP)
                                     && !call.getAuthenticationTokenVerified()) {
                                 mStatus.showZRTPDialog(call);
                             }
@@ -359,7 +363,7 @@ public class CallActivity extends LinphoneGenericActivity
             }
 
             callFragment.setArguments(getIntent().getExtras());
-            getFragmentManager()
+            getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragmentContainer, callFragment)
                     .commitAllowingStateLoss();
@@ -544,8 +548,8 @@ public class CallActivity extends LinphoneGenericActivity
                         + permission
                         + " is "
                         + (permissionGranted == PackageManager.PERMISSION_GRANTED
-                                ? "granted"
-                                : "denied"));
+                        ? "granted"
+                        : "denied"));
 
         if (permissionGranted != PackageManager.PERMISSION_GRANTED) {
             Log.i("[Permission] Asking for " + permission);
@@ -556,14 +560,15 @@ public class CallActivity extends LinphoneGenericActivity
     @Override
     public void onRequestPermissionsResult(
             int requestCode, String[] permissions, final int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int i = 0; i < permissions.length; i++) {
             Log.i(
                     "[Permission] "
                             + permissions[i]
                             + " is "
                             + (grantResults[i] == PackageManager.PERMISSION_GRANTED
-                                    ? "granted"
-                                    : "denied"));
+                            ? "granted"
+                            : "denied"));
         }
 
         switch (requestCode) {
@@ -785,8 +790,8 @@ public class CallActivity extends LinphoneGenericActivity
             Log.i(
                     "[Permission] Record audio permission is "
                             + (recordAudio == PackageManager.PERMISSION_GRANTED
-                                    ? "granted"
-                                    : "denied"));
+                            ? "granted"
+                            : "denied"));
 
             if (recordAudio == PackageManager.PERMISSION_GRANTED) {
                 toggleMicro();
@@ -799,6 +804,7 @@ public class CallActivity extends LinphoneGenericActivity
         } else if (id == R.id.add_call || id == R.id.add_call_no_current_call) {
             goBackToDialer();
         } else if (id == R.id.record_call) {
+
             int externalStorage =
                     getPackageManager()
                             .checkPermission(
@@ -806,8 +812,8 @@ public class CallActivity extends LinphoneGenericActivity
             Log.i(
                     "[Permission] External storage permission is "
                             + (externalStorage == PackageManager.PERMISSION_GRANTED
-                                    ? "granted"
-                                    : "denied"));
+                            ? "granted"
+                            : "denied"));
 
             if (externalStorage == PackageManager.PERMISSION_GRANTED) {
                 toggleCallRecording(!mIsRecording);
@@ -815,6 +821,7 @@ public class CallActivity extends LinphoneGenericActivity
                 checkAndRequestPermission(
                         Manifest.permission.WRITE_EXTERNAL_STORAGE, PERMISSIONS_EXTERNAL_STORAGE);
             }
+
         } else if (id == R.id.recording) {
             toggleCallRecording(false);
         } else if (id == R.id.pause) {
@@ -907,7 +914,7 @@ public class CallActivity extends LinphoneGenericActivity
         if (videoDisabled) {
             CallParams params = LinphoneManager.getLc().createCallParams(call);
             params.enableVideo(false);
-            LinphoneManager.getLc().updateCall(call, params);
+            call.update(params);
         } else {
             mVideoProgress.setVisibility(View.VISIBLE);
             if (call.getRemoteParams() != null && !call.getRemoteParams().lowBandwidthEnabled()) {
@@ -1010,7 +1017,7 @@ public class CallActivity extends LinphoneGenericActivity
 
     private void replaceFragmentVideoByAudio() {
         mAudioCallFragment = new CallAudioFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, mAudioCallFragment);
         try {
             transaction.commitAllowingStateLoss();
@@ -1023,7 +1030,7 @@ public class CallActivity extends LinphoneGenericActivity
         //		Hiding controls to let displayVideoCallControlsIfHidden add them plus the callback
         mVideoCallFragment = new CallVideoFragment();
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, mVideoCallFragment);
         try {
             transaction.commitAllowingStateLoss();
@@ -1059,7 +1066,7 @@ public class CallActivity extends LinphoneGenericActivity
     private void pauseOrResumeCall(Call call) {
         Core lc = LinphoneManager.getLc();
         if (call != null && LinphoneManager.getLc().getCurrentCall() == call) {
-            lc.pauseCall(call);
+            call.pause();
             if (isVideoEnabled(LinphoneManager.getLc().getCurrentCall())) {
                 mIsVideoCallPaused = true;
             }
@@ -1084,7 +1091,7 @@ public class CallActivity extends LinphoneGenericActivity
         }
 
         if (currentCall != null) {
-            lc.terminateCall(currentCall);
+            currentCall.terminate();
         } else if (lc.isInConference()) {
             lc.terminateConference();
         } else {
@@ -1255,7 +1262,7 @@ public class CallActivity extends LinphoneGenericActivity
             LinphoneManager.getLc().enableVideoDisplay(true);
         }
 
-        LinphoneManager.getLc().acceptCallUpdate(call, params);
+        call.acceptUpdate(params);
     }
 
     private void hideStatusBar() {
@@ -1318,8 +1325,8 @@ public class CallActivity extends LinphoneGenericActivity
                         Log.i(
                                 "[Permission] Camera permission is "
                                         + (camera == PackageManager.PERMISSION_GRANTED
-                                                ? "granted"
-                                                : "denied"));
+                                        ? "granted"
+                                        : "denied"));
 
                         if (camera == PackageManager.PERMISSION_GRANTED) {
                             acceptCallUpdate(true);
@@ -1846,8 +1853,8 @@ public class CallActivity extends LinphoneGenericActivity
                     (stats.getIpFamilyOfRemote() == AddressFamily.Inet6)
                             ? "IpV6"
                             : (stats.getIpFamilyOfRemote() == AddressFamily.Inet)
-                                    ? "IpV4"
-                                    : "Unknown");
+                            ? "IpV4"
+                            : "Unknown");
             formatText(
                     senderLossRate,
                     getString(R.string.call_stats_sender_loss_rate),

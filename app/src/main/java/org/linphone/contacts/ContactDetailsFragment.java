@@ -24,7 +24,6 @@ import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,10 +39,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.Fragment;
 
-import it.nethesis.models.NethesisContact;
-import it.nethesis.models.NethesisNumberOrAddress;
-import java.util.List;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -63,6 +60,11 @@ import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.views.ContactAvatar;
+
+import java.util.List;
+
+import it.nethesis.models.NethesisContact;
+import it.nethesis.models.NethesisNumberOrAddress;
 
 public class ContactDetailsFragment extends Fragment
         implements OnClickListener, ContactsUpdatedListener {
@@ -452,7 +454,7 @@ public class ContactDetailsFragment extends Fragment
                     });
             dialog.show();
         } else if (id == R.id.back) {
-            getFragmentManager().popBackStackImmediate();
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
         }
     }
 

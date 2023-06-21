@@ -18,6 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothAssignedNumbers;
 import android.bluetooth.BluetoothDevice;
@@ -27,12 +28,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
-import java.util.List;
+
+import androidx.core.app.ActivityCompat;
+
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.call.CallActivity;
 import org.linphone.core.tools.Log;
+
+import java.util.List;
 
 public class BluetoothManager extends BroadcastReceiver {
     private static BluetoothManager sInstance;
@@ -211,12 +217,18 @@ public class BluetoothManager extends BroadcastReceiver {
     }
 
     public boolean isUsingBluetoothAudioRoute() {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
         return mBluetoothHeadset != null
                 && mBluetoothHeadset.isAudioConnected(mBluetoothDevice)
                 && mIsScoConnected;
     }
 
     public boolean isBluetoothHeadsetAvailable() {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
         ensureInit();
         if (mBluetoothAdapter != null
                 && mBluetoothAdapter.isEnabled()

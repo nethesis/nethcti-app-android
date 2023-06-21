@@ -27,9 +27,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -68,6 +65,9 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.linphone.LinphoneManager.AddressType;
 import org.linphone.assistant.AssistantActivity;
@@ -110,10 +110,10 @@ import org.linphone.fragments.DialerFragment;
 import org.linphone.fragments.EmptyFragment;
 import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.fragments.StatusFragment;
-import org.linphone.presence.UsersByPresenceFragment;
 import org.linphone.history.HistoryDetailFragment;
 import org.linphone.history.HistoryFragment;
 import org.linphone.notifications.FCMNotification;
+import org.linphone.presence.UsersByPresenceFragment;
 import org.linphone.recording.RecordingsFragment;
 import org.linphone.settings.AccountSettingsFragment;
 import org.linphone.settings.AudioSettingsFragment;
@@ -314,8 +314,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     }
 
                     @Override
-                    public void onCallStateChanged(
-                            Core lc, Call call, Call.State state, String message) {
+                    public void onCallStateChanged(Core lc, Call call, Call.State state, String message) {
                         if (state == State.IncomingReceived) {
                             // This case will be handled by the service listener
                         } else if (state == State.OutgoingInit || state == State.OutgoingProgress) {
@@ -397,8 +396,26 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.WRITE_CONTACTS,
                 Manifest.permission.READ_CONTACTS,
-                Manifest.permission.CALL_PHONE
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.MANAGE_OWN_CALLS,
+                Manifest.permission.BIND_TELECOM_CONNECTION_SERVICE,
+                Manifest.permission.READ_PHONE_NUMBERS
         };
+
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            String[] permissionsForAPI33 = {
+                    Manifest.permission.READ_MEDIA_AUDIO,
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.BLUETOOTH_CONNECT
+            };
+            for (String permissionToHave33 : permissionsForAPI33) {
+                if (!checkPermission(permissionToHave33)) {
+                    permissionsToAskFor.add(permissionToHave33);
+                }
+            }
+        }
 
         for (String permissionToHave : permissionsToHave) {
             if (!checkPermission(permissionToHave)) {
@@ -477,7 +494,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     protected void onResume() {
         super.onResume();
         if (!LinphoneService.isReady()) {
-            startService(new Intent(Intent.ACTION_MAIN).setClass(this, LinphoneService.class));
+            startForegroundService(new Intent(Intent.ACTION_MAIN).setClass(this, LinphoneService.class));
         }
 
         Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
@@ -610,6 +627,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 changeCurrentFragment(FragmentsAvailable.HISTORY_LIST, null);
             } else if (extras.getBoolean("Notification", false)) {
                 if (LinphoneManager.getLc().getCallsNb() > 0) {
+                    LinphoneManager.getInstance().routeAudioToReceiver();
                     startIncallActivity();
                 }
             } else if (extras.getBoolean("StartCall", false)) {
@@ -700,6 +718,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
             int requestCode, String[] permissions, int[] grantResults) {
 
         // If permission was asked we wait here for the results so dialogs won't conflict
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (getResources().getBoolean(R.bool.check_for_update_when_app_starts)) {
             checkForUpdate();
         }
@@ -817,7 +836,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     public void popBackStack() {
-        getFragmentManager().popBackStackImmediate();
+        getSupportFragmentManager().popBackStackImmediate();
         mCurrentFragment = FragmentsAvailable.EMPTY;
     }
 
@@ -832,7 +851,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         if (mCurrentFragment == FragmentsAvailable.DIALER) {
             try {
                 DialerFragment dialerFragment = DialerFragment.instance();
-                mDialerSavedState = getFragmentManager().saveFragmentInstanceState(dialerFragment);
+                mDialerSavedState = getSupportFragmentManager().saveFragmentInstanceState(dialerFragment);
             } catch (Exception e) {
                 Log.e(e);
             }
@@ -941,7 +960,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     private void changeFragment(Fragment newFragment, FragmentsAvailable newFragmentType) {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
 
         if (newFragmentType != FragmentsAvailable.DIALER
@@ -976,14 +995,14 @@ public class LinphoneActivity extends LinphoneGenericActivity
         mEmptyFragment = false;
         LinearLayout ll = findViewById(R.id.fragmentContainer2);
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         if (newFragmentType == FragmentsAvailable.EMPTY) {
             ll.setVisibility(View.VISIBLE);
             mEmptyFragment = true;
             transaction.replace(R.id.fragmentContainer2, newFragment);
             transaction.commitAllowingStateLoss();
-            getFragmentManager().executePendingTransactions();
+            getSupportFragmentManager().executePendingTransactions();
         } else {
             if (newFragmentType.shouldAddItselfToTheRightOf(mCurrentFragment)
                     || newFragmentType.shouldAddItselfToTheRightOf(mLeftFragment)) {
@@ -1025,7 +1044,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 transaction.replace(R.id.fragmentContainer, newFragment);
             }
             transaction.commitAllowingStateLoss();
-            getFragmentManager().executePendingTransactions();
+            getSupportFragmentManager().executePendingTransactions();
 
             mCurrentFragment = newFragmentType;
             if (newFragmentType == FragmentsAvailable.DIALER
@@ -1034,7 +1053,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     || newFragmentType == FragmentsAvailable.CHAT_LIST
                     || newFragmentType == FragmentsAvailable.HISTORY_LIST) {
                 try {
-                    getFragmentManager()
+                    getSupportFragmentManager()
                             .popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 } catch (java.lang.IllegalStateException e) {
                     Log.e(e);
@@ -1057,7 +1076,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         String pictureUri =
                 c != null && c.getPhotoUri() != null ? c.getPhotoUri().toString() : null;
 
-        Fragment fragment2 = getFragmentManager().findFragmentById(R.id.fragmentContainer2);
+        Fragment fragment2 = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer2);
         if (fragment2 != null
                 && fragment2.isVisible()
                 && mCurrentFragment == FragmentsAvailable.HISTORY_DETAIL) {
@@ -1080,7 +1099,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     public void displayContact(LinphoneContact contact, boolean chatOnly) {
-        Fragment fragment2 = getFragmentManager().findFragmentById(R.id.fragmentContainer2);
+        Fragment fragment2 = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer2);
         if (fragment2 != null
                 && fragment2.isVisible()
                 && mCurrentFragment == FragmentsAvailable.CONTACT_DETAIL
@@ -1145,8 +1164,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
             boolean createGroupChat,
             boolean isChatRoomEncrypted) {
         if (mCurrentFragment == FragmentsAvailable.INFO_GROUP_CHAT && isGoBack) {
-            getFragmentManager().popBackStackImmediate();
-            getFragmentManager().popBackStackImmediate();
+            getSupportFragmentManager().popBackStackImmediate();
+            getSupportFragmentManager().popBackStackImmediate();
         }
         Bundle extras = new Bundle();
         extras.putSerializable("selectedContacts", selectedContacts);
@@ -1178,7 +1197,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
         }
 
         if (isTablet()) {
-            Fragment fragment2 = getFragmentManager().findFragmentById(R.id.fragmentContainer2);
+            Fragment fragment2 = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer2);
             if (fragment2 != null
                     && fragment2.isVisible()
                     && mCurrentFragment == FragmentsAvailable.GROUP_CHAT
@@ -1205,8 +1224,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
             Bundle shareInfos,
             boolean enableEncryption) {
         if (mCurrentFragment == FragmentsAvailable.CREATE_CHAT && isGoBack) {
-            getFragmentManager().popBackStackImmediate();
-            getFragmentManager().popBackStackImmediate();
+            getSupportFragmentManager().popBackStackImmediate();
+            getSupportFragmentManager().popBackStackImmediate();
         }
         Bundle extras = new Bundle();
         extras.putString("groupChatRoomAddress", address);
@@ -2257,4 +2276,5 @@ public class LinphoneActivity extends LinphoneGenericActivity
             return view;
         }
     }
+
 }

@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 import android.Manifest;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -32,19 +31,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.utils.FileUtils;
 import org.linphone.utils.SelectableHelper;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class RecordingsFragment extends Fragment
         implements AdapterView.OnItemClickListener,
@@ -78,7 +81,7 @@ public class RecordingsFragment extends Fragment
                         if (LinphoneManager.getLc().getProxyConfigList().length == 0) {
                             LinphoneActivity.instance().finish();
                         } else if(getResources().getBoolean(R.bool.isTablet)) {
-                            if(getFragmentManager().getBackStackEntryCount() > 1) {
+                            if(getActivity().getSupportFragmentManager().getBackStackEntryCount() > 1) {
                                 LinphoneActivity.instance().popBackStack();
                             } else {
                                 LinphoneActivity.instance().displayDashboard();

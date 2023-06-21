@@ -19,14 +19,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -38,6 +36,11 @@ import org.linphone.core.FriendList;
 import org.linphone.core.PresenceBasicStatus;
 import org.linphone.core.PresenceModel;
 import org.linphone.core.SubscribePolicy;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class LinphoneContact extends AndroidContact
         implements Serializable, Comparable<LinphoneContact> {
@@ -366,7 +369,8 @@ public class LinphoneContact extends AndroidContact
             mFriend.done();
         }
         if (created) {
-            lc.addFriend(mFriend);
+            lc.createFriend();
+            //lc.addFriend(mFriend);
         }
 
         if (!ContactsManager.getInstance().hasReadContactsAccess()) {
@@ -511,10 +515,9 @@ public class LinphoneContact extends AndroidContact
             c.close();
         }
     }
-
+    @SuppressLint("Range")
     public synchronized void syncValuesFromAndroidCusor(Cursor c) {
-        String displayName =
-                c.getString(c.getColumnIndex(ContactsContract.Data.DISPLAY_NAME_PRIMARY));
+        String displayName = c.getString(c.getColumnIndex(ContactsContract.Data.DISPLAY_NAME_PRIMARY));
         String mime = c.getString(c.getColumnIndex(ContactsContract.Data.MIMETYPE));
         String data1 = c.getString(c.getColumnIndex("data1"));
         String data2 = c.getString(c.getColumnIndex("data2"));

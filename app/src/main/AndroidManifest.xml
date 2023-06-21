@@ -4,6 +4,7 @@
     package="org.linphone"
     android:installLocation="auto">
 
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -23,10 +24,22 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Needed to store received images if the user wants to -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Needed to use our own Contact editor -->
+
+    <!-- Needed to attach file(s) in chat room fragment -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"/>
+    <!-- Starting Android 13 you need those 3 permissions instead (https://developer.android.com/about/versions/13/behavior-changes-13) -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <!-- Needed to shared downloaded files if setting is on -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"  />
+
     <uses-permission android:name="android.permission.WRITE_CONTACTS" /> <!-- Needed to route the audio to the bluetooth headset if available -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" /> <!-- Needed to pre fill the wizard email field (only if enabled in custom settings) -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -39,6 +52,10 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- Needed for kill application yourself -->
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- Needed for Telecom Manager -->
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
 
     <supports-screens
         android:anyDensity="true"
@@ -232,7 +249,9 @@
         <service android:name=".notifications.RegistrationIntentService" />
         <service
             android:name=".LinphoneService"
-            android:exported="true"
+            android:exported="false"
+            android:enabled="true"
+            android:stopWithTask="false"
             android:label="@string/service_name" />
         <service
             android:name=".sync.SyncService"
@@ -271,12 +290,12 @@
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.PhoneStateChangedReceiver" android:exported="true">
+        <receiver android:name=".receivers.PhoneStateChangedReceiver" android:exported="true" android:enabled="true">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.HookReceiver" android:exported="true">
+        <receiver android:name=".receivers.HookReceiver" android:exported="true" android:enabled="true">
             <intent-filter>
                 <action android:name="com.base.module.phone.HOOKEVENT" />
             </intent-filter>
@@ -298,7 +317,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".firebase.FirebaseMessaging" android:exported="true">
+        <service android:name=".firebase.FirebaseMessaging" android:exported="false" android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -319,7 +338,7 @@
         <receiver
             android:name=".notifications.NotificationBroadcastReceiver"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="true" />
     </application>
 
 </manifest>

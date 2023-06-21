@@ -19,17 +19,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
-import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration;
 
 public class QrCodeFragment extends Fragment {
     private CoreListenerStub mListener;
@@ -71,15 +71,18 @@ public class QrCodeFragment extends Fragment {
     }
 
     private void setBackCamera() {
-        int camId = 0;
-        AndroidCameraConfiguration.AndroidCamera[] cameras =
-                AndroidCameraConfiguration.retrieveCameras();
-        for (AndroidCameraConfiguration.AndroidCamera androidCamera : cameras) {
-            if (!androidCamera.frontFacing) camId = androidCamera.id;
-        }
+//        int camId = 0;
+//        AndroidCameraConfiguration.AndroidCamera[] cameras = AndroidCameraConfiguration.retrieveCameras();
+//        for (AndroidCameraConfiguration.AndroidCamera camera : cameras) {
+//            if (!camera.frontFacing) camId = camera.id;
+//        }
         String[] devices = LinphoneManager.getLc().getVideoDevicesList();
-        String newDevice = devices[camId];
-        LinphoneManager.getLc().setVideoDevice(newDevice);
+        String cameraDevice = devices[0];
+        for (String device : devices) {
+            if(device.contains("Back")) cameraDevice = device;
+        }
+//        String newDevice = devices[camId];
+        LinphoneManager.getLc().setVideoDevice(cameraDevice);
     }
 
     private void launchQrcodeReader() {

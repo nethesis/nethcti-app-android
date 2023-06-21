@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- NethCTI Styles -->
-    <style name="NethCTIStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="NethCTIStyle" parent="Theme.MaterialComponents.DayNight">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -39,6 +39,9 @@
 
         <item name="button_background_drawable">@drawable/button_background_light</item>
         <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="NethCTIStyleLaunchActivity" parent="NethCTIStyle">

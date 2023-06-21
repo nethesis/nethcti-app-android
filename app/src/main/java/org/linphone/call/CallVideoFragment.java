@@ -19,7 +19,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import android.app.Fragment;
+//import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
@@ -29,9 +30,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import androidx.fragment.app.Fragment;
+
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.R;
@@ -74,49 +77,44 @@ public class CallVideoFragment extends Fragment
         LinphoneManager.getLc().setNativePreviewWindowId(mCaptureView);
 
         mVideoView.setOnTouchListener(
-                new OnTouchListener() {
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (mScaleDetector != null) {
-                            mScaleDetector.onTouchEvent(event);
-                        }
-
-                        mGestureDetector.onTouchEvent(event);
-                        if (mInCallActivity != null) {
-                            mInCallActivity.displayVideoCallControlsIfHidden();
-                        }
-                        return true;
+                (v, event) -> {
+                    if (mScaleDetector != null) {
+                        mScaleDetector.onTouchEvent(event);
                     }
+
+                    mGestureDetector.onTouchEvent(event);
+                    if (mInCallActivity != null) {
+                        mInCallActivity.displayVideoCallControlsIfHidden();
+                    }
+                    return true;
                 });
 
         mCaptureView.setOnTouchListener(
-                new OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        switch (motionEvent.getAction()) {
-                            case MotionEvent.ACTION_DOWN:
-                                mPreviewX = (int) motionEvent.getX();
-                                mPreviewY = (int) motionEvent.getY();
-                                break;
-                            case MotionEvent.ACTION_MOVE:
-                                int x = (int) motionEvent.getX();
-                                int y = (int) motionEvent.getY();
-                                RelativeLayout.LayoutParams lp =
-                                        (RelativeLayout.LayoutParams)
-                                                mCaptureView.getLayoutParams();
-                                lp.addRule(
-                                        RelativeLayout.ALIGN_PARENT_BOTTOM,
-                                        0); // Clears the rule, as there is no removeRule until API
-                                // 17.
-                                lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
-                                int left = lp.leftMargin + (x - mPreviewX);
-                                int top = lp.topMargin + (y - mPreviewY);
-                                lp.leftMargin = left;
-                                lp.topMargin = top;
-                                view.setLayoutParams(lp);
-                                break;
-                        }
-                        return true;
+                (view1, motionEvent) -> {
+                    switch (motionEvent.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            mPreviewX = (int) motionEvent.getX();
+                            mPreviewY = (int) motionEvent.getY();
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            int x = (int) motionEvent.getX();
+                            int y = (int) motionEvent.getY();
+                            RelativeLayout.LayoutParams lp =
+                                    (RelativeLayout.LayoutParams)
+                                            mCaptureView.getLayoutParams();
+                            lp.addRule(
+                                    RelativeLayout.ALIGN_PARENT_BOTTOM,
+                                    0); // Clears the rule, as there is no removeRule until API
+                            // 17.
+                            lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
+                            int left = lp.leftMargin + (x - mPreviewX);
+                            int top = lp.topMargin + (y - mPreviewY);
+                            lp.leftMargin = left;
+                            lp.topMargin = top;
+                            view1.setLayoutParams(lp);
+                            break;
                     }
+                    return true;
                 });
         return view;
     }

@@ -19,7 +19,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,28 +36,33 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import it.nethesis.models.NethesisContact;
-import it.nethesis.models.contactlist.Contact;
-import it.nethesis.models.contactlist.ContactList;
-import it.nethesis.webservices.RetrofitGenerator;
-import it.nethesis.webservices.UserRestAPI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ListIterator;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.utils.SelectableHelper;
 import org.linphone.utils.SharedPreferencesManager;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ListIterator;
+
+import it.nethesis.models.NethesisContact;
+import it.nethesis.models.contactlist.Contact;
+import it.nethesis.models.contactlist.ContactList;
+import it.nethesis.webservices.RetrofitGenerator;
+import it.nethesis.webservices.UserRestAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

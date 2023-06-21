@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +30,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.core.AccountCreator;
@@ -203,6 +207,11 @@ public class CreateAccountCodeActivationFragment extends Fragment
             AssistantActivity.instance().hideKeyboard();
             AssistantActivity.instance().success();
         }
+    }
+
+    @Override
+    public void onLoginLinphoneAccount(@NonNull AccountCreator creator, AccountCreator.Status status, @Nullable String response) {
+
     }
 
     @Override

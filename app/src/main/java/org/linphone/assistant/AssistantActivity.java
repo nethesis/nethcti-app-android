@@ -26,8 +26,6 @@ import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -46,7 +44,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -56,13 +53,15 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneLauncherActivity;
@@ -88,6 +87,10 @@ import org.linphone.notifications.FCMNotification;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.ThemableActivity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AssistantActivity extends ThemableActivity
         implements OnClickListener,
@@ -319,7 +322,7 @@ public class AssistantActivity extends ThemableActivity
 
     private void changeFragment(Fragment newFragment) {
         hideKeyboard();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, newFragment);
         transaction.commitAllowingStateLoss();
     }
@@ -405,16 +408,16 @@ public class AssistantActivity extends ThemableActivity
     }
 
     @Override
-    public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, @NotNull final int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, @NotNull final int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int i = 0; i < permissions.length; i++) {
             Log.i(
                     "[Permission] "
                             + permissions[i]
                             + " is "
                             + (grantResults[i] == PackageManager.PERMISSION_GRANTED
-                                    ? "granted"
-                                    : "denied"));
+                            ? "granted"
+                            : "denied"));
             if (permissions[i].equals(Manifest.permission.CAMERA)
                     && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                 LinphoneUtils.reloadVideoDevices();
@@ -1001,6 +1004,11 @@ public class AssistantActivity extends ThemableActivity
             AccountCreator accountCreator, AccountCreator.Status status, String resp) {}
 
     @Override
+    public void onLoginLinphoneAccount(@NonNull AccountCreator creator, AccountCreator.Status status, @Nullable String response) {
+
+    }
+
+    @Override
     public void onIsAccountActivated(
             AccountCreator accountCreator, AccountCreator.Status status, String resp) {}
 
@@ -1030,6 +1038,11 @@ public class AssistantActivity extends ThemableActivity
         if (mCurrentFragment == AssistantFragmentsEnum.QRCODE_READER) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 
     /**

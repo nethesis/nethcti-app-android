@@ -22,7 +22,6 @@ package org.linphone.chat;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -36,10 +35,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -55,9 +57,12 @@ import org.linphone.core.ChatRoomParams;
 import org.linphone.core.Core;
 import org.linphone.core.EventLog;
 import org.linphone.core.Participant;
+import org.linphone.core.ParticipantImdnState;
 import org.linphone.core.tools.Log;
 import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.utils.LinphoneUtils;
+
+import java.util.ArrayList;
 
 public class GroupInfoFragment extends Fragment implements ChatRoomListener {
     private ImageView mBackButton, mConfirmButton, mAddParticipantsButton;
@@ -168,7 +173,7 @@ public class GroupInfoFragment extends Fragment implements ChatRoomListener {
                                                 mGroupChatRoomAddress.asStringUriOnly(),
                                                 mShareInfos);
                             } else {
-                                getFragmentManager().popBackStack();
+                                getActivity().getSupportFragmentManager().popBackStack();
                             }
                         } else {
                             LinphoneActivity.instance()
@@ -304,8 +309,8 @@ public class GroupInfoFragment extends Fragment implements ChatRoomListener {
                             mWaitLayout.setVisibility(View.GONE);
                             // This will remove both the creation fragment and the group info
                             // fragment from the back stack
-                            getFragmentManager().popBackStack();
-                            getFragmentManager().popBackStack();
+                            getActivity().getSupportFragmentManager().popBackStack();
+                            getActivity().getSupportFragmentManager().popBackStack();
                             LinphoneActivity.instance()
                                     .goToChat(
                                             cr.getLocalAddress().asStringUriOnly(),
@@ -549,6 +554,11 @@ public class GroupInfoFragment extends Fragment implements ChatRoomListener {
     public void onChatMessageShouldBeStored(ChatRoom cr, ChatMessage msg) {}
 
     @Override
+    public void onEphemeralEvent(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
+    }
+
+    @Override
     public void onIsComposingReceived(ChatRoom cr, Address remoteAddr, boolean isComposing) {}
 
     @Override
@@ -558,7 +568,17 @@ public class GroupInfoFragment extends Fragment implements ChatRoomListener {
     public void onConferenceAddressGeneration(ChatRoom cr) {}
 
     @Override
+    public void onChatMessageParticipantImdnStateChanged(@NonNull ChatRoom chatRoom, @NonNull ChatMessage message, @NonNull ParticipantImdnState state) {
+
+    }
+
+    @Override
     public void onChatMessageReceived(ChatRoom cr, EventLog event_log) {}
+
+    @Override
+    public void onChatMessageSending(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
+    }
 
     @Override
     public void onMessageReceived(ChatRoom cr, ChatMessage msg) {}
@@ -570,8 +590,23 @@ public class GroupInfoFragment extends Fragment implements ChatRoomListener {
     public void onParticipantDeviceAdded(ChatRoom cr, EventLog event_log) {}
 
     @Override
+    public void onEphemeralMessageDeleted(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
+    }
+
+    @Override
     public void onSecurityEvent(ChatRoom cr, EventLog eventLog) {
         refreshParticipantsList();
+    }
+
+    @Override
+    public void onNewEvent(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
+    }
+
+    @Override
+    public void onEphemeralMessageTimerStarted(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
     }
 
     @Override

@@ -33,10 +33,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.core.app.ActivityCompat;
+
 import com.google.android.material.button.MaterialButton;
-import it.nethesis.utils.CallTransferManager;
-import java.util.ArrayList;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -53,6 +54,10 @@ import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneGenericActivity;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.views.ContactAvatar;
+
+import java.util.ArrayList;
+
+import it.nethesis.utils.CallTransferManager;
 
 public class CallOutgoingActivity extends LinphoneGenericActivity implements OnClickListener {
     private TextView mName, mNumber;
@@ -243,7 +248,7 @@ public class CallOutgoingActivity extends LinphoneGenericActivity implements OnC
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (LinphoneManager.isInstanciated()
                 && (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME)) {
-            LinphoneManager.getLc().terminateCall(mCall);
+            mCall.terminate();
             finish();
         }
         return super.onKeyDown(keyCode, event);
@@ -309,14 +314,15 @@ public class CallOutgoingActivity extends LinphoneGenericActivity implements OnC
     @Override
     public void onRequestPermissionsResult(
             int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int i = 0; i < permissions.length; i++) {
             Log.i(
                     "[Permission] "
                             + permissions[i]
                             + " is "
                             + (grantResults[i] == PackageManager.PERMISSION_GRANTED
-                                    ? "granted"
-                                    : "denied"));
+                            ? "granted"
+                            : "denied"));
             if (permissions[i].equals(Manifest.permission.CAMERA)
                     && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                 LinphoneUtils.reloadVideoDevices();

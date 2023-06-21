@@ -25,6 +25,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
@@ -137,6 +138,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 Log.e("[Notification Broadcast Receiver] Couldn't get Core instance");
                 return;
             }
+
             Call call = core.findCallFromUri(remoteAddr);
             if (call == null) {
                 Log.e(

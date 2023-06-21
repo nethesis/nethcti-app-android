@@ -19,14 +19,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -612,7 +614,7 @@ public class AccountSettingsFragment extends Fragment {
                     core != null && mProxyConfig.equals(core.getDefaultProxyConfig()));
             mUseAsDefault.setEnabled(!mUseAsDefault.isChecked());
 
-            mOutboundProxy.setChecked(mProxyConfig.getRoute() != null);
+            mOutboundProxy.setChecked(mProxyConfig.getRoutes() != null);
 
             mIce.setChecked(natPolicy.iceEnabled());
             mIce.setEnabled(

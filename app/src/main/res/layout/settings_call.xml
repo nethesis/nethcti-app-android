@@ -16,7 +16,8 @@
             android:id="@+id/pref_device_ringtone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            linphone:title="@string/pref_device_ringtone" />
+            linphone:title="@string/pref_device_ringtone"
+            android:visibility="gone"/>
 
         <org.linphone.settings.widget.SwitchSetting
             android:id="@+id/pref_vibrate_on_incoming_calls"

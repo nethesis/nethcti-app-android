@@ -32,8 +32,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.core.app.ActivityCompat;
-import java.util.ArrayList;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -50,6 +51,8 @@ import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneGenericActivity;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.views.ContactAvatar;
+
+import java.util.ArrayList;
 
 public class CallIncomingActivity extends LinphoneGenericActivity {
     private static CallIncomingActivity sInstance;
@@ -212,7 +215,7 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (LinphoneManager.isInstanciated()
                 && (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME)) {
-            LinphoneManager.getLc().terminateCall(mCall);
+            mCall.terminate();
             finish();
         }
         return super.onKeyDown(keyCode, event);
@@ -236,7 +239,7 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
         }
         mAlreadyAcceptedOrDeniedCall = true;
 
-        LinphoneManager.getLc().terminateCall(mCall);
+        mCall.terminate();
         finish();
     }
 

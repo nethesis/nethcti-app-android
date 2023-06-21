@@ -31,7 +31,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 
-import java.util.HashMap;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
@@ -48,6 +47,8 @@ import org.linphone.core.tools.Log;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.ImageUtils;
 import org.linphone.utils.LinphoneUtils;
+
+import java.util.HashMap;
 
 public class NotificationsManager {
     private static final int SERVICE_NOTIF_ID = 1;
@@ -245,7 +246,7 @@ public class NotificationsManager {
                         mContext,
                         notif.getNotificationId(),
                         notifIntent,
-                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification =
                 Compatibility.createMessageNotification(
@@ -377,9 +378,9 @@ public class NotificationsManager {
         Bitmap bm = ImageUtils.getRoundBitmapFromUri(mContext, pictureUri);
         String name = LinphoneUtils.getAddressDisplayName(address);
 
-        boolean showAnswerAction =
-                call.getState() == Call.State.IncomingReceived
-                        || call.getState() == Call.State.IncomingEarlyMedia;
+        boolean showAnswerAction = false;
+//                call.getState() == Call.State.IncomingReceived
+//                        || call.getState() == Call.State.IncomingEarlyMedia;
         Notification notification =
                 Compatibility.createInCallNotification(
                         mContext,
@@ -401,6 +402,8 @@ public class NotificationsManager {
                     sendNotification(notif.getNotificationId(), notification);
                 }
             }
+        } else {
+            sendNotification(notif.getNotificationId(), notification);
         }
     }
 
@@ -431,5 +434,9 @@ public class NotificationsManager {
 
     public void dismissNotification(int notifId) {
         mNM.cancel(notifId);
+    }
+
+    public void dismissServiceNotification() {
+        mNM.cancel(mCurrentForegroundServiceNotification);
     }
 }

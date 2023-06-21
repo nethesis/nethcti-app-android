@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.app.AlertDialog;
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,7 +39,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.core.AccountCreator;
@@ -47,6 +50,8 @@ import org.linphone.core.AccountCreatorListener;
 import org.linphone.core.DialPlan;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
+
+import java.util.Locale;
 
 public class LinphoneLoginFragment extends Fragment
         implements CompoundButton.OnCheckedChangeListener,
@@ -372,6 +377,9 @@ public class LinphoneLoginFragment extends Fragment
     @Override
     public void onActivateAlias(
             AccountCreator accountCreator, AccountCreator.Status status, String resp) {}
+
+    @Override
+    public void onLoginLinphoneAccount(@NonNull AccountCreator creator, AccountCreator.Status status, @Nullable String response) {}
 
     @Override
     public void onIsAccountActivated(

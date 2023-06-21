@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
-import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -47,6 +46,7 @@ import org.linphone.core.LoggingServiceListener;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.RegistrationState;
 import org.linphone.core.tools.Log;
+import org.linphone.core.tools.service.CoreService;
 import org.linphone.mediastream.Version;
 import org.linphone.notifications.NotificationsManager;
 import org.linphone.receivers.BluetoothManager;
@@ -72,7 +72,7 @@ import it.nethesis.utils.AppBackgroundWatcher;
  *   <li>Reacting to LinphoneManager state changes
  *   <li>Delegating GUI state change actions to GUI listener
  */
-public final class LinphoneService extends Service {
+public final class LinphoneService extends CoreService {
     /* Listener needs to be implemented in the Service as it calls
      * setLatestEventInfo and startActivity() which needs a context.
      */
@@ -152,14 +152,14 @@ public final class LinphoneService extends Service {
     }
 
     private void onBackgroundMode() {
-        Log.i("[Service] App has entered background mode");
+        Log.i("[LinphoneService] App has entered background mode");
         if (LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null) {
             LinphoneManager.getLcIfManagerNotDestroyedOrNull().enterBackground();
         }
     }
 
     private void onForegroundMode() {
-        Log.i("[Service] App has left background mode");
+        Log.i("[LinphoneService] App has left background mode");
         if (LinphoneManager.getLcIfManagerNotDestroyedOrNull() != null) {
             LinphoneManager.getLcIfManagerNotDestroyedOrNull().enterForeground();
         }
@@ -175,24 +175,28 @@ public final class LinphoneService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
+        android.util.Log.i(
+                "LinphoneService",
+                "[LinphoneService] onStartCommand");
+
         boolean isPush = false;
         if (intent != null && intent.getBooleanExtra("PushNotification", false)) {
             android.util.Log.i(
                     "LinphoneService",
-                    "[Service] [Push Notification] LinphoneService started because of a push");
+                    "[LinphoneService] [Push Notification] LinphoneService started because of a push");
             isPush = true;
         }
 
         boolean startedFromBootReceiver = false;
         if (intent != null && intent.getBooleanExtra("startFromBootReceiver", false)) {
-            android.util.Log.i("LinphoneService", "[Service] LinphoneService started after boot");
+            android.util.Log.i("LinphoneService", "[LinphoneService] LinphoneService started after boot");
             startedFromBootReceiver = true;
         }
 
         if (sInstance != null) {
             android.util.Log.i(
                     "LinphoneService",
-                    "[Service] Attempt to start the LinphoneService but it is already running !");
+                    "[LinphoneService] Attempt to start the LinphoneService but it is already running !");
             return START_STICKY;
         }
 
@@ -209,11 +213,16 @@ public final class LinphoneService extends Service {
                                     public void onCallStateChanged(
                                             Core lc, Call call, Call.State state, String message) {
                                         if (sInstance == null) {
-                                            Log.d(
-                                                    "[Service] Service not ready, discarding call state change to "
-                                                            + state.toString());
+                                            android.util.Log.i(
+                                                    "LinphoneService",
+                                                    "[LinphoneService] Service not ready, discarding call state change to "
+                                                    + state.toString());
                                             return;
                                         }
+
+                                        android.util.Log.i(
+                                                "LinphoneService",
+                                                "[LinphoneService] State -> " + state.toString());
 
                                         nethCallHandler.removeCallbacksAndMessages(null);
 
@@ -237,8 +246,7 @@ public final class LinphoneService extends Service {
                                         /* destroy service */
                                         if (state == State.Released) {
                                             if (LinphoneManager.getLc().getCalls().length <= 0) {
-                                                boolean alwaysOpenServiceFlag =
-                                                        LinphonePreferences.instance().getServiceNotificationVisibility();
+                                                boolean alwaysOpenServiceFlag = LinphonePreferences.instance().getServiceNotificationVisibility();
                                                 boolean status =
                                                         call.getCallLog().getStatus()
                                                                 == Call.Status.Missed
@@ -246,6 +254,8 @@ public final class LinphoneService extends Service {
                                                                 == Call.Status.Aborted
                                                                 || call.getCallLog().getStatus()
                                                                 == Call.Status.Declined
+                                                                || call.getCallLog().getStatus()
+                                                                == Call.Status.AcceptedElsewhere
                                                                 || call.getCallLog().getStatus()
                                                                 == Call.Status.Success;
                                                 if (status
@@ -305,21 +315,21 @@ public final class LinphoneService extends Service {
         BluetoothManager.getInstance().initBluetooth();
 
         /* Close Service If Started From Service */
-        android.util.Log.d(
+        android.util.Log.i(
                 "LinphoneService", "Calls: " + LinphoneManager.getLc().getCalls().length);
         if (startedFromBootReceiver) {
             try {
                 boolean alwaysOpenServiceFlag =
                         LinphonePreferences.instance().getServiceNotificationVisibility();
                 boolean noCallOngoing = LinphoneManager.getLc().getCalls().length <= 0;
-                android.util.Log.d(
+                android.util.Log.i(
                         "LinphoneService",
                         "alwaysOpenServiceFlag: "
                                 + alwaysOpenServiceFlag
                                 + ". noCallOngoing: "
                                 + noCallOngoing);
                 if (!alwaysOpenServiceFlag && noCallOngoing) {
-                    android.util.Log.d(
+                    android.util.Log.i(
                             "LinphoneService",
                             "AppBackgroundWatcher: " + AppBackgroundWatcher.INSTANCE.getValue());
                     if (AppBackgroundWatcher.INSTANCE.getValue() == null
@@ -337,7 +347,6 @@ public final class LinphoneService extends Service {
         nethCallHandler.removeCallbacksAndMessages(null);
         nethCallHandler.postDelayed(
                 new Runnable() {
-
                     @Override
                     public void run() {
                         android.util.Log.d(
@@ -452,10 +461,10 @@ public final class LinphoneService extends Service {
 
         if (info != null) {
             Log.i(
-                    "[Service] Linphone version is ",
+                    "[LinphoneService] Linphone version is ",
                     info.versionName + " (" + info.versionCode + ")");
         } else {
-            Log.i("[Service] Linphone version is unknown");
+            Log.i("[LinphoneService] Linphone version is unknown");
         }
     }
 
@@ -468,9 +477,9 @@ public final class LinphoneService extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         boolean serviceNotif = LinphonePreferences.instance().getServiceNotificationVisibility();
         if (serviceNotif) {
-            Log.i("[Service] Service is running in foreground, don't stop it");
+            Log.i("[LinphoneService] Service is running in foreground, don't stop it");
         } else if (getResources().getBoolean(R.bool.kill_service_with_task_manager)) {
-            Log.i("[Service] Task removed, stop service");
+            Log.i("[LinphoneService] Task removed, stop service");
             Core lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
             if (lc != null) {
                 lc.terminateAllCalls();
@@ -509,7 +518,7 @@ public final class LinphoneService extends Service {
 
         // This will prevent the app from crashing if the service gets killed in background mode
         if (LinphoneActivity.isInstanciated()) {
-            Log.w("[Service] Service is getting destroyed, finish LinphoneActivity");
+            Log.w("[LinphoneService] Service is getting destroyed, finish LinphoneActivity");
             LinphoneActivity.instance().finish();
         }
 
@@ -533,12 +542,15 @@ public final class LinphoneService extends Service {
     }
 
     private void onIncomingReceived() {
-        Intent intent = new Intent().setClass(this, mIncomingReceivedActivity);
+        android.util.Log.i(
+                "LinphoneService",
+                "[LinphoneService] Start LinphoneActivity");
+        Intent intent = new Intent(this, mIncomingReceivedActivity);
         if (LinphoneActivity.isInstanciated()) {
             LinphoneActivity.instance().startActivity(intent);
         } else {
             // This flag is required to start an Activity from a Service context
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     }
@@ -554,7 +566,7 @@ public final class LinphoneService extends Service {
 
         @Override
         public synchronized void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-            Log.i("[Service] Activity created:" + activity);
+            Log.i("[LinphoneService] Activity created:" + activity);
             if (!activities.contains(activity)) activities.add(activity);
         }
 
@@ -565,27 +577,27 @@ public final class LinphoneService extends Service {
 
         @Override
         public synchronized void onActivityResumed(Activity activity) {
-            Log.i("[Service] Activity resumed:" + activity);
+            Log.i("[LinphoneService] Activity resumed:" + activity);
             if (activities.contains(activity)) {
                 mRunningActivities++;
-                Log.i("[Service] runningActivities=" + mRunningActivities);
+                Log.i("[LinphoneService] runningActivities=" + mRunningActivities);
                 checkActivity();
             }
         }
 
         @Override
         public synchronized void onActivityPaused(Activity activity) {
-            Log.i("[Service] Activity paused:" + activity);
+            Log.i("[LinphoneService] Activity paused:" + activity);
             if (activities.contains(activity)) {
                 mRunningActivities--;
-                Log.i("[Service] runningActivities=" + mRunningActivities);
+                Log.i("[LinphoneService] runningActivities=" + mRunningActivities);
                 checkActivity();
             }
         }
 
         @Override
         public void onActivityStopped(Activity activity) {
-            Log.i("[Service] Activity stopped:" + activity);
+            Log.i("[LinphoneService] Activity stopped:" + activity);
         }
 
         @Override
@@ -594,7 +606,7 @@ public final class LinphoneService extends Service {
 
         @Override
         public synchronized void onActivityDestroyed(Activity activity) {
-            Log.i("[Service] Activity destroyed:" + activity);
+            Log.i("[LinphoneService] Activity destroyed:" + activity);
             activities.remove(activity);
         }
 
@@ -643,4 +655,5 @@ public final class LinphoneService extends Service {
     public void deleteTimer() {
         nethCallHandler.removeCallbacksAndMessages(null);
     }
+
 }

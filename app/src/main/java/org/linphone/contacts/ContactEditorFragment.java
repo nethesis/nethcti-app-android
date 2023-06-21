@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -47,12 +46,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
+import androidx.fragment.app.Fragment;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -61,6 +57,13 @@ import org.linphone.mediastream.Version;
 import org.linphone.utils.FileUtils;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.views.ContactAvatar;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactEditorFragment extends Fragment {
     private static final int ADD_PHOTO = 1337;
@@ -131,7 +134,7 @@ public class ContactEditorFragment extends Fragment {
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getFragmentManager().popBackStackImmediate();
+                        getActivity().getSupportFragmentManager().popBackStackImmediate();
                     }
                 });
 
@@ -149,7 +152,7 @@ public class ContactEditorFragment extends Fragment {
                                 }
                             }
                             if (areAllFielsEmpty) {
-                                getFragmentManager().popBackStackImmediate();
+                                getActivity().getSupportFragmentManager().popBackStackImmediate();
                                 return;
                             }
                             mContact = LinphoneContact.createContact();
@@ -202,7 +205,7 @@ public class ContactEditorFragment extends Fragment {
                             ContactsManager.getInstance().fetchContactsAsync();
                         }
 
-                        getFragmentManager().popBackStackImmediate();
+                        getActivity().getSupportFragmentManager().popBackStackImmediate();
                         if (mIsNewContact || LinphoneActivity.instance().isTablet()) {
                             LinphoneActivity.instance().displayContact(mContact, false);
                         }

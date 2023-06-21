@@ -24,11 +24,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -47,6 +43,12 @@ import org.linphone.core.TunnelConfig;
 import org.linphone.core.VideoActivationPolicy;
 import org.linphone.core.tools.Log;
 import org.linphone.utils.LinphoneUtils;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class LinphonePreferences {
     private static final int LINPHONE_CORE_RANDOM_PORT = -1;
@@ -359,7 +361,7 @@ public class LinphonePreferences {
 
     public void setPreferredVideoSize(String preferredVideoSize) {
         if (getLc() == null) return;
-        getLc().setPreferredVideoSizeByName(preferredVideoSize);
+        //getLc().setPreferredVideoSizeByName(preferredVideoSize);
     }
 
     public int getPreferredVideoFps() {
@@ -952,7 +954,7 @@ public class LinphonePreferences {
         int readExternalStorage =
                 mContext.getPackageManager()
                         .checkPermission(
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU ? Manifest.permission.READ_MEDIA_AUDIO : Manifest.permission.READ_EXTERNAL_STORAGE,
                                 mContext.getPackageName());
         return getConfig().getBool("app", "device_ringtone", true)
                 && readExternalStorage == PackageManager.PERMISSION_GRANTED;

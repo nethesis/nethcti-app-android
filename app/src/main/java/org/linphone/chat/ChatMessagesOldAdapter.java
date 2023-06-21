@@ -36,13 +36,10 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
@@ -63,6 +60,12 @@ import org.linphone.utils.SelectableHelper;
 import org.linphone.views.AsyncBitmap;
 import org.linphone.views.BitmapWorkerTask;
 import org.linphone.views.ContactAvatar;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class ChatMessagesOldAdapter extends SelectableAdapter<ChatMessageOldViewHolder>
         implements ChatMessagesGenericAdapter {
@@ -119,9 +122,9 @@ public class ChatMessagesOldAdapter extends SelectableAdapter<ChatMessageOldView
                     public void onMsgStateChanged(ChatMessage message, ChatMessage.State state) {
                         if (state == ChatMessage.State.FileTransferDone) {
                             if (!message.isOutgoing()) {
-                                message.setAppdata(message.getFileTransferFilepath());
+                                message.setAppdata(message.getFileTransferInformation().getFilePath());
                             }
-                            message.setFileTransferFilepath(
+                            message.getFileTransferInformation().setFilePath(
                                     null); // Not needed anymore, will help differenciate between
                             // InProgress states for file transfer / message sending
                         }
@@ -381,8 +384,8 @@ public class ChatMessagesOldAdapter extends SelectableAdapter<ChatMessageOldView
                                                             + filename);
                                             prefix += 1;
                                         }
-                                        message.setFileTransferFilepath(file.getPath());
-                                        message.downloadFile();
+                                        message.getFileTransferInformation().setFilePath(file.getPath());
+                                        message.downloadContent(message.getFileTransferInformation());
 
                                     } else {
                                         Log.w(

@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,11 +29,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.core.PayloadType;
-import org.linphone.core.tools.OpenH264DownloadHelper;
-import org.linphone.core.tools.OpenH264DownloadHelperListener;
+import org.linphone.core.tools.h264.OpenH264DownloadHelper;
+import org.linphone.core.tools.h264.OpenH264DownloadHelperListener;
 
 public class CodecDownloaderFragment extends Fragment {
     private final Handler mHandler = new Handler();

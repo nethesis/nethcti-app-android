@@ -97,12 +97,12 @@ class NethCTIApplication : Application(), LifecycleEventObserver {
                             val core = LinphoneManager.getLcIfManagerNotDestroyedOrNull()
                             val proxyConfig = core.defaultProxyConfig
                             if(proxyPort != null) {
-                                proxyConfig.expires = expireIfProxyConfigured
+                                proxyConfig?.expires = expireIfProxyConfigured
                             } else {
-                                proxyConfig.expires = expireIfProxyNotConfigured
+                                proxyConfig?.expires = expireIfProxyNotConfigured
                             }
                             core.clearProxyConfig() //I can have only one account registered at time
-                            core.addProxyConfig(proxyConfig)
+                            core.addProxyConfig(proxyConfig!!)
                             core.defaultProxyConfig = proxyConfig
 
                         }

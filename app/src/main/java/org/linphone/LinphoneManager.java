@@ -43,14 +43,12 @@ import android.hardware.SensorManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.media.ToneGenerator;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.VibrationEffect;
@@ -60,27 +58,12 @@ import android.provider.Settings.SettingNotFoundException;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
-import com.google.android.material.checkbox.MaterialCheckBox;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import it.nethesis.webservices.AuthenticationRestAPI;
-import it.nethesis.webservices.RetrofitGenerator;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import com.google.android.material.checkbox.MaterialCheckBox;
 
 import org.linphone.assistant.AssistantActivity;
 import org.linphone.call.CallActivity;
@@ -91,6 +74,7 @@ import org.linphone.contacts.LinphoneContact;
 import org.linphone.core.AccountCreator;
 import org.linphone.core.AccountCreatorListener;
 import org.linphone.core.Address;
+import org.linphone.core.AudioDevice;
 import org.linphone.core.AuthInfo;
 import org.linphone.core.AuthMethod;
 import org.linphone.core.Call;
@@ -101,6 +85,7 @@ import org.linphone.core.CallStats;
 import org.linphone.core.ChatMessage;
 import org.linphone.core.ChatRoom;
 import org.linphone.core.ChatRoomCapabilities;
+import org.linphone.core.Conference;
 import org.linphone.core.ConfiguringState;
 import org.linphone.core.Content;
 import org.linphone.core.Core;
@@ -125,10 +110,10 @@ import org.linphone.core.TransportType;
 import org.linphone.core.Tunnel;
 import org.linphone.core.TunnelConfig;
 import org.linphone.core.VersionUpdateCheckResult;
-import org.linphone.core.tools.H264Helper;
 import org.linphone.core.tools.Log;
-import org.linphone.core.tools.OpenH264DownloadHelper;
-import org.linphone.core.tools.OpenH264DownloadHelperListener;
+import org.linphone.core.tools.h264.H264Helper;
+import org.linphone.core.tools.h264.OpenH264DownloadHelper;
+import org.linphone.core.tools.h264.OpenH264DownloadHelperListener;
 import org.linphone.mediastream.Version;
 import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration;
 import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration.AndroidCamera;
@@ -144,6 +129,24 @@ import org.linphone.utils.MediaScanner;
 import org.linphone.utils.MediaScannerListener;
 import org.linphone.utils.PushNotificationUtils;
 import org.linphone.utils.SharedPreferencesManager;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import it.nethesis.webservices.AuthenticationRestAPI;
+import it.nethesis.webservices.RetrofitGenerator;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -379,7 +382,7 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
             return;
         }
 
-        mCodecDownloader = Factory.instance().createOpenH264DownloadHelper(getContext());
+        mCodecDownloader = new OpenH264DownloadHelper(getContext());
         mCodecListener =
                 new OpenH264DownloadHelperListener() {
                     ProgressDialog progress;
@@ -1190,9 +1193,9 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     }
 
     @SuppressLint("Wakelock")
-    public void onCallStateChanged(
-            final Core lc, final Call call, final State state, final String message) {
-        Log.i("[Manager] New call state [", state, "]");
+    public void onCallStateChanged(final Core lc, final Call call, final State state, final String message) {
+        //Log.i("[Manager] New call state [", state, "]");
+        android.util.Log.i("LinphoneManager", "[Manager] New call state ["+ state + "]");
         if (state == State.IncomingReceived && !call.equals(lc.getCurrentCall())) {
             if (call.getReplacedCall() != null) {
                 // attended transfer
@@ -1204,7 +1207,8 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
         if ((state == State.IncomingReceived || state == State.IncomingEarlyMedia)
                 && getCallGsmON()) {
             if (mCore != null) {
-                mCore.declineCall(call, Reason.Busy);
+                call.terminate();
+                //mCore.getCall(call, Reason.Busy);
             }
         } else if (state == State.IncomingReceived
                 && (LinphonePreferences.instance().isAutoAnswerEnabled())
@@ -1266,7 +1270,7 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
             }
 
             if (Hacks.needSoftvolume()) {
-                Log.w("[Manager] Using soft volume audio hack");
+                android.util.Log.i("LinphoneManager", "Using soft volume audio hack");
                 adjustVolume(0); // Synchronize
             }
         }
@@ -1310,7 +1314,8 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
                     && !localVideo
                     && !autoAcceptCameraPolicy
                     && LinphoneManager.getLc().getConference() == null) {
-                LinphoneManager.getLc().deferCallUpdate(call);
+                call.deferUpdate();
+                //LinphoneManager.getLc().deferCallUpdate(call);
             }
         }
         if (state == State.OutgoingInit) {
@@ -1340,6 +1345,16 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
     @Override
     public void onQrcodeFound(Core lc, String result) {}
+
+    @Override
+    public void onAudioDeviceChanged(@NonNull Core core, @NonNull AudioDevice audioDevice) {
+
+    }
+
+    @Override
+    public void onCallIdUpdated(@NonNull Core core, @NonNull String previousCallId, @NonNull String currentCallId) {
+
+    }
 
     public void onCallEncryptionChanged(
             Core lc, Call call, boolean encrypted, String authenticationToken) {}
@@ -1423,11 +1438,11 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     }
 
     private synchronized void startRinging() {
-        if (!LinphonePreferences.instance().isDeviceRingtoneEnabled()) {
-            // Enable speaker audio route, linphone library will do the ringing itself automatically
-            routeAudioToSpeaker();
-            return;
-        }
+//        if (!LinphonePreferences.instance().isDeviceRingtoneEnabled()) {
+//            // Enable speaker audio route, linphone library will do the ringing itself automatically
+//            routeAudioToSpeaker();
+//            return;
+//        }
 
         if (mRessources.getBoolean(R.bool.allow_ringing_while_early_media)) {
             routeAudioToSpeaker(); // Need to be able to ear the ringtone during the early media
@@ -1437,25 +1452,22 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
         mAudioManager.setMode(MODE_RINGTONE);
 
         try {
-            if ((mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE
-                            || mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL)
-                    && mVibrator != null
-                    && LinphonePreferences.instance().isIncomingCallVibrationEnabled()) {
+            if (mVibrator != null && LinphonePreferences.instance().isIncomingCallVibrationEnabled()) {
+                long[] patern = {0, 500, 2000};
                 VibrationEffect vibrateEffect = VibrationEffect
-                        .createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE);
+                        .createWaveform(patern, 1);
                 mVibrator.vibrate(vibrateEffect);
-                //long[] patern = {0, 1000, 1000};
-                //mVibrator.vibrate(patern, 1);
             }
-            if (mRingerPlayer == null) {
+            if (mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL && mRingerPlayer == null ) {
                 requestAudioFocus(STREAM_RING);
                 mRingerPlayer = new MediaPlayer();
-                mRingerPlayer.setAudioStreamType(STREAM_RING);
+                mRingerPlayer.setAudioAttributes(
+                        new AudioAttributes
+                                .Builder()
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build());
 
                 Uri ringtoneUri = Settings.System.DEFAULT_RINGTONE_URI;
-                        /*isInSystemCall(getContext())
-                        ? Settings.System.DEFAULT_NOTIFICATION_URI
-                        : Settings.System.DEFAULT_RINGTONE_URI;*/
 
                 String ringtone =
                         LinphonePreferences.instance()
@@ -1535,7 +1547,8 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
             return false;
         }
 
-        mCore.acceptCallWithParams(call, params);
+        call.acceptWithParams(params);
+        //mCore.acceptCallWithParams(call, params);
         return true;
     }
 
@@ -1675,6 +1688,11 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     public void onChatRoomRead(Core core, ChatRoom chatRoom) {}
 
     @Override
+    public void onConferenceStateChanged(@NonNull Core core, @NonNull Conference conference, Conference.State state) {
+
+    }
+
+    @Override
     public void onSubscriptionStateChanged(Core lc, Event ev, SubscriptionState state) {
         Log.d(
                 "[Manager] Subscription state changed to "
@@ -1685,6 +1703,11 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
     @Override
     public void onCallLogUpdated(Core lc, CallLog newcl) {}
+
+    @Override
+    public void onFirstCallStarted(@NonNull Core core) {
+
+    }
 
     @Override
     public void onNotifyReceived(Core lc, Event ev, String eventName, Content content) {
@@ -1705,6 +1728,11 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     @Override
     public void onPublishStateChanged(Core lc, Event ev, PublishState state) {
         Log.d("[Manager] Publish state changed to " + state + " for event name " + ev.getName());
+    }
+
+    @Override
+    public void onAudioDevicesListUpdated(@NonNull Core core) {
+
     }
 
     @Override
@@ -1780,7 +1808,17 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     }
 
     @Override
+    public void onLastCallEnded(@NonNull Core core) {
+
+    }
+
+    @Override
     public void onEcCalibrationAudioUninit(Core lc) {}
+
+    @Override
+    public void onChatRoomEphemeralMessageDeleted(@NonNull Core core, @NonNull ChatRoom chatRoom) {
+
+    }
 
     private void sendLogs(String info) {
         Context context = LinphoneActivity.instance();
@@ -1827,12 +1865,22 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     }
 
     @Override
+    public void onChatRoomSubjectChanged(@NonNull Core core, @NonNull ChatRoom chatRoom) {
+
+    }
+
+    @Override
     public void onFriendListRemoved(Core lc, FriendList list) {
         list.removeListener(ContactsManager.getInstance());
     }
 
     @Override
     public void onReferReceived(Core lc, String refer_to) {}
+
+    @Override
+    public void onImeeUserRegistration(@NonNull Core core, boolean status, @NonNull String userId, @NonNull String info) {
+
+    }
 
     @Override
     public void onNetworkReachable(Core lc, boolean enable) {}
@@ -1877,6 +1925,11 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
     @Override
     public void onActivateAlias(
             AccountCreator accountCreator, AccountCreator.Status status, String resp) {}
+
+    @Override
+    public void onLoginLinphoneAccount(@NonNull AccountCreator creator, AccountCreator.Status status, @Nullable String response) {
+
+    }
 
     @Override
     public void onIsAccountActivated(

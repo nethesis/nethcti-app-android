@@ -27,6 +27,15 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
+
+import org.linphone.LinphoneManager;
+import org.linphone.core.Address;
+import org.linphone.core.ChatMessage;
+import org.linphone.core.Content;
+import org.linphone.core.Friend;
+import org.linphone.core.FriendList;
+import org.linphone.core.tools.Log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -37,13 +46,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import org.linphone.LinphoneManager;
-import org.linphone.core.Address;
-import org.linphone.core.ChatMessage;
-import org.linphone.core.Content;
-import org.linphone.core.Friend;
-import org.linphone.core.FriendList;
-import org.linphone.core.tools.Log;
 
 public class FileUtils {
     public static String getNameFromFilePath(String filePath) {
@@ -181,13 +183,18 @@ public class FileUtils {
     }
 
     public static String getStorageDirectory(Context mContext) {
-        String storageDir =
-                Environment.getExternalStorageDirectory()
-                        + "/"
-                        + mContext.getString(
-                                mContext.getResources()
-                                        .getIdentifier(
-                                                "app_name", "string", mContext.getPackageName()));
+//        String storageDir =
+//                Environment.getExternalStorageDirectory()
+//                        + "/"
+//                        + mContext.getString(
+//                                mContext.getResources()
+//                                        .getIdentifier(
+//                                                "app_name", "string", mContext.getPackageName()));
+        String storageDir = mContext.getFilesDir() + "/"
+                + mContext.getString(
+                mContext.getResources()
+                        .getIdentifier(
+                                "app_name", "string", mContext.getPackageName()));
         File file = new File(storageDir);
         if (!file.isDirectory() || !file.exists()) {
             Log.w("Directory " + file + " doesn't seem to exists yet, let's create it");
@@ -198,13 +205,11 @@ public class FileUtils {
     }
 
     public static String getRecordingsDirectory(Context mContext) {
-        String recordingsDir =
-                Environment.getExternalStorageDirectory()
-                        + "/"
+        String recordingsDir = mContext.getFilesDir() + "/"
                         + mContext.getString(
-                                mContext.getResources()
-                                        .getIdentifier(
-                                                "app_name", "string", mContext.getPackageName()))
+                        mContext.getResources()
+                                .getIdentifier(
+                                        "app_name", "string", mContext.getPackageName()))
                         + "/recordings";
         File file = new File(recordingsDir);
         if (!file.isDirectory() || !file.exists()) {
@@ -279,5 +284,22 @@ public class FileUtils {
             return "image/" + getExtensionFromFileName(path);
         }
         return "file/" + getExtensionFromFileName(path);
+    }
+
+    public static void deleteFile(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            try {
+                if (file.delete()) {
+                    Log.i("[File Utils] Deleted $filePath");
+                } else {
+                    Log.e("[File Utils] Can't delete $filePath");
+                }
+            } catch (Exception e) {
+                Log.e("[File Utils] Can't delete $filePath, exception: $e");
+            }
+        } else {
+            Log.e("[File Utils] File $filePath doesn't exists");
+        }
     }
 }

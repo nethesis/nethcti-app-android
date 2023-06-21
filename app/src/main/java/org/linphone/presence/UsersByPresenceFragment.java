@@ -14,7 +14,6 @@ import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_RECORD;
 import static org.linphone.presence.PresenceActionsBottomDialog.ACTION_SPY;
 import static org.linphone.presence.PresenceStatusActivity.STATUS_SELECTED;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -32,9 +31,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 
@@ -48,6 +49,7 @@ import org.linphone.interfaces.OnAdapterItemListener;
 import org.linphone.interfaces.OnUserActionListener;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.SharedPreferencesManager;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -58,9 +60,9 @@ import it.nethesis.models.OpGroupsUsers;
 import it.nethesis.models.decorator.MainPresenceDecorator;
 import it.nethesis.models.decorator.PresenceDecorator;
 import it.nethesis.models.presence.PresenceUser;
-import it.nethesis.webservices.ActionCallRestAPI;
 import it.nethesis.utils.RefreshAction;
 import it.nethesis.utils.TimerSingleton;
+import it.nethesis.webservices.ActionCallRestAPI;
 import it.nethesis.webservices.PresenceRestAPI;
 import it.nethesis.webservices.RetrofitGenerator;
 import it.nethesis.webservices.UserRestAPI;
@@ -561,7 +563,7 @@ public class UsersByPresenceFragment extends Fragment implements
             LinphoneActivity parent = LinphoneActivity.instance();
 
             if(!parent.isTablet()){
-                getActivity().getFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().popBackStack();
             } else {
                 if (LinphoneManager.getLc().getProxyConfigList().length == 0) {
                     LinphoneActivity.instance().finish();

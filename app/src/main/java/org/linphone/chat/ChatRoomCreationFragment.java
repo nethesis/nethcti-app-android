@@ -21,7 +21,7 @@ package org.linphone.chat;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

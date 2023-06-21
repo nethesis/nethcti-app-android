@@ -118,7 +118,7 @@ public class CallManager {
         }
 
         // Not yet in video call: try to re-invite with video
-        lc.updateCall(lCall, params);
+        lCall.update(params);
         return true;
     }
 
@@ -136,6 +136,6 @@ public class CallManager {
         }
         CallParams params = lc.createCallParams(lCall);
         getBandwidthManager().updateWithProfileSettings(params);
-        lc.updateCall(lCall, null);
+        lCall.update(null);
     }
 }

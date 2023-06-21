@@ -28,16 +28,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
+
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.UUID;
 import org.linphone.BuildConfig;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneService;
@@ -45,6 +41,11 @@ import org.linphone.R;
 import org.linphone.notifications.RegistrationIntentService;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 public class FirebaseMessaging extends FirebaseMessagingService {
 
@@ -90,19 +91,11 @@ public class FirebaseMessaging extends FirebaseMessagingService {
                 intent.setClass(this, LinphoneService.class);
                 intent.putExtra("PushNotification", true);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    android.util.Log.i(
-                            "FirebaseMessaging",
-                            "[Push Notification] Starting Service with startForegroundService()");
+                android.util.Log.i(
+                        "FirebaseMessaging",
+                        "[Push Notification] Starting Service with startForegroundService()");
 
-                    startForegroundService(intent);
-                } else {
-                    android.util.Log.i(
-                            "FirebaseMessaging",
-                            "[Push Notification] Starting Service with startService()");
-
-                    startService(intent);
-                }
+                startForegroundService(intent);
 
             } catch (Exception e) {
                 android.util.Log.i(
@@ -113,10 +106,10 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, LinphoneActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(
-                        this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+                        this, 0 /* Request code */, intent, PendingIntent.FLAG_IMMUTABLE);
 
         String channelId = "default";
         String channelName = "default";
@@ -136,13 +129,9 @@ public class FirebaseMessaging extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Since android Oreo notification channel is needed.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel =
-                    new NotificationChannel(
-                            channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
-            }
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+        if (notificationManager != null) {
+            notificationManager.createNotificationChannel(channel);
         }
 
         UUID guid = UUID.randomUUID();

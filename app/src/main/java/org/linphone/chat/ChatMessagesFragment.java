@@ -24,7 +24,6 @@ import static org.linphone.fragments.FragmentsAvailable.CHAT;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -48,21 +47,20 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.core.view.inputmethod.InputConnectionCompat;
 import androidx.core.view.inputmethod.InputContentInfoCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.checkbox.MaterialCheckBox;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
@@ -85,6 +83,7 @@ import org.linphone.core.Factory;
 import org.linphone.core.LimeState;
 import org.linphone.core.Participant;
 import org.linphone.core.ParticipantDevice;
+import org.linphone.core.ParticipantImdnState;
 import org.linphone.core.Reason;
 import org.linphone.core.tools.Log;
 import org.linphone.settings.LinphonePreferences;
@@ -92,6 +91,11 @@ import org.linphone.utils.FileUtils;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.SelectableHelper;
 import org.linphone.views.RichEditText;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ChatMessagesFragment extends Fragment
         implements ChatRoomListener,
@@ -557,7 +561,7 @@ public class ChatMessagesFragment extends Fragment
         if (item.getItemId() == R.id.resend) {
             ((ChatMessagesGenericAdapter) mChatEventsList.getAdapter())
                     .removeItem(mContextMenuMessagePosition);
-            message.resend();
+            message.send();
             return true;
         }
         if (item.getItemId() == R.id.imdn_infos) {
@@ -1192,6 +1196,11 @@ public class ChatMessagesFragment extends Fragment
     public void onConferenceAddressGeneration(ChatRoom cr) {}
 
     @Override
+    public void onChatMessageParticipantImdnStateChanged(@NonNull ChatRoom chatRoom, @NonNull ChatMessage message, @NonNull ParticipantImdnState state) {
+
+    }
+
+    @Override
     public void onParticipantRegistrationSubscriptionRequested(
             ChatRoom cr, Address participantAddr) {}
 
@@ -1351,6 +1360,11 @@ public class ChatMessagesFragment extends Fragment
     }
 
     @Override
+    public void onChatMessageSending(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
+    }
+
+    @Override
     public void onMessageReceived(ChatRoom cr, ChatMessage msg) {}
 
     @Override
@@ -1400,13 +1414,33 @@ public class ChatMessagesFragment extends Fragment
     public void onChatMessageShouldBeStored(ChatRoom cr, ChatMessage msg) {}
 
     @Override
+    public void onEphemeralEvent(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
+    }
+
+    @Override
     public void onParticipantDeviceAdded(ChatRoom cr, EventLog event) {}
+
+    @Override
+    public void onEphemeralMessageDeleted(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
+    }
 
     @Override
     public void onSecurityEvent(ChatRoom cr, EventLog eventLog) {
         updateSecurityLevelIcon();
         ((ChatMessagesGenericAdapter) mChatEventsList.getAdapter()).addToHistory(eventLog);
         scrollToBottom();
+    }
+
+    @Override
+    public void onNewEvent(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
+    }
+
+    @Override
+    public void onEphemeralMessageTimerStarted(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {
+
     }
 
     @Override
