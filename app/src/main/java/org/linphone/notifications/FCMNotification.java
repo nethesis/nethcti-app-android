@@ -1,26 +1,25 @@
 package org.linphone.notifications;
 
-import static org.linphone.BuildConfig.DEBUG;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
 import android.util.Log;
+
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.GsonBuilder;
 
-import it.nethesis.models.notificatore.RegisterToken;
-import it.nethesis.models.notificatore.RegisterTokenReponse;
-import it.nethesis.webservices.NotificatoreRestAPI;
+import org.linphone.R;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
 
-import org.linphone.R;
-
+import it.nethesis.models.notificatore.RegisterToken;
+import it.nethesis.models.notificatore.RegisterTokenReponse;
+import it.nethesis.webservices.NotificatoreRestAPI;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -79,12 +78,7 @@ public class FCMNotification {
         return netUsername + "@" + domain;
     }
 
-    private static void doSendRegistrationId(
-            String deviceId,
-            String user,
-            String notificatoreUrl,
-            String notificatoreAppKey,
-            String language) {
+    private static void doSendRegistrationId(String deviceId, String user, String notificatoreUrl, String notificatoreAppKey, String language) {
         try {
             FirebaseMessaging.getInstance().getToken().addOnSuccessListener(installationTokenResult -> {
                 String regId = installationTokenResult;

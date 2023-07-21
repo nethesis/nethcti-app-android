@@ -197,6 +197,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        android.util.Log.i("LinphoneActivity", "onCreate");
         // This must be done before calling super.onCreate().
         super.onCreate(savedInstanceState);
         if (mAbortCreation) {
@@ -263,6 +264,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
             mCurrentFragment =
                     (FragmentsAvailable) savedInstanceState.getSerializable("mCurrentFragment");
         }
+
+        NethCTIApplication.Companion.getInstance().getMainExtensionIfNecessary();
 
         mListener =
                 new CoreListenerStub() {
@@ -408,7 +411,8 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     Manifest.permission.READ_MEDIA_AUDIO,
                     Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.READ_MEDIA_VIDEO,
-                    Manifest.permission.BLUETOOTH_CONNECT
+                    Manifest.permission.BLUETOOTH_CONNECT,
+                    Manifest.permission.POST_NOTIFICATIONS
             };
             for (String permissionToHave33 : permissionsForAPI33) {
                 if (!checkPermission(permissionToHave33)) {
@@ -494,6 +498,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     protected void onResume() {
         super.onResume();
         if (!LinphoneService.isReady()) {
+            android.util.Log.i("LinphoneActivity", "Start Foreground Service");
             startForegroundService(new Intent(Intent.ACTION_MAIN).setClass(this, LinphoneService.class));
         }
 
@@ -771,6 +776,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     private void checkForUpdate() {
+        android.util.Log.i("LinphoneActivity", "checkForUpdate");
         String url = LinphonePreferences.instance().getCheckReleaseUrl();
         if (url != null && !url.isEmpty()) {
             int lastTimestamp = LinphonePreferences.instance().getLastCheckReleaseTimestamp();
@@ -1970,6 +1976,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     private void displayMainAccount() {
+        android.util.Log.i("LinphoneActivity", "displayMainAccount");
         mDefaultAccount.setVisibility(View.VISIBLE);
         TextView address = mDefaultAccount.findViewById(R.id.main_account_address);
         TextView displayName = mDefaultAccount.findViewById(R.id.main_account_display_name);
@@ -2010,6 +2017,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     public void refreshAccounts() {
+        android.util.Log.i("LinphoneActivity", "refreshAccounts");
         if (LinphoneManager.getLc().getProxyConfigList() != null
                 && LinphoneManager.getLc().getProxyConfigList().length > 1) {
             mAccountsList.setVisibility(View.VISIBLE);
@@ -2079,6 +2087,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
     }
 
     private void displayInappNotification(String date) {
+        android.util.Log.i("LinphoneActivity", "displayInappNotification");
         Timestamp now = new Timestamp(new Date().getTime());
         if (LinphonePreferences.instance().getInappPopupTime() != null
                 && Long.parseLong(LinphonePreferences.instance().getInappPopupTime())

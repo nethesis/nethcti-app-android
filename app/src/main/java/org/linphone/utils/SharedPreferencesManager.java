@@ -10,6 +10,8 @@ public class SharedPreferencesManager {
     private static final String DOMAIN = "neth_domain";
     private static final String MAIN_EXTENSION = "neth_main_extension";
 
+    private static final String FCM_TOKEN = "fcm_token";
+
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
@@ -77,6 +79,20 @@ public class SharedPreferencesManager {
     public static void removeMainExtension(Context context) {
         SharedPreferences pref = getSharedPreferences(context);
         pref.edit().remove(MAIN_EXTENSION).apply();
+    }
+
+    public static void setFcmToken(Context context, String fcmToken) {
+        SharedPreferences pref = getSharedPreferences(context);
+        pref.edit().putString(FCM_TOKEN, fcmToken).apply();
+    }
+
+    public static String getFcmToken(Context context) {
+        return getSharedPreferences(context).getString(FCM_TOKEN, null);
+    }
+
+    public static void removeFcmToken(Context context) {
+        SharedPreferences pref = getSharedPreferences(context);
+        pref.edit().remove(FCM_TOKEN).apply();
     }
 
     /*

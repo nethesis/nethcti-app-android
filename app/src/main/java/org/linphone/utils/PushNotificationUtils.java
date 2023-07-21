@@ -20,9 +20,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.content.Context;
-import java.lang.reflect.Constructor;
+
 import org.linphone.R;
 import org.linphone.core.tools.Log;
+
+import java.lang.reflect.Constructor;
 
 public class PushNotificationUtils {
     private static PushHelperInterface mHelper;
@@ -57,9 +59,21 @@ public class PushNotificationUtils {
         return mHelper.isAvailable(context);
     }
 
+    public static void checkForFCM(Context context) {
+        if (mHelper == null) return;
+        mHelper.checkForFCMTopics(context);
+    }
+
+    public static void deregister(Context context) {
+        if (mHelper == null) return;
+        mHelper.deregister(context);
+    }
+
     public interface PushHelperInterface {
         void init(Context context);
 
+        void checkForFCMTopics(Context context);
+        void deregister(Context context);
         boolean isAvailable(Context context);
     }
 }

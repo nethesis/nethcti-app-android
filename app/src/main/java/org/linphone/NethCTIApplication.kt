@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.lifecycle.*
+import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import it.nethesis.models.NethUser
 import it.nethesis.utils.AppBackgroundWatcher
@@ -73,7 +74,7 @@ class NethCTIApplication : Application(), LifecycleEventObserver {
         getMainExtensionIfNecessary()
     }
 
-    private fun getMainExtensionIfNecessary() {
+    fun getMainExtensionIfNecessary() {
         val authToken = SharedPreferencesManager.getAuthtoken(this)
         val domain = SharedPreferencesManager.getDomain(this)
         val mainExtension = SharedPreferencesManager.getMainExtension(this)
@@ -154,6 +155,12 @@ class NethCTIApplication : Application(), LifecycleEventObserver {
         val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
 
         return capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    }
+
+    fun isLogged(): Boolean {
+        val authToken = SharedPreferencesManager.getAuthtoken(this)
+        val domain = SharedPreferencesManager.getDomain(this)
+        return isNetworkOnline(this) && !authToken.isNullOrEmpty() && !domain.isNullOrEmpty()
     }
 
 }

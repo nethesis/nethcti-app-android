@@ -86,6 +86,7 @@ import org.linphone.fragments.StatusFragment;
 import org.linphone.notifications.FCMNotification;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
+import org.linphone.utils.PushNotificationUtils;
 import org.linphone.utils.ThemableActivity;
 
 import java.util.ArrayList;
@@ -568,6 +569,7 @@ public class AssistantActivity extends ThemableActivity
         FCMNotification.updateRegistrationInfo(
                 getApplicationContext(),
                 FCMNotification.getNotificatoreUserIdentifier(userid, domain));
+        PushNotificationUtils.checkForFCM(this);
         mAccountCreated = true;
         mLoginInProgress = false;
         success();
@@ -937,6 +939,7 @@ public class AssistantActivity extends ThemableActivity
 
     private void goToLinphoneActivity() {
         mPrefs.firstLaunchSuccessful();
+        LinphoneManager.getInstance().changeStatusToOnline();
         startActivity(
                 new Intent()
                         .setClass(this, LinphoneActivity.class)
@@ -964,7 +967,7 @@ public class AssistantActivity extends ThemableActivity
                         this,
                         (int) System.currentTimeMillis(),
                         mStartActivity,
-                        PendingIntent.FLAG_CANCEL_CURRENT);
+                        PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager mgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 500, mPendingIntent);
 

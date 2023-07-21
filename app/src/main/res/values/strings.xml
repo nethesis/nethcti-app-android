@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
+    <string name="app_brand_name">NethCTI</string>
     <!-- Custom -->
     <string name="app_name">NethCTI</string>
     <string name="service_name">NethCTI Service</string>

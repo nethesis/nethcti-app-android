@@ -20,7 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import static it.nethesis.webservices.RetrofitGenerator.calculateRFC2104HMAC;
 
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,17 +31,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+
+import org.jetbrains.annotations.NotNull;
+import org.linphone.R;
+import org.linphone.core.TransportType;
+import org.linphone.utils.SharedPreferencesManager;
+
+import java.util.List;
+
 import it.nethesis.models.Extension;
 import it.nethesis.models.LoginCredentials;
 import it.nethesis.models.NethUser;
 import it.nethesis.webservices.AuthenticationRestAPI;
 import it.nethesis.webservices.RetrofitGenerator;
 import it.nethesis.webservices.UserRestAPI;
-import java.util.List;
-import org.jetbrains.annotations.NotNull;
-import org.linphone.R;
-import org.linphone.core.TransportType;
-import org.linphone.utils.SharedPreferencesManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

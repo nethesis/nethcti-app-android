@@ -27,6 +27,8 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.google.firebase.FirebaseApp;
+
 import org.linphone.assistant.AssistantActivity;
 import org.linphone.assistant.RemoteProvisioningActivity;
 import org.linphone.settings.LinphonePreferences;
@@ -40,6 +42,8 @@ public class LinphoneLauncherActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        android.util.Log.i("LinphoneLauncherActivity", "onCreate");
+        FirebaseApp.initializeApp(this);
         // Hack to avoid to draw twice LinphoneActivity on tablets
         if (getResources().getBoolean(R.bool.orientation_portrait_only)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

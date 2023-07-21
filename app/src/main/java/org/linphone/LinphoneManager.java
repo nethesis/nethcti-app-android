@@ -265,7 +265,7 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
     public static synchronized void createAndStart(Context c, boolean isPush) {
         if (sInstance != null) {
-            Log.e(
+            Log.e("LinphoneService",
                     "[Manager] Linphone Manager is already initialized ! Destroying it and creating a new one...");
             destroy();
         }
@@ -2086,10 +2086,13 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
                                 @Override
                                 public void onResponse(
                                         retrofit2.Call<String> call, Response<String> response) {
+                                    // Unsubscribe from FCM topics
+                                    PushNotificationUtils.deregister(context);
                                     // Delete the token and domain information from the
                                     // SharedPreferences
                                     SharedPreferencesManager.removeAuthtoken(context);
                                     SharedPreferencesManager.removeDomain(context);
+                                    SharedPreferencesManager.removeFcmToken(context);
 
                                     // [Notificatore] logout user from Notificatore app.
                                     SharedPreferencesManager.removeUsername(

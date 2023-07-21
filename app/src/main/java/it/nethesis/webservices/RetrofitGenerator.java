@@ -1,20 +1,26 @@
 package it.nethesis.webservices;
 
 import android.util.Log;
+
 import com.google.gson.GsonBuilder;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.jetbrains.annotations.NotNull;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -112,5 +118,32 @@ public class RetrofitGenerator {
         Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
         mac.init(signingKey);
         return toHexString(mac.doFinal(data.getBytes()));
+    }
+
+    public static String calculateSHA256(String source) {
+        byte[] hash = null;
+        String hashCode = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            hash = digest.digest(source.getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("RetrofitGenerator", "Can't calculate SHA-256");
+        }
+
+        if (hash != null) {
+            StringBuilder hashBuilder = new StringBuilder();
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(hash[i]);
+                if (hex.length() == 1) {
+                    hashBuilder.append("0");
+                    hashBuilder.append(hex.charAt(hex.length() - 1));
+                } else {
+                    hashBuilder.append(hex.substring(hex.length() - 2));
+                }
+            }
+            hashCode = hashBuilder.toString();
+        }
+
+        return hashCode;
     }
 }

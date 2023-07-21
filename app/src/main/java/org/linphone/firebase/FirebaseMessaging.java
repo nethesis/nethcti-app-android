@@ -41,6 +41,8 @@ import org.linphone.R;
 import org.linphone.notifications.RegistrationIntentService;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
+import org.linphone.utils.PushNotificationUtils;
+import org.linphone.utils.SharedPreferencesManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -53,6 +55,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(final String token) {
+        SharedPreferencesManager.setFcmToken(this, token);
         // [Notificatore] send new token to Notificatore app.
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
@@ -60,12 +63,9 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         android.util.Log.i("FirebaseIdService", "[Push Notification] Refreshed token: " + token);
 
         LinphoneUtils.dispatchOnUIThread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        LinphonePreferences.instance().setPushNotificationRegistrationID(token);
-                    }
-                });
+                () -> LinphonePreferences.instance().setPushNotificationRegistrationID(token));
+
+        PushNotificationUtils.checkForFCM(this);
     }
 
     @Override
@@ -78,9 +78,10 @@ public class FirebaseMessaging extends FirebaseMessagingService {
             sendNotification("sentTime: " + dateString); // Only for testing.
         }
 
-        android.util.Log.i(
-                "FirebaseMessaging",
-                "[Push Notification] MessageType: " + remoteMessage.getMessageType());
+        android.util.Log.i("FirebaseMessaging", "[Push Notification] MessageData: " + remoteMessage.getData());
+        android.util.Log.i("FirebaseMessaging", "[Push Notification] MessageType: " + remoteMessage.getMessageType());
+        android.util.Log.i("FirebaseMessaging", "[Push Notification] OriginalPriority: " + remoteMessage.getOriginalPriority());
+        android.util.Log.i("FirebaseMessaging", "[Push Notification] Priority: " + remoteMessage.getPriority());
         android.util.Log.i("FirebaseMessaging", "[Push Notification] SentTime: " + dateString);
         android.util.Log.i("FirebaseMessaging", "[Push Notification] Received");
 
@@ -105,6 +106,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
     }
 
     private void sendNotification(String messageBody) {
+        android.util.Log.i("FirebaseMessaging", "SHOW NOTIFICATION");
         Intent intent = new Intent(this, LinphoneActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent =
@@ -118,7 +120,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.nethesis_icon)
-                        .setContentTitle("Chiamata in arrivo")
+                        .setContentTitle("Notifica ricevuta")
                         .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
