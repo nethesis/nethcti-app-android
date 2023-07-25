@@ -2092,7 +2092,7 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
                                     // SharedPreferences
                                     SharedPreferencesManager.removeAuthtoken(context);
                                     SharedPreferencesManager.removeDomain(context);
-                                    SharedPreferencesManager.removeFcmToken(context);
+                                    //SharedPreferencesManager.removeFcmToken(context);
 
                                     // [Notificatore] logout user from Notificatore app.
                                     SharedPreferencesManager.removeUsername(

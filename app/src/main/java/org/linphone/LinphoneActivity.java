@@ -275,8 +275,7 @@ public class LinphoneActivity extends LinphoneGenericActivity
                     }
 
                     @Override
-                    public void onRegistrationStateChanged(
-                            Core lc, ProxyConfig proxy, RegistrationState state, String smessage) {
+                    public void onRegistrationStateChanged(Core lc, ProxyConfig proxy, RegistrationState state, String smessage) {
                         AuthInfo authInfo =
                                 lc.findAuthInfo(
                                         proxy.getRealm(),

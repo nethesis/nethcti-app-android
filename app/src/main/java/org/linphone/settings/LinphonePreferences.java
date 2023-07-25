@@ -616,8 +616,9 @@ public class LinphonePreferences {
             // Add push infos to exisiting proxy configs
             String regId = getPushNotificationRegistrationID();
             String appId = getString(R.string.gcm_defaultSenderId);
-            if (regId != null && lc.getProxyConfigList().length > 0) {
-                for (ProxyConfig lpc : lc.getProxyConfigList()) {
+            ProxyConfig[] proxyConfigList = lc.getProxyConfigList();
+            if (regId != null && proxyConfigList.length > 0) {
+                for (ProxyConfig lpc : proxyConfigList) {
                     if (lpc == null) continue;
                     if (!lpc.isPushNotificationAllowed()) {
                         lpc.edit();

@@ -558,7 +558,6 @@ public class AssistantActivity extends ThemableActivity
 
         // setup proxy settings
         core.setMediaEncryption(MediaEncryption.SRTP);
-        LinphonePreferences.instance().togglePushNotification(true);
         core.setMediaEncryptionMandatory(proxyPort != null);
         proxyConfig.setExpires(proxyPort != null ? expireIfProxyConfigured : expireIfProxyNotConfigured);
 
@@ -570,6 +569,7 @@ public class AssistantActivity extends ThemableActivity
                 getApplicationContext(),
                 FCMNotification.getNotificatoreUserIdentifier(userid, domain));
         PushNotificationUtils.checkForFCM(this);
+        LinphonePreferences.instance().togglePushNotification(true);
         mAccountCreated = true;
         mLoginInProgress = false;
         success();
