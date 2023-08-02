@@ -38,7 +38,6 @@ import org.linphone.BuildConfig;
 import org.linphone.LinphoneActivity;
 import org.linphone.LinphoneService;
 import org.linphone.R;
-import org.linphone.notifications.RegistrationIntentService;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.PushNotificationUtils;
@@ -56,9 +55,6 @@ public class FirebaseMessaging extends FirebaseMessagingService {
     @Override
     public void onNewToken(final String token) {
         SharedPreferencesManager.setFcmToken(this, token);
-        // [Notificatore] send new token to Notificatore app.
-        Intent intent = new Intent(this, RegistrationIntentService.class);
-        startService(intent);
 
         android.util.Log.i("FirebaseIdService", "[Push Notification] Refreshed token: " + token);
 

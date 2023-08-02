@@ -112,7 +112,6 @@ import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.fragments.StatusFragment;
 import org.linphone.history.HistoryDetailFragment;
 import org.linphone.history.HistoryFragment;
-import org.linphone.notifications.FCMNotification;
 import org.linphone.presence.UsersByPresenceFragment;
 import org.linphone.recording.RecordingsFragment;
 import org.linphone.settings.AccountSettingsFragment;
@@ -367,10 +366,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
         if (proxy != null) {
             Address userAddress = proxy.getIdentityAddress();
 
-            FCMNotification.updateRegistrationInfo(
-                    getApplicationContext(),
-                    FCMNotification.getNotificatoreUserIdentifier(
-                            userAddress.getUsername(), userAddress.getDomain()));
         }
 
         // Set the default neth settings.

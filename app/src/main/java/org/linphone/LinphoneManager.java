@@ -118,7 +118,6 @@ import org.linphone.mediastream.Version;
 import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration;
 import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration.AndroidCamera;
 import org.linphone.mediastream.video.capture.hwconf.Hacks;
-import org.linphone.notifications.FCMNotification;
 import org.linphone.receivers.BluetoothManager;
 import org.linphone.receivers.HookReceiver;
 import org.linphone.receivers.OutgoingCallReceiver;
@@ -2099,8 +2098,6 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
                                             context.getApplicationContext());
                                     SharedPreferencesManager.removeMainExtension(
                                             context.getApplicationContext());
-                                    FCMNotification.updateRegistrationInfo(
-                                            context.getApplicationContext(), "");
                                 }
 
                                 @Override

@@ -83,7 +83,6 @@ import org.linphone.core.RegistrationState;
 import org.linphone.core.TransportType;
 import org.linphone.core.tools.Log;
 import org.linphone.fragments.StatusFragment;
-import org.linphone.notifications.FCMNotification;
 import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.PushNotificationUtils;
@@ -565,9 +564,6 @@ public class AssistantActivity extends ThemableActivity
         core.setDefaultProxyConfig(proxyConfig);
 
         // [Notificatore] login to Notificatore app.
-        FCMNotification.updateRegistrationInfo(
-                getApplicationContext(),
-                FCMNotification.getNotificatoreUserIdentifier(userid, domain));
         PushNotificationUtils.checkForFCM(this);
         LinphonePreferences.instance().togglePushNotification(true);
         mAccountCreated = true;
