@@ -243,6 +243,7 @@ public class LinphoneManager implements CoreListener, SensorEventListener, Accou
 
         mPrefs = LinphonePreferences.instance();
         mAudioManager = ((AudioManager) c.getSystemService(Context.AUDIO_SERVICE));
+
         mVibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
         mPowerManager = (PowerManager) c.getSystemService(Context.POWER_SERVICE);
         mConnectivityManager =
