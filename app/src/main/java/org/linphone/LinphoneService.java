@@ -275,7 +275,7 @@ public final class LinphoneService extends CoreService {
                                                 }
                                             }
                                             if (call.getCallLog().getStatus()
-                                                    == Call.Status.Missed) {
+                                                    == Call.Status.Missed || call.getCallLog().getStatus() == Call.Status.Aborted) {
                                                 mNotificationManager.displayMissedCallNotification(
                                                         call);
                                             }
