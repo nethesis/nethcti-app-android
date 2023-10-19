@@ -145,7 +145,7 @@ public class DashboardFragment extends Fragment implements ContactsUpdatedListen
         Address address;
         if (callLog.getDir() == Call.Dir.Incoming) {
             address = callLog.getFromAddress();
-            if (callLog.getStatus() == Call.Status.Missed) {
+            if (callLog.getStatus() == Call.Status.Missed || callLog.getStatus() == Call.Status.Aborted) {
                 callStateIcon.setImageResource(R.drawable.ic_call_missed);
             } else {
                 callStateIcon.setImageResource(R.drawable.ic_call_in);

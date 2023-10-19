@@ -113,6 +113,8 @@ public class CallActivity extends LinphoneGenericActivity
     private static final int PERMISSIONS_ENABLED_MIC = 204;
     private static final int PERMISSIONS_EXTERNAL_STORAGE = 205;
 
+    private static final int PERMISSIONS_BLUETOOTH = 206;
+
     private static CallActivity sInstance;
     private static long sTimeRemind = 0;
     private Handler mControlsHandler = new Handler();
@@ -543,7 +545,7 @@ public class CallActivity extends LinphoneGenericActivity
 
     private void checkAndRequestPermission(String permission, int result) {
         int permissionGranted = getPackageManager().checkPermission(permission, getPackageName());
-        Log.i(
+        android.util.Log.i("CALL_ACTIVITY",
                 "[Permission] "
                         + permission
                         + " is "
@@ -552,7 +554,7 @@ public class CallActivity extends LinphoneGenericActivity
                         : "denied"));
 
         if (permissionGranted != PackageManager.PERMISSION_GRANTED) {
-            Log.i("[Permission] Asking for " + permission);
+            android.util.Log.i("CALL_ACTIVITY","[Permission] Asking for " + permission);
             ActivityCompat.requestPermissions(this, new String[] {permission}, result);
         }
     }
@@ -603,6 +605,11 @@ public class CallActivity extends LinphoneGenericActivity
                                 }
                             }
                         });
+                break;
+            case PERMISSIONS_BLUETOOTH:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    android.util.Log.i("CALL_ACTIVITY","[Permission] BLUETOOTH GRANTED");
+                }
                 break;
             case PERMISSIONS_EXTERNAL_STORAGE:
                 LinphoneUtils.dispatchOnUIThread(

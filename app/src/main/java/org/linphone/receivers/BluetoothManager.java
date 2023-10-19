@@ -217,7 +217,7 @@ public class BluetoothManager extends BroadcastReceiver {
     }
 
     public boolean isUsingBluetoothAudioRoute() {
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
         return mBluetoothHeadset != null
@@ -226,7 +226,7 @@ public class BluetoothManager extends BroadcastReceiver {
     }
 
     public boolean isBluetoothHeadsetAvailable() {
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
         ensureInit();

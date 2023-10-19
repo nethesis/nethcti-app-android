@@ -24,10 +24,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
+
 import org.linphone.LinphoneActivity;
 import org.linphone.R;
 import org.linphone.contacts.ContactsManager;
@@ -39,6 +38,10 @@ import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.SelectableAdapter;
 import org.linphone.utils.SelectableHelper;
 import org.linphone.views.ContactAvatar;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 
 public class HistoryAdapter extends SelectableAdapter<HistoryViewHolder> {
     private final List<CallLog> mLogs;
@@ -99,7 +102,7 @@ public class HistoryAdapter extends SelectableAdapter<HistoryViewHolder> {
 
         if (log.getDir() == Call.Dir.Incoming) {
             address = log.getFromAddress();
-            if (log.getStatus() == Call.Status.Missed) {
+            if (log.getStatus() == Call.Status.Missed || log.getStatus() == Call.Status.Aborted) {
                 holder.callDirection.setImageResource(R.drawable.ic_call_missed);
             } else {
                 holder.callDirection.setImageResource(R.drawable.ic_call_in);

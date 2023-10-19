@@ -112,7 +112,6 @@ import org.linphone.fragments.FragmentsAvailable;
 import org.linphone.fragments.StatusFragment;
 import org.linphone.history.HistoryDetailFragment;
 import org.linphone.history.HistoryFragment;
-import org.linphone.notifications.FCMNotification;
 import org.linphone.presence.UsersByPresenceFragment;
 import org.linphone.recording.RecordingsFragment;
 import org.linphone.settings.AccountSettingsFragment;
@@ -367,10 +366,6 @@ public class LinphoneActivity extends LinphoneGenericActivity
         if (proxy != null) {
             Address userAddress = proxy.getIdentityAddress();
 
-            FCMNotification.updateRegistrationInfo(
-                    getApplicationContext(),
-                    FCMNotification.getNotificatoreUserIdentifier(
-                            userAddress.getUsername(), userAddress.getDomain()));
         }
 
         // Set the default neth settings.
@@ -402,15 +397,26 @@ public class LinphoneActivity extends LinphoneGenericActivity
                 Manifest.permission.CAMERA,
                 Manifest.permission.MANAGE_OWN_CALLS,
                 Manifest.permission.BIND_TELECOM_CONNECTION_SERVICE,
-                Manifest.permission.READ_PHONE_NUMBERS
+                Manifest.permission.READ_PHONE_NUMBERS,
+                Manifest.permission.BLUETOOTH
         };
+
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            String[] permissionsForAPI31 = {
+                    Manifest.permission.BLUETOOTH_CONNECT
+            };
+            for (String permissionToHave31 : permissionsForAPI31) {
+                if (!checkPermission(permissionToHave31)) {
+                    permissionsToAskFor.add(permissionToHave31);
+                }
+            }
+        }
 
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             String[] permissionsForAPI33 = {
                     Manifest.permission.READ_MEDIA_AUDIO,
                     Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.READ_MEDIA_VIDEO,
-                    Manifest.permission.BLUETOOTH_CONNECT,
                     Manifest.permission.POST_NOTIFICATIONS
             };
             for (String permissionToHave33 : permissionsForAPI33) {

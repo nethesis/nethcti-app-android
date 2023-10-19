@@ -4,7 +4,6 @@
     package="org.linphone"
     android:installLocation="auto">
 
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -39,7 +38,6 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" /> <!-- Needed to route the audio to the bluetooth headset if available -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" /> <!-- Needed to pre fill the wizard email field (only if enabled in custom settings) -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -248,7 +246,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".notifications.RegistrationIntentService" />
         <service
             android:name=".LinphoneService"
             android:exported="false"
@@ -302,15 +299,7 @@
                 <action android:name="com.base.module.phone.HOOKEVENT" />
             </intent-filter>
         </receiver>
-        <!--
-<receiver
-            android:name=".receivers.OutgoingCallReceiver"
-            android:permission="android.permission.PROCESS_OUTGOING_CALLS">
-            <intent-filter>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
-            </intent-filter>
-        </receiver>
-        -->
+
         <receiver
             android:name=".receivers.AccountEnableReceiver"
             android:permission="android.permission.USE_SIP" android:exported="true">
@@ -341,6 +330,12 @@
             android:name=".notifications.NotificationBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
+
+        <receiver android:name=".receivers.MediaButtonIntentReceiver" android:enabled="true" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
